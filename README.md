@@ -1,19 +1,23 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=18253736&assignment_repo_type=AssignmentRepo)
-# Nome do projeto
+![Alt text](/misc/header.png)
 
-Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.
+# MindRush
+
+MindRush é uma plataforma de aprendizado baseada em gamificação que visa facilitar e dinamizar o processo de ensino-aprendizagem por meio de quizzes interativos. A solução permite que educadores criem e apliquem quizzes personalizados em tempo real, enquanto os alunos participam de forma síncrona e recebem feedback imediato sobre seu desempenho. Inspirado na plataforma Kahoot!, a ferramenta busca aprimorar a experiência de aprendizado, oferecendo funcionalidades como rankings dinâmicos, geração de quizzes por meio IA generativa e um ambiente interativo que aumenta o engajamento dos estudantes. 
 
 ## Integrantes
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
+* Arthur Ferreira Costa
+* Fernando Antônio Ferreira Ibrahim
+* Jhonata Silveira Dias
+* Luca Ferrari Azalim
+* Pedro Henrique Braga de Castro
+* Wanessa Dias Costa
 
 ## Orientadores
 
-* Nome completo do professor 1
-* Nome completo do professor 2
+* Cleiton Silva Tavares
+* Cristiano de Macêdo Neto
+* Hugo Bastos de Paula
 
 ## Instruções de utilização
 
