@@ -84,25 +84,25 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 <a name="apresentacao"></a>
 # 1. Apresentação
 
-_Nota-se que o ensino tradicional enfrenta desafios no engajamento dos alunos e na avaliação eficaz do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, não garantem uma participação ativa e muitas vezes dificultam a identificação de dificuldades em tempo real. 
+Nota-se que o ensino tradicional enfrenta desafios no engajamento dos alunos e na avaliação eficaz do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, não garantem uma participação ativa e muitas vezes dificultam a identificação de dificuldades em tempo real. 
 
 Estudos apontam que o uso de gamificação no ensino, como no **Kahoot!**, melhora o desempenho dos alunos e a dinâmica em sala de aula, no entanto, ainda há desafios, como problemas técnicos, estresse com o tempo e dificuldades na adaptação dos estudantes (Wang e Tahir, 2020).
 
-Dessa forma, uma plataforma que combine aprendizado gamificado, interatividade em tempo real e feedback imediato pode ser uma solução eficaz para esse problema. O **MindRush** propõe uma abordagem inovadora, permitindo que professores criem quizzes personalizados, enquanto os alunos participam de maneira síncrona, tornando o processo de aprendizado mais dinâmico e envolvente._
+Dessa forma, uma plataforma que combine aprendizado gamificado, interatividade em tempo real e feedback imediato pode ser uma solução eficaz para esse problema. O **MindRush** propõe uma abordagem inovadora, permitindo que professores criem quizzes personalizados, enquanto os alunos participam de maneira síncrona, tornando o processo de aprendizado mais dinâmico e envolvente.
 
 
 ## 1.1. Problema
 
-_O modelo tradicional de ensino apresenta limitações na forma como o aprendizado é conduzido e avaliado. Os principais desafios incluem:
+O modelo tradicional de ensino apresenta limitações na forma como o aprendizado é conduzido e avaliado. Os principais desafios incluem:
 
 - Falta de engajamento dos alunos em metodologias convencionais.
 - Dificuldade dos professores em avaliar a compreensão dos estudantes em tempo real.
 - Problemas técnicos e falta de flexibilidade em plataformas de gamificação existentes.
-- Estresse dos alunos com o tempo limitado de resposta e dificuldades para acompanhar os quizzes._
+- Estresse dos alunos com o tempo limitado de resposta e dificuldades para acompanhar os quizzes.
 
 ## 1.2. Objetivos do trabalho
 
-_O objetivo principal deste trabalho é desenvolver uma plataforma interativa baseada em gamificação para auxiliar professores e alunos no processo de ensino-aprendizagem.
+O objetivo principal deste trabalho é desenvolver uma plataforma interativa baseada em gamificação para auxiliar professores e alunos no processo de ensino-aprendizagem.
 
 Os objetivos específicos são:
 
@@ -110,7 +110,7 @@ Os objetivos específicos são:
 - Fornecer feedback imediato aos alunos, aumentando a retenção do aprendizado.
 - Implementar um ranking dinâmico para incentivar a participação ativa.
 - Utilizar inteligência artificial generativa para facilitar a criação de quizzes.
-- Garantir uma experiência fluida e acessível para diferentes dispositivos._
+- Garantir uma experiência fluida e acessível para diferentes dispositivos.
 
 ## 1.3. Definições e Abreviaturas
 
@@ -118,7 +118,7 @@ Os objetivos específicos são:
 - **Quizzes Síncronos**: Questionários interativos realizados simultaneamente por múltiplos usuários.
 - **IA Generativa**: Inteligência artificial capaz de criar automaticamente conteúdos, como perguntas e respostas para quizzes.
 - **Feedback Imediato**: Retorno instantâneo sobre o desempenho dos alunos, permitindo ajustes no aprendizado.
-- **Ranking Dinâmico**: Sistema de pontuação atualizado em tempo real, estimulando a competição saudável entre os participantes._
+- **Ranking Dinâmico**: Sistema de pontuação atualizado em tempo real, estimulando a competição saudável entre os participantes.
 
 <a name="produto"></a>
 # 2. Nosso Produto
