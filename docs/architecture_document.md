@@ -1,19 +1,27 @@
-# TITULO DO PROJETO
+# MindRush
 
 
-**Nome completo do Aluno 1, email do aluno 1**
+**Arthur Ferreira Costa, arthur.costa.1456541@sga.pucminas.br**
 
-**Nome completo do Aluno 2, email do aluno 2**
+**Fernando Antônio Ferreira Ibrahim, 1443215@sga.pucminas.br**
 
-**Nome completo do Aluno 3, email do aluno 3**
+**Jhonata Silveira Dias, jhonata.dias@sga.pucminas.br**
+
+**Luca Ferrari Azalim, lazalim@pucminas.br**
+
+**Pedro Henrique Braga de Castro, pcastro@sga.pucminas.br**
+
+**Wanessa Dias Costa, wanessa.costa@sga.pucminas.br**
 
 ---
 
 Professores:
 
-**Prof. Nome do Prof 1**
+**Cleiton Silva Tavares**
 
-**Prof. Nome do Prof 2**
+**Cristiano de Macêdo Neto**
+
+**Hugo Bastos de Paula**
 
 
 ---
@@ -24,8 +32,7 @@ _Instituto de Informática e Ciências Exatas – Pontifícia Universidade de Mi
 
 ---
 
-_**Resumo**. Escrever aqui o resumo. O resumo deve contextualizar rapidamente o trabalho, descrever seu objetivo e, ao final, 
-mostrar algum resultado relevante do trabalho (até 10 linhas)._
+_**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de aprendizado baseadas em gamificação, voltadas para a dinamização do processo de ensino-aprendizagem por meio de quizzes interativos. A solução é destinada a educadores que desejam criar e aplicar quizzes personalizados em tempo real, permitindo a participação síncrona dos alunos e fornecendo feedback imediato sobre seu desempenho. Inspirada em plataformas como Kahoot!, a ferramenta busca aprimorar a experiência educacional por meio de funcionalidades como rankings dinâmicos, geração automática de quizzes utilizando inteligência artificial generativa e um ambiente interativo que favorece o engajamento dos estudantes. Além disso, a solução incorpora mecanismos de aprendizado adaptativo e interações em tempo real, proporcionando uma experiência mais imersiva e motivadora._
 
 ---
 
