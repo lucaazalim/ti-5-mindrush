@@ -178,12 +178,16 @@ Obs: acrescente mais linhas, se necessário.
 
 ## 3.3. Restrições Arquiteturais
 
-_Enumere as restrições arquiteturais. Lembre-se de que as restrições arquiteturais geralmente não são consideradas requisitos uma vez que limitam a solução candidata. Os requisitos não impõem restrição, mas precisam ser satisfeitos._
+As restrições arquiteturais do projeto são as seguintes:
 
-As restrições impostas ao projeto que afetam sua arquitetura são (por exemplo):
-
-- O software deverá ser desenvolvido em Python/Django;
-- A comunicação da API deve seguir o padrão RESTful.
+- O sistema deve adotar um modelo baseado em web service.
+- Deve oferecer suporte a serviços tanto no ambiente web quanto no móvel.
+- As versões web e móvel devem ser desenvolvidas utilizando tecnologias distintas.
+- Deve incluir um mecanismo de comunicação em tempo real (mensageria).
+- Deve utilizar serviços de computação em nuvem.
+- A hospedagem deve ser realizada em uma plataforma de nuvem gratuita.
+- Estratégias de testes devem ser implementadas para garantir a qualidade do sistema.
+- O sistema deve permitir que múltiplos clientes se conectem simultaneamente a um único servidor, possibilitando operações concorrentes.
 
 ## 3.4. Mecanismos Arquiteturais
 
