@@ -36,14 +36,6 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 
 ---
 
-## Histórico de Revisões
-
-| **Data** | **Autor** | **Descrição** | **Versão** |
-| --- | --- | --- | --- |
-| **[22/02/2024]** | [Wanessa Dias] | [Adição da seção de apresentação, definição do problema, objetivos do projeto e suas definições.] | [1.0.0] |
-| | | | |
-| | | | |
-
 ## SUMÁRIO
 
 1. [Apresentação](#apresentacao "Apresentação") <br />
