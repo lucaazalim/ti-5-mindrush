@@ -153,19 +153,22 @@ _Esta seção descreve os requisitos comtemplados nesta descrição arquitetural
 
 _Enumere os requisitos funcionais previstos para a sua aplicação. Concentre-se nos requisitos funcionais que sejam críticos para a definição arquitetural. Lembre-se de listar todos os requisitos que são necessários para garantir cobertura arquitetural. Esta seção deve conter uma lista de requisitos ainda sem modelagem. Na coluna Prioridade utilize uma escala (do mais prioritário para o menos): Essencial, Desejável, Opcional._
 
-| **ID** | **Descrição**                                                 | **Prioridade** | **Plataforma** |
-| ------ | ------------------------------------------------------------- | -------------- | -------------- |
-| RF1    | O educador se cadastra no sistema.                            |                | Web            |
-| RF2    | O educador gerencia os quizzes.                               |                | Web            |
-| RF3    | O educador gerencia as questões dos quizzes.                  |                | Web            |
-| RF4    | O educador gera uma partida a partir de um quiz.              |                | Web            |
-| RF5    | O educador inicia, pausa e encerra a partida.                 |                | Web            |
-| RF6    | O educador acompanha o andamento da partida.                  |                | Web            |
-| RF7    | O estudante informa o código da partida.                      |                | Móvel          |
-| RF8    | O estudante escaneia o código QR da partida.                  |                | Móvel          |
-| RF9    | O estudante responde às questões da partida em tempo real.    |                | Móvel          |
-| RF10   | O sistema exibe o ranque da partida ao final de cada questão. |                | Móvel          |
-| RF11   | O sistema exibe o ranque final da partida.                    |                | Móvel          |
+| **ID** | **Descrição**                                                              | **Prioridade** | **Plataforma** |
+| ------ | -------------------------------------------------------------------------- | -------------- | -------------- |
+| RF1    | O educador se cadastra no sistema.                                         | Essencial      | Web            |
+| RF2    | O educador gerencia os quizzes.                                            | Essencial      | Web            |
+| RF3    | O educador gera um quiz a partir de um tema qualquer usando IA generativa. | Opcional       | Web            |
+| RF4    | O educador gera um quiz a partir de um documento PDF usando IA generativa. | Opcional       | Web            |
+| RF5    | O educador gerencia as questões dos quizzes.                               | Essencial      | Web            |
+| RF6    | O educador gera uma partida a partir de um quiz.                           | Essencial      | Web            |
+| RF7    | O educador inicia, pausa e encerra a partida.                              | Essencial      | Web            |
+| RF8    | O educador acompanha o andamento da partida.                               | Desejável      | Web            |
+| RF9    | O estudante informa o código da partida.                                   | Essencial      | Móvel          |
+| RF10   | O estudante escaneia o código QR da partida.                               | Opcional       | Móvel          |
+| RF11   | O estudante entra na partida informando seu nome.                          | Essencial      | Móvel          |
+| RF12   | O estudante responde às questões da partida em tempo real.                 | Essencial      | Móvel          |
+| RF13   | O sistema exibe o ranque da partida ao final de cada questão.              | Desejável      | Móvel          |
+| RF14   | O sistema exibe o ranque final da partida.                                 | Desejável      | Móvel          |
 
 **Observação:** as colunas "Sprint" e "Status" foram removidas, uma vez que o planejamento e o estado de conclusão de cada requisito estão sendo controlados por meio do [GitHub Projects](https://github.com/orgs/ICEI-PUC-Minas-PPLES-TI/projects/556).
 
