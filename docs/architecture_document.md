@@ -30,7 +30,7 @@ _Instituto de Informática e Ciências Exatas – Pontifícia Universidade de Mi
 
 ---
 
-_**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de aprendizado baseadas em gamificação, voltadas para a dinamização do processo de ensino-aprendizagem por meio de quizzes interativos. A solução é destinada a educadores que desejam criar e aplicar quizzes personalizados em tempo real, permitindo a participação síncrona dos alunos e fornecendo feedback imediato sobre seu desempenho. Inspirada em plataformas como Kahoot!, a ferramenta busca aprimorar a experiência educacional por meio de funcionalidades como rankings dinâmicos, geração automática de quizzes utilizando inteligência artificial generativa e um ambiente interativo que favorece o engajamento dos estudantes. Além disso, a solução incorpora mecanismos de aprendizado adaptativo e interações em tempo real, proporcionando uma experiência mais imersiva e motivadora._
+_**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de aprendizado baseadas em gamificação, voltadas para a dinamização do processo de ensino-aprendizagem por meio de quizzes interativos. A solução é destinada a educadores que desejam criar e aplicar quizzes personalizados em tempo real, permitindo a participação síncrona dos estudantes e fornecendo feedback imediato sobre seu desempenho. Inspirada em plataformas como Kahoot!, a ferramenta busca aprimorar a experiência educacional por meio de funcionalidades como rankings dinâmicos, geração automática de quizzes utilizando inteligência artificial generativa e um ambiente interativo que favorece o engajamento dos estudantes. Além disso, a solução incorpora mecanismos de aprendizado adaptativo e interações em tempo real, proporcionando uma experiência mais imersiva e motivadora._
 
 ---
 
@@ -74,39 +74,36 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 
 # 1. Apresentação
 
-Nota-se que o ensino tradicional enfrenta desafios no engajamento dos alunos e na avaliação eficaz do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, não garantem uma participação ativa e muitas vezes dificultam a identificação de dificuldades em tempo real.
+Nota-se que o ensino tradicional enfrenta desafios no engajamento dos estudantes e na avaliação eficaz do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, não garantem uma participação ativa e muitas vezes dificultam a identificação de dificuldades em tempo real.
 
 Estudos apontam que o uso de gamificação no ensino, como no **Kahoot!**, melhora o desempenho dos alunos e a dinâmica em sala de aula, no entanto, ainda há desafios, como problemas técnicos, estresse com o tempo e dificuldades na adaptação dos estudantes (Wang e Tahir, 2020).
 
-Dessa forma, uma plataforma que combine aprendizado gamificado, interatividade em tempo real e feedback imediato pode ser uma solução eficaz para esse problema. O **MindRush** propõe uma abordagem inovadora, permitindo que professores criem quizzes personalizados, enquanto os alunos participam de maneira síncrona, tornando o processo de aprendizado mais dinâmico e envolvente.
+Dessa forma, uma plataforma que combine aprendizado gamificado, interatividade em tempo real e feedback imediato pode ser uma solução eficaz para esse problema. O MindRush propõe uma abordagem que permite que educadores criem quizzes personalizados, enquanto os estudantes participam de maneira síncrona, tornando o processo de aprendizado mais dinâmico e envolvente.
 
 ## 1.1. Problema
 
 O modelo tradicional de ensino apresenta limitações na forma como o aprendizado é conduzido e avaliado. Os principais desafios incluem:
 
-- Falta de engajamento dos alunos em metodologias convencionais.
-- Dificuldade dos professores em avaliar a compreensão dos estudantes em tempo real.
+- Falta de engajamento dos estudantes em metodologias convencionais.
+- Dificuldade dos educadores em avaliar a compreensão dos estudantes em tempo real.
 - Problemas técnicos e falta de flexibilidade em plataformas de gamificação existentes.
-- Estresse dos alunos com o tempo limitado de resposta e dificuldades para acompanhar os quizzes.
+- Estresse dos estudantes com o tempo limitado de resposta e dificuldades para acompanhar os quizzes.
 
 ## 1.2. Objetivos do trabalho
 
-O objetivo principal deste trabalho é desenvolver uma plataforma interativa baseada em gamificação para auxiliar professores e alunos no processo de ensino-aprendizagem.
+Facilitar e dinamizar o processo de ensino-aprendizagem por meio de quizzes interativos baseados em gamificação.
 
 Os objetivos específicos são:
 
-- Criar um sistema de quizzes interativos e personalizáveis.
-- Fornecer feedback imediato aos alunos, aumentando a retenção do aprendizado.
-- Implementar um ranking dinâmico para incentivar a participação ativa.
-- Utilizar inteligência artificial generativa para facilitar a criação de quizzes.
-- Garantir uma experiência fluida e acessível para diferentes dispositivos.
+- Permitir que educadores criem e apliquem quizzes personalizados em tempo real.
+- Permitir que estudantes participem de quizzes síncronos e recebam feedback imediato dos resultados obtidos.
 
 ## 1.3. Definições e Abreviaturas
 
 - **Gamificação**: Aplicação de elementos de jogos para tornar o aprendizado mais envolvente.
 - **Quizzes Síncronos**: Questionários interativos realizados simultaneamente por múltiplos usuários.
 - **IA Generativa**: Inteligência artificial capaz de criar automaticamente conteúdos, como perguntas e respostas para quizzes.
-- **Feedback Imediato**: Retorno instantâneo sobre o desempenho dos alunos, permitindo ajustes no aprendizado.
+- **Feedback Imediato**: Retorno instantâneo sobre o desempenho dos estudantes, permitindo ajustes no aprendizado.
 - **Ranking Dinâmico**: Sistema de pontuação atualizado em tempo real, estimulando a competição saudável entre os participantes.
 
 <a name="produto"></a>
