@@ -151,8 +151,6 @@ _Esta seção descreve os requisitos comtemplados nesta descrição arquitetural
 
 ## 3.1. Requisitos Funcionais
 
-_Enumere os requisitos funcionais previstos para a sua aplicação. Concentre-se nos requisitos funcionais que sejam críticos para a definição arquitetural. Lembre-se de listar todos os requisitos que são necessários para garantir cobertura arquitetural. Esta seção deve conter uma lista de requisitos ainda sem modelagem. Na coluna Prioridade utilize uma escala (do mais prioritário para o menos): Essencial, Desejável, Opcional._
-
 | **ID** | **Descrição**                                                              | **Prioridade** | **Plataforma** |
 | ------ | -------------------------------------------------------------------------- | -------------- | -------------- |
 | RF1    | O educador se cadastra no sistema.                                         | Essencial      | Web            |
