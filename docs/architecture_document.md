@@ -197,15 +197,15 @@ As restrições arquiteturais do projeto são as seguintes:
 
 ## 3.4. Mecanismos Arquiteturais
 
-| **Análise** | **Design** | **Implementação** |
-| --- | --- | --- |
-| Persistência | Banco de Dados Relacional | PostgreSQL |
-| Back-end | RESTful API | Next.js |
-| Web App | Single Page Application | Next.js |
-| Aplicativo | Aplicativo híbrido | Flutter
-| Mensageria | Event driven | RabbitMQ |
-| Teste de Software | Testes unitários e de integração | Jest |
-| Deploy | Cloud gerenciado | Render |
+| **Análise**       | **Design**                            | **Implementação** |
+| ----------------- | ------------------------------------- | ----------------- |
+| Persistência      | Banco de Dados Relacional             | PostgreSQL        |
+| Back-end          | RESTful API                           | Next.js           |
+| Web App           | Single Page Application               | Next.js           |
+| Aplicativo        | Tecnologia híbrida para iOS e Android | Flutter           |
+| Mensageria        | Event driven                          | RabbitMQ          |
+| Teste de Software | Testes unitários e de integração      | Jest              |
+| Deploy            | Cloud gerenciado                      | Render            |
 
 <a name="modelagem"></a>
 # 4. Modelagem e Projeto Arquitetural
