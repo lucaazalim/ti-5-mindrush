@@ -152,15 +152,21 @@ _Esta seção descreve os requisitos comtemplados nesta descrição arquitetural
 
 _Enumere os requisitos funcionais previstos para a sua aplicação. Concentre-se nos requisitos funcionais que sejam críticos para a definição arquitetural. Lembre-se de listar todos os requisitos que são necessários para garantir cobertura arquitetural. Esta seção deve conter uma lista de requisitos ainda sem modelagem. Na coluna Prioridade utilize uma escala (do mais prioritário para o menos): Essencial, Desejável, Opcional._
 
-| **ID** | **Descrição** | **Prioridade** | **Plataforma** | **Sprint** | **Status** |
-| --- | --- | --- | --- | --- | --- |
-| RF001 | | | _web_ | Sprint 1 | ✅ |
-| RF002 | | | _mobile_ | Sprint 1 | ❌ |
-| RF003 | | | _web e mobile_ | Sprint 1 |  |
-| | | | | | |
-| | | | | | |
+| **ID** | **Descrição**                                                 | **Prioridade** | **Plataforma** |
+| ------ | ------------------------------------------------------------- | -------------- | -------------- |
+| RF1    | O educador se cadastra no sistema.                            |                | Web            |
+| RF2    | O educador gerencia os quizzes.                               |                | Web            |
+| RF3    | O educador gerencia as questões dos quizzes.                  |                | Web            |
+| RF4    | O educador gera uma partida a partir de um quiz.              |                | Web            |
+| RF5    | O educador inicia, pausa e encerra a partida.                 |                | Web            |
+| RF6    | O educador acompanha o andamento da partida.                  |                | Web            |
+| RF7    | O estudante informa o código da partida.                      |                | Móvel          |
+| RF8    | O estudante escaneia o código QR da partida.                  |                | Móvel          |
+| RF9    | O estudante responde às questões da partida em tempo real.    |                | Móvel          |
+| RF10   | O sistema exibe o ranque da partida ao final de cada questão. |                | Móvel          |
+| RF11   | O sistema exibe o ranque final da partida.                    |                | Móvel          |
 
-Obs: acrescente mais linhas, se necessário.
+**Observação:** as colunas "Sprint" e "Status" foram removidas, uma vez que o planejamento e o estado de conclusão de cada requisito estão sendo controlados por meio do [GitHub Projects](https://github.com/orgs/ICEI-PUC-Minas-PPLES-TI/projects/556).
 
 ## 3.2. Requisitos Não-Funcionais
 
