@@ -1,6 +1,5 @@
 # MindRush
 
-
 **Arthur Ferreira Costa, arthur.costa.1456541@sga.pucminas.br**
 
 **Fernando Antônio Ferreira Ibrahim, 1443215@sga.pucminas.br**
@@ -23,7 +22,6 @@ Professores:
 
 **Hugo Bastos de Paula**
 
-
 ---
 
 _Curso de Engenharia de Software, Campus Lourdes_
@@ -39,49 +37,48 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 ## SUMÁRIO
 
 1. [Apresentação](#apresentacao "Apresentação") <br />
-	1.1. Problema <br />
-	1.2. Objetivos do trabalho <br />
-	1.3. Definições e Abreviaturas <br />
- 
+   1.1. Problema <br />
+   1.2. Objetivos do trabalho <br />
+   1.3. Definições e Abreviaturas <br />
+
 2. [Nosso Produto](#produto "Nosso Produto") <br />
-	2.1. Visão do Produto <br />
-   	2.2. Nosso Produto <br />
-   	2.3. Personas <br />
+   2.1. Visão do Produto <br />
+   2.2. Nosso Produto <br />
+   2.3. Personas <br />
 
 3. [Requisitos](#requisitos "Requisitos") <br />
-	3.1. Requisitos Funcionais <br />
-	3.2. Requisitos Não-Funcionais <br />
-	3.3. Restrições Arquiteturais <br />
-	3.4. Mecanismos Arquiteturais <br />
+   3.1. Requisitos Funcionais <br />
+   3.2. Requisitos Não-Funcionais <br />
+   3.3. Restrições Arquiteturais <br />
+   3.4. Mecanismos Arquiteturais <br />
 
 4. [Modelagem](#modelagem "Modelagem e projeto arquitetural") <br />
-	4.1. Visão de Negócio <br />
-	4.2. Visão Lógica <br />
-	4.3. Modelo de dados (opcional) <br />
+   4.1. Visão de Negócio <br />
+   4.2. Visão Lógica <br />
+   4.3. Modelo de dados (opcional) <br />
 
 5. [Wireframes](#wireframes "Wireframes") <br />
 
 6. [Solução](#solucao "Projeto da Solução") <br />
 
 7. [Avaliação](#avaliacao "Avaliação da Arquitetura") <br />
-	7.1. Cenários <br />
-	7.2. Avaliação <br />
+   7.1. Cenários <br />
+   7.2. Avaliação <br />
 
 8. [Referências](#referencias "REFERÊNCIAS")<br />
 
 9. [Apêndices](#apendices "APÊNDICES")<br />
-	9.1 Ferramentas <br />
-
+   9.1 Ferramentas <br />
 
 <a name="apresentacao"></a>
+
 # 1. Apresentação
 
-Nota-se que o ensino tradicional enfrenta desafios no engajamento dos alunos e na avaliação eficaz do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, não garantem uma participação ativa e muitas vezes dificultam a identificação de dificuldades em tempo real. 
+Nota-se que o ensino tradicional enfrenta desafios no engajamento dos alunos e na avaliação eficaz do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, não garantem uma participação ativa e muitas vezes dificultam a identificação de dificuldades em tempo real.
 
 Estudos apontam que o uso de gamificação no ensino, como no **Kahoot!**, melhora o desempenho dos alunos e a dinâmica em sala de aula, no entanto, ainda há desafios, como problemas técnicos, estresse com o tempo e dificuldades na adaptação dos estudantes (Wang e Tahir, 2020).
 
 Dessa forma, uma plataforma que combine aprendizado gamificado, interatividade em tempo real e feedback imediato pode ser uma solução eficaz para esse problema. O **MindRush** propõe uma abordagem inovadora, permitindo que professores criem quizzes personalizados, enquanto os alunos participam de maneira síncrona, tornando o processo de aprendizado mais dinâmico e envolvente.
-
 
 ## 1.1. Problema
 
@@ -113,17 +110,21 @@ Os objetivos específicos são:
 - **Ranking Dinâmico**: Sistema de pontuação atualizado em tempo real, estimulando a competição saudável entre os participantes.
 
 <a name="produto"></a>
+
 # 2. Nosso Produto
 
 _Estão seçaõ explora um pouco mais o produto a ser desenvolvido_
 
 ## 2.1 Visão do Produto
+
 ![Exemplo de Visão do Produto](imagens/VisaoProduto.png)
 
 ## 2.2 Nosso Produto
+
 ![Exemplo de Nosso Produto](imagens/NossoProduto.png)
 
 ## 2.3 Personas
+
 <h2>Persona 1</h2>
 <table>
   <tr>
@@ -142,8 +143,8 @@ _Estão seçaõ explora um pouco mais o produto a ser desenvolvido_
   </tr>
 </table>
 
-
 <a name="requisitos"></a>
+
 # 3. Requisitos
 
 _Esta seção descreve os requisitos comtemplados nesta descrição arquitetural, divididos em dois grupos: funcionais e não funcionais._
@@ -173,12 +174,12 @@ _Enumere os requisitos funcionais previstos para a sua aplicação. Concentre-se
 _Enumere os requisitos não-funcionais previstos para a sua aplicação. Entre os requisitos não funcionais, inclua todos os requisitos que julgar importante do ponto de vista arquitetural ou seja os requisitos que terão impacto na definição da arquitetura. Os requisitos devem ser descritos de forma completa e preferencialmente quantitativa._
 
 | **ID** | **Descrição** |
-| --- | --- |
-| RNF001 | |
-| RNF002 | |
-| | |
-| | |
-| | |
+| ------ | ------------- |
+| RNF001 |               |
+| RNF002 |               |
+|        |               |
+|        |               |
+|        |               |
 
 Obs: acrescente mais linhas, se necessário.
 
@@ -208,6 +209,7 @@ As restrições arquiteturais do projeto são as seguintes:
 | Deploy            | Cloud gerenciado                      | Render            |
 
 <a name="modelagem"></a>
+
 # 4. Modelagem e Projeto Arquitetural
 
 _Apresente uma visão geral da solução proposta para o projeto e explique brevemente esse diagrama de visão geral, de forma textual. Esse diagrama não precisa seguir os padrões da UML, e deve ser completo e tão simples quanto possível, apresentando a macroarquitetura da solução._
@@ -240,10 +242,10 @@ Exemplos de Histórias de Usuário:
 
 - Como gerente eu quero conseguir entender o progresso do trabalho do meu time, para que eu possa ter relatórios periódicos dos nossos acertos e falhas.
 
-|EU COMO... `PERSONA`| QUERO/PRECISO ... `FUNCIONALIDADE` |PARA ... `MOTIVO/VALOR`                 |
-|--------------------|------------------------------------|----------------------------------------|
-|Usuário do sistema  | Registrar minhas tarefas           | Não esquecer de fazê-las               |
-|Administrador       | Alterar permissões                 | Permitir que possam administrar contas |
+| EU COMO... `PERSONA` | QUERO/PRECISO ... `FUNCIONALIDADE` | PARA ... `MOTIVO/VALOR`                |
+| -------------------- | ---------------------------------- | -------------------------------------- |
+| Usuário do sistema   | Registrar minhas tarefas           | Não esquecer de fazê-las               |
+| Administrador        | Alterar permissões                 | Permitir que possam administrar contas |
 
 ## 4.2. Visão Lógica
 
@@ -252,7 +254,6 @@ _Apresente os artefatos que serão utilizados descrevendo em linhas gerais as mo
 ### Diagrama de Classes
 
 ![Diagrama de classes](imagens/classes.gif "Diagrama de classes")
-
 
 **Figura 2 – Diagrama de classes (exemplo). Fonte: o próprio autor.**
 
@@ -284,6 +285,7 @@ _Caso julgue necessário para explicar a arquitetura, apresente o diagrama de cl
 Obs: Acrescente uma breve descrição sobre o diagrama apresentado na Figura 3.
 
 <a name="wireframes"></a>
+
 # 5. Wireframes
 
 > Wireframes são protótipos das telas da aplicação usados em design de interface para sugerir a
@@ -292,11 +294,13 @@ Obs: Acrescente uma breve descrição sobre o diagrama apresentado na Figura 3.
 > layout de elementos fundamentais na interface.
 
 <a name="solucao"></a>
+
 # 6. Projeto da Solução
 
 _Apresente as telas dos sistema construído com uma descrição sucinta de cada uma das interfaces._
 
 <a name="avaliacao"></a>
+
 # 7. Avaliação da Arquitetura
 
 _Esta seção descreve a avaliação da arquitetura apresentada, baseada no método ATAM._
@@ -317,28 +321,29 @@ _Apresente os cenários de testes utilizados na realização dos testes da sua a
 
 _Apresente as medidas registradas na coleta de dados. O que não for possível quantificar apresente uma justificativa baseada em evidências qualitativas que suportam o atendimento do requisito não-funcional. Apresente uma avaliação geral da arquitetura indicando os pontos fortes e as limitações da arquitetura proposta._
 
-| **Atributo de Qualidade:** | Segurança |
-| --- | --- |
-| **Requisito de Qualidade** | Acesso aos recursos restritos deve ser controlado |
-| **Preocupação:** | Os acessos de usuários devem ser controlados de forma que cada um tenha acesso apenas aos recursos condizentes as suas credenciais. |
-| **Cenários(s):** | Cenário 4 |
-| **Ambiente:** | Sistema em operação normal |
-| **Estímulo:** | Acesso do administrador do sistema as funcionalidades de cadastro de novos produtos e exclusão de produtos. |
-| **Mecanismo:** | O servidor de aplicação (Rails) gera um _token_ de acesso para o usuário que se autentica no sistema. Este _token_ é transferido para a camada de visualização (Angular) após a autenticação e o tratamento visual das funcionalidades podem ser tratados neste nível. |
-| **Medida de Resposta:** | As áreas restritas do sistema devem ser disponibilizadas apenas quando há o acesso de usuários credenciados. |
+| **Atributo de Qualidade:** | Segurança                                                                                                                                                                                                                                                              |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Requisito de Qualidade** | Acesso aos recursos restritos deve ser controlado                                                                                                                                                                                                                      |
+| **Preocupação:**           | Os acessos de usuários devem ser controlados de forma que cada um tenha acesso apenas aos recursos condizentes as suas credenciais.                                                                                                                                    |
+| **Cenários(s):**           | Cenário 4                                                                                                                                                                                                                                                              |
+| **Ambiente:**              | Sistema em operação normal                                                                                                                                                                                                                                             |
+| **Estímulo:**              | Acesso do administrador do sistema as funcionalidades de cadastro de novos produtos e exclusão de produtos.                                                                                                                                                            |
+| **Mecanismo:**             | O servidor de aplicação (Rails) gera um _token_ de acesso para o usuário que se autentica no sistema. Este _token_ é transferido para a camada de visualização (Angular) após a autenticação e o tratamento visual das funcionalidades podem ser tratados neste nível. |
+| **Medida de Resposta:**    | As áreas restritas do sistema devem ser disponibilizadas apenas quando há o acesso de usuários credenciados.                                                                                                                                                           |
 
 **Considerações sobre a arquitetura:**
 
-| **Riscos:** | Não existe |
-| --- | --- |
+| **Riscos:**                  | Não existe |
+| ---------------------------- | ---------- |
 | **Pontos de Sensibilidade:** | Não existe |
-| _ **Tradeoff** _ **:** | Não existe |
+| _ **Tradeoff** _ **:**       | Não existe |
 
 Evidências dos testes realizados
 
 _Apresente imagens, descreva os testes de tal forma que se comprove a realização da avaliação._
 
 <a name="referencias"></a>
+
 # 8. REFERÊNCIAS
 
 _Como um projeto da arquitetura de uma aplicação não requer revisão bibliográfica, a inclusão das referências não é obrigatória. No entanto, caso você deseje incluir referências relacionadas às tecnologias, padrões, ou metodologias que serão usadas no seu trabalho, relacione-as de acordo com a ABNT._
@@ -346,7 +351,6 @@ _Como um projeto da arquitetura de uma aplicação não requer revisão bibliogr
 Verifique no link abaixo como devem ser as referências no padrão ABNT:
 
 http://www.pucminas.br/imagedb/documento/DOC\_DSC\_NOME\_ARQUI20160217102425.pdf
-
 
 **[1]** - _ELMASRI, Ramez; NAVATHE, Sham. **Sistemas de banco de dados**. 7. ed. São Paulo: Pearson, c2019. E-book. ISBN 9788543025001._
 
@@ -358,17 +362,17 @@ http://www.pucminas.br/imagedb/documento/DOC\_DSC\_NOME\_ARQUI20160217102425.pdf
 
 **[5]** - _RUSSELL, Stuart J.; NORVIG, Peter. **Inteligência artificial**. Rio de Janeiro: Elsevier, c2013. xxi, 988 p. ISBN 9788535237016._
 
-
 <a name="apendices"></a>
+
 # 9. APÊNDICES
 
 _Inclua o URL do repositório (Github, Bitbucket, etc) onde você armazenou o código da sua prova de conceito/protótipo arquitetural da aplicação como anexos. A inclusão da URL desse repositório de código servirá como base para garantir a autenticidade dos trabalhos._
 
 ## 9.1 Ferramentas
 
-| Ambiente  | Plataforma              |Link de Acesso |
-|-----------|-------------------------|---------------|
-|Repositório de código | GitHub | https://github.com/XXXXXXX | 
-|Hospedagem do site | Heroku |  https://XXXXXXX.herokuapp.com | 
-|Protótipo Interativo | MavelApp ou Figma | https://figma.com/XXXXXXX |
-|Documentação de teste | Github | https://githun.com/xxxx |
+| Ambiente              | Plataforma        | Link de Acesso                |
+| --------------------- | ----------------- | ----------------------------- |
+| Repositório de código | GitHub            | https://github.com/XXXXXXX    |
+| Hospedagem do site    | Heroku            | https://XXXXXXX.herokuapp.com |
+| Protótipo Interativo  | MavelApp ou Figma | https://figma.com/XXXXXXX     |
+| Documentação de teste | Github            | https://githun.com/xxxx       |
