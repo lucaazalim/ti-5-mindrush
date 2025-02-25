@@ -116,29 +116,59 @@ Os objetivos específicos são:
 _Estão seçaõ explora um pouco mais o produto a ser desenvolvido_
 
 ## 2.1 Visão do Produto
-
-![Exemplo de Visão do Produto](imagens/VisaoProduto.png)
+Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e a avaliação do aprendizado de forma interativa, o MindRush é um sistema de quizzes gamificados que torna o ensino mais dinâmico e envolvente. Diferentemente do Google Forms, que oferece formulários estáticos sem elementos de gamificação, nosso produto proporciona uma experiência interativa com rankings, tempo de resposta e competitividade, tornando as avaliações mais engajantes.
 
 ## 2.2 Nosso Produto
 
-![Exemplo de Nosso Produto](imagens/NossoProduto.png)
+| É  				  | 		NÃO É 		|
+| 		:----- 		  |				 :---  	|
+| Uma plataforma de quizzes personalizados que permite uma experiência de jogo síncrona entre estudantes conectados na mesma sala, promovendo engajamento e aprendizado de forma interativa e dinâmica. | Uma plataforma para criação e aplicação de questionários e provas formais, como o Google Forms. |
+| **FAZ** | **NÃO FAZ** |
+| <ul><li>Traz gamificação ao ambiente escolar por meio da criação de salas onde os usuários competem entre si, testando seus conhecimentos sobre um determinado tema de forma interativa.</li><li>Possibilita a geração automática de quizzes com base em documentos fornecidos pelos usuários, utilizando IAs generativas para criar perguntas relevantes e contextualizadas.</li></ul> | <ul><li>Não permite a criação de provas ou formulários para avaliação individual</li><li>Não foca em ensino assíncrono ou aprendizado autodidata, exigindo interação síncrona entre usuários.</li><li>Não gera relatórios detalhados de desempenho para acompanhamento de longo prazo.</li></ul> |
 
 ## 2.3 Personas
 
-<h2>Persona 1</h2>
+<h2>Educador</h2>
 <table>
   <tr>
     <td style="vertical-align: top; width: 150px;">
-      <img src="imagens/persona.jpg" alt="Imagem da Persona"  style="width: 100px; height: auto; border-radius: 10px;">
+      <img src="imagens/persona-1.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
     </td>
     <td style="vertical-align: top; padding-left: 10px;">
-      <strong>Nome:</strong> Ana Souza <br>
-      <strong>Idade:</strong> 32 anos <br>
-      <strong>Hobby:</strong> Ler livros de ficção científica <br>
-      <strong>Trabalho:</strong> Desenvolvedora de software <br>
-      <strong>Personalidade:</strong> Analítica, criativa e determinada <br>
-      <strong>Sonho:</strong> Criar uma startup de tecnologia <br>
-      <strong>Dores:</strong> Falta de tempo para equilibrar trabalho e vida pessoal <br>
+      <strong>Nome:</strong> Lucas Almeida <br>
+      <strong>Idade:</strong> 42 anos <br>
+      <strong>Hobby:</strong> Jogar xadrez e assistir documentários sobre ciência <br>
+      <strong>Trabalho:</strong> Professor de Engenharia de Software na Puc Minas <br>
+      <strong>Personalidade:</strong>  Analítico e um pouco tímido. Tem grande domínio técnico, mas encontra dificuldades para tornar suas aulas mais dinâmicas e envolventes. <br>
+      <strong>Sonho:</strong> Ajudar seus alunos a realmente se interessarem pelo conteúdo e aprenderem de forma significativa <br>
+      <strong>Dores:</strong>
+	  	<ul>
+	  		<li>Dificuldade em manter os alunos concentrados e engajados nas aulas</li>
+	  		<li>Tempo limitado para preparar materiais interativos</li>
+		</ul> <br>
+    </td>
+  </tr>
+</table>
+
+<h2>Estudante</h2>
+<table>
+  <tr>
+    <td style="vertical-align: top; width: 150px;">
+      <img src="imagens/persona-2.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+    </td>
+    <td style="vertical-align: top; padding-left: 10px;">
+      <strong>Nome:</strong> Matheus Castro <br>
+      <strong>Idade:</strong> 21 anos <br>
+      <strong>Hobby:</strong> Jogar RPG de mesa e desenvolver projetos pessoais de software <br>
+      <strong>Trabalho:</strong> Estagiário em uma empresa de desenvolvimento de software <br>
+      <strong>Personalidade:</strong> Curioso, autodidata e motivado por desafios. Gosta de aprender na prática e se sente mais engajado em atividades interativas. <br>
+      <strong>Sonho:</strong> Se tornar um desenvolvedor sênior em uma grande empresa de tecnologia e contribuir para projetos inovadores. <br>
+	<strong>Dores:</strong>
+	  	<ul>
+	  		<li>Acha difícil manter o foco em aulas expositivas sem interações práticas</li>
+	  		<li>Prefere aprender resolvendo problemas e desafios, mas sente que nem sempre o ensino acompanha esse formato</li>
+			<li>Gostaria de testar seus conhecimentos de forma dinâmica e divertida, em vez de apenas provas teóricas</li>
+		</ul> <br>
     </td>
   </tr>
 </table>
