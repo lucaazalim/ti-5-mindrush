@@ -113,14 +113,15 @@ Os objetivos específicos são:
 _Estão seçaõ explora um pouco mais o produto a ser desenvolvido_
 
 ## 2.1 Visão do Produto
+
 Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e a avaliação do aprendizado de forma interativa, o MindRush é um sistema de quizzes gamificados que torna o ensino mais dinâmico e envolvente. Diferentemente do Google Forms, que oferece formulários estáticos sem elementos de gamificação, nosso produto proporciona uma experiência interativa com rankings, tempo de resposta e competitividade, tornando as avaliações mais engajantes.
 
 ## 2.2 Nosso Produto
 
-| É  				  | 		NÃO É 		|
-| 		:----- 		  |				 :---  	|
-| Uma plataforma de quizzes personalizados que permite uma experiência de jogo síncrona entre estudantes conectados na mesma sala, promovendo engajamento e aprendizado de forma interativa e dinâmica. | Uma plataforma para criação e aplicação de questionários e provas formais, como o Google Forms. |
-| **FAZ** | **NÃO FAZ** |
+| É                                                                                                                                                                                                                                                                                                                                                                                       | NÃO É                                                                                                                                                                                                                                                                                            |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Uma plataforma de quizzes personalizados que permite uma experiência de jogo síncrona entre estudantes conectados na mesma sala, promovendo engajamento e aprendizado de forma interativa e dinâmica.                                                                                                                                                                                   | Uma plataforma para criação e aplicação de questionários e provas formais, como o Google Forms.                                                                                                                                                                                                  |
+| **FAZ**                                                                                                                                                                                                                                                                                                                                                                                 | **NÃO FAZ**                                                                                                                                                                                                                                                                                      |
 | <ul><li>Traz gamificação ao ambiente escolar por meio da criação de salas onde os usuários competem entre si, testando seus conhecimentos sobre um determinado tema de forma interativa.</li><li>Possibilita a geração automática de quizzes com base em documentos fornecidos pelos usuários, utilizando IAs generativas para criar perguntas relevantes e contextualizadas.</li></ul> | <ul><li>Não permite a criação de provas ou formulários para avaliação individual</li><li>Não foca em ensino assíncrono ou aprendizado autodidata, exigindo interação síncrona entre usuários.</li><li>Não gera relatórios detalhados de desempenho para acompanhamento de longo prazo.</li></ul> |
 
 ## 2.3 Personas
@@ -199,17 +200,13 @@ _Esta seção descreve os requisitos comtemplados nesta descrição arquitetural
 
 ## 3.2. Requisitos Não-Funcionais
 
-_Enumere os requisitos não-funcionais previstos para a sua aplicação. Entre os requisitos não funcionais, inclua todos os requisitos que julgar importante do ponto de vista arquitetural ou seja os requisitos que terão impacto na definição da arquitetura. Os requisitos devem ser descritos de forma completa e preferencialmente quantitativa._
-
-| **ID** | **Descrição** |
-| ------ | ------------- |
-| RNF001 |               |
-| RNF002 |               |
-|        |               |
-|        |               |
-|        |               |
-
-Obs: acrescente mais linhas, se necessário.
+| **ID** | **Descrição**                                                                                                                      |
+| ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| RNF001 | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                             |
+| RNF002 | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                                   |
+| RNF003 | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop.    |
+| RNF004 | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                           |
+| RNF005 | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                       |
 
 ## 3.3. Restrições Arquiteturais
 
