@@ -110,7 +110,7 @@ Os objetivos específicos são:
 
 # 2. Nosso Produto
 
-_Estão seçaõ explora um pouco mais o produto a ser desenvolvido_
+Está seção explora um pouco mais sobre o produto a ser desenvolvido.
 
 ## 2.1 Visão do Produto
 
@@ -135,14 +135,14 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
     <td style="vertical-align: top; padding-left: 10px;">
       <strong>Nome:</strong> Lucas Almeida <br>
       <strong>Idade:</strong> 42 anos <br>
-      <strong>Hobby:</strong> Jogar xadrez e assistir documentários sobre ciência <br>
-      <strong>Trabalho:</strong> Professor de Engenharia de Software na Puc Minas <br>
-      <strong>Personalidade:</strong>  Analítico e um pouco tímido. Tem grande domínio técnico, mas encontra dificuldades para tornar suas aulas mais dinâmicas e envolventes. <br>
-      <strong>Sonho:</strong> Ajudar seus alunos a realmente se interessarem pelo conteúdo e aprenderem de forma significativa <br>
+      <strong>Hobby:</strong> Jogar xadrez e assistir documentários sobre ciência.<br>
+      <strong>Trabalho:</strong> Professor de Engenharia de Software na PUC Minas.<br>
+      <strong>Personalidade:</strong>  Analítico e um pouco tímido. Tem grande domínio técnico, mas encontra dificuldades para tornar suas aulas mais dinâmicas e envolventes.<br>
+      <strong>Sonho:</strong> Ajudar seus alunos a realmente se interessarem pelo conteúdo e aprenderem de forma significativa. <br>
       <strong>Dores:</strong>
 	  	<ul>
-	  		<li>Dificuldade em manter os alunos concentrados e engajados nas aulas</li>
-	  		<li>Tempo limitado para preparar materiais interativos</li>
+	  		<li>Dificuldade em manter os alunos concentrados e engajados nas aulas.</li>
+	  		<li>Tempo limitado para preparar materiais interativos.</li>
 		</ul> <br>
     </td>
   </tr>
@@ -157,15 +157,15 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
     <td style="vertical-align: top; padding-left: 10px;">
       <strong>Nome:</strong> Matheus Castro <br>
       <strong>Idade:</strong> 21 anos <br>
-      <strong>Hobby:</strong> Jogar RPG de mesa e desenvolver projetos pessoais de software <br>
-      <strong>Trabalho:</strong> Estagiário em uma empresa de desenvolvimento de software <br>
-      <strong>Personalidade:</strong> Curioso, autodidata e motivado por desafios. Gosta de aprender na prática e se sente mais engajado em atividades interativas. <br>
-      <strong>Sonho:</strong> Se tornar um desenvolvedor sênior em uma grande empresa de tecnologia e contribuir para projetos inovadores. <br>
+      <strong>Hobby:</strong> Jogar RPG de mesa e desenvolver projetos pessoais de software.<br>
+      <strong>Trabalho:</strong> Estagiário em uma empresa de desenvolvimento de software.<br>
+      <strong>Personalidade:</strong> Curioso, autodidata e motivado por desafios. Gosta de aprender na prática e se sente mais engajado em atividades interativas.<br>
+      <strong>Sonho:</strong> Se tornar um desenvolvedor sênior em uma grande empresa de tecnologia e contribuir para projetos inovadores.<br>
 	<strong>Dores:</strong>
 	  	<ul>
-	  		<li>Acha difícil manter o foco em aulas expositivas sem interações práticas</li>
-	  		<li>Prefere aprender resolvendo problemas e desafios, mas sente que nem sempre o ensino acompanha esse formato</li>
-			<li>Gostaria de testar seus conhecimentos de forma dinâmica e divertida, em vez de apenas provas teóricas</li>
+	  		<li>Acha difícil manter o foco em aulas expositivas sem interações práticas.</li>
+	  		<li>Prefere aprender resolvendo problemas e desafios, mas sente que nem sempre o ensino acompanha esse formato.</li>
+			<li>Gostaria de testar seus conhecimentos de forma dinâmica e divertida, em vez de apenas provas teóricas.</li>
 		</ul> <br>
     </td>
   </tr>
@@ -200,13 +200,13 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 
 ## 3.2. Requisitos Não-Funcionais
 
-| **ID** | **Descrição**                                                                                                                      |
-| ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| RNF1 | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                             |
-| RNF2 | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                                   |
-| RNF3 | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop.    |
-| RNF4 | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                           |
-| RNF5 | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                       |
+| **ID** | **Descrição**                                                                                                               |
+| ------ | --------------------------------------------------------------------------------------------------------------------------- |
+| RNF1   | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                      |
+| RNF2   | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                            |
+| RNF3   | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop. |
+| RNF4   | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                    |
+| RNF5   | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                |
 
 ## 3.3. Restrições Arquiteturais
 
