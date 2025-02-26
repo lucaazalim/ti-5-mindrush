@@ -175,7 +175,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
 
 # 3. Requisitos
 
-_Esta seção descreve os requisitos comtemplados nesta descrição arquitetural, divididos em dois grupos: funcionais e não funcionais._
+Esta seção descreve os requisitos comtemplados nesta descrição arquitetural, divididos em dois grupos: funcionais e não funcionais.
 
 ## 3.1. Requisitos Funcionais
 
@@ -202,11 +202,11 @@ _Esta seção descreve os requisitos comtemplados nesta descrição arquitetural
 
 | **ID** | **Descrição**                                                                                                                      |
 | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| RNF001 | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                             |
-| RNF002 | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                                   |
-| RNF003 | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop.    |
-| RNF004 | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                           |
-| RNF005 | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                       |
+| RNF1 | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                             |
+| RNF2 | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                                   |
+| RNF3 | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop.    |
+| RNF4 | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                           |
+| RNF5 | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                       |
 
 ## 3.3. Restrições Arquiteturais
 
