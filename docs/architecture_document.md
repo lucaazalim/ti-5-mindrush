@@ -156,7 +156,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
       <strong>Nome:</strong> Carolina Mendes <br>
       <strong>Idade:</strong> 32 anos <br>
       <strong>Hobby:</strong> Gravar vídeos para seu canal educacional no YouTube e praticar yoga <br>
-      <strong>Trabalho:</strong> Professor de Engenharia de Software na Puc Minas <br>
+      <strong>Trabalho:</strong> Professora de Ciências da Computação na modalidade EAD <br>
       <strong>Personalidade:</strong>  Comunicativa, adaptável e inovadora. Sempre busca novas formas de engajar seus alunos no ambiente digital, usando metodologias ativas e ferramentas interativas. <br>
       <strong>Sonho:</strong> Criar uma experiência de ensino online tão dinâmica e envolvente quanto as aulas presenciais, aumentando a taxa de aprendizado e participação dos alunos.<br>
       <strong>Dores:</strong>
@@ -179,7 +179,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
       <strong>Nome:</strong> André Castro <br>
       <strong>Idade:</strong> 21 anos <br>
       <strong>Hobby:</strong> Jogar videogames e sair com os amigos <br>
-      <strong>Trabalho:</strong> Ainda não trabalha, apenas estuda na PUC Minas.<br>
+      <strong>Trabalho:</strong> Estudante de Sistemas de Informação na PUC Minas.<br>
       <strong>Personalidade:</strong> Desligado, procrastinador e desmotivado com o curso. Ele se interessa por tecnologia, mas sente dificuldades em se concentrar nas disciplinas mais teóricas..<br>
       <strong>Sonho:</strong> Concluir a faculdade e conseguir um emprego, mas ainda não sabe em qual área deseja atuar. <br>
 	<strong>Dores:</strong>
@@ -200,7 +200,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
       <strong>Nome:</strong> Mariana Santos<br>
       <strong>Idade:</strong> 25 anos <br>
       <strong>Hobby:</strong> Participar de hackathons e consumir conteúdos sobre tecnologia <br>
-      <strong>Trabalho:</strong> Desenvolvedora júnior em uma startup de software <br>
+      <strong>Trabalho:</strong> Estudante de Engenharia de Software e desenvolvedora júnior em uma startup de software <br>
       <strong>Personalidade:</strong> Focada, determinada e autodidata. Gosta de desafios e sempre busca aprender além do que é ensinado em sala de aula. <br>
       <strong>Sonho:</strong> Se tornar uma engenheira de software sênior e trabalhar em projetos inovadores no exterior.<br>
 	<strong>Dores:</strong>
