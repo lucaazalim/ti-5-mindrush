@@ -91,13 +91,12 @@ O modelo tradicional de ensino apresenta limitações na forma como o aprendizad
 
 ## 1.2. Objetivos do trabalho
 
-Facilitar e dinamizar o processo de ensino-aprendizagem por meio de quizzes interativos baseados em gamificação.
+Desenvolver uma plataforma de quizzes interativos que permita a criação e aplicação de perguntas personalizadas em tempo real por educadores.
 
 Os objetivos específicos são:
 
-- Desenvolver uma plataforma de quizzes interativos que permita a criação e aplicação de perguntas personalizadas em tempo real por professores.
 - Implementar um sistema de participação síncrona para estudantes, garantindo a interação em tempo real e a exibição dinâmica das respostas.
-- Criar um mecanismo de feedback imediato, possibilitando que alunos e professores acompanhem o desempenho individual e coletivo.
+- Criar um mecanismo de feedback imediato, possibilitando que alunos e educadores acompanhem o desempenho individual e coletivo.
 - Desenvolver um sistema de geração automática de quizzes com base em temas, utilizando inteligência artificial para facilitar a criação de conteúdo educacional.
 - Implementar um sistema de rankings dinâmicos, permitindo que os participantes visualizem sua posição em tempo real e incentivando a competitividade saudável no aprendizado
 
