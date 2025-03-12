@@ -351,11 +351,11 @@ A seguir, são apresentadas as histórias de usuário para o **MindRush**, estru
 
 ## 4.2. Visão Lógica
 
-_Apresente os artefatos que serão utilizados descrevendo em linhas gerais as motivações que levaram a equipe a utilizar estes diagramas._
+Esta seção apresenta os artefatos que foram utilizados para projetar o sistema.
 
 ### Diagrama de Classes
 
-O diagrama de classes de domínio abaixo ilustra as principais entidades do sistema, incluindo seus atributos e métodos. A implementação, contudo, não utiliza classes.
+O **diagrama de classes** foi utilizado para modelar a estrutura estática do sistema, representando as entidades principais, seus atributos e relacionamentos. Ele permite visualizar como os **educadores, quizzes, partidas e respostas** interagem, garantindo um design coerente e alinhado aos requisitos funcionais e não funcionais. Além disso, a herança aplicada às questões (múltipla escolha e verdadeiro/falso) favorece a extensibilidade e a reutilização de código.
 
 ![Diagrama de classes](assets/diagrama-de-classes.png "Diagrama de classes")
 
@@ -363,18 +363,43 @@ O diagrama de classes de domínio abaixo ilustra as principais entidades do sist
 
 ### Diagrama de componentes
 
-_Apresente o diagrama de componentes da aplicação, indicando, os elementos da arquitetura e as interfaces entre eles. Liste os estilos/padrões arquiteturais utilizados e faça uma descrição sucinta dos componentes indicando o papel de cada um deles dentro da arquitetura/estilo/padrão arquitetural. Indique também quais componentes serão reutilizados (navegadores, SGBDs, middlewares, etc), quais componentes serão adquiridos por serem proprietários e quais componentes precisam ser desenvolvidos._
+O **diagrama de componentes** foi empregado para representar a arquitetura do sistema, destacando **módulos, interfaces e suas interações**. Ele evidencia a separação entre **Front-end (Web e Mobile), Back-end (API), Banco de Dados e Mensageria**, garantindo uma visão clara da comunicação entre os serviços. Esse modelo modular facilita a escalabilidade, manutenção e implementação de novas funcionalidades.
 
-![Diagrama de componentes](assets/componentes.png "Diagrama de componentes")
+![Diagrama de componentes](assets/diagrama-de-componentes.png "Diagrama de componentes")
 
 **Figura 3 – Diagrama de Componentes (exemplo). Fonte: o próprio autor.**
 
-_Apresente uma descrição detalhada dos artefatos que constituem o diagrama de implantação._
+#### Estilos/Padrões Arquiteturais Utilizados
 
-Ex: conforme diagrama apresentado na Figura X, as entidades participantes da solução são:
+1. **Arquitetura Cliente-Servidor**: O **Front-end Web (Next.js)** e o **Aplicativo Flutter** se comunicam com o **Back-end (Next.js API)** via **REST API**.
+2. **Arquitetura em Camadas**: Separação entre **interface do usuário, lógica de negócio e persistência**.
+3. **RESTful API**: O Back-end expõe **serviços HTTP** para os clientes consumirem.
+4. **Event-Driven Architecture (EDA)**: **RabbitMQ** gerencia eventos de **partidas e atualizações em tempo real**.
+5. **Microservices-like Modularity**: Serviços modulares para **Autenticação, Quiz e Partidas**.
+6. **Mobile-First & Cross-Platform**: **Flutter** garante compatibilidade para Android e iOS.
 
-- **Componente 1** - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nunc magna, accumsan eget porta a, tincidunt sed mauris. Suspendisse orci nulla, sagittis a lorem laoreet, tincidunt imperdiet ipsum. Morbi malesuada pretium suscipit.
-- **Componente 2** - Praesent nec nisi hendrerit, ullamcorper tortor non, rutrum sem. In non lectus tortor. Nulla vel tincidunt eros.
+---
+
+#### **Descrição Sucinta dos Componentes**
+
+| **Componente**                  | **Papel dentro da Arquitetura**                              |
+| ------------------------------- | ------------------------------------------------------------ |
+| **Next.js (Front-end Web)**     | Interface para educadores criarem e gerenciarem quizzes.     |
+| **Flutter (Aplicativo Móvel)**  | Interface para estudantes participarem dos quizzes.          |
+| **Next.js (Back-end API)**      | Servidor que gerencia autenticação, quizzes e partidas.      |
+| **PostgreSQL (Banco de Dados)** | Armazena quizzes, partidas e respostas dos estudantes.       |
+| **RabbitMQ (Mensageria)**       | Gerencia atualizações em tempo real dos quizzes e rankings.  |
+| **API de IA Generativa**        | Gera automaticamente quizzes a partir de temas e documentos. |
+
+---
+
+#### **Classificação dos Componentes**
+
+| **Tipo**          | **Componentes**                                                                 |
+| ----------------- | ------------------------------------------------------------------------------- |
+| **Reutilizados**  | Navegadores (Chrome, Firefox), PostgreSQL, RabbitMQ.                            |
+| **Adquiridos**    | API de IA Generativa (serviço externo, possivelmente pago).                     |
+| **Desenvolvidos** | Next.js (Front-end e Back-end), Aplicativo Flutter, Serviços de Quiz e Partida. |
 
 ## 4.3. Modelo de dados (opcional)
 

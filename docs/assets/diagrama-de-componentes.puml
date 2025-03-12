@@ -1,0 +1,38 @@
+@startuml
+title Diagrama de Componentes - MindRush
+
+' Definição dos pacotes principais
+package "Front-end (Next.js)" {
+    [Next.js (React SPA)] as Frontend
+}
+
+package "Back-end (Next.js API)" {
+    [API REST] as API
+    [Serviço de Autenticação] as AuthService
+    [Serviço de Partida] as PartidaService
+    [Serviço de Quiz] as QuizService
+}
+
+package "Banco de Dados (PostgreSQL)" {
+    [PostgreSQL] as Database
+}
+
+package "Mensageria (RabbitMQ)" {
+    [Fila de Eventos] as RabbitMQ
+}
+
+package "Sistema Externo (IA Generativa)" {
+    [API de IA] as IAAPI
+}
+
+' Definição das conexões e interfaces
+Frontend --> API : HTTPS (REST API)
+API --> AuthService : Gerenciamento de autenticação (JWT)
+API --> QuizService : CRUD de Quizzes
+API --> PartidaService : Gerenciamento de partidas
+API --> Database : PostgreSQL (via ORM)
+API --> RabbitMQ : Publicação de eventos (ex. início/fim de partida)
+PartidaService --> RabbitMQ : Consumo de eventos (atualização em tempo real)
+QuizService --> IAAPI : Geração de perguntas via IA
+
+@enduml
