@@ -287,13 +287,19 @@ Os mecanismos arquiteturais do MindRush foram definidos para garantir desempenho
 
 # 4. Modelagem e Projeto Arquitetural
 
-_Apresente uma visão geral da solução proposta para o projeto e explique brevemente esse diagrama de visão geral, de forma textual. Esse diagrama não precisa seguir os padrões da UML, e deve ser completo e tão simples quanto possível, apresentando a macroarquitetura da solução._
+A Figura 1 apresenta uma visão geral da solução proposta, ilustrando a macroarquitetura do projeto.
 
-![Visão Geral da Solução](assets/visao.png "Visão Geral da Solução")
+![Visão Geral da Solução](assets/diagrama-de-visao-geral.png "Visão Geral da Solução")
 
-**Figura 1 - Visão Geral da Solução (fonte: https://medium.com)**
+**Figura 1 - Visão geral da solução. Fonte: o próprio autor.**
 
-Obs: substitua esta imagem por outra, adequada ao seu projeto (cada arquitetura é única).
+Breve descrição do diagrama:
+
+- **Usuários**: O educador cria e gerencia quizzes, enquanto o estudante participa das partidas.
+- **Front-end**: Interface web (Next.js) para educadores e aplicativo móvel (Flutter) para estudantes.
+- **Back-end**: Next.js API centraliza a lógica, com serviços modulares para autenticação, quizzes e partidas.
+- **Infraestrutura**: PostgreSQL armazena dados, RabbitMQ gerencia mensagens e API de IA Generativa gera quizzes automaticamente.
+- **Fluxo**: O Front-end consome a API, que interage com o banco de dados, mensageria e IA para entregar uma experiência dinâmica e escalável.
 
 ## 4.1. Visão de Negócio (Funcionalidades)
 
