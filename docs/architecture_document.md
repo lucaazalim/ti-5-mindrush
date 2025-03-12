@@ -271,6 +271,8 @@ As restrições arquiteturais do projeto são as seguintes:
 
 ## 3.4. Mecanismos Arquiteturais
 
+Os mecanismos arquiteturais do MindRush foram definidos para garantir desempenho, escalabilidade e segurança. A tabela abaixo resume as principais escolhas tecnológicas:
+
 | **Análise**       | **Design**                            | **Implementação** |
 | ----------------- | ------------------------------------- | ----------------- |
 | Persistência      | Banco de Dados Relacional             | PostgreSQL        |
