@@ -95,10 +95,9 @@ Desenvolver uma plataforma de quizzes interativos que permita a criação e apli
 
 Os objetivos específicos são:
 
-- Implementar um sistema de participação síncrona para estudantes, garantindo a interação em tempo real e a exibição dinâmica das respostas.
 - Criar um mecanismo de feedback imediato, possibilitando que alunos e educadores acompanhem o desempenho individual e coletivo.
 - Desenvolver um sistema de geração automática de quizzes com base em temas, utilizando inteligência artificial para facilitar a criação de conteúdo educacional.
-- Implementar um sistema de rankings dinâmicos, permitindo que os participantes visualizem sua posição em tempo real e incentivando a competitividade saudável no aprendizado
+- Desenvolver um sistema de rankings dinâmicos, permitindo que os participantes visualizem sua posição em tempo real e incentivando a competitividade saudável no aprendizado
 
 ## 1.3. Definições e Abreviaturas
 
