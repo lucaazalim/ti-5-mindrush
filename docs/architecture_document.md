@@ -74,11 +74,11 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 
 # 1. Apresentação
 
-Nota-se que o ensino tradicional enfrenta desafios no engajamento dos estudantes e na avaliação eficaz do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, não garantem uma participação ativa e muitas vezes dificultam a identificação de dificuldades em tempo real.
+O ensino tradicional enfrenta desafios no engajamento dos estudantes e na avaliação do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, nem sempre incentivam a participação ativa, tornando difícil identificar dificuldades em tempo real.
 
-Estudos apontam que o uso de gamificação no ensino, como no **Kahoot!**, melhora o desempenho dos alunos e a dinâmica em sala de aula, no entanto, ainda há desafios, como problemas técnicos, estresse com o tempo e dificuldades na adaptação dos estudantes (Wang e Tahir, 2020).
+Plataformas de gamificação, como o Kahoot!, ajudam a melhorar o desempenho dos alunos e a tornar as aulas mais dinâmicas (Wang e Tahir, 2020). No entanto, ainda há limitações, como problemas técnicos, pressão do tempo e dificuldades de adaptação.
 
-Dessa forma, uma plataforma que combine aprendizado gamificado, interatividade em tempo real e feedback imediato pode ser uma solução eficaz para esse problema. O MindRush propõe uma abordagem que permite que educadores criem quizzes personalizados, enquanto os estudantes participam de maneira síncrona, tornando o processo de aprendizado mais dinâmico e envolvente.
+Nesse contexto, o MindRush propõe uma plataforma de quizzes interativos que permite aos educadores criar e aplicar perguntas personalizadas em tempo real, possibilitando a participação síncrona dos estudantes e fornecendo feedback imediato. Além das funcionalidades tradicionais, a ferramenta também inclui rankings dinâmicos, geração automática de quizzes por inteligência artificial e recursos de aprendizado adaptativo, proporcionando uma experiência mais imersiva para professores e alunos.
 
 ## 1.1. Problema
 
@@ -95,8 +95,11 @@ Facilitar e dinamizar o processo de ensino-aprendizagem por meio de quizzes inte
 
 Os objetivos específicos são:
 
-- Permitir que educadores criem e apliquem quizzes personalizados em tempo real.
-- Permitir que estudantes participem de quizzes síncronos e recebam feedback imediato dos resultados obtidos.
+- Desenvolver uma plataforma de quizzes interativos que permita a criação e aplicação de perguntas personalizadas em tempo real por professores.
+- Implementar um sistema de participação síncrona para estudantes, garantindo a interação em tempo real e a exibição dinâmica das respostas.
+- Criar um mecanismo de feedback imediato, possibilitando que alunos e professores acompanhem o desempenho individual e coletivo.
+- Desenvolver um sistema de geração automática de quizzes com base em temas, utilizando inteligência artificial para facilitar a criação de conteúdo educacional.
+- Implementar um sistema de rankings dinâmicos, permitindo que os participantes visualizem sua posição em tempo real e incentivando a competitividade saudável no aprendizado
 
 ## 1.3. Definições e Abreviaturas
 
