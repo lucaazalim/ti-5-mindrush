@@ -367,7 +367,7 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 
 ![Diagrama de componentes](assets/diagrama-de-componentes.png "Diagrama de componentes")
 
-**Figura 3 – Diagrama de Componentes (exemplo). Fonte: o próprio autor.**
+**Figura 3 – Diagrama de componentes. Fonte: o próprio autor.**
 
 #### Estilos/Padrões Arquiteturais Utilizados
 
@@ -380,7 +380,7 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 
 ---
 
-#### **Descrição Sucinta dos Componentes**
+#### Descrição Sucinta dos Componentes
 
 | **Componente**                  | **Papel dentro da Arquitetura**                              |
 | ------------------------------- | ------------------------------------------------------------ |
@@ -393,11 +393,11 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 
 ---
 
-#### **Classificação dos Componentes**
+#### Classificação dos Componentes
 
 | **Tipo**          | **Componentes**                                                                 |
 | ----------------- | ------------------------------------------------------------------------------- |
-| **Reutilizados**  | Navegadores (Chrome, Firefox), PostgreSQL, RabbitMQ.                            |
+| **Reutilizados**  | Navegadores, PostgreSQL, RabbitMQ.                                              |
 | **Adquiridos**    | API de IA Generativa (serviço externo, possivelmente pago).                     |
 | **Desenvolvidos** | Next.js (Front-end e Back-end), Aplicativo Flutter, Serviços de Quiz e Partida. |
 
