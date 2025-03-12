@@ -110,7 +110,7 @@ Os objetivos específicos são:
 
 # 2. Nosso Produto
 
-_Estão seçaõ explora um pouco mais o produto a ser desenvolvido_
+Está seção explora um pouco mais sobre o produto a ser desenvolvido.
 
 ## 2.1 Visão do Produto
 
@@ -126,46 +126,88 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
 
 ## 2.3 Personas
 
-<h2>Educador</h2>
+<h2>Educadores</h2>
 <table>
   <tr>
     <td style="vertical-align: top; width: 150px;">
-      <img src="imagens/persona-1.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+      <img src="imagens/persona-lucas-almeida.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
     </td>
     <td style="vertical-align: top; padding-left: 10px;">
       <strong>Nome:</strong> Lucas Almeida <br>
-      <strong>Idade:</strong> 42 anos <br>
-      <strong>Hobby:</strong> Jogar xadrez e assistir documentários sobre ciência <br>
-      <strong>Trabalho:</strong> Professor de Engenharia de Software na Puc Minas <br>
-      <strong>Personalidade:</strong>  Analítico e um pouco tímido. Tem grande domínio técnico, mas encontra dificuldades para tornar suas aulas mais dinâmicas e envolventes. <br>
-      <strong>Sonho:</strong> Ajudar seus alunos a realmente se interessarem pelo conteúdo e aprenderem de forma significativa <br>
+      <strong>Idade:</strong> 43 anos <br>
+      <strong>Hobby:</strong> Jogar xadrez e assistir documentários sobre ciência.<br>
+      <strong>Trabalho:</strong> Professor de Engenharia de Software na PUC Minas.<br>
+      <strong>Personalidade:</strong>  Analítico e um pouco tímido. Tem grande domínio técnico, mas encontra dificuldades para tornar suas aulas mais dinâmicas e envolventes.<br>
+      <strong>Sonho:</strong> Ajudar seus alunos a realmente se interessarem pelo conteúdo e aprenderem de forma significativa. <br>
       <strong>Dores:</strong>
 	  	<ul>
-	  		<li>Dificuldade em manter os alunos concentrados e engajados nas aulas</li>
-	  		<li>Tempo limitado para preparar materiais interativos</li>
+	  		<li>Dificuldade em manter os alunos concentrados e engajados nas aulas.</li>
+	  		<li>Tempo limitado para preparar materiais interativos.</li>
+		</ul> <br>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td style="vertical-align: top; width: 150px;">
+      <img src="imagens/persona-carolina-mendes.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+    </td>
+    <td style="vertical-align: top; padding-left: 10px;">
+      <strong>Nome:</strong> Carolina Mendes <br>
+      <strong>Idade:</strong> 32 anos <br>
+      <strong>Hobby:</strong> Gravar vídeos para seu canal educacional no YouTube e praticar yoga <br>
+      <strong>Trabalho:</strong> Professora de Ciências da Computação na modalidade EAD <br>
+      <strong>Personalidade:</strong>  Comunicativa, adaptável e inovadora. Sempre busca novas formas de engajar seus alunos no ambiente digital, usando metodologias ativas e ferramentas interativas. <br>
+      <strong>Sonho:</strong> Criar uma experiência de ensino online tão dinâmica e envolvente quanto as aulas presenciais, aumentando a taxa de aprendizado e participação dos alunos.<br>
+      <strong>Dores:</strong>
+	  	<ul>
+	  		<li>Percebe que muitos alunos assistem às aulas de forma passiva e sem engajamento real</li>
+	  		<li>Tem dificuldades em avaliar a compreensão dos alunos de maneira eficaz no ambiente online</li>
+        <li>Busca ferramentas que possibilitem interatividade e engajamento sem comprometer a organização do conteúdo</li>
 		</ul> <br>
     </td>
   </tr>
 </table>
 
-<h2>Estudante</h2>
+<h2>Estudantes</h2>
 <table>
   <tr>
     <td style="vertical-align: top; width: 150px;">
-      <img src="imagens/persona-2.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+      <img src="imagens/persona-andre-castro.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
     </td>
     <td style="vertical-align: top; padding-left: 10px;">
-      <strong>Nome:</strong> Matheus Castro <br>
+      <strong>Nome:</strong> André Castro <br>
       <strong>Idade:</strong> 21 anos <br>
-      <strong>Hobby:</strong> Jogar RPG de mesa e desenvolver projetos pessoais de software <br>
-      <strong>Trabalho:</strong> Estagiário em uma empresa de desenvolvimento de software <br>
-      <strong>Personalidade:</strong> Curioso, autodidata e motivado por desafios. Gosta de aprender na prática e se sente mais engajado em atividades interativas. <br>
-      <strong>Sonho:</strong> Se tornar um desenvolvedor sênior em uma grande empresa de tecnologia e contribuir para projetos inovadores. <br>
+      <strong>Hobby:</strong> Jogar videogames e sair com os amigos <br>
+      <strong>Trabalho:</strong> Estudante de Sistemas de Informação na PUC Minas.<br>
+      <strong>Personalidade:</strong> Desligado, procrastinador e desmotivado com o curso. Ele se interessa por tecnologia, mas sente dificuldades em se concentrar nas disciplinas mais teóricas..<br>
+      <strong>Sonho:</strong> Concluir a faculdade e conseguir um emprego, mas ainda não sabe em qual área deseja atuar. <br>
 	<strong>Dores:</strong>
 	  	<ul>
-	  		<li>Acha difícil manter o foco em aulas expositivas sem interações práticas</li>
-	  		<li>Prefere aprender resolvendo problemas e desafios, mas sente que nem sempre o ensino acompanha esse formato</li>
-			<li>Gostaria de testar seus conhecimentos de forma dinâmica e divertida, em vez de apenas provas teóricas</li>
+	  		<li>Acha difícil manter o foco em aulas expositivas e frequentemente perde o interesse</li>
+	  		<li>Tem dificuldades em acompanhar o conteúdo, especialmente em disciplinas que exigem mais lógica e raciocínio</li>
+			<li>Precisa de estímulos externos para estudar e revisar o conteúdo antes das provas</li>
+		</ul> <br>
+    </td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td style="vertical-align: top; width: 150px;">
+      <img src="imagens/persona-mariana-santos.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+    </td>
+    <td style="vertical-align: top; padding-left: 10px;">
+      <strong>Nome:</strong> Mariana Santos<br>
+      <strong>Idade:</strong> 25 anos <br>
+      <strong>Hobby:</strong> Participar de hackathons e consumir conteúdos sobre tecnologia <br>
+      <strong>Trabalho:</strong> Estudante de Engenharia de Software e desenvolvedora júnior em uma startup de software <br>
+      <strong>Personalidade:</strong> Focada, determinada e autodidata. Gosta de desafios e sempre busca aprender além do que é ensinado em sala de aula. <br>
+      <strong>Sonho:</strong> Se tornar uma engenheira de software sênior e trabalhar em projetos inovadores no exterior.<br>
+	<strong>Dores:</strong>
+	  	<ul>
+	  		<li>Sente que o ensino tradicional muitas vezes não acompanha a velocidade do mercado de tecnologia.</li>
+	  		<li>Acha que algumas metodologias acadêmicas são ultrapassadas e pouco envolventes.</li>
+			  <li>Busca formas de testar e aprimorar seus conhecimentos de maneira mais interativa e aplicada.</li>
 		</ul> <br>
     </td>
   </tr>
@@ -175,7 +217,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
 
 # 3. Requisitos
 
-_Esta seção descreve os requisitos comtemplados nesta descrição arquitetural, divididos em dois grupos: funcionais e não funcionais._
+Esta seção descreve os requisitos comtemplados nesta descrição arquitetural, divididos em dois grupos: funcionais e não funcionais.
 
 ## 3.1. Requisitos Funcionais
 
@@ -200,13 +242,13 @@ _Esta seção descreve os requisitos comtemplados nesta descrição arquitetural
 
 ## 3.2. Requisitos Não-Funcionais
 
-| **ID** | **Descrição**                                                                                                                      |
-| ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| RNF001 | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                             |
-| RNF002 | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                                   |
-| RNF003 | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop.    |
-| RNF004 | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                           |
-| RNF005 | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                       |
+| **ID** | **Descrição**                                                                                                               |
+| ------ | --------------------------------------------------------------------------------------------------------------------------- |
+| RNF1   | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                      |
+| RNF2   | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                            |
+| RNF3   | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop. |
+| RNF4   | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                    |
+| RNF5   | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                |
 
 ## 3.3. Restrições Arquiteturais
 
