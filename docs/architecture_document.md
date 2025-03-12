@@ -242,13 +242,19 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 
 ## 3.2. Requisitos Não-Funcionais
 
-| **ID** | **Descrição**                                                                                                               |
-| ------ | --------------------------------------------------------------------------------------------------------------------------- |
-| RNF1   | O tempo de resposta para o envio e recebimento das respostas dos estudantes deve ser inferior a 200ms.                      |
-| RNF2   | O sistema deve estar disponível 99,5% do tempo, garantindo alta disponibilidade.                                            |
-| RNF3   | A interface para dispositivos móveis e web, adaptação para telas de até 5 polegadas mobile e acima de 15 polegadas desktop. |
-| RNF4   | As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes.                    |
-| RNF5   | O sistema deve ser escalável horizontalmente para suportar aumento de usuários sem degradação de desempenho.                |
+| **ID** | **Descrição**                                                                                                                                                                                                                                                                                                      |
+| ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| RNF1   | O sistema deve ser compatível com os navegadores web Google Chrome, Mozilla Firefox, Microsoft Edge e Safari, em suas versões mais recentes.                                                                                                                                                                       |
+| RNF2   | A interface do front-end web deve ser compatível e oferecer responsividade para telas entre 1280 e 1920 pixels de largura.                                                                                                                                                                                         |
+| RNF3   | A interface do front-end web deve estar disponível nos modos claro, escuro e sistema.                                                                                                                                                                                                                              |
+| RNF4   | O desenvolvimento do back-end deve adotar o padrão REST para estruturação da API, atendendo ao nível 2 do modelo de maturidade de Richardson.                                                                                                                                                                      |
+| RNF5   | A autenticação deve seguir o protocolo JWT, garantindo que 100% das requisições protegidas exijam um token válido.                                                                                                                                                                                                 |
+| RNF6   | O segredo (secret key) utilizado para assinar os tokens JWT deve ter, no mínimo, 128 bits de entropia (16 bytes).                                                                                                                                                                                                  |
+| RNF7   | Informações sensíveis, como senhas, devem ser armazenadas utilizando hashing seguro, como bcrypt ou Argon2.                                                                                                                                                                                                        |
+| RNF8   | O cadastro de educadores deve exigir uma senha de, no mínimo, 8 caracteres, incluindo, pelo menos, uma letra maiúscula, uma letra minúscula, um número e um símbolo.                                                                                                                                               |
+| RNF9   | As respostas dos estudantes aos quizzes devem ser vinculadas exclusivamente ao nome de usuário escolhido por eles ao início de cada partida, impedindo a identificação direta dos participantes por meio de informações pessoais, garantindo o anonimato e a privacidade dos jogadores durante e após a atividade. |
+| RNF10  | O sistema deve suportar até 60 estudantes participando de um quiz ao mesmo tempo, sem aumento significativo de tempo de resposta.                                                                                                                                                                                  |
+| RNF11  | O tempo de processamento das requisições realizadas à API deve ser inferior a 200ms, considerando apenas o tempo de execução no servidor e desconsiderando a latência da rede.                                                                                                                                     |
 
 ## 3.3. Restrições Arquiteturais
 
