@@ -1,0 +1,66 @@
+@startuml
+class Educador {
+  +id: UUID
+  +nome: String
+  +email: String
+  +senha: String
+  +criarQuiz()
+  +editarQuiz()
+  +excluirQuiz()
+  +iniciarPartida()
+  +pausarPartida()
+  +encerrarPartida()
+}
+
+class Quiz {
+  +id: UUID
+  +titulo: String
+  +descricao: String
+  +gerarQuizIA()
+}
+
+abstract class Questao {
+  +id: UUID
+  +enunciado: String
+}
+
+class QuestaoMultiplaEscolha {
+  +opcoes: List<String>
+  +respostaCorreta: String
+}
+
+class QuestaoVerdadeiroFalso {
+  +respostaCorreta: Boolean
+}
+
+class Partida {
+  +id: UUID
+  +codigoAcesso: String
+  +status: String
+  +registrarParticipacao()
+}
+
+class Resposta {
+  +id: UUID
+  +nomeEstudante: String
+  +respostaEscolhida: String
+  +correta: Boolean
+}
+
+class Ranking {
+  +posicao: Integer
+  +nomeEstudante: String
+  +pontuacao: Integer
+}
+
+Educador "1" -- "N" Quiz
+Quiz "1" -- "N" Questao
+Educador "1" -- "N" Partida
+Partida "1" -- "N" Resposta
+Resposta "N" -- "1" Questao
+Partida "1" -- "N" Ranking
+Resposta "N" -- "1" Ranking
+
+Questao <|-- QuestaoMultiplaEscolha
+Questao <|-- QuestaoVerdadeiroFalso
+@enduml

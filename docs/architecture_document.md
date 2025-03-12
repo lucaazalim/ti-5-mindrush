@@ -130,7 +130,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
 <table>
   <tr>
     <td style="vertical-align: top; width: 150px;">
-      <img src="imagens/persona-lucas-almeida.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+      <img src="assets/persona-lucas-almeida.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
     </td>
     <td style="vertical-align: top; padding-left: 10px;">
       <strong>Nome:</strong> Lucas Almeida <br>
@@ -150,7 +150,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
 <table>
   <tr>
     <td style="vertical-align: top; width: 150px;">
-      <img src="imagens/persona-carolina-mendes.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+      <img src="assets/persona-carolina-mendes.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
     </td>
     <td style="vertical-align: top; padding-left: 10px;">
       <strong>Nome:</strong> Carolina Mendes <br>
@@ -173,7 +173,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
 <table>
   <tr>
     <td style="vertical-align: top; width: 150px;">
-      <img src="imagens/persona-andre-castro.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+      <img src="assets/persona-andre-castro.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
     </td>
     <td style="vertical-align: top; padding-left: 10px;">
       <strong>Nome:</strong> André Castro <br>
@@ -194,7 +194,7 @@ Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e 
 <table>
   <tr>
     <td style="vertical-align: top; width: 150px;">
-      <img src="imagens/persona-mariana-santos.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
+      <img src="assets/persona-mariana-santos.webp" alt="Imagem da Persona"  style="width: 150px; height: auto; border-radius: 10px;">
     </td>
     <td style="vertical-align: top; padding-left: 10px;">
       <strong>Nome:</strong> Mariana Santos<br>
@@ -289,7 +289,7 @@ Os mecanismos arquiteturais do MindRush foram definidos para garantir desempenho
 
 _Apresente uma visão geral da solução proposta para o projeto e explique brevemente esse diagrama de visão geral, de forma textual. Esse diagrama não precisa seguir os padrões da UML, e deve ser completo e tão simples quanto possível, apresentando a macroarquitetura da solução._
 
-![Visão Geral da Solução](imagens/visao.png "Visão Geral da Solução")
+![Visão Geral da Solução](assets/visao.png "Visão Geral da Solução")
 
 **Figura 1 - Visão Geral da Solução (fonte: https://medium.com)**
 
@@ -297,30 +297,57 @@ Obs: substitua esta imagem por outra, adequada ao seu projeto (cada arquitetura 
 
 ## 4.1. Visão de Negócio (Funcionalidades)
 
-_Apresente uma lista simples com as funcionalidades previstas no projeto (escopo do produto)._
+1. **Cadastro e Autenticação**
 
-1. O sistema deve...
-2. O sistema deve...
-3. ...
+   - O educador pode criar uma conta no sistema.
+   - O educador pode realizar login para acessar suas funcionalidades.
 
-Obs: a quantidade e o escopo das funcionalidades deve ser negociado com os professores/orientadores do trabalho.
+2. **Gerenciamento de Quizzes**
+
+   - O educador pode criar quizzes personalizados.
+   - O educador pode editar e excluir quizzes existentes.
+   - O educador pode gerar quizzes automaticamente com IA generativa a partir de um tema.
+   - O educador pode gerar quizzes automaticamente com IA generativa a partir de um documento PDF.
+
+3. **Gerenciamento de Questões**
+
+   - O educador pode adicionar, editar e remover questões em um quiz.
+
+4. **Execução de Quizzes**
+
+   - O educador pode iniciar uma partida de quiz.
+   - O educador pode pausar e encerrar a partida a qualquer momento.
+   - O educador pode visualizar o andamento da partida e o desempenho dos estudantes.
+
+5. **Participação dos Estudantes**
+
+   - O estudante pode entrar em uma partida informando um código único.
+   - O estudante pode escanear um QR Code para acessar a partida de forma rápida.
+   - O estudante pode inserir seu nome antes de participar.
+   - O estudante pode responder perguntas em tempo real.
+
+6. **Interatividade e Feedback**
+   - O sistema exibe o ranking dos participantes ao final de cada pergunta.
+   - O sistema exibe o ranking final ao término da partida.
+   - O estudante recebe feedback imediato sobre suas respostas.
 
 ### Histórias de Usuário
 
-_Nesta seção, você deve descrever estórias de usuários seguindo os métodos ágeis. Lembre-se das características de qualidade das estórias de usuários, ou seja, o que é preciso para descrever boas histórias de usuários._
+A seguir, são apresentadas as histórias de usuário para o **MindRush**, estruturadas conforme as necessidades de educadores e estudantes.
 
-Exemplos de Histórias de Usuário:
-
-- Como Fulano eu quero poder convidar meus amigos para que a gente possa se reunir...
-
-- Como Cicrano eu quero poder organizar minhas tarefas diárias, para que...
-
-- Como gerente eu quero conseguir entender o progresso do trabalho do meu time, para que eu possa ter relatórios periódicos dos nossos acertos e falhas.
-
-| EU COMO... `PERSONA` | QUERO/PRECISO ... `FUNCIONALIDADE` | PARA ... `MOTIVO/VALOR`                |
-| -------------------- | ---------------------------------- | -------------------------------------- |
-| Usuário do sistema   | Registrar minhas tarefas           | Não esquecer de fazê-las               |
-| Administrador        | Alterar permissões                 | Permitir que possam administrar contas |
+| **EU COMO...** | **QUERO/PRECISO...**                                       | **PARA QUE...**                                        |
+| -------------- | ---------------------------------------------------------- | ------------------------------------------------------ |
+| **Educador**   | Criar quizzes personalizados                               | Avaliar o aprendizado dos estudantes de forma dinâmica |
+| **Educador**   | Gerar quizzes automaticamente com IA generativa            | Economizar tempo na criação de perguntas               |
+| **Educador**   | Iniciar, pausar e encerrar uma partida de quiz             | Controlar o ritmo da atividade em sala de aula         |
+| **Educador**   | Acompanhar o progresso dos estudantes durante o quiz       | Identificar dificuldades em tempo real                 |
+| **Educador**   | Visualizar o ranking dos participantes ao final da partida | Estimular o engajamento dos alunos                     |
+| **Educador**   | Compartilhar um código para os estudantes entrarem no quiz | Facilitar o acesso e participação na atividade         |
+| **Estudante**  | Inserir um código e entrar na partida                      | Participar do quiz de forma interativa                 |
+| **Estudante**  | Responder perguntas em tempo real                          | Testar meus conhecimentos e aprender de forma ativa    |
+| **Estudante**  | Visualizar minha posição no ranking                        | Acompanhar meu desempenho e competir de forma saudável |
+| **Estudante**  | Receber feedback imediato sobre minhas respostas           | Saber se estou acertando ou errando as questões        |
+| **Estudante**  | Escanear um QR Code para entrar rapidamente na partida     | Facilitar o acesso ao quiz sem digitar códigos         |
 
 ## 4.2. Visão Lógica
 
@@ -328,17 +355,17 @@ _Apresente os artefatos que serão utilizados descrevendo em linhas gerais as mo
 
 ### Diagrama de Classes
 
-![Diagrama de classes](imagens/classes.gif "Diagrama de classes")
+O diagrama de classes de domínio abaixo ilustra as principais entidades do sistema, incluindo seus atributos e métodos. A implementação, contudo, não utiliza classes.
 
-**Figura 2 – Diagrama de classes (exemplo). Fonte: o próprio autor.**
+![Diagrama de classes](assets/diagrama-de-classes.png "Diagrama de classes")
 
-Obs: Acrescente uma breve descrição sobre o diagrama apresentado na Figura 3.
+**Figura 2 – Diagrama de classes. Fonte: o próprio autor.**
 
 ### Diagrama de componentes
 
 _Apresente o diagrama de componentes da aplicação, indicando, os elementos da arquitetura e as interfaces entre eles. Liste os estilos/padrões arquiteturais utilizados e faça uma descrição sucinta dos componentes indicando o papel de cada um deles dentro da arquitetura/estilo/padrão arquitetural. Indique também quais componentes serão reutilizados (navegadores, SGBDs, middlewares, etc), quais componentes serão adquiridos por serem proprietários e quais componentes precisam ser desenvolvidos._
 
-![Diagrama de componentes](imagens/componentes.png "Diagrama de componentes")
+![Diagrama de componentes](assets/componentes.png "Diagrama de componentes")
 
 **Figura 3 – Diagrama de Componentes (exemplo). Fonte: o próprio autor.**
 
@@ -353,7 +380,7 @@ Ex: conforme diagrama apresentado na Figura X, as entidades participantes da sol
 
 _Caso julgue necessário para explicar a arquitetura, apresente o diagrama de classes ou diagrama de Entidade/Relacionamentos ou tabelas do banco de dados. Este modelo pode ser essencial caso a arquitetura utilize uma solução de banco de dados distribuídos ou um banco NoSQL._
 
-![Diagrama de Entidade Relacionamento (ER) ](imagens/der.png "Diagrama de Entidade Relacionamento (ER) ")
+![Diagrama de Entidade Relacionamento (ER) ](assets/der.png "Diagrama de Entidade Relacionamento (ER) ")
 
 **Figura 4 – Diagrama de Entidade Relacionamento (ER) - exemplo. Fonte: o próprio autor.**
 
