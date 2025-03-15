@@ -25,7 +25,7 @@
 | 3\. ESTIMATIVA DE CUSTO |  |  |
 | ----- | ----- | ----- |
 | **3.1. Prazo previsto (horas)** | **3.2. Data prevista de início** | **3.3. Data prevista de término** |
-| 1200 | 12/02/2025 | 25/06/2025 |
+| 1390 | 12/02/2025 | 25/06/2025 |
 
 | 4\. ESTIMATIVA DE CUSTO |  |  |  |
 | ----- | ----- | ----- | ----- |
