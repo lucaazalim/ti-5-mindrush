@@ -6,18 +6,18 @@
 | **1.2. Gerente do projeto** | Luca Ferrari Azalim |
 | **1.3. Cliente do projeto** | PUC Minas |
 | **1.4. Tipo do projeto** | Desenvolvimento de novo produto |
-| **1.5. Objetivo do projeto** | Desenvolver um produto que facilite e dinamize o processo de ensino-aprendizagem por meio de quizzes interativos baseados em gamificação |
-| **1.6. Benefícios que justificam o projeto** | Permitir que educadores criem e apliquem quizzes personalizados em tempo real. Permitir que estudantes participem de quizzes síncronos e recebam feedback imediato dos resultados obtidos. |
-| **1.7. Qualidade esperada do produto final (requisitos de qualidade)** | Usabilidade que atenda ao público alvo. Desempenho adequado para uma sala de aula de 60 alunos. As partidas devem ser processadas em tempo real, garantindo sincronização entre educadores e estudantes. |
+| **1.5. Objetivo do projeto** | Desenvolver uma plataforma de quizzes interativos baseados em gamificação, visando facilitar e dinamizar o processo de ensino-aprendizagem. A plataforma permitirá que educadores criem quizzes personalizados, e que estudantes participem de quizzes síncronos com feedback em tempo real. |
+| **1.6. Benefícios que justificam o projeto** | O projeto visa proporcionar uma abordagem mais envolvente e interativa para o processo de aprendizado. Ele permite que educadores monitorem e avaliem o desempenho dos estudantes de maneira dinâmica e imediata, contribuindo para uma aprendizagem mais eficaz e engajante. |
+| **1.7. Qualidade esperada do produto final (requisitos de qualidade)** | A plataforma deverá ser usável, com uma interface intuitiva para educadores e estudantes. O desempenho deve garantir que até 60 alunos participem simultaneamente de quizzes sem latência significativa, assegurando sincronização entre os participantes.  |
 
 | 2\. ESCOPO PRELIMINAR E PREMISSAS |
 | :---- |
 | **2.1. O que será feito (escopo do projeto)** |
-| Plataforma de quizzes personalizados que permite uma experiência de jogo síncrona entre estudantes conectados na mesma sala. |
+| A plataforma incluirá funcionalidades como: criação de quizzes personalizados, participação em quizzes síncronos, feedback instantâneo, e um painel para educadores gerenciarem e visualizarem resultados. |
 | **2.2. O que não será feito no projeto (contra-escopo)** |
-| Plataforma para criação e aplicação de questionários e provas formais, como o Google Forms. |
+| O projeto não incluirá funcionalidades para provas formais ou questionários de múltipla escolha, como os oferecidos por ferramentas como o Google Forms. |
 | **2.3. Resultados / serviços / produtos a serem entregues** |
-| 1\. Sistema de quizzes gamificados. |
+| 1\. Plataforma de quizzes gamificados. |
 | 2\. Documentação do produto. |
 | **2.4. Condições para início do projeto** |
 | Os alunos envolvidos no projeto precisam estar devidamente matriculados na disciplina de “Trabalho Interdisciplinar: Aplicações Distribuídas”. |
@@ -30,12 +30,12 @@
 | 4\. ESTIMATIVA DE CUSTO |  |  |  |
 | ----- | ----- | ----- | ----- |
 | **Item de custo** | **Qtd. de horas** | **Valor/hora** | **Valor total** |
-| 4.1 Recursos Humanos (especifique) | 1200 | 30 | R$ 36.000,00 |
-| 4.2 Hardware (especifique) | N/A | N/A | N/A |
-| 4.3 Rede e serviços de hospedagem | N/A | N/A | N/A |
-| 4.4 Software de terceiros | N/A | N/A | N/A |
-| 4.5 Serviços e treinamento | N/A | N/A | N/A |
-| 4.6 Total Geral | N/A | N/A | R$ 36.000,00 |
+| 4.1 Recursos Humanos (especifique) | 1200 | R$ 30,00 | R$ 36.000,00 |
+| 4.2 Hardware (especifique) | 80 | R$ 25,00 | R$ 2.000,00 |
+| 4.3 Rede e serviços de hospedagem | 50 | R$ 60,00	 | R$ 3.000,00 |
+| 4.4 Software de terceiros | 20 | R$ 125,00 | R$ 2.500,00 |
+| 4.5 Serviços e treinamento | 40 | R$ 45,00 | R$ 1.800,00 |
+| 4.6 Total Geral | 1390 | R$ 285,00 | R$ 45.300,00 |
 
 | 5\. PARTES INTERESSADAS |  |  |
 | ----- | ----- | ----- |
