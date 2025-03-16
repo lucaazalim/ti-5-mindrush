@@ -245,15 +245,14 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 
 | **ID** | **Descrição**                                                                                                                                                                                                                                                                                                      |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| RNF1   | O sistema deve ser compatível com os navegadores web Google Chrome, Mozilla Firefox, Microsoft Edge e Safari, em suas versões mais recentes.                                                                                                                                                                       |
+| RNF1   | O sistema deve ser compatível com os navegadores web Google Chrome (v134), Mozilla Firefox (v135), Microsoft Edge (v133) e Safari (v18.3).                                                                                                                                                                         |
 | RNF2   | A interface do front-end web deve ser compatível e oferecer responsividade para telas entre 1280 e 1920 pixels de largura.                                                                                                                                                                                         |
 | RNF3   | A interface do front-end web deve estar disponível nos modos claro, escuro e sistema.                                                                                                                                                                                                                              |
 | RNF4   | O desenvolvimento do back-end deve adotar o padrão REST para estruturação da API, atendendo ao nível 2 do modelo de maturidade de Richardson.                                                                                                                                                                      |
 | RNF5   | O sistema deve exigir, dos educadores, autenticação com e-mail e senha.                                                                                                                                                                                                                                            |
 | RNF6   | A autenticação deve seguir o protocolo JWT, garantindo que 100% das requisições protegidas exijam um token válido.                                                                                                                                                                                                 |
 | RNF7   | O segredo (secret key) utilizado para assinar os tokens JWT deve ter, no mínimo, 128 bits de entropia (16 bytes).                                                                                                                                                                                                  |
-| RNF8   | Informações sensíveis, como senhas, devem ser armazenadas utilizando hashing seguro, como bcrypt ou Argon2.                                                                                                                                                                                                        |
-| RNF9   | O cadastro de educadores deve exigir uma senha de, no mínimo, 8 caracteres, incluindo, pelo menos, uma letra maiúscula, uma letra minúscula, um número e um símbolo.                                                                                                                                               |
+| RNF8   | Informações sensíveis, como senhas, devem ser armazenadas utilizando a estratégia de hashing Bcrypt.                                                                                                                                                                                                               |
 | RNF10  | As respostas dos estudantes aos quizzes devem ser vinculadas exclusivamente ao nome de usuário escolhido por eles ao início de cada partida, impedindo a identificação direta dos participantes por meio de informações pessoais, garantindo o anonimato e a privacidade dos jogadores durante e após a atividade. |
 | RNF11  | O sistema deve suportar até 60 estudantes participando de um quiz ao mesmo tempo, sem aumento significativo de tempo de resposta.                                                                                                                                                                                  |
 | RNF12  | O tempo de processamento das requisições realizadas à API deve ser inferior a 200ms, considerando apenas o tempo de execução no servidor e desconsiderando a latência da rede.                                                                                                                                     |
@@ -409,15 +408,23 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 | **Adquiridos**    | API de IA Generativa (serviço externo, possivelmente pago).                     |
 | **Desenvolvidos** | Next.js (Front-end e Back-end), Aplicativo Flutter, Serviços de Quiz e Partida. |
 
-## 4.3. Modelo de dados (opcional)
+## 4.3. Modelo de dados
 
-_Caso julgue necessário para explicar a arquitetura, apresente o diagrama de classes ou diagrama de Entidade/Relacionamentos ou tabelas do banco de dados. Este modelo pode ser essencial caso a arquitetura utilize uma solução de banco de dados distribuídos ou um banco NoSQL._
+O diagrama da Figura 4 representa o modelo de dados do sistema.
 
-![Diagrama de Entidade Relacionamento (ER) ](assets/der.png "Diagrama de Entidade Relacionamento (ER) ")
+- A **tabela `educator`** armazena os dados dos educadores responsáveis pela criação dos quizzes, incluindo informações como nome, e-mail e senha.
+- A **tabela `quiz`** contém os quizzes criados pelos educadores, com campos para título, descrição e data de criação, além da relação com o educador responsável.
+- A **tabela `question`** guarda as perguntas dos quizzes, com informações como o tipo da pergunta (múltipla escolha ou verdadeiro/falso), o texto da pergunta e o limite de tempo.
+- A **tabela `question_quiz_alternatives`** registra as alternativas das perguntas do tipo múltipla escolha, identificando qual alternativa é a correta.
+- A **tabela `match`** representa as sessões (ou partidas) de execução dos quizzes, contendo o código PIN da partida e o estado atual (aguardando, em execução, pausada ou finalizada).
+- A **tabela `participant`** armazena os participantes que ingressaram em uma partida, identificados pelo apelido e pelo vínculo com a partida específica.
+- A **tabela `quiz_answer`** registra as respostas dos participantes para cada pergunta de uma determinada partida, garantindo que cada combinação de participante, pergunta e partida seja única.
 
-**Figura 4 – Diagrama de Entidade Relacionamento (ER) - exemplo. Fonte: o próprio autor.**
+As relações entre as tabelas foram estabelecidas para garantir a integridade referencial do sistema, permitindo o rastreamento de todas as etapas, desde a criação do quiz até a participação e resposta dos jogadores em uma partida específica.
 
-Obs: Acrescente uma breve descrição sobre o diagrama apresentado na Figura 3.
+![Diagrama Lógico de Banco de Dados](assets/diagrama-logico.png "Diagrama Lógico de Banco de Dados")
+
+**Figura 4 – Diagrama Lógico de Banco de Dados. Fonte: o próprio autor.**
 
 <a name="wireframes"></a>
 

@@ -1,0 +1,67 @@
+Table educator {
+  id uuid [primary key]
+  name string
+  email string [unique]
+  password string
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+}
+
+Table quiz {
+  id uuid [primary key]
+  title string [not null]
+  description string [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+  educator_id uuid
+}
+
+Table question {
+  id uuid [primary key]
+  type enum('QUIZ', 'TRUE_OR_FALSE')
+  question string
+  time_limit integer
+  created_at timestamp
+  quiz_id uuid
+}
+
+Table question_quiz_alternatives {
+  id uuid [primary key]
+  question_id uuid
+  answer string
+  correct boolean
+  created_at timestamp
+}
+
+Table match {
+  id uuid [primary key]
+  quiz_id uuid
+  pin string
+  state enum('WAITING', 'RUNNING', 'PAUSED', 'ENDED')
+  created_at timestamp
+}
+
+Table participant {
+  id uuid [primary key]
+  nickname string
+  match_id uuid
+}
+
+Table quiz_answer {
+  id uuid [primary key]
+  participant_id uuid
+  question_id uuid
+  match_id uuid
+  alternative string
+
+  indexes {
+    (participant_id, question_id, match_id) [unique]
+  }
+}
+
+Ref: "educator"."id" < "quiz"."educator_id"
+Ref: "quiz"."id" < "match"."quiz_id"
+Ref: "quiz"."id" < "question"."quiz_id"
+Ref: "question"."id" < "question_quiz_alternatives"."question_id"
+Ref: "match"."id" < "participant"."match_id"
+Ref: "participant"."id" < "quiz_answer"."participant_id"
+Ref: "question"."id" < "quiz_answer"."question_id"
+Ref: "match"."id" < "quiz_answer"."match_id"
