@@ -43,6 +43,10 @@ Table participant {
   id uuid [primary key]
   nickname string [not null]
   match_id uuid [not null]
+
+  indexes {
+    (nickname, match_id) [unique]
+  }
 }
 
 Table quiz_answer {
