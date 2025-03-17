@@ -1,56 +1,57 @@
 Table educator {
   id uuid [primary key]
-  name string
-  email string [unique]
-  password string
+  name string [not null]
+  email string [not null, unique]
+  password string [not null]
   created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
 }
 
 Table quiz {
   id uuid [primary key]
+  educator_id uuid [not null]
   title string [not null]
   description string [not null]
   created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
-  educator_id uuid
 }
 
 Table question {
   id uuid [primary key]
+  quiz_id uuid [not null]
   type enum('QUIZ', 'TRUE_OR_FALSE')
-  question string
-  time_limit integer
-  created_at timestamp
-  quiz_id uuid
+  question string [not null]
+  time_limit integer [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
 }
 
 Table question_quiz_alternatives {
   id uuid [primary key]
-  question_id uuid
-  answer string
-  correct boolean
-  created_at timestamp
+  question_id uuid [not null]
+  answer string [not null]
+  correct boolean [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
 }
 
 Table match {
   id uuid [primary key]
-  quiz_id uuid
-  pin string
-  state enum('WAITING', 'RUNNING', 'PAUSED', 'ENDED')
-  created_at timestamp
+  quiz_id uuid [not null]
+  pin string [not null]
+  state enum('WAITING', 'RUNNING', 'PAUSED', 'ENDED') [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
 }
 
 Table participant {
   id uuid [primary key]
-  nickname string
-  match_id uuid
+  nickname string [not null]
+  match_id uuid [not null]
 }
 
 Table quiz_answer {
   id uuid [primary key]
-  participant_id uuid
-  question_id uuid
-  match_id uuid
-  alternative string
+  participant_id uuid [not null]
+  question_id uuid [not null]
+  match_id uuid [not null]
+  alternative string [not null]
+  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
 
   indexes {
     (participant_id, question_id, match_id) [unique]
