@@ -110,31 +110,11 @@ export const verificationTokens = createTable(
   }),
 );
 
-// Create enums
-// const questionTypeEnum = pgEnum("question_type", ["QUIZ", "TRUE_OR_FALSE"]);
-// const matchStateEnum = pgEnum("match_state", [
-//   "WAITING",
-//   "RUNNING",
-//   "PAUSED",
-//   "ENDED",
-// ]);
-
-// Tables
-export const educator = createTable("educator", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  password: text("password").notNull(),
-  createdAt: timestamp("created_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-});
-
 export const quiz = createTable("quiz", {
   id: uuid("id").primaryKey().defaultRandom(),
   educatorId: uuid("educator_id")
     .notNull()
-    .references(() => educator.id),
+    .references(() => users.id),
   title: text("title").notNull(),
   description: text("description").notNull(),
   createdAt: timestamp("created_at")
@@ -147,7 +127,7 @@ export const question = createTable("question", {
   quizId: uuid("quiz_id")
     .notNull()
     .references(() => quiz.id),
-  type: text("type").notNull(), // TODO use enum
+  type: text("type").notNull(), // TODO enum(QUIZ, TRUE_OR_FALSE)
   question: text("question").notNull(),
   timeLimit: integer("time_limit").notNull(),
   createdAt: timestamp("created_at")
@@ -176,7 +156,7 @@ export const match = createTable("match", {
     .notNull()
     .references(() => quiz.id),
   pin: text("pin").notNull(),
-  state: text("state").notNull(), // TODO use enum
+  state: text("state").notNull(), // TODO enum(WAITING, RUNNING, PAUSED, ENDED)
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
