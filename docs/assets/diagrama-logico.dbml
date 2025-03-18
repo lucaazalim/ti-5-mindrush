@@ -43,6 +43,7 @@ Table participant {
   id uuid [primary key]
   nickname string [not null]
   match_id uuid [not null]
+  total_points int [not null]
 
   indexes {
     (nickname, match_id) [unique]
@@ -55,6 +56,7 @@ Table quiz_answer {
   question_id uuid [not null]
   match_id uuid [not null]
   alternative string [not null]
+  points int [not null]
   created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
 
   indexes {
