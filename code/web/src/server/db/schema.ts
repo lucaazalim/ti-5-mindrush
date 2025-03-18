@@ -1,17 +1,17 @@
-import { relations, sql } from "drizzle-orm";
+import {relations, sql} from "drizzle-orm";
 import {
-  boolean,
-  index,
-  integer,
-  pgTableCreator,
-  primaryKey,
-  text,
-  timestamp,
-  unique,
-  uuid,
-  varchar,
+    boolean,
+    index,
+    integer,
+    pgTableCreator,
+    primaryKey,
+    text,
+    timestamp,
+    unique,
+    uuid,
+    varchar,
 } from "drizzle-orm/pg-core";
-import { type AdapterAccount } from "next-auth/adapters";
+import {type AdapterAccount} from "next-auth/adapters";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -187,6 +187,7 @@ export const participant = createTable(
   {
     id: uuid("id").primaryKey().defaultRandom(),
     nickname: text("nickname").notNull(),
+    total_points: integer("total_points").notNull(),
     matchId: uuid("match_id")
       .notNull()
       .references(() => match.id),
@@ -210,6 +211,7 @@ export const quizAnswer = createTable(
       .notNull()
       .references(() => match.id),
     alternative: text("alternative").notNull(),
+    points: integer("points").notNull(),
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
