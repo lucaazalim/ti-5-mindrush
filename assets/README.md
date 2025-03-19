@@ -2,10 +2,7 @@
 
 Liste os artefatos produzidos, com suas localizaçãoes e descrição do conteúdo.
 
-* `/inpi`
-    * ... 
-* `/management`
-	* ...
-* `/minute`
-	* **Ata_xx_ago_2020.docx**: Ata de reunião do dia xx de agosto de 2020.
-
+- `/inpi`
+- `/management`
+- `/minute`
+  - ata-2025-02-26.md - Ata de kick-off do projeto.
