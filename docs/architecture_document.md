@@ -286,15 +286,15 @@ As restrições arquiteturais do projeto são as seguintes:
 
 Os mecanismos arquiteturais do MindRush foram definidos para garantir desempenho, escalabilidade e segurança. A tabela abaixo resume as principais escolhas tecnológicas:
 
-| **Análise**       | **Design**                            | **Implementação** |
-| ----------------- | ------------------------------------- | ----------------- |
-| Persistência      | Banco de Dados Relacional             | PostgreSQL        |
-| Back-end          | REST API + RPC                        | Next.js           |
-| Front-end         | Single Page Application               | React + Next.js   |
-| Aplicativo        | Tecnologia híbrida para iOS e Android | Flutter           |
-| Mensageria        | Event driven                          | RabbitMQ          |
-| Teste de Software | Testes unitários e de integração      | Jest              |
-| Deploy            | Cloud gerenciado                      | Render            |
+| **Análise**       | **Design**                            | **Implementação**                         |
+| ----------------- | ------------------------------------- | ----------------------------------------- |
+| Persistência      | Banco de Dados Relacional + ORM       | PostgreSQL + Drizzle                      |
+| Back-end          | REST API + RPC                        | Route Handlers + Server Actions (Next.js) |
+| Front-end         | Single Page Application               | React + Next.js                           |
+| Aplicativo        | Tecnologia híbrida para iOS e Android | Flutter                                   |
+| Mensageria        | Event driven                          | RabbitMQ                                  |
+| Teste de Software | Testes unitários e de integração      | Jest                                      |
+| Deploy            | Cloud gerenciado                      | Render                                    |
 
 <a name="modelagem"></a>
 
@@ -323,10 +323,8 @@ Breve descrição do diagrama:
 
 2. **Gerenciamento de Quizzes**
 
-   - O educador pode criar quizzes personalizados.
    - O educador pode editar e excluir quizzes existentes.
-   - O educador pode gerar quizzes automaticamente com IA generativa a partir de um tema.
-   - O educador pode gerar quizzes automaticamente com IA generativa a partir de um documento PDF.
+   - O educador pode criar quizzes personalizados, criando-os a partir do zero ou usando IA generativa.
 
 3. **Gerenciamento de Questões**
 
@@ -394,21 +392,25 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 2. **Arquitetura em Camadas**: Separação entre **interface do usuário, lógica de negócio e persistência**.
 3. **RESTful API**: O Back-end expõe **serviços HTTP** para os clientes consumirem.
 4. **Event-Driven Architecture (EDA)**: **RabbitMQ** gerencia eventos de **partidas e atualizações em tempo real**.
-5. **Microservices-like Modularity**: Serviços modulares para **Autenticação, Quiz e Partidas**.
-6. **Mobile-First & Cross-Platform**: **Flutter** garante compatibilidade para Android e iOS.
+5. **Cross-Platform**: **Flutter** garante compatibilidade para Android e iOS.
 
 ---
 
 #### Descrição Sucinta dos Componentes
 
-| **Componente**                  | **Papel dentro da Arquitetura**                              |
-| ------------------------------- | ------------------------------------------------------------ |
-| **Next.js (Front-end Web)**     | Interface para educadores criarem e gerenciarem quizzes.     |
-| **Flutter (Aplicativo Móvel)**  | Interface para estudantes participarem dos quizzes.          |
-| **Next.js (Back-end API)**      | Servidor que gerencia autenticação, quizzes e partidas.      |
-| **PostgreSQL (Banco de Dados)** | Armazena quizzes, partidas e respostas dos estudantes.       |
-| **RabbitMQ (Mensageria)**       | Gerencia atualizações em tempo real dos quizzes e rankings.  |
-| **API de IA Generativa**        | Gera automaticamente quizzes a partir de temas e documentos. |
+| **Componente**       | **Papel dentro da Arquitetura**                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------- |
+| **Educador**         | Cria e gerencia quizzes, aplica partidas e acompanha o desempenho dos estudantes via navegador.               |
+| **Estudante**        | Participa das partidas e responde às perguntas em tempo real pelo aplicativo móvel.                           |
+| **Navegador**        | Interface web (Next.js) utilizada pelos educadores para gerenciar quizzes e partidas.                         |
+| **Aplicativo**       | Aplicativo Flutter utilizado pelos estudantes para interagir com as partidas gamificadas.                     |
+| **Server Actions**   | Executa ações críticas no servidor, como controle da lógica de negócios das partidas.                         |
+| **React Components** | Componentes da interface web utilizados na plataforma do educador.                                            |
+| **REST API**         | Disponibiliza serviços HTTP consumidos pelo aplicativo, como autenticação e envio de respostas.               |
+| **WebSocket**        | Proporciona comunicação em tempo real entre o back-end e o aplicativo, enviando atualizações instantâneas.    |
+| **Banco de Dados**   | Armazena dados relacionados a usuários, quizzes, partidas e resultados (PostgreSQL).                          |
+| **Mensageria**       | Gerencia eventos e filas de comunicação assíncrona entre os serviços (RabbitMQ).                              |
+| **API da OpenAI**    | Serviço externo que gera quizzes automaticamente a partir de temas ou documentos fornecidos pelos educadores. |
 
 ---
 
