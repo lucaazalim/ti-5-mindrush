@@ -1,6 +1,6 @@
 # Artefatos do Projeto
 
-Liste os artefatos produzidos, com suas localizaçãoes e descrição do conteúdo.
+Artefatos produzidos, com suas localizaçãoes e descrição do conteúdo.
 
 - `/inpi`
 - `/management`
