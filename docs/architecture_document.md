@@ -100,11 +100,24 @@ O modelo tradicional de ensino apresenta limitações na forma como o aprendizad
 
 ## 1.3. Definições e Abreviaturas
 
-- **Gamificação**: Aplicação de elementos de jogos para tornar o aprendizado mais envolvente.
-- **Quizzes Síncronos**: Questionários interativos realizados simultaneamente por múltiplos usuários.
-- **IA Generativa**: Inteligência artificial capaz de criar automaticamente conteúdos, como perguntas e respostas para quizzes.
-- **Feedback Imediato**: Retorno instantâneo sobre o desempenho dos estudantes, permitindo ajustes no aprendizado.
-- **Ranking Dinâmico**: Sistema de pontuação atualizado em tempo real, estimulando a competição saudável entre os participantes.
+## 1.3. Definições e Abreviaturas
+
+| **Termo / Sigla** | **Definição**                                                                                                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| API               | Interface de Programação de Aplicações (_Application Programming Interface_). Conjunto de rotinas e padrões para integração de software.         |
+| JWT               | _JSON Web Token_. Padrão aberto para autenticação e troca segura de informações entre partes usando tokens compactos e assinados.                |
+| IA                | Inteligência Artificial. Área da ciência da computação dedicada à criação de sistemas capazes de simular inteligência humana.                    |
+| REST              | Estilo arquitetural para comunicação entre sistemas distribuídos utilizando o protocolo HTTP.                                                    |
+| CRUD              | Acrônimo para Create, Read, Update e Delete. Operações básicas de persistência em banco de dados.                                                |
+| UI/UX             | Interface do Usuário e Experiência do Usuário (_User Interface_ / _User Experience_). Design focado na interação e experiência do usuário final. |
+| QR Code           | Código de barras bidimensional que pode ser escaneado para fornecer acesso rápido a uma URL ou outra informação.                                 |
+| API RESTful       | API que segue o estilo arquitetural REST, baseada em recursos e operações HTTP (GET, POST, PUT, DELETE).                                         |
+| PostgreSQL        | Sistema gerenciador de banco de dados relacional de código aberto e altamente escalável.                                                         |
+| Next.js           | Framework React para desenvolvimento de aplicações web com renderização híbrida (SSR, SSG e CSR).                                                |
+| Flutter           | Framework da Google para desenvolvimento de aplicações móveis nativas para iOS e Android com uma única base de código.                           |
+| RabbitMQ          | Sistema de mensageria open-source baseado no protocolo AMQP, utilizado para comunicação assíncrona entre serviços.                               |
+| Render            | Plataforma de computação em nuvem utilizada para deploy de aplicações web e serviços backend.                                                    |
+| Bcrypt            | Algoritmo de hash para criptografia segura de senhas.                                                                                            |
 
 <a name="produto"></a>
 
@@ -114,7 +127,7 @@ Está seção explora um pouco mais sobre o produto a ser desenvolvido.
 
 ## 2.1 Visão do Produto
 
-Para educadores e estudantes cuja necessidade é o engajamento dos estudantes e a avaliação do aprendizado de forma interativa, o MindRush é um sistema de quizzes gamificados que torna o ensino mais dinâmico e envolvente. Diferentemente do Google Forms, que oferece formulários estáticos sem elementos de gamificação, nosso produto proporciona uma experiência interativa com rankings, tempo de resposta e competitividade, tornando as avaliações mais engajantes.
+O MindRush é uma plataforma de quizzes gamificados projetada para transformar o processo de ensino-aprendizagem, proporcionando uma experiência interativa e engajadora para educadores e estudantes. Destinada a educadores que buscam dinamizar suas aulas e avaliar o aprendizado de forma mais atrativa, a ferramenta permite a criação e aplicação de quizzes em tempo real, promovendo a participação ativa dos alunos por meio de rankings, desafios e feedbacks instantâneos. Diferente de soluções tradicionais, como o Google Forms, que se limitam à coleta de respostas em formulários estáticos, o MindRush promove uma experiência lúdica e competitiva.
 
 ## 2.2 Nosso Produto
 
@@ -221,22 +234,22 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 
 ## 3.1. Requisitos Funcionais
 
-| **ID** | **Descrição**                                                              | **Prioridade** | **Plataforma** |
-| ------ | -------------------------------------------------------------------------- | -------------- | -------------- |
-| RF1    | O educador se cadastra no sistema.                                         | Essencial      | Web            |
-| RF2    | O educador gerencia os quizzes.                                            | Essencial      | Web            |
-| RF3    | O educador gera um quiz a partir de um tema qualquer usando IA generativa. | Opcional       | Web            |
-| RF4    | O educador gera um quiz a partir de um documento PDF usando IA generativa. | Opcional       | Web            |
-| RF5    | O educador gerencia as questões dos quizzes.                               | Essencial      | Web            |
-| RF6    | O educador gera uma partida a partir de um quiz.                           | Essencial      | Web            |
-| RF7    | O educador inicia, pausa e encerra a partida.                              | Essencial      | Web            |
-| RF8    | O educador acompanha o andamento da partida.                               | Desejável      | Web            |
-| RF9    | O estudante informa o código da partida.                                   | Essencial      | Móvel          |
-| RF10   | O estudante escaneia o código QR da partida.                               | Opcional       | Móvel          |
-| RF11   | O estudante entra na partida informando seu nome.                          | Essencial      | Móvel          |
-| RF12   | O estudante responde às questões da partida em tempo real.                 | Essencial      | Móvel          |
-| RF13   | O sistema exibe o ranque da partida ao final de cada questão.              | Desejável      | Móvel          |
-| RF14   | O sistema exibe o ranque final da partida.                                 | Desejável      | Móvel          |
+| **ID** | **Descrição**                                                                  | **Prioridade** | **Plataforma** |
+| ------ | ------------------------------------------------------------------------------ | -------------- | -------------- |
+| RF1    | O educador se cadastra no sistema.                                             | Essencial      | Web            |
+| RF2    | O educador gerencia os quizzes.                                                | Essencial      | Web            |
+| RF3    | O educador gera um quiz a partir de um tema qualquer usando IA generativa.     | Opcional       | Web            |
+| RF4    | O educador gera um quiz a partir de um documento PDF usando IA generativa.     | Opcional       | Web            |
+| RF5    | O educador gerencia as questões dos quizzes.                                   | Essencial      | Web            |
+| RF6    | O educador gera uma partida a partir de um quiz.                               | Essencial      | Web            |
+| RF7    | O educador inicia, pausa e encerra uma partida.                                | Essencial      | Web            |
+| RF8    | O educador acompanha o andamento da partida.                                   | Desejável      | Web            |
+| RF9    | O estudante informa um código para acessar uma partida.                        | Essencial      | Móvel          |
+| RF10   | O estudante escaneia um código QR para acessar uma partida.                    | Opcional       | Móvel          |
+| RF11   | O estudante informa um apelido que o identificará na partida.                  | Essencial      | Móvel          |
+| RF12   | O estudante responde às questões da partida em tempo real.                     | Essencial      | Móvel          |
+| RF13   | O estudante visualiza o ranque de pontuação da partida ao fim de cada questão. | Desejável      | Móvel          |
+| RF14   | O estudante visualiza o ranque de pontuação final ao fim da partida.           | Desejável      | Móvel          |
 
 **Observação:** as colunas "Sprint" e "Status" foram removidas, uma vez que o planejamento e o estado de conclusão de cada requisito estão sendo controlados por meio do [GitHub Projects](https://github.com/orgs/ICEI-PUC-Minas-PPLES-TI/projects/556).
 
@@ -276,8 +289,8 @@ Os mecanismos arquiteturais do MindRush foram definidos para garantir desempenho
 | **Análise**       | **Design**                            | **Implementação** |
 | ----------------- | ------------------------------------- | ----------------- |
 | Persistência      | Banco de Dados Relacional             | PostgreSQL        |
-| Back-end          | RESTful API                           | Next.js           |
-| Web App           | Single Page Application               | Next.js           |
+| Back-end          | REST API + RPC                        | Next.js           |
+| Front-end         | Single Page Application               | React + Next.js   |
 | Aplicativo        | Tecnologia híbrida para iOS e Android | Flutter           |
 | Mensageria        | Event driven                          | RabbitMQ          |
 | Teste de Software | Testes unitários e de integração      | Jest              |
@@ -289,7 +302,7 @@ Os mecanismos arquiteturais do MindRush foram definidos para garantir desempenho
 
 A Figura 1 apresenta uma visão geral da solução proposta, ilustrando a macroarquitetura do projeto.
 
-![Visão Geral da Solução](assets/diagrama-de-visao-geral.png "Visão Geral da Solução")
+![Visão Geral da Solução](assets/diagrama-de-arquitetura.png "Visão Geral da Solução")
 
 **Figura 1 - Visão geral da solução. Fonte: o próprio autor.**
 
