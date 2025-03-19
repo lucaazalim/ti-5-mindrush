@@ -91,13 +91,12 @@ O modelo tradicional de ensino apresenta limitações na forma como o aprendizad
 
 ## 1.2. Objetivos do trabalho
 
-Desenvolver uma plataforma de quizzes interativos que permita a criação e aplicação de perguntas personalizadas em tempo real por educadores.
+**Objetivo:** Desenvolver uma plataforma digital que permita a educadores a criação e aplicação em tempo real de quizzes personalizados.
 
-Os objetivos específicos são:
+**Objetivos específicos:**
 
-- Criar um mecanismo de feedback imediato, possibilitando que alunos e educadores acompanhem o desempenho individual e coletivo.
-- Desenvolver um sistema de geração automática de quizzes com base em temas, utilizando inteligência artificial para facilitar a criação de conteúdo educacional.
-- Desenvolver um sistema de rankings dinâmicos, permitindo que os participantes visualizem sua posição em tempo real e incentivando a competitividade saudável no aprendizado
+- Desenvolver uma plataforma web que permita ao educador o gerenciamento dos quizzes e das suas aplicações em tempo real.
+- Desenvolver um aplicativo móvel que permita ao estudante responder aos quizzes em tempo real e obter _feedback_ sobre seu desempenho.
 
 ## 1.3. Definições e Abreviaturas
 
