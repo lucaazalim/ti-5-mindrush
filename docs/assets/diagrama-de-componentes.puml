@@ -25,16 +25,16 @@ package "Serviços Externos" {
     [API da OpenAI]
 }
 
-Educador --> [Navegador]
-Estudante --> [Aplicativo]
+Educador ..> [Navegador]
+Estudante ..> [Aplicativo]
 
-[Navegador] --> [Server Actions] : HTTPS
-[Navegador] --> [React Components] : HTTPS
+[Navegador] ..> [Server Actions] : HTTPS
+[Navegador] ..> [React Components] : HTTPS
 
-[Aplicativo] --> [REST API] : HTTPS
-[Aplicativo] --> [WebSocket] : TCP
+[Aplicativo] ..> [REST API] : HTTPS
+[Aplicativo] ..> [WebSocket] : TCP
 
-[Back-end] --> [Banco de Dados] : SQL
-[Back-end] --> [Mensageria] : AMQP
-[Back-end] --> [API da OpenAI] : HTTPS
+[Back-end] ..> [Banco de Dados] : SQL
+[Back-end] ..> [Mensageria] : AMQP
+[Back-end] ..> [API da OpenAI] : HTTPS
 @enduml
