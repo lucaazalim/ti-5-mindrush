@@ -1,17 +1,16 @@
 # Artefatos relativos à Disciplina de Gerência de projetos
 
-Este diretório mantém os artefatos relatório à gerência do projeto. 
+Este diretório mantém os artefatos relacionados à gerência do projeto.
 
 Os principais documentos a serem produzidos são:
 
-* `Termo de Abertura de Projeto.docx`
-	* Termo de Abertura do Projeto.
+- `termo_de_abertura_do_projeto.md`
 
-* `Registro das Partes Interessadas.xlsx`
-	* Registro das Partes Interessadas.
+  - Termo de Abertura do Projeto.
 
-* `Declaracao de escopo.docx`
-	* Declaracao de escopo.
+- `partes_interessadas.md`
 
+  - Registro das Partes Interessadas.
 
-Demais artefatos que julgar pertinentes.
+- `declaracao_de_escopo.md`
+  - Declaracao de escopo.
