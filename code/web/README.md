@@ -1,29 +1,35 @@
-# Create T3 App
+## Next.js Authentication com NextAuth e Google OAuth
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+### Configurar o Google OAuth
+1. Acesse [Google Cloud Console](https://console.cloud.google.com/cloud-resource-manager)
+2. Crie um novo projeto
+3. Vá para **APIs e Serviços** -> **Tela de Consentimento OAuth**
+4. Configure a autenticação OAuth:
+   - Insira `http://localhost:3000` na "Página inicial do aplicativo"
+   - Em **Acesso a dados**, adicione os três primeiros escopos disponíveis
+5. Vá para **Credenciais** e crie um novo **OAuth Client ID**:
+   - Selecione "Aplicativo Web"
+   - **Origens JavaScript autorizadas**: `http://localhost:3000`
+   - **URIs de redirecionamento autorizados**: `http://localhost:3000/api/auth/callback/google`
+6. Copie o **Client ID** e o **Client Secret**
 
-## What's next? How do I make an app with this?
+### Criar o arquivo `.env`
+No diretório raiz do projeto, crie um arquivo `.env` e adicione:
+```env
+AUTH_GOOGLE_ID=seu-client-id
+AUTH_GOOGLE_SECRET=seu-client-secret
+AUTH_SECRET=sua-chave-secreta
+```
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+**Dica**: Para gerar uma chave segura para `AUTH_SECRET`, use:
+```bash
+npx auth secret
+```
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
-
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
-
-## Learn More
-
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
-
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### Rodar o projeto localmente
+```bash
+npm run dev
+# ou
+yarn dev
+```
+Acesse `http://localhost:3000` no navegador.

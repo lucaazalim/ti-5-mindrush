@@ -1,3 +1,4 @@
+import { Button } from "~/components/ui/button";
 import { signIn } from "~/server/auth";
 
 export default function SignInButton() {
@@ -8,7 +9,7 @@ export default function SignInButton() {
         await signIn();
       }}
     >
-      <button type="submit">Signin</button>
+      <Button className="bg-primary text-[15px]" size="default" type="submit">Acessar</Button>
     </form>
   );
 }
