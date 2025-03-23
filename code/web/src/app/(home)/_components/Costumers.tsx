@@ -1,14 +1,14 @@
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import React from "react";
-import apexLogo from "public/landing-page/logo-apex.png";
-import celestialLogo from "public/landing-page/logo-celestial.png";
-import pulseLogo from "public/landing-page/logo-pulse.png";
-import quantumLogo from "public/landing-page/logo-quantum.png";
+import apexLogo from "public/home/logo-apex.png";
+import celestialLogo from "public/home/logo-celestial.png";
+import pulseLogo from "public/home/logo-pulse.png";
+import quantumLogo from "public/home/logo-quantum.png";
 
-const Costumers = () => {
+const customers = () => {
   return (
-    <div className="mx-auto w-3/4 pt-24 text-center" id="costumers">
+    <div className="mx-auto w-3/4 pt-24 text-center" id="customers">
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
         whileInView={{ scale: 0.8, opacity: 1 }}
@@ -62,4 +62,4 @@ const Costumers = () => {
   );
 };
 
-export default Costumers;
+export default customers;

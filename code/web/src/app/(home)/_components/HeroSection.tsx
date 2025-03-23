@@ -2,7 +2,7 @@
 import { Button } from "~/components/ui/button";
 import { ReactTyped } from "react-typed";
 import Image from "next/image";
-import mobile from "public/landing-page/mobile.png";
+import mobile from "public/home/mobile.png";
 import * as motion from "motion/react-client";
 export const HeroSection = () => {
   return (

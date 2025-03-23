@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "~/components/ui/button";
 import Image from "next/image";
-import mobile from "public/landing-page/mobile.png";
+import mobile from "public/home/mobile.png";
 import * as motion from "motion/react-client";
 
 const Benefits = () => {

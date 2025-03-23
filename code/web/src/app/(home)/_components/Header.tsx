@@ -1,4 +1,4 @@
-import SignInButton from "./SignInButton";
+import SignInButton from "../../_components/SignInButton";
 import * as motion from "motion/react-client";
 import Link from "next/link";
 
@@ -37,7 +37,7 @@ const Header = () => {
             Preço
           </Link>
           <Link
-            href="#costumers"
+            href="#customers"
             className="relative block w-fit text-lg after:absolute after:block after:h-[4px] after:w-full after:origin-center after:scale-x-0 after:bg-primary after:transition after:duration-300 after:content-[''] after:hover:scale-x-100"
           >
             Clientes
