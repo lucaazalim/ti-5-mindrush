@@ -12,7 +12,7 @@ const Header = () => {
     >
       <div className="mx-auto flex w-3/4 items-center justify-between text-secondary">
         <Link href="#home">
-          <h1 className="text-[25px] font-semibold">
+          <h1 className="select-none text-[25px] font-semibold">
             Mind<span className="italic">Rush</span>
           </h1>
         </Link>
