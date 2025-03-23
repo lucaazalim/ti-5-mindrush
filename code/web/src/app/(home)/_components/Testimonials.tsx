@@ -19,7 +19,7 @@ const TestimonialsColumn = (props: {
       whileInView={{ translateY: "-50%" }}
       viewport={{ once: true }}
       transition={{
-        duration: props.duration || 10,
+        duration: props.duration ?? 10,
         repeat: Infinity,
         ease: "linear",
         repeatType: "loop",

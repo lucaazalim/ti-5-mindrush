@@ -6,7 +6,7 @@ import celestialLogo from "public/home/logo-celestial.png";
 import pulseLogo from "public/home/logo-pulse.png";
 import quantumLogo from "public/home/logo-quantum.png";
 
-const customers = () => {
+const Customers = () => {
   return (
     <div className="mx-auto w-3/4 pt-24 text-center" id="customers">
       <motion.div
@@ -62,4 +62,4 @@ const customers = () => {
   );
 };
 
-export default customers;
+export default Customers;

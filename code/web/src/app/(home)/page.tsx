@@ -1,10 +1,10 @@
 import Header from "./_components/Header";
 import { Pricing } from "./_components/Pricing";
 import { HeroSection } from "./_components/HeroSection";
-import customers from "./_components/customers";
 import { Testimonials } from "./_components/Testimonials";
 import Benefits from "./_components/Benefits";
 import Footer from "./_components/Footer";
+import Customers from "~/app/(home)/_components/Customers";
 
 export default async function HomePage() {
   return (
@@ -14,7 +14,7 @@ export default async function HomePage() {
       <Benefits />
       <Testimonials />
       <Pricing />
-      <customers />
+      <Customers />
       <Footer />
     </main>
   );
