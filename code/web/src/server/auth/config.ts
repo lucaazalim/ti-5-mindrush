@@ -52,5 +52,9 @@ export const authConfig = {
         id: user.id,
       },
     }),
+    authorized: async ({ auth }) => {
+      // Logged in users are authenticated, otherwise redirect to login page
+      return !!auth
+    },
   },
 } satisfies NextAuthConfig;
