@@ -8,7 +8,14 @@ import avatar7 from "public/landing-page/avatar-7.png";
 import avatar8 from "public/landing-page/avatar-8.png";
 import avatar9 from "public/landing-page/avatar-9.png";
 
-export const testimonials = [
+type Testimonial = {
+  text: string;
+  imageSrc: string;
+  name: string;
+  username: `@${string}`;
+};
+
+export const testimonials: Testimonial[] = [
   {
     text: "Com essa plataforma de quizzes, meus alunos estão mais engajados e participativos nas aulas. É uma ferramenta incrível para dinamizar o ensino!",
     imageSrc: avatar1.src,
