@@ -22,10 +22,10 @@ import {type AdapterAccount} from "next-auth/adapters";
 export const createTable = pgTableCreator((name) => `mindrush_${name}`);
 
 export const users = createTable("user", {
-  id: varchar("id", { length: 255 })
+  id: uuid("id")
     .notNull()
     .primaryKey()
-    .$defaultFn(() => crypto.randomUUID()),
+    .defaultRandom(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("email_verified", {
@@ -42,7 +42,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 export const accounts = createTable(
   "account",
   {
-    userId: varchar("user_id", { length: 255 })
+    userId: uuid("user_id")
       .notNull()
       .references(() => users.id),
     type: varchar("type", { length: 255 })
@@ -78,7 +78,7 @@ export const sessions = createTable(
     sessionToken: varchar("session_token", { length: 255 })
       .notNull()
       .primaryKey(),
-    userId: varchar("user_id", { length: 255 })
+    userId: uuid("user_id")
       .notNull()
       .references(() => users.id),
     expires: timestamp("expires", {
