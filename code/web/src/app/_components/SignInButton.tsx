@@ -7,7 +7,7 @@ export default function SignInButton() {
     <form
       action={async () => {
         "use server";
-        await signIn(undefined, {
+        await signIn("google", {
             redirectTo: ROUTES.DASHBOARD
           });
       }}
