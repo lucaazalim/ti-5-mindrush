@@ -1,10 +1,10 @@
 import * as motion from "motion/react-client";
 import Image from "next/image";
 import React from "react";
-import apexLogo from "public/logo-apex.png";
-import celestialLogo from "public/logo-celestial.png";
-import pulseLogo from "public/logo-pulse.png";
-import quantumLogo from "public/logo-quantum.png";
+import apexLogo from "public/landing-page/logo-apex.png";
+import celestialLogo from "public/landing-page/logo-celestial.png";
+import pulseLogo from "public/landing-page/logo-pulse.png";
+import quantumLogo from "public/landing-page/logo-quantum.png";
 
 const Costumers = () => {
   return (
