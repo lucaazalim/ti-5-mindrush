@@ -9,7 +9,9 @@ export default function SignInButton() {
         await signIn();
       }}
     >
-      <Button className="bg-primary text-[15px]" size="default" type="submit">Acessar</Button>
+      <Button className="bg-primary text-[15px]" size="default" type="submit">
+        Acessar
+      </Button>
     </form>
   );
 }
