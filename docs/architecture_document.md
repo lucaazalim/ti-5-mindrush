@@ -76,9 +76,9 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 
 O ensino tradicional enfrenta desafios no engajamento dos estudantes e na avaliação do aprendizado. Métodos convencionais, como aulas expositivas e provas escritas, nem sempre incentivam a participação ativa, tornando difícil identificar dificuldades em tempo real.
 
-Plataformas de gamificação, como o Kahoot!, ajudam a melhorar o desempenho dos alunos e a tornar as aulas mais dinâmicas (Wang e Tahir, 2020). No entanto, ainda há limitações, como problemas técnicos, pressão do tempo e dificuldades de adaptação.
+Plataformas de gamificação, como o Kahoot!, ajudam a melhorar o desempenho dos estudantes e a tornar as aulas mais dinâmicas (Wang e Tahir, 2020). No entanto, ainda há limitações, como problemas técnicos, pressão do tempo e dificuldades de adaptação.
 
-Nesse contexto, o MindRush propõe uma plataforma de quizzes interativos que permite aos educadores criar e aplicar perguntas personalizadas em tempo real, possibilitando a participação síncrona dos estudantes e fornecendo feedback imediato. Além das funcionalidades tradicionais, a ferramenta também inclui rankings dinâmicos, geração automática de quizzes por inteligência artificial e recursos de aprendizado adaptativo, proporcionando uma experiência mais imersiva para professores e alunos.
+Nesse contexto, o MindRush propõe uma plataforma de quizzes interativos que permite aos educadores criar e aplicar perguntas personalizadas em tempo real, possibilitando a participação síncrona dos estudantes e fornecendo feedback imediato. Além das funcionalidades tradicionais, a ferramenta também inclui rankings dinâmicos, geração automática de quizzes por inteligência artificial e recursos de aprendizado adaptativo, proporcionando uma experiência mais imersiva para professores e estudantes.
 
 ## 1.1. Problema
 
@@ -127,7 +127,7 @@ Está seção explora um pouco mais sobre o produto a ser desenvolvido.
 
 ## 2.1 Visão do Produto
 
-O MindRush é uma plataforma de quizzes gamificados projetada para transformar o processo de ensino-aprendizagem, proporcionando uma experiência interativa e engajadora para educadores e estudantes. Destinada a educadores que buscam dinamizar suas aulas e avaliar o aprendizado de forma mais atrativa, a ferramenta permite a criação e aplicação de quizzes em tempo real, promovendo a participação ativa dos alunos por meio de rankings, desafios e feedbacks instantâneos. Diferente de soluções tradicionais, como o Google Forms, que se limitam à coleta de respostas em formulários estáticos, o MindRush promove uma experiência lúdica e competitiva.
+O MindRush é uma plataforma de quizzes gamificados projetada para transformar o processo de ensino-aprendizagem, proporcionando uma experiência interativa e engajadora para educadores e estudantes. Destinada a educadores que buscam dinamizar suas aulas e avaliar o aprendizado de forma mais atrativa, a ferramenta permite a criação e aplicação de quizzes em tempo real, promovendo a participação ativa dos estudantes por meio de rankings, desafios e feedbacks instantâneos. Diferente de soluções tradicionais, como o Google Forms, que se limitam à coleta de respostas em formulários estáticos, o MindRush promove uma experiência lúdica e competitiva.
 
 ## 2.2 Nosso Produto
 
@@ -151,10 +151,10 @@ O MindRush é uma plataforma de quizzes gamificados projetada para transformar o
       <strong>Hobby:</strong> Jogar xadrez e assistir documentários sobre ciência.<br>
       <strong>Trabalho:</strong> Professor de Engenharia de Software na PUC Minas.<br>
       <strong>Personalidade:</strong>  Analítico e um pouco tímido. Tem grande domínio técnico, mas encontra dificuldades para tornar suas aulas mais dinâmicas e envolventes.<br>
-      <strong>Sonho:</strong> Ajudar seus alunos a realmente se interessarem pelo conteúdo e aprenderem de forma significativa. <br>
+      <strong>Sonho:</strong> Ajudar seus estudantes a realmente se interessarem pelo conteúdo e aprenderem de forma significativa. <br>
       <strong>Dores:</strong>
 	  	<ul>
-	  		<li>Dificuldade em manter os alunos concentrados e engajados nas aulas.</li>
+	  		<li>Dificuldade em manter os estudantes concentrados e engajados nas aulas.</li>
 	  		<li>Tempo limitado para preparar materiais interativos.</li>
 		</ul> <br>
     </td>
@@ -170,12 +170,12 @@ O MindRush é uma plataforma de quizzes gamificados projetada para transformar o
       <strong>Idade:</strong> 32 anos <br>
       <strong>Hobby:</strong> Gravar vídeos para seu canal educacional no YouTube e praticar yoga <br>
       <strong>Trabalho:</strong> Professora de Ciências da Computação na modalidade EAD <br>
-      <strong>Personalidade:</strong>  Comunicativa, adaptável e inovadora. Sempre busca novas formas de engajar seus alunos no ambiente digital, usando metodologias ativas e ferramentas interativas. <br>
-      <strong>Sonho:</strong> Criar uma experiência de ensino online tão dinâmica e envolvente quanto as aulas presenciais, aumentando a taxa de aprendizado e participação dos alunos.<br>
+      <strong>Personalidade:</strong>  Comunicativa, adaptável e inovadora. Sempre busca novas formas de engajar seus estudantes no ambiente digital, usando metodologias ativas e ferramentas interativas. <br>
+      <strong>Sonho:</strong> Criar uma experiência de ensino online tão dinâmica e envolvente quanto as aulas presenciais, aumentando a taxa de aprendizado e participação dos estudantes.<br>
       <strong>Dores:</strong>
 	  	<ul>
-	  		<li>Percebe que muitos alunos assistem às aulas de forma passiva e sem engajamento real</li>
-	  		<li>Tem dificuldades em avaliar a compreensão dos alunos de maneira eficaz no ambiente online</li>
+	  		<li>Percebe que muitos estudantes assistem às aulas de forma passiva e sem engajamento real</li>
+	  		<li>Tem dificuldades em avaliar a compreensão dos estudantes de maneira eficaz no ambiente online</li>
         <li>Busca ferramentas que possibilitem interatividade e engajamento sem comprometer a organização do conteúdo</li>
 		</ul> <br>
     </td>
@@ -358,7 +358,7 @@ A seguir, são apresentadas as histórias de usuário para o **MindRush**, estru
 | **Educador**   | Gerar quizzes automaticamente com IA generativa            | Economizar tempo na criação de perguntas               |
 | **Educador**   | Iniciar, pausar e encerrar uma partida de quiz             | Controlar o ritmo da atividade em sala de aula         |
 | **Educador**   | Acompanhar o progresso dos estudantes durante o quiz       | Identificar dificuldades em tempo real                 |
-| **Educador**   | Visualizar o ranking dos participantes ao final da partida | Estimular o engajamento dos alunos                     |
+| **Educador**   | Visualizar o ranking dos participantes ao final da partida | Estimular o engajamento dos estudantes                 |
 | **Educador**   | Compartilhar um código para os estudantes entrarem no quiz | Facilitar o acesso e participação na atividade         |
 | **Estudante**  | Inserir um código e entrar na partida                      | Participar do quiz de forma interativa                 |
 | **Estudante**  | Responder perguntas em tempo real                          | Testar meus conhecimentos e aprender de forma ativa    |
