@@ -1,12 +1,15 @@
 import { Button } from "~/components/ui/button";
 import { signIn } from "~/server/auth";
+import {ROUTES} from "~/lib/constants";
 
 export default function SignInButton() {
   return (
     <form
       action={async () => {
         "use server";
-        await signIn();
+        await signIn(undefined, {
+            redirectTo: ROUTES.DASHBOARD
+          });
       }}
     >
       <Button className="bg-primary text-[15px]" size="default" type="submit">
