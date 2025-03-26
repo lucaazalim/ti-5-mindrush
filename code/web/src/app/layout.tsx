@@ -16,7 +16,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${inter.className} scroll-smooth antialiased` }>
-      <body>{children}</body>
-    </html>
+      <body className="bg-[var(--color-ice)]">{children}</body>
+      </html>
   );
 }
