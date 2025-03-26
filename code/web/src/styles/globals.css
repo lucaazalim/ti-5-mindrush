@@ -32,6 +32,8 @@
     --color-from: hsl(210, 100%, 95%);
     --color-via: hsl(0, 0%, 92%);
     --color-to: hsl(210, 100%, 90%);
+
+    --color-ice: hsl(240, 11%, 96%);
   }
   .dark {
     --background: 0 0% 3.9%;

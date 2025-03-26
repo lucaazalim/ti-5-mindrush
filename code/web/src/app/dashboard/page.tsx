@@ -1,24 +1,21 @@
-import { db } from "~/server/db";
-import {Button} from "~/components/ui/button";
 import PageTitle from "~/app/dashboard/_components/PageTitle";
+import QuizzesList from "./_components/QuizzesList";
+import { getAllQuizzes } from "~/server/quiz";
+import CreateQuizButton from "./_components/CreateQuizButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
-  const data = await db.query.quiz.findMany();
+  const quizzes = await getAllQuizzes(); // Fetch no server
 
   return (
     <div>
       <div className="flex flex-row justify-between">
-        <PageTitle>Seus quizzes</PageTitle>
-        <Button>Criar quiz</Button>
+        <PageTitle>Meus quizzes</PageTitle>
+        <CreateQuizButton />
       </div>
-      {data.map((quiz) => (
-        <div key={quiz.id}>
-          <h1>{quiz.title}</h1>
-          <p>{quiz.description}</p>
-        </div>
-      ))}
+
+      <QuizzesList quizzes={quizzes} />
     </div>
   );
 }
