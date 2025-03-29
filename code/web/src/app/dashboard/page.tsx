@@ -13,7 +13,7 @@ export default async function Page() {
   return (
     <div>
       <div className="flex flex-row justify-between">
-        <PageTitle>Meus quizzes</PageTitle>
+        <PageTitle className="mt-1">Meus quizzes</PageTitle>
         <CreateQuizModal educatorId={dataAuth?.user?.id || ""} />
       </div>
 

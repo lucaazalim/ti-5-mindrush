@@ -1,6 +1,6 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import QuizTypeSelector from "../QuizTypeSelector";
+import QuizTypeSelector from "./QuizTypeSelector";
 
 export default function QuizStepOne({ form }: { form: any }) {
   return (

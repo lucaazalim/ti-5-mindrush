@@ -16,6 +16,8 @@ import { createQuiz } from "~/server/quiz";
 import QuizStepOne from "./_components/QuizStepOne";
 import QuizStepTwoAI from "./_components/QuizStepTwoAI";
 import QuizStepTwoPDF from "./_components/QuizStepTwoPDF";
+import StepOneActions from "./_components/StepOneActions";
+import StepTwoActions from "./_components/StepTwoActions";
 
 const quizSchema = z
   .object({
@@ -65,8 +67,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
     resolver: zodResolver(quizSchema),
     mode: "onChange",
     defaultValues: {
-      educatorId: educatorId,
-      type: "BLANK",
+      educatorId: educatorId
     },
   });
 
@@ -79,7 +80,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
 
   return (
     <Dialog>
-      <DialogTrigger className="rounded-3xl bg-primary px-4 py-2 text-white">
+      <DialogTrigger className="text-sm text-white rounded-3xl bg-primary py-3 px-8  ">
         Criar quiz
       </DialogTrigger>
       <DialogContent>
@@ -94,67 +95,23 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
                   <QuizStepTwoAI form={form} />
                 )}
 
-                {/* Input específico para PDF_GENERATED */}
                 {selectedType === "PDF_GENERATED" && (
                   <QuizStepTwoPDF form={form} />
                 )}
 
-                {/* Botões de navegação */}
-                <div className="mt-4 flex justify-between">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => setStep(1)}
-                  >
-                    Voltar
-                  </Button>
-                  <Button
-                    type="submit"
-                    onClick={async () => {
-                      let isValid = true;
-
-                      if (selectedType === "AI_GENERATED") {
-                        isValid = await form.trigger([
-                          "theme",
-                          "difficulty",
-                          "language",
-                        ]);
-                      } else if (selectedType === "PDF_GENERATED") {
-                        isValid = await form.trigger(["pdfBase64"]);
-                      }
-
-                      if (isValid) {
-                        form.handleSubmit(onSubmit)();
-                      }
-                    }}
-                  >
-                    Criar Quiz
-                  </Button>
-                </div>
+                <StepTwoActions setStep={setStep} />
               </>
             )}
           </form>
         </Form>
 
-        {/* Lógica para avançar para o próximo step ou submeter o formulário */}
-        {step === 1 && selectedType && (
-          <div className="flex justify-center">
-            <Button
-              type="button"
-              onClick={async () => {
-                const isValid = await form.trigger(["title", "description"]);
-                if (isValid) {
-                  if (selectedType === "BLANK") {
-                    form.handleSubmit(onSubmit)();
-                  } else {
-                    setStep(2);
-                  }
-                }
-              }}
-            >
-              Continuar
-            </Button>
-          </div>
+        {step === 1 && (
+          <StepOneActions
+            form={form}
+            selectedType={selectedType}
+            setStep={setStep}
+            onSubmit={onSubmit}
+          />
         )}
       </DialogContent>
     </Dialog>

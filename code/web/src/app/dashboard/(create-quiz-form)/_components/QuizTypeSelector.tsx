@@ -3,24 +3,24 @@
 type QuizType = "BLANK" | "AI_GENERATED" | "PDF_GENERATED";
 
 interface QuizOption {
-    value: QuizType;
-    label: string;
-    description: string;
+  value: QuizType;
+  label: string;
+  description: string;
 }
 
 interface QuizTypeSelectorProps {
-    selectedType: string;
-    onSelect: (value: QuizType) => void;
+  selectedType: string;
+  onSelect: (value: QuizType) => void;
 }
 
 const quizTypes: QuizOption[] = [
-    { value: "BLANK", label: "Quiz em Branco", description: "Crie manualmente suas perguntas." },
-    { value: "AI_GENERATED", label: "Gerado por IA", description: "A IA cria perguntas automaticamente." },
-    { value: "PDF_GENERATED", label: "Gerado por PDF", description: "Carregue um PDF e gere perguntas." }
+  { value: "BLANK", label: "Quiz em Branco", description: "Crie manualmente suas perguntas." },
+  { value: "AI_GENERATED", label: "Gerado por IA", description: "A IA cria perguntas automaticamente." },
+  { value: "PDF_GENERATED", label: "Gerado por PDF", description: "Carregue um PDF e gere perguntas." }
 ];
 
 export default function QuizTypeSelector({ selectedType, onSelect }: QuizTypeSelectorProps) {
-   return (
+  return (
     <div className="grid grid-cols-3 gap-4">
       {quizTypes.map((option) => (
         <div
