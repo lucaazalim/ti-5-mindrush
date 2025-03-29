@@ -1,7 +1,7 @@
 import PageTitle from "~/app/dashboard/_components/PageTitle";
 import QuizzesList from "./_components/QuizzesList";
 import { getAllQuizzes } from "~/server/quiz";
-import { CreateQuizModal } from "./_components/forms-quiz/CreateQuizModal";
+import { CreateQuizModal } from "./(forms-quiz)/CreateQuizModal";
 import { auth } from "~/server/auth";
 
 export const dynamic = "force-dynamic";

@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 interface Quiz {
     id: string;
     educatorId: string;
@@ -16,10 +18,12 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
       <div className="grid grid-cols-4 gap-5 mt-8">
         {quizzes.length > 0 ? (
           quizzes.map((quiz) => (
-            <div className="bg-white p-6 rounded-xl cursor-pointer" key={quiz.id}>
-              <h3 className="font-bold">{quiz.title}</h3>
-              <p>{quiz.description}</p>
-            </div>
+            <Link href={`/quiz/${quiz.id}`} key={quiz.id}>
+              <div className="bg-white p-6 rounded-xl cursor-pointer" >
+                <h3 className="font-bold">{quiz.title}</h3>
+                <p>{quiz.description}</p>
+              </div>
+            </Link>
           ))
         ) : (
           <p className="text-gray-500">Nenhum quiz encontrado.</p>
