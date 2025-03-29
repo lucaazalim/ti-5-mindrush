@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mindrush/modules/lobby/presentation/main_screen.dart';
+import 'package:mindrush/modules/lobby/presentation/pin_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
+        MaterialPageRoute(builder: (context) => const PinScreen()),
       );
     });
   }
@@ -31,12 +31,16 @@ class _HomePageState extends State<HomePage> {
           children: [
             Image.asset(
               'assets/images/logo.png',
-              width: 212,
+              width: 200,
             ),
             const SizedBox(height: 40),
             const Text(
               'Bem-vindo!',
               style: TextStyle(color: Colors.white, fontSize: 24),
+            ),
+            const SizedBox(height: 20),
+            const CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             ),
           ],
         ),
@@ -44,4 +48,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
