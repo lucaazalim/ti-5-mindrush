@@ -11,34 +11,29 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
-import QuizTypeSelector from "./QuizTypeSelector";
+import { Form } from "~/components/ui/form";
 import { createQuiz } from "~/server/quiz";
+import QuizStepOne from "./_components/QuizStepOne";
+import QuizStepTwoAI from "./_components/QuizStepTwoAI";
+import QuizStepTwoPDF from "./_components/QuizStepTwoPDF";
 
 const quizSchema = z
   .object({
     educatorId: z.string().uuid(),
     title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-    description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
+    description: z
+      .string()
+      .min(8, "A descrição deve ter pelo menos 8 caracteres"),
     type: z.enum(["BLANK", "AI_GENERATED", "PDF_GENERATED"]),
-    theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres").optional(),
+    theme: z
+      .string()
+      .min(3, "O tema deve ter pelo menos 3 caracteres")
+      .optional(),
     difficulty: z.enum(["EASY", "MEDIUM", "HARD"]).optional(),
-    language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres").optional(),
+    language: z
+      .string()
+      .min(2, "O idioma deve ter pelo menos 2 caracteres")
+      .optional(),
     pdfBase64: z.string().optional(),
   })
   // Validação individual para "theme"
@@ -61,7 +56,6 @@ const quizSchema = z
     message: "Faça o upload de um arquivo PDF.",
     path: ["pdfBase64"],
   });
-
 
 type QuizInput = z.infer<typeof quizSchema>;
 
@@ -92,152 +86,17 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
         <DialogTitle>Criar um novo quiz</DialogTitle>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {step === 1 && (
-              <>
-                <div className="space-y-4">
-                  <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                      <FormItem className="space-y-1">
-                        <FormLabel>Título</FormLabel>
-                        <FormControl>
-                          <Input placeholder="História do Brasil" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem className="space-y-1">
-                        <FormLabel>Descrição</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Revisão do capítulo 4"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="type"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <QuizTypeSelector
-                          selectedType={field.value}
-                          onSelect={field.onChange}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </>
-            )}
+            {step === 1 && <QuizStepOne form={form} />}
 
             {step === 2 && (
               <>
-                {/* Inputs específicos para AI_GENERATED */}
                 {selectedType === "AI_GENERATED" && (
-                  <>
-                    <div className="space-y-4">
-                      <FormField
-                        control={form.control}
-                        name="theme"
-                        render={({ field }) => (
-                          <FormItem className="space-y-1">
-                            <FormLabel>Tema</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Digite o tema do quiz"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="difficulty"
-                        render={({ field }) => (
-                          <FormItem className="space-y-1">
-                            <FormLabel>Dificuldade</FormLabel>
-                            <FormControl>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <SelectTrigger>
-                                  <SelectValue placeholder="Escolha a dificuldade" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectItem value="EASY">Fácil</SelectItem>
-                                  <SelectItem value="MEDIUM">Média</SelectItem>
-                                  <SelectItem value="HARD">Difícil</SelectItem>
-                                </SelectContent>
-                              </Select>
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="language"
-                        render={({ field }) => (
-                          <FormItem className="space-y-1">
-                            <FormLabel>Idioma</FormLabel>
-                            <FormControl>
-                              <Input
-                                placeholder="Digite o idioma do quiz"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
-                  </>
+                  <QuizStepTwoAI form={form} />
                 )}
 
                 {/* Input específico para PDF_GENERATED */}
                 {selectedType === "PDF_GENERATED" && (
-                  <FormField
-                    control={form.control}
-                    name="pdfBase64"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Enviar PDF</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="file"
-                            accept="application/pdf"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                const reader = new FileReader();
-                                reader.readAsDataURL(file);
-                                reader.onload = () => {
-                                  field.onChange(reader.result as string);
-                                };
-                              }
-                            }}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <QuizStepTwoPDF form={form} />
                 )}
 
                 {/* Botões de navegação */}
