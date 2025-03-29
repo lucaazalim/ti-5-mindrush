@@ -25,8 +25,8 @@ const quizIdSchema = z.string().uuid();
 const quizSchema = z.object({
   educatorId: z.string().uuid(),
   title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-  description: z.string().min(8, "A descrição deve ter pelo menos 10 caracteres"),
-  type: z.enum(["BLANK", "AI_GENERATED", "PDF_GENERATED"]),
+  description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
+  type: z.enum(["BLANK", "AI_GENERATED", "PDF_GENERATED"]).default("BLANK"),
   theme: z.string().optional(), 
   difficulty: z.enum(["EASY" , "MEDIUM" , "HARD"]).optional(), 
   language: z.string().optional(), 
