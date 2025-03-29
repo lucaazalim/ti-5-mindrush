@@ -28,7 +28,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
               <div className="relative flex flex-row justify-between">
                 <h3 className="font-bold">{quiz.title}</h3>
               </div>
-              <p>{quiz.description}</p>
+              <p className="break-words">{quiz.description}</p>
             </Link>
 
             <QuizOptions quizId={quiz.id} />
