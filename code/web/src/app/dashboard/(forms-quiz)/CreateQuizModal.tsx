@@ -30,45 +30,38 @@ import {
 import QuizTypeSelector from "./QuizTypeSelector";
 import { createQuiz } from "~/server/quiz";
 
-// Definição do schema de validação com Zod
 const quizSchema = z
   .object({
     educatorId: z.string().uuid(),
     title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-    description: z
-      .string()
-      .min(8, "A descrição deve ter pelo menos 8 caracteres"),
+    description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
     type: z.enum(["BLANK", "AI_GENERATED", "PDF_GENERATED"]),
-    theme: z.string().optional(),
+    theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres").optional(),
     difficulty: z.enum(["EASY", "MEDIUM", "HARD"]).optional(),
-    language: z.string().optional(),
+    language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres").optional(),
     pdfBase64: z.string().optional(),
   })
-  .refine(
-    (data) => {
-      if (data.type === "AI_GENERATED") {
-        return data.theme && data.difficulty && data.language;
-      }
-      return true;
-    },
-    {
-      message:
-        "Os campos tema, dificuldade e idioma são obrigatórios para quizzes gerados por IA.",
-      path: ["theme"], // Aponta para um dos campos (pode ser qualquer um dos três)
-    },
-  )
-  .refine(
-    (data) => {
-      if (data.type === "PDF_GENERATED") {
-        return !!data.pdfBase64;
-      }
-      return true;
-    },
-    {
-      message: "Faça o upload de um arquivo PDF.",
-      path: ["pdfBase64"],
-    },
-  );
+  // Validação individual para "theme"
+  .refine((data) => data.type !== "AI_GENERATED" || !!data.theme, {
+    message: "O tema é obrigatório para quizzes gerados por IA.",
+    path: ["theme"],
+  })
+  // Validação individual para "difficulty"
+  .refine((data) => data.type !== "AI_GENERATED" || !!data.difficulty, {
+    message: "A dificuldade é obrigatória para quizzes gerados por IA.",
+    path: ["difficulty"],
+  })
+  // Validação individual para "language"
+  .refine((data) => data.type !== "AI_GENERATED" || !!data.language, {
+    message: "O idioma é obrigatório para quizzes gerados por IA.",
+    path: ["language"],
+  })
+  // Validação do PDF quando for "PDF_GENERATED"
+  .refine((data) => data.type !== "PDF_GENERATED" || !!data.pdfBase64, {
+    message: "Faça o upload de um arquivo PDF.",
+    path: ["pdfBase64"],
+  });
+
 
 type QuizInput = z.infer<typeof quizSchema>;
 
