@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "~/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -62,7 +61,7 @@ const quizSchema = z
 type QuizInput = z.infer<typeof quizSchema>;
 
 export function CreateQuizModal({ educatorId }: { educatorId: string }) {
-  const [step, setStep] = useState(1); // Controla os steps
+  const [step, setStep] = useState(1); 
   const form = useForm<QuizInput>({
     resolver: zodResolver(quizSchema),
     mode: "onChange",
@@ -70,7 +69,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
       educatorId: educatorId,
       type: "BLANK",
     },
-  });
+  }); 
 
   const selectedType = form.watch("type");
 

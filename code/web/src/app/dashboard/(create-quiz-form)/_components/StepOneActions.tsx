@@ -26,9 +26,7 @@ export default function StepOneActions({ form, selectedType, setStep, onSubmit }
                 className="mt-2 w-1/2"
                 onClick={async () => {
                     if (await form.trigger(["title", "description"])) {
-                        console.log("selectedType", selectedType);
                         if (selectedType === "BLANK") {
-                            console.log("entrou no blank");
                             form.handleSubmit(onSubmit)();
                         } else {
                             setStep(2);

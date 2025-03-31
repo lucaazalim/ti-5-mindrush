@@ -1,6 +1,6 @@
 "use client"
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
+import { FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import QuizTypeSelector from "./QuizTypeSelector";
 import QuizBasicInfos from "./QuizBasicInfos";
 
