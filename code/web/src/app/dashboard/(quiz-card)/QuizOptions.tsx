@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Settings2, Pencil, Trash2 } from "lucide-react";
+import { Settings2, Pencil, Trash2, Edit } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,9 +11,17 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import DeleteQuizModal from "./DeleteQuizModal";
+import EditQuizModal from "./EditQuizModal";
 
-export default function QuizOptions({ quizId }: { quizId: string }) {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
+interface QuizOptionsProps {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export default function QuizOptions({ id, title, description }: QuizOptionsProps) {
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   return (
     <>
@@ -24,13 +32,16 @@ export default function QuizOptions({ quizId }: { quizId: string }) {
         <DropdownMenuContent>
           <DropdownMenuLabel>Opções do quiz</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer">
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => setIsEditDialogOpen(true)}
+          >
             <Pencil />
             Editar
           </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer focus:bg-red-50 focus:text-red-500"
-            onClick={() => setIsDialogOpen(true)}
+            onClick={() => setIsDeleteDialogOpen(true)}
           >
             <Trash2 />
             Excluir
@@ -38,10 +49,19 @@ export default function QuizOptions({ quizId }: { quizId: string }) {
         </DropdownMenuContent>
       </DropdownMenu>
 
+      <EditQuizModal
+        open={isEditDialogOpen}
+        setIsEditDialogOpen={setIsEditDialogOpen}
+        id={id}
+        title={title}
+        description={description}
+      /> 
+
       <DeleteQuizModal
-        open={isDialogOpen}
-        setIsDialogOpen={setIsDialogOpen}
-        quizId={quizId}
+        open={isDeleteDialogOpen}
+        setIsDeleteDialogOpen={setIsDeleteDialogOpen}
+        id={id}
+        title={title}
       />
     </>
   );

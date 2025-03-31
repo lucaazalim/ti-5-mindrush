@@ -31,7 +31,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
               <p className="break-words">{quiz.description}</p>
             </Link>
 
-            <QuizOptions quizId={quiz.id} />
+            <QuizOptions id={quiz.id} title={quiz.title} description={quiz.description} />
           </div>
         ))
       ) : (

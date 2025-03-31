@@ -6,32 +6,29 @@ import { deleteQuiz } from "~/server/quiz";
 
 interface DeleteQuizModalProps {
   open: boolean;
-  setIsDialogOpen: (open: boolean) => void;
-  quizId: string;
+  setIsDeleteDialogOpen: (open: boolean) => void;
+  id: string;
+  title: string;
 }
 
-export default function DeleteQuizModal({
-  open,
-  setIsDialogOpen,
-  quizId,
-}: DeleteQuizModalProps) {
+export default function DeleteQuizModal({ open, setIsDeleteDialogOpen, id, title }: DeleteQuizModalProps) {
   return (
-    <Dialog open={open} onOpenChange={setIsDialogOpen}>
+    <Dialog open={open} onOpenChange={setIsDeleteDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Excluir quiz</DialogTitle>
+          <DialogTitle>Excluir quiz - {title}</DialogTitle>
           <DialogDescription>
-            Esta a excluirá permanentemente este quiz.
+            Esta ação excluirá permanentemente o quiz.
           </DialogDescription>
         </DialogHeader>
         <div className="mt-2 flex gap-2">
-          <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+          <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
             Cancelar
           </Button>
           <Button
             variant="destructive"
             onClick={async () => {
-              await deleteQuiz(quizId);
+              await deleteQuiz(id);
               window.location.reload();
             }}
           >
