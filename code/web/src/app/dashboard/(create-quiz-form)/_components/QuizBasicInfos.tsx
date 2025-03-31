@@ -11,7 +11,7 @@ interface QuizBasicInfosProps {
 
 export default function QuizBasicInfos({form, title, description}: QuizBasicInfosProps) {
     return(
-        <div className="space-y-4">
+        <div className="space-y-3">
             <FormField
             control={form.control}
             name="title"

@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "~
 
 export default function QuizTypeSpecificForm({ form, }: { form: any }) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       <>
         <FormField control={form.control} name="theme" render={({ field }) => (
           <FormItem className="space-y-1">

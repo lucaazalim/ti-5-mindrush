@@ -80,7 +80,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
 
   return (
     <Dialog>
-      <DialogTrigger className="text-sm text-white rounded-3xl bg-primary py-3 px-8  ">
+      <DialogTrigger className="text-sm font-medium text-white rounded-3xl bg-primary py-3 px-8  ">
         Criar quiz
       </DialogTrigger>
       <DialogContent>
