@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class NameScreen extends StatefulWidget {
+  const NameScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<NameScreen> createState() => _NameScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _NameScreenState extends State<NameScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  String? _nameError;
 
   @override
   void dispose() {
@@ -18,16 +19,26 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _submitForm() {
-    if (_formKey.currentState!.validate()) {
-      // Se os dados forem válidos, mostra mensagem de sucesso
+
+    String name = _nameController.text.trim();
+    if (name.isEmpty || name.length < 2) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Bem-vindo, ${_nameController.text}!'),
-          backgroundColor: Colors.green,
+        const SnackBar(
+          content: Text('O nome deve ter pelo menos 2 caracteres.'),
+          backgroundColor: Colors.red,
         ),
       );
+      return;
     }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Bem-vindo, $name!'),
+        backgroundColor: Colors.green,
+      ),
+    );
+
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,21 +83,14 @@ class _MainScreenState extends State<MainScreen> {
                             fillColor: Colors.white,
                             contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10), // Ajuste do padding interno
                             enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(6),
                               borderSide: const BorderSide(color: Colors.white),
                             ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(6),
                               borderSide: const BorderSide(color: Colors.blue),
                             ),
                           ),
-
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Por favor insira seu nome';
-                            }
-                            return null;
-                          },
 
                         ),
 
@@ -100,9 +104,9 @@ class _MainScreenState extends State<MainScreen> {
                     child: ElevatedButton(
                       onPressed: _submitForm,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
+                        backgroundColor: const Color(0xFF2C2C2C),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(6),
                         ),
                       ),
                       child: const Text(

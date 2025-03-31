@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mindrush/modules/lobby/presentation/main_screen.dart';
+import 'package:mindrush/modules/lobby/presentation/name_screen.dart';
 
 class PinScreen extends StatefulWidget {
   const PinScreen({super.key});
@@ -46,11 +46,11 @@ class _PinScreenState extends State<PinScreen> {
 
       // Valida se o PIN está na lista de válidos
       if (validPins.contains(_pinController.text)) {
-        // Navegar para a tela de apelido (MainScreen)
+        // Navegar para a tela de apelido (NameScreen)
         Navigator.pop(context); // Remover o loading
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const MainScreen()),
+          MaterialPageRoute(builder: (context) => const NameScreen()),
         );
       } else {
         Navigator.pop(context); // Remover o loading
