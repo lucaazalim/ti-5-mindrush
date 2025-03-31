@@ -67,7 +67,8 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
     resolver: zodResolver(quizSchema),
     mode: "onChange",
     defaultValues: {
-      educatorId: educatorId
+      educatorId: educatorId,
+      type: "BLANK",
     },
   });
 
