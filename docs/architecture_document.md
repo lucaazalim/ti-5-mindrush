@@ -444,10 +444,18 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 # 5. Wireframes
 
-> Wireframes são protótipos das telas da aplicação usados em design de interface para sugerir a
-> estrutura de um site web e seu relacionamentos entre suas
-> páginas. Um wireframe web é uma ilustração semelhante ao
-> layout de elementos fundamentais na interface.
+## Wireframe do Aplicativo
+### Tela de início
+![Tela de início do app](assets/wireframes/app-inicio.png "Tela de início do app")
+
+### RF9: O estudante informa um código para acessar uma partida.
+![Wireframe aplicativo RF9](assets/wireframes/app-pin.png "Wireframe aplicativo RF9")
+
+### RF11: O estudante informa um apelido que o identificará na partida.
+![Wireframe aplicativo RF11](assets/wireframes/app-apelido.png "Wireframe aplicativo RF11")
+
+### Lobby de espera
+![Wireframe aplicativo Lobby](assets/wireframes/app-lobby-espera.png "Wireframe aplicativo Lobby")
 
 <a name="solucao"></a>
 
@@ -530,5 +538,5 @@ _Inclua o URL do repositório (Github, Bitbucket, etc) onde você armazenou o c�
 | --------------------- | ----------------- | ----------------------------- |
 | Repositório de código | GitHub            | https://github.com/XXXXXXX    |
 | Hospedagem do site    | Heroku            | https://XXXXXXX.herokuapp.com |
-| Protótipo Interativo  | MavelApp ou Figma | https://encr.pw/l4sVl     |
+| Protótipo Interativo  |  Figma | https://encr.pw/l4sVl     |
 | Documentação de teste | Github            | https://githun.com/xxxx       |
