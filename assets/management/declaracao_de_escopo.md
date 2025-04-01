@@ -2,7 +2,7 @@
 
 | **Campo**                        | **Detalhes**                                                                                                                                     |
 |-----------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Projeto**                       | Mind*Rush*                                                                                                                                      |
+| **Projeto**                       | MIND*Rush*                                                                                                                                      |
 | **Gerente do Projeto**            | Luca Ferrari Azalim                                                                                                                            |
 | **Objetivo do Projeto**           | Desenvolver uma plataforma digital que permita aos educadores a criação e aplicação em tempo real de quizzes personalizados.                    |
 
