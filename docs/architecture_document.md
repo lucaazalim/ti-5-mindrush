@@ -530,5 +530,5 @@ _Inclua o URL do repositório (Github, Bitbucket, etc) onde você armazenou o c�
 | --------------------- | ----------------- | ----------------------------- |
 | Repositório de código | GitHub            | https://github.com/XXXXXXX    |
 | Hospedagem do site    | Heroku            | https://XXXXXXX.herokuapp.com |
-| Protótipo Interativo  | MavelApp ou Figma | https://figma.com/XXXXXXX     |
+| Protótipo Interativo  | MavelApp ou Figma | https://encr.pw/l4sVl     |
 | Documentação de teste | Github            | https://githun.com/xxxx       |
