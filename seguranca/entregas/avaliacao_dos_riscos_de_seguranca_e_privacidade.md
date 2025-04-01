@@ -2,6 +2,8 @@
 
 **Nome do consultor de segurança da equipe:** Luca Ferrari Azalim
 
+---
+
 **1. Quais partes do projeto requerem modelos de ameaças antes da liberação?**
 
 - **Cadastro e login de educador (RF1, RNF5 e RNF6):** Criação de conta e login por parte do educador usando conta Google.
