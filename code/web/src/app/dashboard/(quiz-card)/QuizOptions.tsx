@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Settings2, Pencil, Trash2, Edit } from "lucide-react";
+import { Settings2, Pencil, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import DeleteQuizModal from "./DeleteQuizModal";
-import EditQuizModal from "./EditQuizModal";
 
 interface QuizOptionsProps {
   id: string;
@@ -19,9 +18,12 @@ interface QuizOptionsProps {
   description: string;
 }
 
-export default function QuizOptions({ id, title, description }: QuizOptionsProps) {
+export default function QuizOptions({
+  id,
+  title,
+  description,
+}: QuizOptionsProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
 
   return (
     <>
@@ -32,30 +34,26 @@ export default function QuizOptions({ id, title, description }: QuizOptionsProps
         <DropdownMenuContent>
           <DropdownMenuLabel>Opções do quiz</DropdownMenuLabel>
           <DropdownMenuSeparator />
+
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => setIsEditDialogOpen(true)}
+            onClick={() => {
+              window.location.href = `/dashboard/manual?id=${id}`;
+            }}
           >
-            <Pencil />
+            <Pencil className="mr-2 h-4 w-4" />
             Editar
           </DropdownMenuItem>
+
           <DropdownMenuItem
             className="cursor-pointer focus:bg-red-50 focus:text-red-500"
             onClick={() => setIsDeleteDialogOpen(true)}
           >
-            <Trash2 />
+            <Trash2 className="mr-2 h-4 w-4" />
             Excluir
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <EditQuizModal
-        open={isEditDialogOpen}
-        setIsEditDialogOpen={setIsEditDialogOpen}
-        id={id}
-        title={title}
-        description={description}
-      /> 
 
       <DeleteQuizModal
         open={isDeleteDialogOpen}

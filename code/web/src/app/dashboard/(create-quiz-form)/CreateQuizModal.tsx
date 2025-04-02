@@ -4,14 +4,18 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import { Button } from "~/components/ui/button";
 import { Form } from "~/components/ui/form";
+
 import { createQuiz } from "~/server/quiz";
+
 import QuizStepOne from "./_components/QuizStepOne";
 import QuizStepTwoAI from "./_components/QuizStepTwoAI";
 import QuizStepTwoPDF from "./_components/QuizStepTwoPDF";
@@ -37,22 +41,18 @@ const quizSchema = z
       .optional(),
     pdfBase64: z.string().optional(),
   })
-  // Validação individual para "theme"
   .refine((data) => data.type !== "AI_GENERATED" || !!data.theme, {
     message: "O tema é obrigatório para quizzes gerados por IA.",
     path: ["theme"],
   })
-  // Validação individual para "difficulty"
   .refine((data) => data.type !== "AI_GENERATED" || !!data.difficulty, {
     message: "A dificuldade é obrigatória para quizzes gerados por IA.",
     path: ["difficulty"],
   })
-  // Validação individual para "language"
   .refine((data) => data.type !== "AI_GENERATED" || !!data.language, {
     message: "O idioma é obrigatório para quizzes gerados por IA.",
     path: ["language"],
   })
-  // Validação do PDF quando for "PDF_GENERATED"
   .refine((data) => data.type !== "PDF_GENERATED" || !!data.pdfBase64, {
     message: "Faça o upload de um arquivo PDF.",
     path: ["pdfBase64"],
@@ -61,30 +61,42 @@ const quizSchema = z
 type QuizInput = z.infer<typeof quizSchema>;
 
 export function CreateQuizModal({ educatorId }: { educatorId: string }) {
-  const [step, setStep] = useState(1); 
+  const [step, setStep] = useState(1);
+
   const form = useForm<QuizInput>({
     resolver: zodResolver(quizSchema),
     mode: "onChange",
     defaultValues: {
-      educatorId: educatorId,
+      educatorId,
       type: "BLANK",
     },
-  }); 
+  });
 
   const selectedType = form.watch("type");
 
   async function onSubmit(values: QuizInput) {
-    const data = await createQuiz(values);
-    window.location.reload();
+    try {
+      const result = await createQuiz(values);
+
+      if (values.type === "BLANK" && result?.id) {
+        window.location.href = `/dashboard/manual?id=${result.id}`;
+      } else {
+        window.location.reload();
+      }
+    } catch (error) {
+      alert("Erro ao criar o quiz. Tente novamente.");
+    }
   }
 
   return (
     <Dialog>
-      <DialogTrigger className="text-sm font-medium text-white rounded-3xl bg-primary py-3 px-8  ">
+      <DialogTrigger className="rounded-3xl bg-primary px-8 py-3 text-sm font-medium text-white">
         Criar quiz
       </DialogTrigger>
+
       <DialogContent>
         <DialogTitle>Criar um novo quiz</DialogTitle>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {step === 1 && <QuizStepOne form={form} />}
@@ -94,11 +106,9 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
                 {selectedType === "AI_GENERATED" && (
                   <QuizStepTwoAI form={form} />
                 )}
-
                 {selectedType === "PDF_GENERATED" && (
                   <QuizStepTwoPDF form={form} />
                 )}
-
                 <StepTwoActions setStep={setStep} />
               </>
             )}

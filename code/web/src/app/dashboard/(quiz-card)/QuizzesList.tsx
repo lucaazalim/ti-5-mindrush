@@ -9,6 +9,7 @@ interface Quiz {
   title: string;
   description: string;
   createdAt: Date;
+  questionCount: number;
 }
 
 interface QuizzesListProps {
@@ -17,25 +18,42 @@ interface QuizzesListProps {
 
 export default function QuizzesList({ quizzes }: QuizzesListProps) {
   return (
-    <div className="mt-8 grid grid-cols-4 gap-5">
+    <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {quizzes.length > 0 ? (
         quizzes.map((quiz) => (
           <div
             key={quiz.id}
-            className="relative cursor-pointer rounded-xl bg-white p-6"
+            className="relative flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md"
           >
-            <Link href={`/quiz/${quiz.id}`} prefetch={true}>
-              <div className="relative flex flex-row justify-between">
-                <h3 className="font-bold">{quiz.title}</h3>
-              </div>
-              <p className="break-words">{quiz.description}</p>
-            </Link>
+            <div className="relative h-28 bg-gray-200">
+              <span className="absolute right-2 top-2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
+                {quiz.questionCount}{" "}
+                {quiz.questionCount === 1 ? "pergunta" : "perguntas"}
+              </span>
+            </div>
 
-            <QuizOptions id={quiz.id} title={quiz.title} description={quiz.description} />
+            <div className="flex flex-1 flex-col justify-between p-4">
+              <Link href={`/quiz/${quiz.id}`}>
+                <div className="space-y-1">
+                  <h3 className="text-sm font-semibold">{quiz.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {quiz.description}
+                  </p>
+                </div>
+              </Link>
+
+              <div className="mt-4 flex justify-end">
+                <QuizOptions
+                  id={quiz.id}
+                  title={quiz.title}
+                  description={quiz.description}
+                />
+              </div>
+            </div>
           </div>
         ))
       ) : (
-        <p className="text-gray-500">Nenhum quiz encontrado.</p>
+        <p className="text-muted-foreground">Nenhum quiz encontrado.</p>
       )}
     </div>
   );

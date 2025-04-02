@@ -14,7 +14,7 @@ export default async function Page() {
     <div>
       <div className="flex flex-row justify-between">
         <PageTitle className="mt-1">Meus quizzes</PageTitle>
-        <CreateQuizModal educatorId={dataAuth?.user?.id || ""} />
+        <CreateQuizModal educatorId={dataAuth?.user?.id ?? ""} />
       </div>
 
       <QuizzesList quizzes={quizzes} />
