@@ -5,4 +5,5 @@ Artefatos produzidos, com suas localizaçãoes e descrição do conteúdo.
 - `/inpi`
 - `/management`
 - `/minute`
-  - ata-2025-02-26.md - Ata de kick-off do projeto.
+  - `ata-2025-02-26.md` - Ata de kick-off do projeto.
+  - `ata-2025-03-26.md` - Ata de reunião do dia 26 de março de 2025.
