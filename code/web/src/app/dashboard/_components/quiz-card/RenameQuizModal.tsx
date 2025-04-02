@@ -4,7 +4,6 @@ import { Button } from "~/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
@@ -13,7 +12,7 @@ import { Form } from "~/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import QuizBasicInfos from "../(create-quiz-form)/_components/QuizBasicInfos";
+import QuizBasicInfos from "../create-quiz-form/components/QuizBasicInfos";
 
 interface RenameQuizModalProps {
   open: boolean;
