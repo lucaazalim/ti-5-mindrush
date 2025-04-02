@@ -443,7 +443,7 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 # 5. Wireframes
 
-## Wireframe do Aplicativo
+## Wireframes do Aplicativo
 ### Tela de início
 ![Tela de início do app](assets/wireframes/app-inicio.png "Tela de início do app")
 
@@ -455,6 +455,18 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 ### Lobby de espera
 ![Wireframe aplicativo Lobby](assets/wireframes/app-lobby-espera.png "Wireframe aplicativo Lobby")
+
+## Wireframe Web
+### RF2: O educador gerencia os quizzes.
+![Wireframe web RF02](assets/wireframes/web-dashboard.png "Wireframe web RF02")
+#### Modal para criar um quiz
+![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz.png "Wireframe web RF02 - Modal inicial")
+
+#### Step para quizzes gerados por IA
+![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-IA.png "Wireframe web RF02 - Modal com step de opções geradas por IA")
+
+#### Step para quizzes gerados por PDF
+![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-PDF.png "Wireframe web RF02 - Modal com step de opções geradas por PDF")
 
 <a name="solucao"></a>
 
