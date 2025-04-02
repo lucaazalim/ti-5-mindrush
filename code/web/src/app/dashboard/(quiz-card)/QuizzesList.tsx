@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import QuizOptions from "./QuizOptions";
+import { Button } from "~/components/ui/button";
 
 interface Quiz {
   id: string;
@@ -25,7 +26,15 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
             key={quiz.id}
             className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md"
           >
-            <div className="relative h-28 bg-gray-200">
+            <div className="relative h-32 bg-gray-200 flex justify-center items-center">
+
+              <Button 
+                className="h-11 mt-4"
+                onClick={() => {
+                  window.location.href = `/quiz`
+                }}
+                >Iniciar Partida</Button>
+
               <span className="absolute right-2 top-2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
                 {quiz.questionCount}{" "}
                 {quiz.questionCount === 1 ? "pergunta" : "perguntas"}
