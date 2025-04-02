@@ -468,6 +468,10 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 #### Step para quizzes gerados por PDF
 ![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-PDF.png "Wireframe web RF02 - Modal com step de opções geradas por PDF")
 
+### RF5: O educador gerencia as questões dos quizzes
+![Wireframe web RF05](assets/wireframes/web-questoes-manuais.png "Wireframe web RF05 - Gerenciamento de questões")
+
+
 <a name="solucao"></a>
 
 # 6. Projeto da Solução
