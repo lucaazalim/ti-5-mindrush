@@ -1,15 +1,16 @@
 import { getQuizById, getQuestionsByQuizId } from "~/server/quiz";
 import { QuizManualForm } from "./QuizManualForm";
-import type { QuizType } from "./QuizManualForm"; // importa o tipo correto
+import type { QuizType } from "./QuizManualForm";
 
 export default async function Page({
   searchParams,
 }: {
   searchParams: { id: string };
 }) {
-  const quiz = await getQuizById(searchParams.id);
-  const questionsFromDb = await getQuestionsByQuizId(searchParams.id);
+  const id = searchParams.id;
+  const quiz = await getQuizById(id);
 
+  const questionsFromDb = await getQuestionsByQuizId(id);
   if (!quiz) {
     return <div className="p-4 text-red-500">Quiz não encontrado.</div>;
   }

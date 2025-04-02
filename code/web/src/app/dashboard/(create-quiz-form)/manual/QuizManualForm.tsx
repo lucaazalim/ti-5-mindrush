@@ -162,6 +162,7 @@ export function QuizManualForm({
           />
 
           <Button
+            type="button"
             className="mx-auto block rounded-sm px-4 py-2 text-sm"
             onClick={async () => {
               const hasInvalid = questions.some((q) => {

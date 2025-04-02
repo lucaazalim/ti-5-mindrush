@@ -27,7 +27,11 @@ export function SlideNavigation({
 }: SlideNavigationProps) {
   return (
     <aside className="flex h-full w-[180px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
-      <Button onClick={addNewSlide} className="h-[8px] w-[140px] rounded-sm">
+      <Button
+        type="button"
+        onClick={addNewSlide}
+        className="h-[8px] w-[140px] rounded-sm"
+      >
         Novo Slide
       </Button>
 
