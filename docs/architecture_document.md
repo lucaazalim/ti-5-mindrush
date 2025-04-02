@@ -472,7 +472,7 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 ![Wireframe web RF05](assets/wireframes/web-questoes-manuais.png "Wireframe web RF05 - Gerenciamento de questões")
 
 ### RF6: O educador gera uma partida a partir de um quiz.
-![Wireframe web RF06](assets/wireframes/web-iniciar partida.png "Wireframe web RF06 - Iniciar Partida")
+![Wireframe web RF06](./assets/wireframes/web-iniciar%20partida.png "Wireframe web RF06 - Iniciar Partida")
 
 
 <a name="solucao"></a>
