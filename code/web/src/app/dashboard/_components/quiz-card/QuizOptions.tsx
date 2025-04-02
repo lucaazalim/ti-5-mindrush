@@ -12,18 +12,9 @@ import {
 } from "~/components/ui/dropdown-menu";
 import DeleteQuizModal from "./DeleteQuizModal";
 import RenameQuizModal from "./RenameQuizModal";
+import { Quiz } from "~/lib/types";
 
-interface QuizOptionsProps {
-  id: string;
-  title: string;
-  description: string;
-}
-
-export default function QuizOptions({
-  id,
-  title,
-  description,
-}: QuizOptionsProps) {
+export default function QuizOptions({ id, title, description}: Quiz) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
 

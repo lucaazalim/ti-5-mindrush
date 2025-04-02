@@ -3,15 +3,7 @@
 import Link from "next/link";
 import QuizOptions from "./QuizOptions";
 import { Button } from "~/components/ui/button";
-
-interface Quiz {
-  id: string;
-  educatorId: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-  questionCount: number;
-}
+import { Quiz } from "~/lib/types";
 
 interface QuizzesListProps {
   quizzes: Quiz[];

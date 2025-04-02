@@ -5,23 +5,7 @@ import { db } from "./db";
 import { quiz, question, questionQuizAlternatives } from "./db/schema";
 import { eq } from "drizzle-orm";
 import { inArray } from "drizzle-orm";
-
-
-export type QuizInput = {
-  educatorId: string;
-  title: string;
-  description: string;
-  type: "BLANK" | "AI_GENERATED" | "PDF_GENERATED";
-  theme?: string;
-  difficulty?: "EASY" | "MEDIUM" | "HARD";
-  language?: string;
-  pdfBase64?: string;
-};
-
-type QuizUpdateInput = {
-  title?: string;
-  description?: string;
-};
+import { Quiz, QuizUpdate } from "~/lib/types";
 
 const quizIdSchema = z.string().uuid();
 const quizSchema = z.object({
@@ -71,7 +55,7 @@ export async function getQuizById(id: string) {
   });
 }
 
-export async function createQuiz(quizData: QuizInput): Promise<{ id: string }> {
+export async function createQuiz(quizData: Quiz): Promise<{ id: string }> {
   const parsedData = quizSchema.safeParse(quizData);
   if (!parsedData.success) {
     throw new Error("Dados inválidos para criação do quiz");
@@ -86,7 +70,7 @@ export async function createQuiz(quizData: QuizInput): Promise<{ id: string }> {
   return created;
 }
 
-export async function updateQuiz(id: string, updateData: QuizUpdateInput) {
+export async function updateQuiz(id: string, updateData: QuizUpdate) {
   const parsedId = quizIdSchema.safeParse(id);
   if (!parsedId.success) {
     throw new Error("ID inválido");
