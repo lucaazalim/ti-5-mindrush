@@ -30,7 +30,7 @@ export default function QuizOptions({
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="absolute right-5 top-4">
+        <DropdownMenuTrigger className="absolute top-4 right-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
           <Settings2 size={20} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>

@@ -23,7 +23,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
         quizzes.map((quiz) => (
           <div
             key={quiz.id}
-            className="relative flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md"
+            className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md"
           >
             <div className="relative h-28 bg-gray-200">
               <span className="absolute right-2 top-2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
@@ -32,7 +32,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
               </span>
             </div>
 
-            <div className="flex flex-1 flex-col justify-between p-4">
+            <div className="flex flex-1 flex-col justify-between px-4 py-5 relative">
               <Link href={`/quiz/${quiz.id}`}>
                 <div className="space-y-1">
                   <h3 className="text-sm font-semibold">{quiz.title}</h3>
@@ -42,13 +42,12 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
                 </div>
               </Link>
 
-              <div className="mt-4 flex justify-end">
-                <QuizOptions
-                  id={quiz.id}
-                  title={quiz.title}
-                  description={quiz.description}
-                />
-              </div>
+              <QuizOptions
+                id={quiz.id}
+                title={quiz.title}
+                description={quiz.description}
+              />
+
             </div>
           </div>
         ))
