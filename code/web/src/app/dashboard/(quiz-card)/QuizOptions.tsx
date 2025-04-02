@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Settings2, Pencil, Trash2 } from "lucide-react";
+import { Settings2, Pencil, Trash2, TextCursorInput } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import DeleteQuizModal from "./DeleteQuizModal";
+import RenameQuizModal from "./RenameQuizModal";
 
 interface QuizOptionsProps {
   id: string;
@@ -24,6 +25,7 @@ export default function QuizOptions({
   description,
 }: QuizOptionsProps) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
 
   return (
     <>
@@ -46,6 +48,14 @@ export default function QuizOptions({
           </DropdownMenuItem>
 
           <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {setIsRenameDialogOpen(true)}}
+          >
+            <TextCursorInput className="mr-2 h-4 w-4" />
+            Renomear
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
             className="cursor-pointer focus:bg-red-50 focus:text-red-500"
             onClick={() => setIsDeleteDialogOpen(true)}
           >
@@ -54,6 +64,14 @@ export default function QuizOptions({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <RenameQuizModal
+        open={isRenameDialogOpen}
+        setIsRenameDialogOpen={setIsRenameDialogOpen}
+        id={id}
+        title={title}
+        description={description} 
+      />
 
       <DeleteQuizModal
         open={isDeleteDialogOpen}

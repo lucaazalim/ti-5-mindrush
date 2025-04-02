@@ -8,39 +8,39 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { deleteQuiz, updateQuiz } from "~/server/quiz";
+import { updateQuiz } from "~/server/quiz";
 import { Form } from "~/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import QuizBasicInfos from "../(create-quiz-form)/_components/QuizBasicInfos";
 
-interface EditQuizModalProps {
+interface RenameQuizModalProps {
   open: boolean;
-  setIsEditDialogOpen: (open: boolean) => void;
+  setIsRenameDialogOpen: (open: boolean) => void;
   id: string;
   title: string;
   description: string;
 }
 
-const editQuizSchema = z.object({
+const renameQuizSchema = z.object({
   title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
   description: z
     .string()
     .min(8, "A descrição deve ter pelo menos 8 caracteres"),
 });
 
-type EditQuizInput = z.infer<typeof editQuizSchema>;
+type RenameQuizInput = z.infer<typeof renameQuizSchema>;
 
-export default function EditQuizModal({
+export default function RenameQuizModal({
   open,
-  setIsEditDialogOpen,
+  setIsRenameDialogOpen,
   id,
   title,
   description,
-}: EditQuizModalProps) {
-  const editQuizForm = useForm<EditQuizInput>({
-    resolver: zodResolver(editQuizSchema),
+}: RenameQuizModalProps) {
+  const renameQuizForm = useForm<RenameQuizInput>({
+    resolver: zodResolver(renameQuizSchema),
     mode: "onChange",
     defaultValues: {
       title,
@@ -48,24 +48,24 @@ export default function EditQuizModal({
     },
   });
 
-  async function onSubmit(updateData: EditQuizInput) {
+  async function onSubmit(updateData: RenameQuizInput) {
     await updateQuiz(id, updateData);
     window.location.reload();
   }
 
   return (
-    <Dialog open={open} onOpenChange={setIsEditDialogOpen}>
+    <Dialog open={open} onOpenChange={setIsRenameDialogOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Editar quiz - {title}</DialogTitle>
         </DialogHeader>
-        <Form {...editQuizForm}>
+        <Form {...renameQuizForm}>
           <form
-            onSubmit={editQuizForm.handleSubmit(onSubmit)}
+            onSubmit={renameQuizForm.handleSubmit(onSubmit)}
             className="space-y-6"
           >
             <QuizBasicInfos
-              form={editQuizForm}
+              form={renameQuizForm}
               title={title}
               description={description}
             />
@@ -73,7 +73,7 @@ export default function EditQuizModal({
             <div className="mt-2 flex gap-2">
               <Button
                 variant="outline"
-                onClick={() => setIsEditDialogOpen(false)}
+                onClick={() => setIsRenameDialogOpen(false)}
               >
                 Cancelar
               </Button>
