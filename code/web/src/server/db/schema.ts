@@ -132,7 +132,7 @@ export const question = createTable("question", {
   quizId: uuid("quiz_id")
     .notNull()
     .references(() => quiz.id),
-  type: text("type").notNull(), // TODO enum(QUIZ, TRUE_OR_FALSE)
+  type: text("type", { enum: ["QUIZ", "TRUE_OR_FALSE"] }).notNull(),
   question: text("question").notNull(),
   timeLimit: integer("time_limit").notNull(),
   createdAt: timestamp("created_at")
@@ -161,7 +161,7 @@ export const match = createTable("match", {
     .notNull()
     .references(() => quiz.id),
   pin: text("pin").notNull(),
-  state: text("state").notNull(), // TODO enum(WAITING, RUNNING, PAUSED, ENDED)
+  state: text("state", { enum: ["WAITING", "RUNNING", "PAUSED", "ENDED"] }).notNull(),
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
