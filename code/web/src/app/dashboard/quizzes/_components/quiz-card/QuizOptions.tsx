@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Settings2, Pencil, Trash2, TextCursorInput } from "lucide-react";
+import { Pencil, Settings2, TextCursorInput, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,16 +12,19 @@ import {
 } from "~/components/ui/dropdown-menu";
 import DeleteQuizModal from "./DeleteQuizModal";
 import RenameQuizModal from "./RenameQuizModal";
-import { Quiz } from "~/lib/types";
+import type { Quiz } from "~/lib/types";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "~/lib/constants";
 
-export default function QuizOptions({ id, title, description}: Quiz) {
+export default function QuizOptions({ id, title, description }: Quiz) {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="absolute top-4 right-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+        <DropdownMenuTrigger className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
           <Settings2 size={20} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -30,9 +33,7 @@ export default function QuizOptions({ id, title, description}: Quiz) {
 
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => {
-              window.location.href = `/dashboard/manual?id=${id}`;
-            }}
+            onClick={() => router.push(ROUTES.QUIZ(id))}
           >
             <Pencil className="mr-2 h-4 w-4" />
             Editar
@@ -40,7 +41,9 @@ export default function QuizOptions({ id, title, description}: Quiz) {
 
           <DropdownMenuItem
             className="cursor-pointer"
-            onClick={() => {setIsRenameDialogOpen(true)}}
+            onClick={() => {
+              setIsRenameDialogOpen(true);
+            }}
           >
             <TextCursorInput className="mr-2 h-4 w-4" />
             Renomear
@@ -61,7 +64,7 @@ export default function QuizOptions({ id, title, description}: Quiz) {
         setIsRenameDialogOpen={setIsRenameDialogOpen}
         id={id}
         title={title}
-        description={description} 
+        description={description}
       />
 
       <DeleteQuizModal

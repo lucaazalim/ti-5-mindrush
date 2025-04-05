@@ -12,7 +12,7 @@ import { Form } from "~/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import QuizBasicInfos from "../create-quiz-form/components/QuizBasicInfos";
+import QuizBasicInfos from "../create-quiz-form/QuizBasicInfos";
 
 interface RenameQuizModalProps {
   open: boolean;

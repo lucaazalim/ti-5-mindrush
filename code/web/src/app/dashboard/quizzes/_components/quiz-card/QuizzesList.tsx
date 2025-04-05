@@ -34,7 +34,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
             </div>
 
             <div className="flex flex-1 flex-col justify-between px-4 py-5 relative">
-              <Link href={`/quiz/${quiz.id}`}>
+              <Link href={`/src/app/dashboard/matches/${quiz.id}`}>
                 <div className="space-y-1">
                   <h3 className="text-sm font-semibold">{quiz.title}</h3>
                   <p className="text-sm text-muted-foreground">

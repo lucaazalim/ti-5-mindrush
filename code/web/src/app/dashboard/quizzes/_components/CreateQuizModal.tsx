@@ -15,11 +15,11 @@ import { Form } from "~/components/ui/form";
 
 import { createQuiz } from "~/server/quiz";
 
-import QuizStepOne from "./components/QuizStepOne";
-import QuizStepTwoAI from "./components/QuizStepTwoAI";
-import QuizStepTwoPDF from "./components/QuizStepTwoPDF";
-import StepOneActions from "./components/StepOneActions";
-import StepTwoActions from "./components/StepTwoActions";
+import QuizStepOne from "./create-quiz-form/QuizStepOne";
+import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoAI";
+import QuizStepTwoPDF from "./create-quiz-form/QuizStepTwoPDF";
+import StepOneActions from "./create-quiz-form/StepOneActions";
+import StepTwoActions from "./create-quiz-form/StepTwoActions";
 
 const quizSchema = z
   .object({

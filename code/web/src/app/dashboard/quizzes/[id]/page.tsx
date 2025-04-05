@@ -1,13 +1,9 @@
-import { getQuizById, getQuestionsByQuizId } from "~/server/quiz";
-import { QuizManualForm } from "./QuizManualForm";
-import type { QuizType } from "./QuizManualForm";
+import { getQuestionsByQuizId, getQuizById } from "~/server/quiz";
+import type { QuizType } from "./_components/QuizManualForm";
+import { QuizManualForm } from "./_components/QuizManualForm";
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: { id: string };
-}) {
-  const id = searchParams.id;
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
   const quiz = await getQuizById(id);
 
   const questionsFromDb = await getQuestionsByQuizId(id);

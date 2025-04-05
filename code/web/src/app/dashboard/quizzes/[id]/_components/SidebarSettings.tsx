@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { type QuizType } from "../QuizManualForm";
+import { type QuizType } from "./QuizManualForm";
 
 interface SidebarSettingsProps {
   quizType: QuizType;

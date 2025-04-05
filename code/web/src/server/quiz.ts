@@ -2,9 +2,8 @@
 
 import { z } from "zod";
 import { db } from "./db";
-import { quiz, question, questionQuizAlternatives } from "./db/schema";
-import { eq } from "drizzle-orm";
-import { inArray } from "drizzle-orm";
+import { question, questionQuizAlternatives, quiz } from "./db/schema";
+import { eq, inArray } from "drizzle-orm";
 import { Quiz, QuizUpdate } from "~/lib/types";
 
 const quizIdSchema = z.string().uuid();
@@ -29,7 +28,9 @@ const quizSchema = z.object({
 
 export async function getAllQuizzes() {
   const quizzes = await db.select().from(quiz);
-  const questions = await db.select({ id: question.id, quizId: question.quizId }).from(question);
+  const questions = await db
+    .select({ id: question.id, quizId: question.quizId })
+    .from(question);
 
   const questionCountByQuiz: Record<string, number> = {};
 
@@ -39,10 +40,9 @@ export async function getAllQuizzes() {
 
   return quizzes.map((q) => ({
     ...q,
-    questionCount: questionCountByQuiz[q.id] ?? 0, 
+    questionCount: questionCountByQuiz[q.id] ?? 0,
   }));
 }
-
 
 export async function getQuizById(id: string) {
   const parsedId = quizIdSchema.safeParse(id);
@@ -61,7 +61,10 @@ export async function createQuiz(quizData: Quiz): Promise<{ id: string }> {
     throw new Error("Dados inválidos para criação do quiz");
   }
 
-  const [created] = await db.insert(quiz).values(parsedData.data).returning({ id: quiz.id });
+  const [created] = await db
+    .insert(quiz)
+    .values(parsedData.data)
+    .returning({ id: quiz.id });
 
   if (!created?.id) {
     throw new Error("Falha ao criar quiz: ID não retornado");
@@ -95,22 +98,23 @@ export async function deleteQuiz(id: string) {
     throw new Error("ID inválido");
   }
 
-  const questions = await db.select().from(question).where(eq(question.quizId, id));
+  const questions = await db
+    .select()
+    .from(question)
+    .where(eq(question.quizId, id));
 
   const questionIds = questions.map((q) => q.id);
 
   if (questionIds.length > 0) {
     await db
-  .delete(questionQuizAlternatives)
-  .where(inArray(questionQuizAlternatives.questionId, questionIds));
-
+      .delete(questionQuizAlternatives)
+      .where(inArray(questionQuizAlternatives.questionId, questionIds));
   }
 
   await db.delete(question).where(eq(question.quizId, id));
 
   return await db.delete(quiz).where(eq(quiz.id, id));
 }
-
 
 export async function getQuestionsByQuizId(quizId: string) {
   const questions = await db
@@ -120,11 +124,9 @@ export async function getQuestionsByQuizId(quizId: string) {
 
   const allAlternatives = await db.select().from(questionQuizAlternatives);
 
-  const enriched = questions.map((q) => ({
+  return questions.map((q) => ({
     ...q,
-    type: q.type === "TRUE_OR_FALSE" ? "TRUE_OR_FALSE" : "QUIZ", 
+    type: q.type === "TRUE_OR_FALSE" ? "TRUE_OR_FALSE" : "QUIZ",
     alternatives: allAlternatives.filter((a) => a.questionId === q.id),
   }));
-
-  return enriched;
 }

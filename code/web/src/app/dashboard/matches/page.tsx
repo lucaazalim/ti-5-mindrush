@@ -1,4 +1,4 @@
-import QRCodePage from "./QRCodePage";
+import QRCodePage from "./[id]/_components/QRCodePage";
 
 export default function Page() {
 

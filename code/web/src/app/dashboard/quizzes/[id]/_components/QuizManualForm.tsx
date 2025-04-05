@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { nanoid } from "nanoid";
-import { QuestionEditor } from "./components/QuestionEditor";
-import { AnswersManager } from "./components/AnswersManager";
-import { SlideNavigation } from "./components/SlideNavigation";
-import { SidebarSettings } from "./components/SidebarSettings";
+import { QuestionEditor } from "./QuestionEditor";
+import { AnswersManager } from "./AnswersManager";
+import { SlideNavigation } from "./SlideNavigation";
+import { SidebarSettings } from "./SidebarSettings";
 import { Button } from "~/components/ui/button";
 import { saveQuestionsAndAnswers } from "~/actions/question-actions";
 

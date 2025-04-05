@@ -4,7 +4,7 @@ import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Trash2, Plus } from "lucide-react";
 import { cn } from "~/lib/utils";
-import { type QuizType } from "../QuizManualForm";
+import { type QuizType } from "./QuizManualForm";
 
 interface Props {
   quizType: QuizType;
