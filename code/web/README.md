@@ -24,9 +24,7 @@
 
 ---
 
-## Next.js Authentication com NextAuth e Google OAuth
-
-### Configurar o Google OAuth
+## Configurando autenticação com Google OAuth
 
 1. Acesse [Google Cloud Console](https://console.cloud.google.com/cloud-resource-manager)
 2. Crie um novo projeto
