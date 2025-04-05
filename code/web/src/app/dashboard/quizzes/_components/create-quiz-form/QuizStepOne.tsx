@@ -1,13 +1,21 @@
-"use client"
+"use client";
 
-import { FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "~/components/ui/form";
 import QuizTypeSelector from "./QuizTypeSelector";
 import QuizBasicInfo from "./QuizBasicInfo";
+import { useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
 
-export default function QuizStepOne({ form }: { form: any }) {
+export default function QuizStepOne() {
+  const form = useCreateQuizFormContext();
+
   return (
     <>
-      <QuizBasicInfo formContext={form} />
+      <QuizBasicInfo />
 
       <FormField
         control={form.control}

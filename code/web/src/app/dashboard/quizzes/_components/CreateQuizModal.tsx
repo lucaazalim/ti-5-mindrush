@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -20,10 +19,16 @@ import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoAI";
 import QuizStepTwoPDF from "./create-quiz-form/QuizStepTwoPDF";
 import StepOneActions from "./create-quiz-form/StepOneActions";
 import StepTwoActions from "./create-quiz-form/StepTwoActions";
-import {CreateQuizSchema, quizCreateSchema} from "~/app/dashboard/quizzes/form-schema";
+import {
+  type CreateQuizSchema,
+  quizCreateSchema,
+} from "~/app/dashboard/quizzes/form-schema";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "~/lib/constants";
 
 export function CreateQuizModal({ educatorId }: { educatorId: string }) {
   const [step, setStep] = useState(1);
+  const router = useRouter();
 
   const form = useForm<CreateQuizSchema>({
     resolver: zodResolver(quizCreateSchema),
@@ -41,7 +46,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
       const result = await createQuiz(values);
 
       if (values.type === "BLANK" && result?.id) {
-        window.location.href = `/dashboard/manual?id=${result.id}`;
+        router.push(ROUTES.QUIZ(result.id));
       } else {
         window.location.reload();
       }
@@ -61,16 +66,12 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {step === 1 && <QuizStepOne form={form} />}
+            {step === 1 && <QuizStepOne />}
 
             {step === 2 && (
               <>
-                {selectedType === "AI_GENERATED" && (
-                  <QuizStepTwoAI form={form} />
-                )}
-                {selectedType === "PDF_GENERATED" && (
-                  <QuizStepTwoPDF form={form} />
-                )}
+                {selectedType === "AI_GENERATED" && <QuizStepTwoAI />}
+                {selectedType === "PDF_GENERATED" && <QuizStepTwoPDF />}
                 <StepTwoActions setStep={setStep} />
               </>
             )}
@@ -79,7 +80,6 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
 
         {step === 1 && (
           <StepOneActions
-            form={form}
             selectedType={selectedType}
             setStep={setStep}
             onSubmit={onSubmit}

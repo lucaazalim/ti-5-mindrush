@@ -50,7 +50,7 @@ export async function getQuizById(id: string) {
     throw new Error("ID inválido");
   }
 
-  return await db.query.quiz.findFirst({
+  return db.query.quiz.findFirst({
     where: eq(quiz.id, id),
   });
 }
@@ -89,7 +89,7 @@ export async function updateQuiz(id: string, updateData: QuizUpdate) {
     throw new Error("Dados inválidos para atualização do quiz");
   }
 
-  return await db.update(quiz).set(parsedUpdate.data).where(eq(quiz.id, id));
+  return db.update(quiz).set(parsedUpdate.data).where(eq(quiz.id, id));
 }
 
 export async function deleteQuiz(id: string) {
@@ -113,7 +113,7 @@ export async function deleteQuiz(id: string) {
 
   await db.delete(question).where(eq(question.quizId, id));
 
-  return await db.delete(quiz).where(eq(quiz.id, id));
+  return db.delete(quiz).where(eq(quiz.id, id));
 }
 
 export async function getQuestionsByQuizId(quizId: string) {
