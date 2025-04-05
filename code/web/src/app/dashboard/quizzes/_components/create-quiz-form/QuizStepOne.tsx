@@ -2,12 +2,12 @@
 
 import { FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
 import QuizTypeSelector from "./QuizTypeSelector";
-import QuizBasicInfos from "./QuizBasicInfos";
+import QuizBasicInfo from "./QuizBasicInfo";
 
 export default function QuizStepOne({ form }: { form: any }) {
   return (
     <>
-      <QuizBasicInfos form={form} />
+      <QuizBasicInfo formContext={form} />
 
       <FormField
         control={form.control}

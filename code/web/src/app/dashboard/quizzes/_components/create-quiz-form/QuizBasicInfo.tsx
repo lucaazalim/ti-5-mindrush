@@ -2,14 +2,12 @@
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
+import {useCreateQuizFormContext} from "~/app/dashboard/quizzes/form-schema";
 
-interface QuizBasicInfosProps {
-    form: any;
-    title?: string;
-    description?: string;
-}
+export default function QuizBasicInfo() {
 
-export default function QuizBasicInfos({form, title, description}: QuizBasicInfosProps) {
+    const form = useCreateQuizFormContext();
+
     return(
         <div className="space-y-3">
             <FormField
