@@ -10,7 +10,7 @@
 
 4. **Evite recarregar a página com `window.location.reload()`**. Essa prática quebra a fluidez da SPA e deve ser substituída por abordagens reativas e controladas.
 
-5. **Use constantes de rota definidas no arquivo `routes.ts`**. Isso evita o uso de rotas hard-coded, garante consistência entre os arquivos e facilita manutenções futuras.
+5. **Use constantes de rota definidas no arquivo `lib/routes.ts`**. Isso evita o uso de rotas hard-coded, garante consistência entre os arquivos e facilita manutenções futuras.
 
 6. **Com React Hook Form, não passe objetos de formulário como props**. Em vez disso, utilize os hooks diretamente dentro dos componentes que precisam interagir com o formulário.
 
@@ -22,6 +22,7 @@
 
 10. **Sempre utilize os componentes da biblioteca ShadCN quando disponíveis**. Evite criar componentes personalizados desnecessariamente. Isso garante consistência visual, reduz retrabalho e acelera o desenvolvimento
 
+11. **Todas as entidades do banco de dados possuem tipos inferidos automaticamente**, disponíveis no arquivo `lib/types.ts`. Usem esses tipos para evitar a duplicação de tipos e garantir a consistência entre o banco de dados e o código.
 ---
 
 ## Configurando autenticação com Google OAuth
