@@ -1,6 +1,6 @@
 import PageTitle from "~/app/dashboard/_components/PageTitle";
 import QuizzesList from "~/app/dashboard/quizzes/_components/quiz-card/QuizzesList";
-import { getAllQuizzes } from "~/server/quiz";
+import { getAllQuizzes } from "~/server/actions/quiz";
 import { CreateQuizModal } from "./_components/CreateQuizModal";
 import { auth } from "~/server/auth";
 

@@ -1,4 +1,4 @@
-import { getQuestionsByQuizId, getQuizById } from "~/server/quiz";
+import { getQuestionsByQuizId, getQuizById } from "~/server/actions/quiz";
 import type { QuizType } from "./_components/QuizManualForm";
 import { QuizManualForm } from "./_components/QuizManualForm";
 

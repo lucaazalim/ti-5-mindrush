@@ -1,8 +1,8 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "./db";
-import { question, questionQuizAlternatives, quiz } from "./db/schema";
+import { db } from "../db";
+import { question, questionQuizAlternatives, quiz } from "../db/schema";
 import { eq, inArray } from "drizzle-orm";
 import { Quiz, QuizUpdate } from "~/lib/types";
 

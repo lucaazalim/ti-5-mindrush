@@ -2,7 +2,7 @@
 
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "~/components/ui/dialog";
-import { deleteQuiz } from "~/server/quiz";
+import { deleteQuiz } from "~/server/actions/quiz";
 
 interface DeleteQuizModalProps {
   open: boolean;

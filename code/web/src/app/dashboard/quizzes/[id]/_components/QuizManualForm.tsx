@@ -7,7 +7,7 @@ import { AnswersManager } from "./AnswersManager";
 import { SlideNavigation } from "./SlideNavigation";
 import { SidebarSettings } from "./SidebarSettings";
 import { Button } from "~/components/ui/button";
-import { saveQuestionsAndAnswers } from "~/actions/question-actions";
+import { saveQuestionsAndAnswers } from "~/server/actions/question-actions";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "~/lib/constants";
 
