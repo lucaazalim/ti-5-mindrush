@@ -8,6 +8,8 @@ import { SlideNavigation } from "./SlideNavigation";
 import { SidebarSettings } from "./SidebarSettings";
 import { Button } from "~/components/ui/button";
 import { saveQuestionsAndAnswers } from "~/actions/question-actions";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "~/lib/constants";
 
 export type QuizType = "QUIZ" | "VERDADEIRO_FALSO";
 
@@ -44,6 +46,8 @@ export function QuizManualForm({
   quiz: Quiz;
   initialQuestions?: LoadedQuestion[];
 }) {
+  const router = useRouter();
+
   const [questions, setQuestions] = useState<Question[]>(
     initialQuestions.length > 0
       ? initialQuestions.map((q) => ({
@@ -187,7 +191,7 @@ export function QuizManualForm({
                   questions: questions.map(({ id, ...rest }) => rest),
                 });
 
-                window.location.href = `/dashboard`;
+                router.push(ROUTES.DASHBOARD);
               } catch (error) {
                 alert(
                   "Erro ao salvar perguntas. Verifique os dados e tente novamente.",

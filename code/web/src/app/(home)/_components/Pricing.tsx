@@ -3,7 +3,7 @@
 import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { pricingTiers } from "~/data/pricing";
+import { pricingTiers } from "~/app/(home)/_data/pricing";
 
 export const Pricing = () => {
   return (

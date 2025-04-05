@@ -3,13 +3,18 @@
 import Link from "next/link";
 import QuizOptions from "./QuizOptions";
 import { Button } from "~/components/ui/button";
-import { Quiz } from "~/lib/types";
+import type { Quiz } from "~/lib/types";
+import {useRouter} from "next/navigation";
+import {ROUTES} from "~/lib/constants";
 
 interface QuizzesListProps {
   quizzes: Quiz[];
 }
 
 export default function QuizzesList({ quizzes }: QuizzesListProps) {
+
+  const router = useRouter();
+
   return (
     <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {quizzes.length > 0 ? (
@@ -18,14 +23,13 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
             key={quiz.id}
             className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md"
           >
-            <div className="relative h-32 bg-gray-200 flex justify-center items-center">
-
-              <Button 
-                className="h-11 mt-4"
-                onClick={() => {
-                  window.location.href = `/quiz`
-                }}
-                >Iniciar Partida</Button>
+            <div className="relative flex h-32 items-center justify-center bg-gray-200">
+              <Button
+                className="mt-4 h-11"
+                onClick={() => router.push(ROUTES.QUIZZES)}
+              >
+                Iniciar Partida
+              </Button>
 
               <span className="absolute right-2 top-2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
                 {quiz.questionCount}{" "}
@@ -33,7 +37,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
               </span>
             </div>
 
-            <div className="flex flex-1 flex-col justify-between px-4 py-5 relative">
+            <div className="relative flex flex-1 flex-col justify-between px-4 py-5">
               <Link href={`/src/app/dashboard/matches/${quiz.id}`}>
                 <div className="space-y-1">
                   <h3 className="text-sm font-semibold">{quiz.title}</h3>
@@ -48,7 +52,6 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
                 title={quiz.title}
                 description={quiz.description}
               />
-
             </div>
           </div>
         ))

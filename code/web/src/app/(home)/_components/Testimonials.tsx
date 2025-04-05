@@ -1,6 +1,6 @@
 "use client";
 
-import { testimonials } from "~/data/testimonials";
+import { testimonials } from "~/app/(home)/_data/testimonials";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import React from "react";
