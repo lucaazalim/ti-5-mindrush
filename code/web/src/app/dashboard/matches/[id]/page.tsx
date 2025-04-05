@@ -1,4 +1,4 @@
-import { getQuizById, getQuestionsByQuizId } from "~/server/actions/quiz";
+import { getQuizById, getQuestionsByQuizId } from "~/server/actions/quiz-actions";
 
 interface PageProps {
   params: { id: string };

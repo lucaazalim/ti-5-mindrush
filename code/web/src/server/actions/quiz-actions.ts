@@ -1,70 +1,132 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "~/server/db";
-import { question, questionQuizAlternatives } from "~/server/db/schema";
-import { nanoid } from "nanoid";
+import { db } from "../db";
+import { question, questionQuizAlternatives, quiz } from "../db/schema";
 import { eq, inArray } from "drizzle-orm";
+import { type Quiz, type QuizUpdate } from "~/lib/types";
 
-const questionSchema = z.object({
-  quizId: z.string().uuid(),
-  questions: z.array(
-    z.object({
-      text: z.string().min(1, "A pergunta não pode estar vazia"),
-      answers: z.array(z.string().min(1)).min(2).max(4),
-      correctAnswerIndex: z.number().min(0),
-      type: z.enum(["QUIZ", "VERDADEIRO_FALSO"]),
-    })
-  ),
+const quizIdSchema = z.string().uuid();
+const quizSchema = z.object({
+  educatorId: z.string().uuid(),
+  title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
+  description: z
+    .string()
+    .min(8, "A descrição deve ter pelo menos 8 caracteres"),
+  type: z.enum(["BLANK", "AI_GENERATED", "PDF_GENERATED"]),
+  theme: z
+    .string()
+    .min(3, "O tema deve ter pelo menos 3 caracteres")
+    .optional(),
+  difficulty: z.enum(["EASY", "MEDIUM", "HARD"]).optional(),
+  language: z
+    .string()
+    .min(2, "O idioma deve ter pelo menos 2 caracteres")
+    .optional(),
+  pdfBase64: z.string().optional(),
 });
 
-export async function saveQuestionsAndAnswers(data: unknown) {
-  const parsed = questionSchema.safeParse(data);
+export async function getAllQuizzes() {
+  const quizzes = await db.select().from(quiz);
+  const questions = await db
+    .select({ id: question.id, quizId: question.quizId })
+    .from(question);
 
-  if (!parsed.success) {
-    throw new Error("Dados inválidos");
+  const questionCountByQuiz: Record<string, number> = {};
+
+  questions.forEach((q) => {
+    questionCountByQuiz[q.quizId] = (questionCountByQuiz[q.quizId] ?? 0) + 1;
+  });
+
+  return quizzes.map((q) => ({
+    ...q,
+    questionCount: questionCountByQuiz[q.id] ?? 0,
+  }));
+}
+
+export async function getQuizById(id: string) {
+  const parsedId = quizIdSchema.safeParse(id);
+  if (!parsedId.success) {
+    throw new Error("ID inválido");
   }
 
-  const { quizId, questions } = parsed.data;
+  return db.query.quiz.findFirst({
+    where: eq(quiz.id, id),
+  });
+}
 
-  try {
-    const existingQuestions = await db
-      .select({ id: question.id })
-      .from(question)
-      .where(eq(question.quizId, quizId));
-
-    const questionIds = existingQuestions.map((q) => q.id);
-
-    if (questionIds.length > 0) {
-      await db
-        .delete(questionQuizAlternatives)
-        .where(inArray(questionQuizAlternatives.questionId, questionIds));
-    }
-
-    await db.delete(question).where(eq(question.quizId, quizId));
-
-    for (const q of questions) {
-      const questionId = nanoid();
-
-      await db.insert(question).values({
-        id: questionId,
-        quizId,
-        question: q.text,
-        type: q.type === "VERDADEIRO_FALSO" ? "TRUE_OR_FALSE" : q.type,
-        timeLimit: 20,
-      });
-
-      const alternatives = q.answers.map((answer, index) => ({
-        id: nanoid(),
-        questionId,
-        answer,
-        correct: index === q.correctAnswerIndex,
-      }));
-
-      await db.insert(questionQuizAlternatives).values(alternatives);
-    }
-
-  } catch (err) {
-    throw new Error("Erro ao salvar perguntas.");
+export async function createQuiz(quizData: Quiz): Promise<{ id: string }> {
+  const parsedData = quizSchema.safeParse(quizData);
+  if (!parsedData.success) {
+    throw new Error("Dados inválidos para criação do quiz");
   }
+
+  const [created] = await db
+    .insert(quiz)
+    .values(parsedData.data)
+    .returning({ id: quiz.id });
+
+  if (!created?.id) {
+    throw new Error("Falha ao criar quiz: ID não retornado");
+  }
+
+  return created;
+}
+
+export async function updateQuiz(id: string, updateData: QuizUpdate) {
+  const parsedId = quizIdSchema.safeParse(id);
+  if (!parsedId.success) {
+    throw new Error("ID inválido");
+  }
+
+  const updateSchema = z.object({
+    title: z.string().min(3).optional(),
+    description: z.string().min(8).optional(),
+  });
+
+  const parsedUpdate = updateSchema.safeParse(updateData);
+  if (!parsedUpdate.success) {
+    throw new Error("Dados inválidos para atualização do quiz");
+  }
+
+  return db.update(quiz).set(parsedUpdate.data).where(eq(quiz.id, id));
+}
+
+export async function deleteQuiz(id: string) {
+  const parsedId = quizIdSchema.safeParse(id);
+  if (!parsedId.success) {
+    throw new Error("ID inválido");
+  }
+
+  const questions = await db
+    .select()
+    .from(question)
+    .where(eq(question.quizId, id));
+
+  const questionIds = questions.map((q) => q.id);
+
+  if (questionIds.length > 0) {
+    await db
+      .delete(questionQuizAlternatives)
+      .where(inArray(questionQuizAlternatives.questionId, questionIds));
+  }
+
+  await db.delete(question).where(eq(question.quizId, id));
+
+  return db.delete(quiz).where(eq(quiz.id, id));
+}
+
+export async function getQuestionsByQuizId(quizId: string) {
+  const questions = await db
+    .select()
+    .from(question)
+    .where(eq(question.quizId, quizId));
+
+  const allAlternatives = await db.select().from(questionQuizAlternatives);
+
+  return questions.map((q) => ({
+    ...q,
+    type: q.type === "TRUE_OR_FALSE" ? "TRUE_OR_FALSE" : "QUIZ",
+    alternatives: allAlternatives.filter((a) => a.questionId === q.id),
+  }));
 }

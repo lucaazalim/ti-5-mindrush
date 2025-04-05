@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { updateQuiz } from "~/server/actions/quiz";
+import { updateQuiz } from "~/server/actions/quiz-actions";
 import { Form } from "~/components/ui/form";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

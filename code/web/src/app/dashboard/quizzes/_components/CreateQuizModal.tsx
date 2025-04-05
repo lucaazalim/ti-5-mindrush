@@ -12,7 +12,7 @@ import {
 } from "~/components/ui/dialog";
 import { Form } from "~/components/ui/form";
 
-import { createQuiz } from "~/server/actions/quiz";
+import { createQuiz } from "~/server/actions/quiz-actions";
 
 import QuizStepOne from "./create-quiz-form/QuizStepOne";
 import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoAI";
