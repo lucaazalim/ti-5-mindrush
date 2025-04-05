@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { db } from "~/server/db";
-import { question, questionQuizAlternatives } from "~/server/db/schema";
+import { questions, quizQuestionsAlternatives } from "~/server/db/schema";
 
 const questionSchema = z.object({
   quizId: z.string().uuid(),
@@ -30,7 +30,7 @@ export async function saveQuestionsAndAnswers(data: unknown) {
       const questionId = crypto.randomUUID();
       const mappedType = q.type === "VERDADEIRO_FALSO" ? "TRUE_OR_FALSE" : q.type;
 
-      await db.insert(question).values({
+      await db.insert(questions).values({
         id: questionId,
         quizId,
         question: q.text,
@@ -45,7 +45,7 @@ export async function saveQuestionsAndAnswers(data: unknown) {
         correct: index === q.correctAnswerIndex,
       }));
 
-      await db.insert(questionQuizAlternatives).values(alternatives);
+      await db.insert(quizQuestionsAlternatives).values(alternatives);
     }
 
   } catch (error) {

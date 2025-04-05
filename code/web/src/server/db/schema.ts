@@ -110,7 +110,7 @@ export const verificationTokens = createTable(
   }),
 );
 
-export const quiz = createTable("quiz", {
+export const quizzes = createTable("quizzes", {
   id: uuid("id").primaryKey().defaultRandom(),
   educatorId: uuid("educator_id")
     .notNull()
@@ -127,11 +127,11 @@ export const quiz = createTable("quiz", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const question = createTable("question", {
+export const questions = createTable("questions", {
   id: uuid("id").primaryKey().defaultRandom(),
   quizId: uuid("quiz_id")
     .notNull()
-    .references(() => quiz.id),
+    .references(() => quizzes.id),
   type: text("type", { enum: ["QUIZ", "TRUE_OR_FALSE"] }).notNull(),
   question: text("question").notNull(),
   timeLimit: integer("time_limit").notNull(),
@@ -140,13 +140,13 @@ export const question = createTable("question", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const questionQuizAlternatives = createTable(
-  "question_quiz_alternatives",
+export const quizQuestionsAlternatives = createTable(
+  "quiz_questions_alternatives",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     questionId: uuid("question_id")
       .notNull()
-      .references(() => question.id),
+      .references(() => questions.id),
     answer: text("answer").notNull(),
     correct: boolean("correct").notNull(),
     createdAt: timestamp("created_at")
@@ -155,11 +155,11 @@ export const questionQuizAlternatives = createTable(
   },
 );
 
-export const match = createTable("match", {
+export const matches = createTable("matches", {
   id: uuid("id").primaryKey().defaultRandom(),
   quizId: uuid("quiz_id")
     .notNull()
-    .references(() => quiz.id),
+    .references(() => quizzes.id),
   pin: text("pin").notNull(),
   state: text("state", { enum: ["WAITING", "RUNNING", "PAUSED", "ENDED"] }).notNull(),
   createdAt: timestamp("created_at")
@@ -167,34 +167,34 @@ export const match = createTable("match", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const participant = createTable(
-  "participant",
+export const participants = createTable(
+  "participants",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     nickname: text("nickname").notNull(),
     total_points: integer("total_points").notNull(),
     matchId: uuid("match_id")
       .notNull()
-      .references(() => match.id),
+      .references(() => matches.id),
   },
   (table) => ({
     nicknameMatchIdx: unique().on(table.nickname, table.matchId),
   }),
 );
 
-export const quizAnswer = createTable(
-  "quiz_answer",
+export const quizAnswers = createTable(
+  "quiz_answers",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     participantId: uuid("participant_id")
       .notNull()
-      .references(() => participant.id),
+      .references(() => participants.id),
     questionId: uuid("question_id")
       .notNull()
-      .references(() => question.id),
+      .references(() => questions.id),
     matchId: uuid("match_id")
       .notNull()
-      .references(() => match.id),
+      .references(() => matches.id),
     alternative: text("alternative").notNull(),
     points: integer("points").notNull(),
     createdAt: timestamp("created_at")
