@@ -27,18 +27,20 @@ const quizSchema = z.object({
 });
 
 export async function getAllQuizzes() {
-  const quizzes = await db.select().from(quizzes);
-  const questions = await db
+
+  const alQuizzes = await db.select().from(quizzes);
+
+  const quizQuestions = await db
     .select({ id: questions.id, quizId: questions.quizId })
     .from(questions);
 
   const questionCountByQuiz: Record<string, number> = {};
 
-  questions.forEach((q) => {
+  quizQuestions.forEach((q) => {
     questionCountByQuiz[q.quizId] = (questionCountByQuiz[q.quizId] ?? 0) + 1;
   });
 
-  return quizzes.map((q) => ({
+  return alQuizzes.map((q) => ({
     ...q,
     questionCount: questionCountByQuiz[q.id] ?? 0,
   }));
@@ -98,12 +100,12 @@ export async function deleteQuiz(id: string) {
     throw new Error("ID inválido");
   }
 
-  const questions = await db
+  const allQuestions = await db
     .select()
     .from(questions)
     .where(eq(questions.quizId, id));
 
-  const questionIds = questions.map((q) => q.id);
+  const questionIds = allQuestions.map((q) => q.id);
 
   if (questionIds.length > 0) {
     await db
@@ -117,14 +119,14 @@ export async function deleteQuiz(id: string) {
 }
 
 export async function getQuestionsByQuizId(quizId: string) {
-  const questions = await db
+  const allQuestions = await db
     .select()
     .from(questions)
     .where(eq(questions.quizId, quizId));
 
   const allAlternatives = await db.select().from(quizQuestionsAlternatives);
 
-  return questions.map((q) => ({
+  return allQuestions.map((q) => ({
     ...q,
     type: q.type === "TRUE_OR_FALSE" ? "TRUE_OR_FALSE" : "QUIZ",
     alternatives: allAlternatives.filter((a) => a.questionId === q.id),
