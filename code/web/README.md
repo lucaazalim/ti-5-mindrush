@@ -23,6 +23,8 @@
 10. **Sempre utilize os componentes da biblioteca ShadCN quando disponíveis**. Evite criar componentes personalizados desnecessariamente. Isso garante consistência visual, reduz retrabalho e acelera o desenvolvimento
 
 11. **Todas as entidades do banco de dados possuem tipos inferidos automaticamente**, disponíveis no arquivo `lib/types.ts`. Usem esses tipos para evitar a duplicação de tipos e garantir a consistência entre o banco de dados e o código.
+
+12. **Evite o uso de `throw`.** O arquivo `/lib/result.ts` fornece uma abstração para lidar com erros de maneira funcional. Leia [este artigo](https://www.dennisokeeffe.com/blog/2024-07-14-creating-a-result-type-in-typescript) sobre Result Pattern. 
 ---
 
 ## Configurando autenticação com Google OAuth
