@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { db } from "../db";
 import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
-import { eq, inArray } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { type Quiz, type QuizUpdate } from "~/lib/types";
 
 const quizIdSchema = z.string().uuid();
@@ -27,7 +27,6 @@ const quizSchema = z.object({
 });
 
 export async function getAllQuizzes() {
-
   const alQuizzes = await db.select().from(quizzes);
 
   const quizQuestions = await db
@@ -96,24 +95,10 @@ export async function updateQuiz(id: string, updateData: QuizUpdate) {
 
 export async function deleteQuiz(id: string) {
   const parsedId = quizIdSchema.safeParse(id);
+
   if (!parsedId.success) {
     throw new Error("ID inválido");
   }
-
-  const allQuestions = await db
-    .select()
-    .from(questions)
-    .where(eq(questions.quizId, id));
-
-  const questionIds = allQuestions.map((q) => q.id);
-
-  if (questionIds.length > 0) {
-    await db
-      .delete(quizQuestionsAlternatives)
-      .where(inArray(quizQuestionsAlternatives.questionId, questionIds));
-  }
-
-  await db.delete(questions).where(eq(questions.quizId, id));
 
   return db.delete(quizzes).where(eq(quizzes.id, id));
 }

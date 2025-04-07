@@ -131,7 +131,7 @@ export const questions = createTable("questions", {
   id: uuid("id").primaryKey().defaultRandom(),
   quizId: uuid("quiz_id")
     .notNull()
-    .references(() => quizzes.id),
+    .references(() => quizzes.id, { onDelete: "cascade" }),
   type: text("type", { enum: ["QUIZ", "TRUE_OR_FALSE"] }).notNull(),
   question: text("question").notNull(),
   timeLimit: integer("time_limit").notNull(),
@@ -146,7 +146,7 @@ export const quizQuestionsAlternatives = createTable(
     id: uuid("id").primaryKey().defaultRandom(),
     questionId: uuid("question_id")
       .notNull()
-      .references(() => questions.id),
+      .references(() => questions.id, { onDelete: "cascade" }),
     answer: text("answer").notNull(),
     correct: boolean("correct").notNull(),
     createdAt: timestamp("created_at")
