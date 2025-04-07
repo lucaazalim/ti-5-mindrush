@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mindrush/modules/match/logic/alternative.dart';
+import 'package:mindrush/modules/match/logic/question.dart';
+
+import 'package:mindrush/modules/match/presentation/match_question.dart';
 
 class NameScreen extends StatefulWidget {
   const NameScreen({super.key});
@@ -8,6 +12,7 @@ class NameScreen extends StatefulWidget {
 }
 
 class _NameScreenState extends State<NameScreen> {
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   String? _nameError;
@@ -18,7 +23,7 @@ class _NameScreenState extends State<NameScreen> {
     super.dispose();
   }
 
-  void _submitForm() {
+  void _submitForm() async {
 
     String name = _nameController.text.trim();
     if (name.isEmpty || name.length < 2) {
@@ -30,13 +35,52 @@ class _NameScreenState extends State<NameScreen> {
       );
       return;
     }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Bem-vindo, $name!'),
-        backgroundColor: Colors.green,
-      ),
-    );
 
+    if (_formKey.currentState!.validate()) {
+      // Exibir o loading
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+          );
+        },
+      );
+
+      // Simular um atraso para o loading (substitua por sua lógica real)
+
+      await Future.delayed(const Duration(seconds: 2));
+
+      Navigator.pop(context); // Remove o loading
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => MatchQuestionScreen(
+            question: Question(
+              id: 1,
+              type: 'match',
+              question: 'Qual é a capital do Brasil?',
+              timeLimit: 30,
+              quizId: 100,
+              alternatives: [
+                Alternative(id:1, answer: 'Rio de Janeiro', correct: false),
+                Alternative(id:2, answer: 'São Paulo', correct: false),
+                Alternative(id:3, answer: 'Brasília', correct: true),
+                Alternative(id:4, answer: 'Salvador', correct: false),
+              ],
+            ),
+            onResponder: (resposta) {
+              print('Resposta selecionada: $resposta');
+            },
+          ),
+        ),
+      );
+
+
+    }
   }
 
 
