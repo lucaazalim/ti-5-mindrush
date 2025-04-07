@@ -5,10 +5,10 @@ import { db } from "../db";
 import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { type Quiz, type QuizUpdate } from "~/lib/types";
+import {uuidParser} from "~/lib/parsers";
 
-const quizIdSchema = z.string().uuid();
 const quizSchema = z.object({
-  educatorId: z.string().uuid(),
+  educatorId: uuidParser,
   title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
   description: z
     .string()
@@ -46,7 +46,7 @@ export async function getAllQuizzes() {
 }
 
 export async function getQuizById(id: string) {
-  const parsedId = quizIdSchema.safeParse(id);
+  const parsedId = uuidParser.safeParse(id);
   if (!parsedId.success) {
     throw new Error("ID inválido");
   }
@@ -75,7 +75,7 @@ export async function createQuiz(quizData: Quiz): Promise<{ id: string }> {
 }
 
 export async function updateQuiz(id: string, updateData: QuizUpdate) {
-  const parsedId = quizIdSchema.safeParse(id);
+  const parsedId = uuidParser.safeParse(id);
   if (!parsedId.success) {
     throw new Error("ID inválido");
   }
@@ -94,7 +94,7 @@ export async function updateQuiz(id: string, updateData: QuizUpdate) {
 }
 
 export async function deleteQuiz(id: string) {
-  const parsedId = quizIdSchema.safeParse(id);
+  const parsedId = uuidParser.safeParse(id);
 
   if (!parsedId.success) {
     throw new Error("ID inválido");

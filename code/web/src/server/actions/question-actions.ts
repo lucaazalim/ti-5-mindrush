@@ -2,17 +2,18 @@
 
 import { z } from "zod";
 import { db } from "~/server/db";
-import { questions, quizQuestionsAlternatives } from "~/server/db/schema";
+import { quizQuestionsAlternatives } from "~/server/db/schema";
+import { uuidParser } from "~/lib/parsers";
 
 const questionSchema = z.object({
-  quizId: z.string().uuid(),
+  quizId: uuidParser,
   questions: z.array(
     z.object({
       text: z.string().min(1, "A pergunta não pode estar vazia"),
       answers: z.array(z.string().min(1)).min(2).max(4),
       correctAnswerIndex: z.number().min(0),
       type: z.enum(["QUIZ", "VERDADEIRO_FALSO"]),
-    })
+    }),
   ),
 });
 
@@ -28,7 +29,8 @@ export async function saveQuestionsAndAnswers(data: unknown) {
   try {
     for (const q of questions) {
       const questionId = crypto.randomUUID();
-      const mappedType = q.type === "VERDADEIRO_FALSO" ? "TRUE_OR_FALSE" : q.type;
+      const mappedType =
+        q.type === "VERDADEIRO_FALSO" ? "TRUE_OR_FALSE" : q.type;
 
       await db.insert(questions).values({
         id: questionId,
@@ -47,7 +49,6 @@ export async function saveQuestionsAndAnswers(data: unknown) {
 
       await db.insert(quizQuestionsAlternatives).values(alternatives);
     }
-
   } catch (error) {
     throw new Error("Erro interno ao salvar perguntas.");
   }
