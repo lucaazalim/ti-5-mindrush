@@ -443,8 +443,8 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 # 5. Wireframes
 
-## Wireframes do Aplicativo
-### Tela de início
+## Wireframe Mobile
+### Tela de início.
 ![Tela de início do app](assets/wireframes/app-inicio.png "Tela de início do app")
 
 ### RF9: O estudante informa um código para acessar uma partida.
@@ -453,22 +453,49 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 ### RF11: O estudante informa um apelido que o identificará na partida.
 ![Wireframe aplicativo RF11](assets/wireframes/app-apelido.png "Wireframe aplicativo RF11")
 
-### Lobby de espera
+### Lobby de espera.
 ![Wireframe aplicativo Lobby](assets/wireframes/app-lobby-espera.png "Wireframe aplicativo Lobby")
+
+### Carregamento da partida.
+![Wireframe carregamento da partida](assets/wireframes/app-carregamento-partida.png "Wireframe carregamento da partida")
+
+### Exibição da pergunta.
+![Wireframe exibe pergunta](assets/wireframes/app-exibindo-pergunta.png "Wireframe exibe pergunta")
+
+### RF12: O estudante responde às questões da partida em tempo real. (Múltipla escolha)
+![Wireframe partida](assets/wireframes/app-partida.png "Wireframe partida")
+
+### Resposta correta.
+![Wireframe resposta-correta](assets/wireframes/app-resposta-correta.png "Wireframe resposta-correta")
+
+### Resposta errada.
+![Wireframe resposta-errada](assets/wireframes/app-resposta-errada.png "Wireframe resposta-errada")
+
+### RF12: O estudante responde às questões da partida em tempo real. (Verdadeiro ou falso)
+![Wireframe partida-vf](assets/wireframes/app-partida-vf.png "Wireframe partida-vf")
+
+### Resposta correta. (Verdadeiro ou falso)
+![Wireframe resposta-correta-vf](assets/wireframes/app-resposta-correta-vf.png "Wireframe resposta-correta-vf")
+
+### Resposta errada. (Verdadeiro ou falso)
+![Wireframe resposta-errada-vf](assets/wireframes/app-resposta-errada-vf.png "Wireframe resposta-errada-vf")
+
+
+
 
 ## Wireframe Web
 ### RF2: O educador gerencia os quizzes.
 ![Wireframe web RF02](assets/wireframes/web-dashboard.png "Wireframe web RF02")
-#### Modal para criar um quiz
+#### Modal para criar um quiz.
 ![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz.png "Wireframe web RF02 - Modal inicial")
 
-#### Step para quizzes gerados por IA
+#### Step para quizzes gerados por IA.
 ![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-IA.png "Wireframe web RF02 - Modal com step de opções geradas por IA")
 
-#### Step para quizzes gerados por PDF
+#### Step para quizzes gerados por PDF.
 ![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-PDF.png "Wireframe web RF02 - Modal com step de opções geradas por PDF")
 
-### RF5: O educador gerencia as questões dos quizzes
+### RF5: O educador gerencia as questões dos quizzes.
 ![Wireframe web RF05](assets/wireframes/web-questoes-manuais.png "Wireframe web RF05 - Gerenciamento de questões")
 
 ### RF6: O educador gera uma partida a partir de um quiz.
