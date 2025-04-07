@@ -110,7 +110,7 @@ export const verificationTokens = createTable(
   }),
 );
 
-export const quizzes = createTable("quizzes", {
+export const quizzes = createTable("quiz", {
   id: uuid("id").primaryKey().defaultRandom(),
   educatorId: uuid("educator_id")
     .notNull()
@@ -127,7 +127,7 @@ export const quizzes = createTable("quizzes", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const questions = createTable("questions", {
+export const questions = createTable("question", {
   id: uuid("id").primaryKey().defaultRandom(),
   quizId: uuid("quiz_id")
     .notNull()
@@ -141,7 +141,7 @@ export const questions = createTable("questions", {
 });
 
 export const quizQuestionsAlternatives = createTable(
-  "quiz_questions_alternatives",
+  "quiz_question_alternative",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     questionId: uuid("question_id")
@@ -155,7 +155,7 @@ export const quizQuestionsAlternatives = createTable(
   },
 );
 
-export const matches = createTable("matches", {
+export const matches = createTable("match", {
   id: uuid("id").primaryKey().defaultRandom(),
   quizId: uuid("quiz_id")
     .notNull()
@@ -168,7 +168,7 @@ export const matches = createTable("matches", {
 });
 
 export const participants = createTable(
-  "participants",
+  "participant",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     nickname: text("nickname").notNull(),
@@ -183,7 +183,7 @@ export const participants = createTable(
 );
 
 export const quizAnswers = createTable(
-  "quiz_answers",
+  "quiz_answer",
   {
     id: uuid("id").primaryKey().defaultRandom(),
     participantId: uuid("participant_id")
