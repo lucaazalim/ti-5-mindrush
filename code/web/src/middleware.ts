@@ -1,7 +1,7 @@
 import { auth } from "~/server/auth";
 import { ROUTES } from "~/lib/constants";
 import { NextResponse } from "next/server";
-import { Route } from "next";
+import { type Route } from "next";
 
 export default auth((request) => {
   // This always return the pathname WITH leading slash and WITHOUT trailing slash.

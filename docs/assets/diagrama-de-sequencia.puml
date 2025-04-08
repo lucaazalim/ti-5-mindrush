@@ -1,0 +1,45 @@
+@startuml
+actor Educator
+actor Student
+
+participant "Mobile App" as MobileApp
+participant "Web App" as WebApp
+participant "Server Actions" as ServerActions
+participant "REST API" as RESTAPI
+participant "RabbitMQ Broker" as RabbitMQ
+participant "WebSocket Server" as WSS
+
+== Match Creation ==
+
+Educator -> WebApp : Creates a match from an existing quiz
+WebApp -> ServerActions : createMatch()
+WebApp <-- ServerActions : Match data, including a PIN
+Educator <-- WebApp : Match data, including a QR Code for the PIN
+
+== Students Join ==
+
+Student -> MobileApp : Provides match PIN
+MobileApp -> RESTAPI : GET /matches/[PIN]
+MobileApp <-- RESTAPI : Match data, including ID
+
+Student -> MobileApp : Provides a nickname
+MobileApp -> RESTAPI : POST /matches/[match ID]/participants
+MobileApp <-- RESTAPI : Participant data, including a secret token
+
+MobileApp -> WSS : Connect, providing token for authentication
+MobileApp <-- WSS : OK
+
+Student <-- MobileApp : Renders a waiting screen
+
+== Match Start or Next Question ==
+
+Educator -> WebApp : Press "Start Match" or "Next Question" button
+WebApp -> ServerActions : nextQuestion()
+Educator <-- ServerActions : OK
+ServerActions -> WSS : broadcastNextQuestion(question)
+WSS -> MobileApp : nextQuestion(question)
+Student <-- MobileApp : Renders the first/next question
+
+== Student Answers Question ==
+
+@enduml
