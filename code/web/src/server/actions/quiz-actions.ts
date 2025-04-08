@@ -6,7 +6,7 @@ import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { NewQuiz, type Quiz, type UpdateQuiz } from "~/lib/types";
 import {uuidParser} from "~/lib/parsers";
-import {Result} from "~/lib/result";
+import {fail, Result, succeed} from "~/lib/result";
 
 const quizSchema = z.object({
   educatorId: uuidParser,
@@ -50,17 +50,17 @@ export async function getQuizById(id: string): Promise<Result<Quiz, string>> {
   const parsedId = uuidParser.safeParse(id);
 
   if (parsedId.error) {
-    return Result.fail(parsedId.error.message);
+    return fail(parsedId.error.message);
   }
 
   const result = await db.select().from(quizzes).where(eq(quizzes.id, id));
   const quiz = result[0];
 
   if (!quiz) {
-    return Result.fail("Quiz não encontrado.");
+    return fail("Quiz não encontrado.");
   }
 
-  return Result.succeed(quiz);
+  return succeed(quiz);
 }
 
 export async function createQuiz(quizData: NewQuiz): Promise<{ id: string }> {

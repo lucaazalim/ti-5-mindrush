@@ -5,14 +5,14 @@ import {matches} from "~/server/db/schema";
 import {matchIdOrPinParser, uuidParser} from "~/lib/parsers";
 import {eq} from "drizzle-orm";
 import type {Match} from "~/lib/types";
-import {Result} from "~/lib/result";
+import {fail, Result, succeed} from "~/lib/result";
 
 export async function getMatchByIdOrPin(idOrPin: string): Promise<Result<Match, {message: string, status: number}>> {
 
     const parsedIdOrPin = matchIdOrPinParser.safeParse(idOrPin);
 
     if (parsedIdOrPin.error) {
-        return Result.fail({
+        return fail({
             message: "O ID ou PIN da partida informado é inválido.",
             status: 400,
         });
@@ -30,12 +30,12 @@ export async function getMatchByIdOrPin(idOrPin: string): Promise<Result<Match, 
     const match = result[0];
 
     if(!match) {
-        return Result.fail({
+        return fail({
             message: "Partida não encontrada.",
             status: 404,
         });
     }
 
-    return Result.succeed(match);
+    return succeed(match);
 
 }

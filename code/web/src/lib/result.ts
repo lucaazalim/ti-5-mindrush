@@ -1,96 +1,44 @@
-export abstract class Result<T, E> {
-    protected constructor(
-        readonly _tag: "Success" | "Failure",
-        protected readonly value: T | E
-    ) {}
+export type Success<T> = {
+    _tag: "Success";
+    data: T;
+};
 
-    static succeed<T>(data: T): Success<T> {
-        return new Success(data);
-    }
+export type Failure<E> = {
+    _tag: "Failure";
+    error: E;
+};
 
-    static fail<E>(error: E): Failure<E> {
-        return new Failure(error);
-    }
+export type Result<T, E> = Success<T> | Failure<E>;
 
-    abstract isSuccess(): this is Success<T>;
-    abstract isFailure(): this is Failure<E>;
-
-    get data(): T {
-        if (this.isSuccess()) return this.value;
-        throw new Error("Cannot get data from a Failure");
-    }
-
-    get error(): E {
-        if (this.isFailure()) return this.value;
-        throw new Error("Cannot get error from a Success");
-    }
-
-    map<U>(f: (value: T) => U): Result<U, E> {
-        return this.isSuccess()
-            ? Result.succeed(f(this.data))
-            : (this as unknown as Result<U, E>);
-    }
-
-    flatMap<U>(f: (value: T) => Result<U, E>): Result<U, E> {
-        return this.isSuccess() ? f(this.data) : (this as unknown as Result<U, E>);
-    }
-
-    equals(that: unknown): boolean {
-        return (
-            that instanceof Result &&
-            this._tag === that._tag &&
-            this.value === that.value
-        );
-    }
-
-    toJSON() {
-        return {
-            _tag: this._tag,
-            [this._tag === "Success" ? "data" : "error"]: this.value,
-        };
-    }
-
-    toString(): string {
-        return JSON.stringify(this.toJSON());
-    }
-
-    [Symbol.for("nodejs.util.inspect.custom")]() {
-        return this.toJSON();
-    }
+export function succeed<T>(data: T): Success<T> {
+    return { _tag: "Success", data };
 }
 
-export class Success<T> extends Result<T, never> {
-    constructor(data: T) {
-        super("Success", data);
-    }
-
-    isSuccess(): this is Success<T> {
-        return true;
-    }
-
-    isFailure(): this is Failure<never> {
-        return false;
-    }
-
-    get data(): T {
-        return this.value;
-    }
+export function fail<E>(error: E): Failure<E> {
+    return { _tag: "Failure", error };
 }
 
-export class Failure<E> extends Result<never, E> {
-    constructor(error: E) {
-        super("Failure", error);
-    }
+export function isSuccess<T, E>(result: Result<T, E>): result is Success<T> {
+    return result._tag === "Success";
+}
 
-    isSuccess(): this is Success<never> {
-        return false;
-    }
+export function isFailure<T, E>(result: Result<T, E>): result is Failure<E> {
+    return result._tag === "Failure";
+}
 
-    isFailure(): this is Failure<E> {
-        return true;
-    }
+export function map<T, E, U>(
+    result: Result<T, E>,
+    f: (value: T) => U
+): Result<U, E> {
+    return isSuccess(result) ? succeed(f(result.data)) : result;
+}
 
-    get error(): E {
-        return this.value;
-    }
+export function toJSON<T, E>(result: Result<T, E>): object {
+    return isSuccess(result)
+        ? { _tag: "Success", data: result.data }
+        : { _tag: "Failure", error: result.error };
+}
+
+export function toString<T, E>(result: Result<T, E>): string {
+    return JSON.stringify(toJSON(result));
 }

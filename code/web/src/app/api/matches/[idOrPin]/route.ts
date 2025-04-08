@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getMatchByIdOrPin } from "~/server/actions/match-actions";
+import {isFailure} from "~/lib/result";
 
 export async function GET(
   req: NextRequest,
@@ -8,7 +9,7 @@ export async function GET(
   const { idOrPin } = await params;
   const result = await getMatchByIdOrPin(idOrPin);
 
-  if (result.isFailure()) {
+  if (isFailure(result)) {
     return NextResponse.json(result.error.message, {
       status: result.error.status,
     });

@@ -5,6 +5,7 @@ import { z } from "zod";
 import { db } from "~/server/db";
 import { participants } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
+import {isFailure} from "~/lib/result";
 
 export async function POST(
   req: NextRequest,
@@ -13,7 +14,7 @@ export async function POST(
   const { idOrPin } = await params;
   const match = await getMatchByIdOrPin(idOrPin);
 
-  if (match.isFailure()) {
+  if (isFailure(match)) {
     return NextResponse.json(match.error.message, {
       status: match.error.status,
     });
