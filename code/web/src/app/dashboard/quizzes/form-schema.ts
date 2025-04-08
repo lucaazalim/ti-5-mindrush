@@ -20,7 +20,7 @@ const blankSchema = z.object({
 
 const aiGeneratedSchema = z.object({
   ...baseFields,
-  type: z.literal("AI_GENERATED"),
+  type: z.literal("THEME_GENERATED"),
   theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres"),
   difficulty: z.enum(["EASY", "MEDIUM", "HARD"]),
   language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres"),

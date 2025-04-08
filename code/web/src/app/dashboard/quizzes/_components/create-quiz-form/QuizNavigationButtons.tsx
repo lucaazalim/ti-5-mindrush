@@ -8,7 +8,7 @@ interface QuizNavigationButtonsProps {
     educatorId: string;
     title: string;
     description: string;
-    type: "BLANK" | "AI_GENERATED" | "PDF_GENERATED";
+    type: "BLANK" | "THEME_GENERATED" | "PDF_GENERATED";
     theme?: string;
     difficulty?: "EASY" | "MEDIUM" | "HARD";
     language?: string;
@@ -29,7 +29,7 @@ export function QuizNavigationButtons({ step, setStep, selectedType, form, onSub
         onClick={async () => {
           let isValid = true;
 
-          if (selectedType === "AI_GENERATED") {
+          if (selectedType === "THEME_GENERATED") {
             isValid = await form.trigger(["theme", "difficulty", "language"]);
           } else if (selectedType === "PDF_GENERATED") {
             isValid = await form.trigger(["pdfBase64"]);

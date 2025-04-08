@@ -117,7 +117,7 @@ export const quizzes = createTable("quiz", {
     .references(() => users.id),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  type: text("type", { enum: ["BLANK", "AI_GENERATED", "PDF_GENERATED"] }).notNull(),
+  type: text("type", { enum: ["BLANK", "THEME_GENERATED", "PDF_GENERATED"] }).notNull(),
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),

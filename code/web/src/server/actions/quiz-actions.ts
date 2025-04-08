@@ -14,7 +14,7 @@ const quizSchema = z.object({
   description: z
     .string()
     .min(8, "A descrição deve ter pelo menos 8 caracteres"),
-  type: z.enum(["BLANK", "AI_GENERATED", "PDF_GENERATED"]),
+  type: z.enum(["BLANK", "THEME_GENERATED", "PDF_GENERATED"]),
   theme: z
     .string()
     .min(3, "O tema deve ter pelo menos 3 caracteres")

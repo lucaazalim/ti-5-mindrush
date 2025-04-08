@@ -1,6 +1,6 @@
 "use client"
 
-type QuizType = "BLANK" | "AI_GENERATED" | "PDF_GENERATED";
+type QuizType = "BLANK" | "THEME_GENERATED" | "PDF_GENERATED";
 
 interface QuizOption {
   value: QuizType;
@@ -15,7 +15,7 @@ interface QuizTypeSelectorProps {
 
 const quizTypes: QuizOption[] = [
   { value: "BLANK", label: "Quiz em Branco", description: "Crie manualmente suas perguntas." },
-  { value: "AI_GENERATED", label: "Gerado por IA", description: "A IA cria perguntas automaticamente." },
+  { value: "THEME_GENERATED", label: "Gerado por IA", description: "A IA cria perguntas automaticamente." },
   { value: "PDF_GENERATED", label: "Gerado por PDF", description: "Carregue um PDF e gere perguntas." }
 ];
 

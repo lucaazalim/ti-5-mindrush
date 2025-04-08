@@ -80,7 +80,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
 
             {step === 2 && (
               <>
-                {selectedType === "AI_GENERATED" && <QuizStepTwoAI />}
+                {selectedType === "THEME_GENERATED" && <QuizStepTwoAI />}
                 {selectedType === "PDF_GENERATED" && <QuizStepTwoPDF />}
                 <StepTwoActions setStep={setStep} />
               </>
