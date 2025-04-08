@@ -8,13 +8,20 @@ participant "Server Actions" as ServerActions
 participant "REST API" as RESTAPI
 participant "RabbitMQ Broker" as RabbitMQ
 participant "WebSocket Server" as WSS
+participant "Database" as DB
 
 == Match Creation ==
 
-Educator -> WebApp : Creates a match from an existing quiz
-WebApp -> ServerActions : createMatch()
-WebApp <-- ServerActions : Match data, including a PIN
-Educator <-- WebApp : Match data, including a QR Code for the PIN
+Educator -> WebApp : Navigates to /dashboard/quizzes
+Educator <-- WebApp : Renders the quiz list
+Educator -> WebApp : Press "Create Match" button from a specific quiz
+WebApp -> ServerActions : createMatch(quizId)
+ServerActions -> ServerActions : generateRandomPin()
+ServerActions -> DB : INSERT INTO matches [...]
+ServerActions <-- DB : Created match, including ID
+WebApp <-- ServerActions : Match data, including the generated PIN
+WebApp -> WebApp : Redirects to /dashboard/matches/[matchId]
+Educator <-- WebApp : Renders the QR code, PIN and match control buttons
 
 == Students Join ==
 
@@ -27,6 +34,8 @@ Student <-- MobileApp : Renders the nickname input screen
 
 Student -> MobileApp : Provides a nickname
 MobileApp -> RESTAPI : POST /matches/[match ID]/participants
+RESTAPI -> DB : INSERT INTO participants [...]
+RESTAPI <-- DB : Created participant, including ID
 MobileApp <-- RESTAPI : Participant data, including a secret token
 
 MobileApp -> WSS : Connect, providing token for authentication
