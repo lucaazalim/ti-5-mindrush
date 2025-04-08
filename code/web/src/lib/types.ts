@@ -12,11 +12,6 @@ import {
   type verificationTokens,
 } from "~/server/db/schema";
 
-export type QuizUpdate = {
-  title?: string;
-  description?: string;
-};
-
 // Select types (e.g. for reading from DB)
 export type User = InferSelectModel<typeof users>;
 export type Account = InferSelectModel<typeof accounts>;
@@ -41,6 +36,7 @@ export type NewQuestion = InferInsertModel<typeof questions>;
 export type NewQuestionQuizAlternative = InferInsertModel<
   typeof quizQuestionsAlternatives
 >;
+export type UpdateQuiz = Partial<Pick<Quiz, "title" | "description">>;
 export type NewMatch = InferInsertModel<typeof matches>;
 export type NewParticipant = InferInsertModel<typeof participants>;
 export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;

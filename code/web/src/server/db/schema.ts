@@ -118,10 +118,6 @@ export const quizzes = createTable("quiz", {
   title: text("title").notNull(),
   description: text("description").notNull(),
   type: text("type", { enum: ["BLANK", "AI_GENERATED", "PDF_GENERATED"] }).notNull(),
-  theme: text("theme"), // Just for AI_GENERATED
-  difficulty: text("difficulty", { enum: ["EASY", "MEDIUM", "HARD"] }), // Just for AI_GENERATED
-  language: text("language"), // Just for AI_GENERATED
-  pdfBase64: text("pdf_base64"), // Just for PDF_GENERATED
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),

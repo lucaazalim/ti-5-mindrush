@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -10,7 +10,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import { Form } from "~/components/ui/form";
 
 import { createQuiz } from "~/server/actions/quiz-actions";
 
@@ -30,16 +29,18 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
   const [step, setStep] = useState(1);
   const router = useRouter();
 
-  const form = useForm<CreateQuizSchema>({
+  const methods = useForm<CreateQuizSchema>({
     resolver: zodResolver(quizCreateSchema),
     mode: "onChange",
     defaultValues: {
-      educatorId,
+      educatorId: educatorId,
+      title: "",
+      description: "",
       type: "BLANK",
     },
   });
 
-  const selectedType = form.watch("type");
+  const selectedType = methods.watch("type");
 
   async function onSubmit(values: CreateQuizSchema) {
     try {
@@ -64,9 +65,18 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
       <DialogContent>
         <DialogTitle>Criar um novo quiz</DialogTitle>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {step === 1 && <QuizStepOne />}
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
+            {step === 1 && (
+              <>
+                <QuizStepOne />
+                <StepOneActions
+                  selectedType={selectedType}
+                  setStep={setStep}
+                  onSubmit={onSubmit}
+                />
+              </>
+            )}
 
             {step === 2 && (
               <>
@@ -76,15 +86,8 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
               </>
             )}
           </form>
-        </Form>
+        </FormProvider>
 
-        {step === 1 && (
-          <StepOneActions
-            selectedType={selectedType}
-            setStep={setStep}
-            onSubmit={onSubmit}
-          />
-        )}
       </DialogContent>
     </Dialog>
   );

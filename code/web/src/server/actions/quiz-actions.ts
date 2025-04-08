@@ -4,7 +4,7 @@ import { z } from "zod";
 import { db } from "../db";
 import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 import { eq } from "drizzle-orm";
-import { type Quiz, type QuizUpdate } from "~/lib/types";
+import { NewQuiz, type Quiz, type UpdateQuiz } from "~/lib/types";
 import {uuidParser} from "~/lib/parsers";
 import {Result} from "~/lib/result";
 
@@ -63,7 +63,7 @@ export async function getQuizById(id: string): Promise<Result<Quiz, string>> {
   return Result.succeed(quiz);
 }
 
-export async function createQuiz(quizData: Quiz): Promise<{ id: string }> {
+export async function createQuiz(quizData: NewQuiz): Promise<{ id: string }> {
   const parsedData = quizSchema.safeParse(quizData);
   if (!parsedData.success) {
     throw new Error("Dados inválidos para criação do quiz");
@@ -81,7 +81,7 @@ export async function createQuiz(quizData: Quiz): Promise<{ id: string }> {
   return created;
 }
 
-export async function updateQuiz(id: string, updateData: QuizUpdate) {
+export async function updateQuiz(id: string, updateData: UpdateQuiz) {
   const parsedId = uuidParser.safeParse(id);
   if (!parsedId.success) {
     throw new Error("ID inválido");
