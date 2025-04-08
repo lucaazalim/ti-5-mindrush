@@ -18,9 +18,12 @@ Educator <-- WebApp : Match data, including a QR Code for the PIN
 
 == Students Join ==
 
-Student -> MobileApp : Provides match PIN
+Student -> MobileApp : Opens the app
+Student <-- MobileApp : Renders the PIN input screen
+Student -> MobileApp : Provides match PIN or scans QR code
 MobileApp -> RESTAPI : GET /matches/[PIN]
 MobileApp <-- RESTAPI : Match data, including ID
+Student <-- MobileApp : Renders the nickname input screen
 
 Student -> MobileApp : Provides a nickname
 MobileApp -> RESTAPI : POST /matches/[match ID]/participants
