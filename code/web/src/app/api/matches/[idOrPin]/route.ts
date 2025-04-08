@@ -1,36 +1,18 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { db } from "~/server/db";
-import { matches } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
-import { matchIdOrPinParser, uuidParser } from "~/lib/parsers";
+import { getMatchByIdOrPin } from "~/server/actions/match-actions";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ idOrPin: string }> },
 ) {
   const { idOrPin } = await params;
-  const parsedIdOrPin = matchIdOrPinParser.safeParse(idOrPin);
+  const result = await getMatchByIdOrPin(idOrPin);
 
-  if (parsedIdOrPin.error) {
-    return NextResponse.json("Invalid ID or PIN.", {
-      status: 400,
+  if (result.error) {
+    return NextResponse.json(result.error.message, {
+      status: result.error.status,
     });
   }
 
-  const result = await db
-    .select()
-    .from(matches)
-    .where(
-      uuidParser.safeParse(idOrPin).success
-        ? eq(matches.id, parsedIdOrPin.data)
-        : eq(matches.pin, parsedIdOrPin.data),
-    );
-
-  const match = result[0];
-
-  if (!match) {
-    return NextResponse.json("Match not found.", { status: 404 });
-  }
-
-  return NextResponse.json(match, { status: 200 });
+  return NextResponse.json(result.data, { status: 200 });
 }
