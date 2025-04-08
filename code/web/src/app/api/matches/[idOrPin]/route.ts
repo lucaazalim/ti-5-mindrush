@@ -8,7 +8,7 @@ export async function GET(
   const { idOrPin } = await params;
   const result = await getMatchByIdOrPin(idOrPin);
 
-  if (result.error) {
+  if (result.isFailure()) {
     return NextResponse.json(result.error.message, {
       status: result.error.status,
     });

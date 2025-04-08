@@ -4,6 +4,7 @@ import { participantCreationParser } from "~/lib/parsers";
 import { z } from "zod";
 import { db } from "~/server/db";
 import { participants } from "~/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function POST(
   req: NextRequest,
@@ -12,7 +13,7 @@ export async function POST(
   const { idOrPin } = await params;
   const match = await getMatchByIdOrPin(idOrPin);
 
-  if (match.error) {
+  if (match.isFailure()) {
     return NextResponse.json(match.error.message, {
       status: match.error.status,
     });
@@ -23,12 +24,24 @@ export async function POST(
   >;
 
   if (participantCreationParser.safeParse(payload).error) {
-    return NextResponse.json("Invalid payload", {
+    return NextResponse.json("O conteúdo da requisição é inválido.", {
       status: 400,
     });
   }
 
-  const createdParticipant = db
+  const exists = await db
+    .select()
+    .from(participants)
+    .where(eq(participants.nickname, payload.nickname));
+
+  if (exists) {
+    return NextResponse.json(
+      "O apelido escolhido já está sendo usado por outro participante.",
+      { status: 400 },
+    );
+  }
+
+  const createdParticipant = await db
     .insert(participants)
     .values({
       matchId: match.data.id,

@@ -13,7 +13,7 @@ export async function getMatchByIdOrPin(idOrPin: string): Promise<Result<Match, 
 
     if (parsedIdOrPin.error) {
         return Result.fail({
-            message: "Invalid match ID or PIN.",
+            message: "O ID ou PIN da partida informado é inválido.",
             status: 400,
         });
     }
@@ -31,7 +31,7 @@ export async function getMatchByIdOrPin(idOrPin: string): Promise<Result<Match, 
 
     if(!match) {
         return Result.fail({
-            message: "Match not found.",
+            message: "Partida não encontrada.",
             status: 404,
         });
     }
