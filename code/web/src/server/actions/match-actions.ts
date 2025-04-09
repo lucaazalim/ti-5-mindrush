@@ -4,7 +4,7 @@ import {db} from "~/server/db";
 import {matches} from "~/server/db/schema";
 import {matchIdOrPinParser, uuidParser} from "~/lib/parsers";
 import {eq} from "drizzle-orm";
-import type {Match} from "~/lib/types";
+import type {Match, NewMatch} from "~/lib/types";
 import {fail, Result, succeed} from "~/lib/result";
 
 export async function getMatchByIdOrPin(idOrPin: string): Promise<Result<Match, {message: string, status: number}>> {
@@ -38,4 +38,33 @@ export async function getMatchByIdOrPin(idOrPin: string): Promise<Result<Match, 
 
     return succeed(match);
 
+}
+
+export async function createMatch(quizId: string): Promise<Result<Match, {message: string, status: number}>> {
+    const newMatch: NewMatch = {
+        quizId: quizId,
+        pin: generateRandomPin(),
+        state: "WAITING",
+        createdAt: new Date(),
+    };
+
+    const result = await db
+        .insert(matches)
+        .values(newMatch)
+        .returning();
+
+    if (result.length > 0) {
+        return succeed(result[0]!);
+    }
+
+    return fail({
+        message: "Ocorreu um erro ao criar a partida.",
+        status: 500,
+    });
+
+}
+
+function generateRandomPin(): string {
+    const pin = Math.floor(Math.random() * 1000000).toString();
+    return pin.substring(pin.length - 6);
 }

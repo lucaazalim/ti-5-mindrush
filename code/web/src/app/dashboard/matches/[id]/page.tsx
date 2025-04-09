@@ -1,65 +1,54 @@
-import { getQuizById, getQuestionsByQuizId } from "~/server/actions/quiz-actions";
+import QRCodePage from "./_components/QRCodePage";
+import {getMatchByIdOrPin} from "~/server/actions/match-actions";
+import {isFailure} from "~/lib/result";
 
-interface PageProps {
-  params: { id: string };
-}
 
-type Alternative = {
-  id: string;
-  answer: string;
-  correct: boolean;
-};
+export default async function Page(
+    { params }: { params: Promise<{ id: string }> },
+) {
+    console.log("Inicio do componente")
+    const {id} = await params;
+    const match = await getMatchByIdOrPin(id);
 
-export default async function QuizDetailPage({ params }: PageProps) {
-  const quizId = params.id;
+    // TODO: Handle error
+    if (isFailure(match)) {
+        return <p>error</p>;
+    }
 
-  const [quiz, questions] = await Promise.all([
-    getQuizById(quizId),
-    getQuestionsByQuizId(quizId),
-  ]);
+    const pin = match.data.pin;
 
-  if (!quiz) {
-    return <div className="p-10 text-red-500">Quiz não encontrado.</div>;
-  }
+    console.log("match",match);
 
-  return (
-    <div className="p-6 md:p-10">
-      <h1 className="mb-2 text-2xl font-bold">{quiz.title}</h1>
-      <p className="mb-6 text-muted-foreground">{quiz.description}</p>
+    /*// Pin
+    const searchParams = useSearchParams();
+    const pin = searchParams.get("pin");*/
 
-      {questions.length === 0 ? (
-        <p className="text-sm text-muted-foreground">
-          Nenhuma pergunta cadastrada ainda.
-        </p>
-      ) : (
-        <div className="space-y-6">
-          {questions.map((q, i) => (
-            <div
-              key={q.id}
-              className="rounded-lg border bg-white p-4 shadow-sm"
-            >
-              <h2 className="mb-2 font-semibold">
-                {i + 1}. {q.question}
-              </h2>
+    const listDeJagadores = []
 
-              <ul className="space-y-2">
-                {(q.alternatives as Alternative[]).map((alt, idx) => (
-                  <li
-                    key={alt.id}
-                    className={`rounded px-3 py-1 text-sm ${
-                      alt.correct
-                        ? "bg-green-100 font-semibold text-green-800"
-                        : "bg-gray-100 text-gray-600"
-                    }`}
-                  >
-                    {String.fromCharCode(65 + idx)}. {alt.answer}
-                  </li>
-                ))}
-              </ul>
+    const isPlayer = listDeJagadores.length > 0;
+
+    const withPlayer = listDeJagadores.length;
+    const withoutPlayer = <h2 className="text-white w-96 mt-4 bg-purple-500 border-2xl rounded-lg p-4 mt-4 text-center">
+        Aguardando jogadores...
+    </h2>;
+
+    return (
+        <div className="flex flex-col items-center justify-center w-full h-screen">
+            {/* Pin e qrcode */}
+            <div className="flex justify-center w-full gap-4">
+                <div className="bg-white rounded-lg py-2 px-16 flex flex-col items-start justify-center">
+                    <h1 className="">PIN do Jogo</h1>
+                    <h2 className="font-bold text-5xl">{pin}</h2>
+                </div>
+                <div className="max-w-96 ">
+                    <QRCodePage text={pin} />
+                </div>
+
             </div>
-          ))}
+
+            <div>
+                { isPlayer ? withPlayer : withoutPlayer }
+            </div>
         </div>
-      )}
-    </div>
-  );
+    )
 }

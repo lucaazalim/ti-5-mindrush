@@ -6,6 +6,8 @@ import { Button } from "~/components/ui/button";
 import type { Quiz } from "~/lib/types";
 import {useRouter} from "next/navigation";
 import {ROUTES} from "~/lib/constants";
+import {createMatch} from "~/server/actions/match-actions";
+import {isFailure, isSuccess} from "~/lib/result";
 
 interface QuizzesListProps {
   quizzes: Quiz[];
@@ -14,6 +16,19 @@ interface QuizzesListProps {
 export default function QuizzesList({ quizzes }: QuizzesListProps) {
 
   const router = useRouter();
+
+  const newMatch = async (quizId: string) => {
+    console.log("id", quizId);
+    const result = await createMatch(quizId);
+    if (isFailure(result)) {
+      alert(result.error.message);
+      return;
+    }
+
+    const id = result.data.id;
+    router.push(ROUTES.MATCH(id));
+
+  }
 
   return (
     <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -26,9 +41,9 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
             <div className="relative flex h-32 items-center justify-center bg-gray-200">
               <Button
                 className="mt-4 h-11"
-                onClick={() => router.push(ROUTES.QUIZZES)}
+                onClick={() => newMatch(quiz.id)}
               >
-                Iniciar Partida
+                Criar Partida
               </Button>
 
               <span className="absolute right-2 top-2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
