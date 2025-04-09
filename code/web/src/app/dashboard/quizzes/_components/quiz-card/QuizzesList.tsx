@@ -7,7 +7,7 @@ import type { Quiz } from "~/lib/types";
 import {useRouter} from "next/navigation";
 import {ROUTES} from "~/lib/constants";
 import {createMatch} from "~/server/actions/match-actions";
-import {isFailure, isSuccess} from "~/lib/result";
+import {isFailure} from "~/lib/result";
 
 interface QuizzesListProps {
   quizzes: Quiz[];
