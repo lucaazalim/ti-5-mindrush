@@ -501,6 +501,9 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 ### RF6: O educador gera uma partida a partir de um quiz.
 ![Wireframe web RF06](./assets/wireframes/web-iniciar%20partida.png "Wireframe web RF06 - Iniciar Partida")
 
+### RF7: O educador inicia, pausa e encerra uma partida.
+![Wireframe web RF07](assets/wireframes/web-pausar-ou-encerrar-partida.png "Wireframe web RF07")
+
 
 <a name="solucao"></a>
 
