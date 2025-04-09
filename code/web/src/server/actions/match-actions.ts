@@ -43,7 +43,13 @@ export async function getMatchByIdOrPin(
 
 export async function createMatch(
   quizId: string,
-): Promise<Result<Match, { message: string; status: number }>> {
+): Promise<Result<Match, string>> {
+  const session = await auth();
+
+  if (!session) {
+    return fail("Não autenticado.");
+  }
+
   const newMatch: NewMatch = {
     quizId: quizId,
     pin: generateRandomPin(),
@@ -57,10 +63,7 @@ export async function createMatch(
     return succeed(result[0]!);
   }
 
-  return fail({
-    message: "Ocorreu um erro ao criar a partida.",
-    status: 500,
-  });
+  return fail("Ocorreu um erro ao criar a partida.");
 }
 
 function generateRandomPin(): string {
