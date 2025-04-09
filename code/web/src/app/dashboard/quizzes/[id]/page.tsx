@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   });
 
   return (
-    <div className="fixed inset-0 top-[72px] flex h-[calc(100vh-72px)] w-full bg-muted">
+    <div className="fixed inset-0 top-[72px] flex w-full bg-muted">
       <QuizManualForm quizId={id} initialQuestions={questions} />
     </div>
   );

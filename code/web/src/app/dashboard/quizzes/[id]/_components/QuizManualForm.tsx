@@ -128,7 +128,7 @@ export default function QuizManualForm({
         />
       </div>
 
-      <div className="w-[280px] shrink-0 border-l border-muted">
+      <div className="w-[220px] shrink-0 border-l border-muted">
         <SidebarSettings
           question={currentQuestion}
           onUpdate={updateCurrentQuestion}
