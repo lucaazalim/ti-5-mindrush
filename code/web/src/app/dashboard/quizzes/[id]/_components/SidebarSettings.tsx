@@ -54,9 +54,15 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
           />
         </div>
 
-        <Button className="w-full" onClick={onSubmit}>
-          Salvar Quiz
-        </Button>
+        <div className="flex h-full items-center justify-center">
+          <Button
+            type="button"
+            onClick={onSubmit}
+            className="h-[8px] w-[140px]"
+          >
+            Salvar Quiz
+          </Button>
+        </div>
       </div>
     </aside>
   );
