@@ -155,7 +155,7 @@ export const matches = createTable("match", {
   id: uuid("id").primaryKey().defaultRandom(),
   quizId: uuid("quiz_id")
     .notNull()
-    .references(() => quizzes.id),
+    .references(() => quizzes.id, { onDelete: "cascade" }),
   pin: text("pin").notNull(),
   state: text("state", { enum: ["WAITING", "RUNNING", "PAUSED", "ENDED"] }).notNull(),
   createdAt: timestamp("created_at")
