@@ -20,14 +20,13 @@ export function SlideNavigation({
   onDelete,
 }: SlideNavigationProps) {
   const handleDelete = (index: number) => {
-    // Impede a exclusão do slide atual e garante que sempre haja pelo menos um slide
     if (questions.length > 1 && index !== currentSlide) {
       onDelete(index);
     }
   };
 
   return (
-    <aside className="flex h-full w-[180px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
+    <aside className="flex h-full w-[200px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
       <Button
         type="button"
         onClick={onAdd}
@@ -44,7 +43,7 @@ export function SlideNavigation({
               currentSlide === index ? "border-primary" : "border-muted"
             }`}
           >
-            {index !== currentSlide && (
+            {questions.length > 1 && index !== currentSlide && (
               <button
                 type="button"
                 className="absolute right-2 top-2 text-muted-foreground hover:text-destructive"

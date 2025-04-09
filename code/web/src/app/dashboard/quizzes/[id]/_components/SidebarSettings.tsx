@@ -20,7 +20,7 @@ interface Props {
 
 export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
   return (
-    <aside className="min-h-[calc(100vh-80px)] shrink-0 border-l bg-white px-4 py-6 md:w-[220px]">
+    <aside className="min-h-[calc(100vh-80px)] shrink-0 border-l bg-white px-4 py-6 md:w-[200px]">
       <div className="space-y-4">
         <div className="space-y-2">
           <Select

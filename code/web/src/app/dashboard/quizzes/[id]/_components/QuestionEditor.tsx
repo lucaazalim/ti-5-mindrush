@@ -1,4 +1,4 @@
-import { Input } from "~/components/ui/input";
+import { Textarea } from "~/components/ui/textarea";
 
 interface Props {
   value: string;
@@ -8,11 +8,12 @@ interface Props {
 export function QuestionEditor({ value, onChange }: Props) {
   return (
     <div className="space-y-2">
-      <Input
+      <Textarea
         id="question"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Digite a pergunta aqui..."
+        placeholder="Ex: Quais os tipos de alocação de memória do Java?"
+        className="min-h-[80px] resize-none border border-primary bg-white focus-visible:ring-0 focus-visible:ring-offset-0"
       />
     </div>
   );

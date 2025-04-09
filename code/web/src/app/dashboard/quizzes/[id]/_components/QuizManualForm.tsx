@@ -104,7 +104,7 @@ export default function QuizManualForm({
 
   return (
     <div className="flex h-screen w-full">
-      <div className="h-full w-[220px] shrink-0 border-r border-muted">
+      <div className="h-full w-[200px] shrink-0 border-r border-muted">
         <SlideNavigation
           questions={questions}
           currentSlide={currentSlide}
@@ -128,7 +128,7 @@ export default function QuizManualForm({
         />
       </div>
 
-      <div className="w-[220px] shrink-0 border-l border-muted">
+      <div className="w-[200px] shrink-0 border-l border-muted">
         <SidebarSettings
           question={currentQuestion}
           onUpdate={updateCurrentQuestion}
