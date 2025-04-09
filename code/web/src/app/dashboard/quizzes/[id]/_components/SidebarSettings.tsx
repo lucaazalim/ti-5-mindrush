@@ -1,5 +1,7 @@
 "use client";
 
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -8,23 +10,22 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { type QuizType } from "./QuizManualForm";
+import { type QuestionWithAnswers } from "~/lib/types";
 
-interface SidebarSettingsProps {
-  quizType: QuizType;
-  onChangeType: (type: QuizType) => void;
+interface Props {
+  question: QuestionWithAnswers;
+  onUpdate: (updated: Partial<QuestionWithAnswers>) => void;
+  onSubmit: () => void;
 }
 
-export function SidebarSettings({
-  quizType,
-  onChangeType,
-}: SidebarSettingsProps) {
+export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
   return (
-    <aside className="w-[180px] border-l bg-white p-4">
+    <aside className="min-h-[calc(100vh-80px)] shrink-0 border-l bg-white px-4 py-6 md:w-[280px]">
       <div className="space-y-4">
         <div className="space-y-2">
           <Select
-            value={quizType}
-            onValueChange={(value: QuizType) => onChangeType(value)}
+            value={question.type}
+            onValueChange={(value: QuizType) => onUpdate({ type: value })}
           >
             <SelectTrigger>
               <SelectValue placeholder="Tipo de pergunta" />
@@ -37,6 +38,25 @@ export function SidebarSettings({
             </SelectContent>
           </Select>
         </div>
+
+        <div>
+          <label className="mb-1 block text-sm font-medium">
+            Tempo limite (segundos)
+          </label>
+          <Input
+            type="number"
+            min={10}
+            max={120}
+            value={question.timeLimit}
+            onChange={(e) =>
+              onUpdate({ timeLimit: Number(e.target.value) || 30 })
+            }
+          />
+        </div>
+
+        <Button className="w-full" onClick={onSubmit}>
+          Salvar Quiz
+        </Button>
       </div>
     </aside>
   );

@@ -40,3 +40,8 @@ export type UpdateQuiz = Partial<Pick<Quiz, "title" | "description">>;
 export type NewMatch = InferInsertModel<typeof matches>;
 export type NewParticipant = InferInsertModel<typeof participants>;
 export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;
+
+export type QuestionWithAnswers = Question & {
+  answers: string[];
+  correctAnswerIndex: number;
+};

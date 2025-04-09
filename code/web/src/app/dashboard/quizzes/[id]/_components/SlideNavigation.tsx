@@ -2,34 +2,35 @@
 
 import { Button } from "~/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { type QuestionWithAnswers } from "~/lib/types";
 
 interface SlideNavigationProps {
-  questions: {
-    id: string;
-    text: string;
-    answers: string[];
-    correctAnswerIndex: number;
-    type: "QUIZ" | "VERDADEIRO_FALSO";
-  }[];
-
-  currentIndex: number;
-  setCurrentIndex: (index: number) => void;
-  addNewSlide: () => void;
-  removeSlide: (index: number) => void;
+  questions: QuestionWithAnswers[];
+  currentSlide: number;
+  onSlideChange: (index: number) => void;
+  onAdd: () => void;
+  onDelete: (index: number) => void;
 }
 
 export function SlideNavigation({
   questions,
-  currentIndex,
-  setCurrentIndex,
-  addNewSlide,
-  removeSlide,
+  currentSlide,
+  onSlideChange,
+  onAdd,
+  onDelete,
 }: SlideNavigationProps) {
+  const handleDelete = (index: number) => {
+    // Impede a exclusão do slide atual e garante que sempre haja pelo menos um slide
+    if (questions.length > 1 && index !== currentSlide) {
+      onDelete(index);
+    }
+  };
+
   return (
     <aside className="flex h-full w-[180px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
       <Button
         type="button"
-        onClick={addNewSlide}
+        onClick={onAdd}
         className="h-[8px] w-[140px] rounded-sm"
       >
         Novo Slide
@@ -39,20 +40,24 @@ export function SlideNavigation({
         {questions.map((q, index) => (
           <div
             key={q.id}
-            className={`relative w-[148px] rounded-md border p-5 text-left text-sm ${
-              currentIndex === index ? "border-primary" : "border-muted"
+            className={`relative w-[148px] rounded-md border p-5 text-left text-sm transition-colors ${
+              currentSlide === index ? "border-primary" : "border-muted"
             }`}
           >
-            <button
-              className="absolute right-2 top-2 text-muted-foreground hover:text-destructive"
-              onClick={() => removeSlide(index)}
-            >
-              <Trash2 size={14} />
-            </button>
+            {index !== currentSlide && (
+              <button
+                type="button"
+                className="absolute right-2 top-2 text-muted-foreground hover:text-destructive"
+                onClick={() => handleDelete(index)}
+              >
+                <Trash2 size={14} />
+              </button>
+            )}
 
             <button
+              type="button"
               className="w-full text-left"
-              onClick={() => setCurrentIndex(index)}
+              onClick={() => onSlideChange(index)}
             >
               <div className="mb-1 text-xs font-semibold">
                 {index + 1}.{" "}

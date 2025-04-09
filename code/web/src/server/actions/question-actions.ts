@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { db } from "~/server/db";
-import { quizQuestionsAlternatives } from "~/server/db/schema";
+import { questions, quizQuestionsAlternatives } from "~/server/db/schema"; 
 import { uuidParser } from "~/lib/parsers";
 
 const questionSchema = z.object({
@@ -24,10 +24,10 @@ export async function saveQuestionsAndAnswers(data: unknown) {
     throw new Error("Dados inválidos para salvar perguntas.");
   }
 
-  const { quizId, questions } = parsed.data;
+  const { quizId, questions: parsedQuestions } = parsed.data;
 
   try {
-    for (const q of questions) {
+    for (const q of parsedQuestions) {
       const questionId = crypto.randomUUID();
       const mappedType =
         q.type === "VERDADEIRO_FALSO" ? "TRUE_OR_FALSE" : q.type;
