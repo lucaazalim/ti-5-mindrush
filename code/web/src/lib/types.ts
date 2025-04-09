@@ -32,11 +32,12 @@ export type NewAccount = InferInsertModel<typeof accounts>;
 export type NewSession = InferInsertModel<typeof sessions>;
 export type NewVerificationToken = InferInsertModel<typeof verificationTokens>;
 export type NewQuiz = InferInsertModel<typeof quizzes>;
+export type UpdateQuiz = Partial<Pick<Quiz, "title" | "description">>;
+export type QuizWithCount = Quiz & { questionCount: number };
 export type NewQuestion = InferInsertModel<typeof questions>;
 export type NewQuestionQuizAlternative = InferInsertModel<
   typeof quizQuestionsAlternatives
 >;
-export type UpdateQuiz = Partial<Pick<Quiz, "title" | "description">>;
 export type NewMatch = InferInsertModel<typeof matches>;
 export type NewParticipant = InferInsertModel<typeof participants>;
 export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;

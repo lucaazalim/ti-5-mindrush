@@ -16,7 +16,12 @@ import type { Quiz } from "~/lib/types";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "~/lib/constants";
 
-export default function QuizOptions({ id, title, description }: Quiz) {
+interface QuizOptionsProps {
+  quiz: Quiz;
+}
+
+export default function QuizOptions({ quiz }: QuizOptionsProps) {
+  const { id, title, description } = quiz;
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
   const router = useRouter();
