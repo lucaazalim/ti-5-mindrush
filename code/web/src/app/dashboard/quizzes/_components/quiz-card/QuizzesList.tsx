@@ -1,16 +1,15 @@
 "use client";
 
-import Link from "next/link";
 import QuizOptions from "./QuizOptions";
 import { Button } from "~/components/ui/button";
-import type { Quiz } from "~/lib/types";
+import type { QuizWithCount } from "~/lib/types";
 import {useRouter} from "next/navigation";
 import {ROUTES} from "~/lib/constants";
 import {createMatch} from "~/server/actions/match-actions";
 import {isFailure} from "~/lib/result";
 
 interface QuizzesListProps {
-  quizzes: Quiz[];
+  quizzes: QuizWithCount[];
 }
 
 export default function QuizzesList({ quizzes }: QuizzesListProps) {
@@ -53,20 +52,14 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
             </div>
 
             <div className="relative flex flex-1 flex-col justify-between px-4 py-5">
-              <Link href={`/src/app/dashboard/matches/${quiz.id}`}>
                 <div className="space-y-1">
                   <h3 className="text-sm font-semibold">{quiz.title}</h3>
                   <p className="text-sm text-muted-foreground">
                     {quiz.description}
                   </p>
                 </div>
-              </Link>
 
-              <QuizOptions
-                id={quiz.id}
-                title={quiz.title}
-                description={quiz.description}
-              />
+              <QuizOptions quiz={quiz}/>
             </div>
           </div>
         ))

@@ -504,6 +504,15 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 ### RF7: O educador inicia, pausa e encerra uma partida.
 ![Wireframe web RF07](assets/wireframes/web-pausar-ou-encerrar-partida.png "Wireframe web RF07")
 
+### RF8: O educador acompanha o andamento da partida (aguadar jogadores).
+![Wireframe web RF08](assets/wireframes/web-acompanhar-partida.png "Wireframe web RF08")
+
+### RF8: O educador acompanha o andamento da partida (jogadores em sala).
+![Wireframe web RF08](assets/wireframes/web-acompanhar-partida-02.png "Wireframe web RF08")
+
+### RF8: O educador acompanha o andamento da partida (acertos acerca das questões).
+![Wireframe web RF08](assets/wireframes/web-pontuacao-questao.png "Wireframe web RF08")
+
 
 <a name="solucao"></a>
 

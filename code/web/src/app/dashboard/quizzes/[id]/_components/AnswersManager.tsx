@@ -4,40 +4,49 @@ import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Trash2, Plus } from "lucide-react";
 import { cn } from "~/lib/utils";
-import { type QuizType } from "./QuizManualForm";
 
 interface Props {
-  quizType: QuizType;
+  type: "QUIZ" | "TRUE_OR_FALSE";
   answers: string[];
-  correctIndex: number;
-  onChange: (answers: string[]) => void;
-  onSelectCorrect: (index: number) => void;
-  onDeleteAnswer: (index: number) => void;
+  correctAnswerIndex: number;
+  onChangeAnswers: (answers: string[]) => void;
+  onChangeCorrectIndex: (index: number) => void;
 }
 
 export function AnswersManager({
-  quizType,
+  type,
   answers,
-  correctIndex,
-  onChange,
-  onSelectCorrect,
-  onDeleteAnswer,
+  correctAnswerIndex,
+  onChangeAnswers,
+  onChangeCorrectIndex,
 }: Props) {
-  const isVF = quizType === "VERDADEIRO_FALSO";
+  const isVF = type === "TRUE_OR_FALSE";
 
   const updateAnswer = (index: number, value: string) => {
     const updated = [...answers];
     updated[index] = value;
-    onChange(updated);
+    onChangeAnswers(updated);
   };
 
   const addAnswer = () => {
     if ((isVF && answers.length >= 2) || answers.length >= 4) return;
-    onChange([...answers, ""]);
+    onChangeAnswers([...answers, ""]);
   };
 
-  const canDelete = answers.length > (isVF ? 2 : 2);
-  const canAdd = isVF ? answers.length < 2 : answers.length < 4;
+  const deleteAnswer = (index: number) => {
+    if (answers.length <= 2) return;
+    const updated = answers.filter((_, i) => i !== index);
+    onChangeAnswers(updated);
+
+    if (correctAnswerIndex === index) {
+      onChangeCorrectIndex(-1);
+    } else if (correctAnswerIndex > index) {
+      onChangeCorrectIndex(correctAnswerIndex - 1);
+    }
+  };
+
+  const canDelete = !isVF && answers.length > 2;
+  const canAdd = !isVF && answers.length < 4;
 
   return (
     <div className="space-y-6">
@@ -47,11 +56,12 @@ export function AnswersManager({
             <Input
               value={answer}
               placeholder={`Resposta ${index + 1}`}
+              disabled={isVF}
               onChange={(e) => updateAnswer(index, e.target.value)}
-              onClick={() => onSelectCorrect(index)}
+              onClick={() => onChangeCorrectIndex(index)}
               className={cn(
                 "cursor-pointer border-2 bg-[#f7fcff] pr-10",
-                correctIndex === index
+                correctAnswerIndex === index
                   ? "border-green-500 focus-visible:ring-green-500"
                   : "border-muted",
               )}
@@ -59,7 +69,7 @@ export function AnswersManager({
 
             {canDelete && (
               <button
-                onClick={() => onDeleteAnswer(index)}
+                onClick={() => deleteAnswer(index)}
                 type="button"
                 className="absolute right-2 top-2 text-muted-foreground hover:text-destructive"
               >
