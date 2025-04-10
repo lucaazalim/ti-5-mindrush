@@ -74,12 +74,17 @@ export default function QuizManualForm({
     setCurrentSlide(questions.length);
   };
 
-  const handleDeleteQuestion = () => {
+  const handleDeleteQuestion = (index: number) => {
     if (questions.length <= 1) return;
 
-    const updated = questions.filter((_, i) => i !== currentSlide);
+    const updated = questions.filter((_, i) => i !== index);
     setQuestions(updated);
-    setCurrentSlide((prev) => (prev > 0 ? prev - 1 : 0));
+
+    if (currentSlide === index) {
+      setCurrentSlide((prev) => (prev > 0 ? prev - 1 : 0));
+    } else if (currentSlide > index) {
+      setCurrentSlide((prev) => prev - 1);
+    }
   };
 
   const handleSubmit = async () => {

@@ -19,12 +19,6 @@ export function SlideNavigation({
   onAdd,
   onDelete,
 }: SlideNavigationProps) {
-  const handleDelete = (index: number) => {
-    if (questions.length > 1 && index !== currentSlide) {
-      onDelete(index);
-    }
-  };
-
   return (
     <aside className="flex h-full w-[200px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
       <Button
@@ -38,16 +32,16 @@ export function SlideNavigation({
       <div className="flex w-full flex-col items-center gap-4">
         {questions.map((q, index) => (
           <div
-            key={q.id}
+            key={q.id || index}
             className={`relative w-[148px] rounded-md border p-5 text-left text-sm transition-colors ${
               currentSlide === index ? "border-primary" : "border-muted"
             }`}
           >
-            {questions.length > 1 && index !== currentSlide && (
+            {questions.length > 1 && (
               <button
                 type="button"
                 className="absolute right-2 top-2 text-muted-foreground hover:text-destructive"
-                onClick={() => handleDelete(index)}
+                onClick={() => onDelete(index)}
               >
                 <Trash2 size={14} />
               </button>
