@@ -16,5 +16,5 @@ export const participantCreationParser = z.object({
 
 // Match
 
-export const matchPinParser = z.string().regex(/^\d{5}$/);
+export const matchPinParser = z.string().regex(/^\d{6}$/);
 export const matchIdOrPinParser = uuidParser.or(matchPinParser);
