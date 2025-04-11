@@ -17,7 +17,7 @@ import {
 } from "~/components/ui/select";
 import { useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
 
-export default function QuizTypeSpecificForm() {
+export default function QuizStepTwoTheme() {
   const form = useCreateQuizFormContext();
 
   return (

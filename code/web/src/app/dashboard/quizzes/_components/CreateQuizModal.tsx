@@ -14,7 +14,7 @@ import {
 import { createQuiz } from "~/server/actions/quiz-actions";
 
 import QuizStepOne from "./create-quiz-form/QuizStepOne";
-import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoAI";
+import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoTheme";
 import QuizStepTwoPDF from "./create-quiz-form/QuizStepTwoPDF";
 import StepOneActions from "./create-quiz-form/StepOneActions";
 import StepTwoActions from "./create-quiz-form/StepTwoActions";
