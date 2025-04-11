@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "~/components/ui/dialog";
@@ -13,6 +14,8 @@ interface DeleteQuizModalProps {
 }
 
 export default function DeleteQuizModal({ open, setIsDeleteDialogOpen, id, title }: DeleteQuizModalProps) {
+  const router = useRouter();
+  
   return (
     <Dialog open={open} onOpenChange={setIsDeleteDialogOpen}>
       <DialogContent>
@@ -31,7 +34,7 @@ export default function DeleteQuizModal({ open, setIsDeleteDialogOpen, id, title
             onClick={async () => {
               await deleteQuiz(id);
               toast.success("Quiz excluído com sucesso!");
-              window.location.reload();
+              router.refresh();
             }}
           >
             Excluir

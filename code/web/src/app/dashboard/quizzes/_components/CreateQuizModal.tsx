@@ -48,11 +48,10 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
       const result = await createQuiz(values);
       toast.success("Quiz criado com sucesso!");
       
-      if (values.type === "BLANK" && result?.id) {
+      if (result?.id) {
         router.push(ROUTES.QUIZ(result.id));
-      } else {
-        window.location.reload();
-      }
+      } 
+
     } catch (error) {
       toast.error("Erro ao criar o quiz. Tente novamente.");
     }

@@ -16,6 +16,7 @@ import QuizBasicInfo from "../create-quiz-form/QuizBasicInfo";
 import { UpdateQuiz } from "~/lib/types";
 import { uuidParser } from "~/lib/parsers";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface RenameQuizModalProps {
   open: boolean;
@@ -32,6 +33,9 @@ const renameQuizSchema = z.object({
 });
 
 export default function RenameQuizModal({ open, setIsRenameDialogOpen, quizInput }: RenameQuizModalProps) {
+
+  const router = useRouter();
+
   const renameQuizForm = useForm<UpdateQuiz>({
     resolver: zodResolver(renameQuizSchema),
     mode: "onChange",
@@ -45,7 +49,7 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quizInput
   async function onSubmit(updateData: UpdateQuiz) {
     await updateQuiz(updateData);
     toast.info("Quiz renomeado com sucesso!");
-    window.location.reload();
+    router.refresh();
   }
 
   return (
