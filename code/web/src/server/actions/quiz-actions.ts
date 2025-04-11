@@ -5,8 +5,8 @@ import { db } from "../db";
 import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { NewQuiz, type Quiz, type UpdateQuiz } from "~/lib/types";
-import {uuidParser} from "~/lib/parsers";
-import {fail, Result, succeed} from "~/lib/result";
+import { uuidParser } from "~/lib/parsers";
+import { fail, Result, succeed } from "~/lib/result";
 
 const quizSchema = z.object({
   educatorId: uuidParser,
@@ -81,8 +81,8 @@ export async function createQuiz(quizData: NewQuiz): Promise<{ id: string }> {
   return created;
 }
 
-export async function updateQuiz(id: string, updateData: UpdateQuiz) {
-  const parsedId = uuidParser.safeParse(id);
+export async function updateQuiz(updateData: UpdateQuiz) {
+  const parsedId = uuidParser.safeParse(updateData.id);
   if (!parsedId.success) {
     throw new Error("ID inválido");
   }
@@ -97,7 +97,7 @@ export async function updateQuiz(id: string, updateData: UpdateQuiz) {
     throw new Error("Dados inválidos para atualização do quiz");
   }
 
-  return db.update(quizzes).set(parsedUpdate.data).where(eq(quizzes.id, id));
+  return db.update(quizzes).set(parsedUpdate.data).where(eq(quizzes.id, updateData.id));
 }
 
 export async function deleteQuiz(id: string) {

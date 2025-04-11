@@ -67,9 +67,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
       <RenameQuizModal
         open={isRenameDialogOpen}
         setIsRenameDialogOpen={setIsRenameDialogOpen}
-        id={id}
-        title={title}
-        description={description}
+        quizInput={quiz}
       />
 
       <DeleteQuizModal
