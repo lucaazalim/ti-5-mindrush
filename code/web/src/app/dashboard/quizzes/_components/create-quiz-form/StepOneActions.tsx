@@ -22,8 +22,7 @@ export default function StepOneActions({
         type="button"
         className="mt-2 w-1/2"
         onClick={async () => {
-          const isValid = await form.trigger(["title", "description"]); // Valida todos os campos
-          console.log("Erros", form.formState.errors);   // Verifica se tem erros
+          const isValid = await form.trigger(["title", "description"]);
         
           if (isValid) {
             if (selectedType === "BLANK") {

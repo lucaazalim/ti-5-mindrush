@@ -18,7 +18,6 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
   const router = useRouter();
 
   const newMatch = async (quizId: string) => {
-    console.log("id", quizId);
     const result = await createMatch(quizId);
     if (isFailure(result)) {
       toast.error("Erro ao criar partida: " + result.error);
