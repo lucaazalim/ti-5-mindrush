@@ -63,11 +63,7 @@ export default function RenameQuizModal({
             onSubmit={renameQuizForm.handleSubmit(onSubmit)}
             className="space-y-6"
           >
-            <QuizBasicInfo
-              formContext={renameQuizForm}
-              title={title}
-              description={description}
-            />
+            <QuizBasicInfo />
 
             <div className="mt-2 flex gap-2">
               <Button
