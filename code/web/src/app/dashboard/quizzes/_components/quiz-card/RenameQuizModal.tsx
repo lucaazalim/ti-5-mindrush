@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import QuizBasicInfo from "../create-quiz-form/QuizBasicInfo";
 import { UpdateQuiz } from "~/lib/types";
 import { uuidParser } from "~/lib/parsers";
+import { toast } from "sonner";
 
 interface RenameQuizModalProps {
   open: boolean;
@@ -43,6 +44,7 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quizInput
 
   async function onSubmit(updateData: UpdateQuiz) {
     await updateQuiz(updateData);
+    toast.info("Quiz renomeado com sucesso!");
     window.location.reload();
   }
 

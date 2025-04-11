@@ -3,10 +3,11 @@
 import QuizOptions from "./QuizOptions";
 import { Button } from "~/components/ui/button";
 import type { QuizWithCount } from "~/lib/types";
-import {useRouter} from "next/navigation";
-import {ROUTES} from "~/lib/constants";
-import {createMatch} from "~/server/actions/match-actions";
-import {isFailure} from "~/lib/result";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "~/lib/constants";
+import { createMatch } from "~/server/actions/match-actions";
+import { isFailure } from "~/lib/result";
+import { toast } from "sonner";
 
 interface QuizzesListProps {
   quizzes: QuizWithCount[];
@@ -20,13 +21,12 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
     console.log("id", quizId);
     const result = await createMatch(quizId);
     if (isFailure(result)) {
-      alert(result.error.message);
+      toast.error("Erro ao criar partida: " + result.error);
       return;
     }
-
+    toast.success("Partida criada com sucesso!");
     const id = result.data.id;
     router.push(ROUTES.MATCH(id));
-
   }
 
   return (

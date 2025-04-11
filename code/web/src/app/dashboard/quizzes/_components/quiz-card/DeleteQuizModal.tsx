@@ -1,5 +1,6 @@
 "use client";
 
+import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "~/components/ui/dialog";
 import { deleteQuiz } from "~/server/actions/quiz-actions";
@@ -29,6 +30,7 @@ export default function DeleteQuizModal({ open, setIsDeleteDialogOpen, id, title
             variant="destructive"
             onClick={async () => {
               await deleteQuiz(id);
+              toast.success("Quiz excluído com sucesso!");
               window.location.reload();
             }}
           >

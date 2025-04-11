@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.className} scroll-smooth antialiased`}>
       <body className="bg-[var(--color-ice)]">
         <main>{children}</main>
-        <Toaster />
+        <Toaster richColors />
       </body>
     </html>
   );
