@@ -42,6 +42,8 @@ export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;
 
 // Other types
 
+export type QuestionType = Question["type"];
+
 export type UpdateQuiz = Pick<Quiz, "id" | "title" | "description">;
 
 export type QuizWithQuestionCount = Quiz & { questionCount: number };

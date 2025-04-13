@@ -17,3 +17,13 @@ export const ROUTES: {
   MATCHES: "/dashboard/matches",
   MATCH: (id: string) => `/dashboard/matches/${id}`,
 };
+
+export const QUESTION_TYPES = ["QUIZ", "TRUE_OR_FALSE"] as const;
+
+export const QUESTION_TYPES_NAMES: Record<
+  (typeof QUESTION_TYPES)[number],
+  string
+> = {
+  QUIZ: "Quiz",
+  TRUE_OR_FALSE: "Verdadeiro ou falso",
+};

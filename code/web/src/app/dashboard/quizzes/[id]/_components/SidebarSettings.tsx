@@ -9,8 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { type QuizType } from "./QuizManualForm";
-import { type QuestionWithRawAlternatives } from "~/lib/types";
+import { QuestionType, type QuestionWithRawAlternatives } from "~/lib/types";
+import { QUESTION_TYPES, QUESTION_TYPES_NAMES } from "~/lib/constants";
 
 interface Props {
   question: QuestionWithRawAlternatives;
@@ -25,16 +25,17 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
         <div className="space-y-2">
           <Select
             value={question.type}
-            onValueChange={(value: QuizType) => onUpdate({ type: value })}
+            onValueChange={(value: QuestionType) => onUpdate({ type: value })}
           >
             <SelectTrigger>
               <SelectValue placeholder="Tipo de pergunta" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="QUIZ">Quiz</SelectItem>
-              <SelectItem value="VERDADEIRO_FALSO">
-                Verdadeiro ou falso
-              </SelectItem>
+              {Object.entries(QUESTION_TYPES_NAMES).map(([key, value]) => (
+                <SelectItem key={key} value={key}>
+                  {value}
+                </SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>

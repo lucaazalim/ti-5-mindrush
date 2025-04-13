@@ -12,6 +12,7 @@ import {
     varchar,
 } from "drizzle-orm/pg-core";
 import {type AdapterAccount} from "next-auth/adapters";
+import { QUESTION_TYPES } from "~/lib/constants";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -127,7 +128,7 @@ export const questions = createTable("question", {
   quizId: uuid("quiz_id")
     .notNull()
     .references(() => quizzes.id, { onDelete: "cascade" }),
-  type: text("type", { enum: ["QUIZ", "TRUE_OR_FALSE"] }).notNull(),
+  type: text("type", { enum: QUESTION_TYPES }).notNull(),
   question: text("question").notNull(),
   timeLimit: integer("time_limit").notNull(),
   createdAt: timestamp("created_at")

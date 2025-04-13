@@ -18,8 +18,6 @@ interface Props {
   initialQuestions?: QuestionWithAlternatives[];
 }
 
-export type QuizType = "QUIZ" | "TRUE_OR_FALSE";
-
 export default function QuizManualForm({
   quizId,
   initialQuestions = [],
