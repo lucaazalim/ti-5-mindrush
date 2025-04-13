@@ -5,7 +5,7 @@ class DioClient {
   final Dio _dio = Dio(
 
     BaseOptions(
-      baseUrl: "https://exemplo.com",
+      baseUrl: "http://localhost:3000/api",
       connectTimeout: Duration(seconds: 10),
       receiveTimeout: Duration(seconds: 10),
       headers: {

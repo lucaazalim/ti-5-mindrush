@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mindrush/modules/lobby/presentation/name_screen.dart';
-
+import '../logic/api/match_service.dart';
 class PinScreen extends StatefulWidget {
   const PinScreen({super.key});
 
@@ -41,22 +41,27 @@ class _PinScreenState extends State<PinScreen> {
         },
       );
 
-      // Simular um atraso para o loading (substitua por sua lógica real)
-      await Future.delayed(const Duration(seconds: 2));
+      try {
+        // Tenta validar o PIN através da API
+        final match = await MatchService.validateMatch(_pinController.text);
 
-      // Valida se o PIN está na lista de válidos
-      if (validPins.contains(_pinController.text)) {
-        // Navegar para a tela de apelido (NameScreen)
-        Navigator.pop(context); // Remover o loading
+        // Se chegou aqui, o match foi encontrado com sucesso
+        Navigator.pop(context); // Remove o loading
+
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const NameScreen()),
+          MaterialPageRoute(
+            builder: (context) => NameScreen(), // Passando o match, se necessário
+          ),
         );
-      } else {
-        Navigator.pop(context); // Remover o loading
+      } catch (e) {
+        // Erro ao buscar o match
+        Navigator.pop(context); // Remove o loading
+        print('Erro ao validar PIN: $e');
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('PIN inválido. Tente novamente!'),
+            content: Text('PIN inválido ou erro na conexão. Tente novamente!'),
             backgroundColor: Colors.redAccent,
           ),
         );
