@@ -21,17 +21,18 @@ jobs:
         with:
           node-version: "18"
 
-      - name: Change directory to code/web
-        run: cd code/web
-
       - name: Install dependencies
         run: npm install
+        working-directory: code/web
 
       - name: Run TypeScript checks
         run: npm run type-check
+        working-directory: code/web
 
       - name: Run ESLint
         run: npm run lint
+        working-directory: code/web
 
       - name: Build the project
         run: npm run build
+        working-directory: code/web
