@@ -15,6 +15,11 @@
 
 **2. Quais partes do projeto requerem revisões do design de segurança antes da liberação?**
 
+- **Autenticação e autorização (RF1, RNF5 e RNF6):** Revisar o design para garantir que o sistema de autenticação baseado em sessões seja seguro e que as permissões sejam corretamente implementadas.
+- **Gerenciamento de quizzes e partidas (RF2, RF6 e RF7):** Verificar se o design impede acessos não autorizados e protege os dados sensíveis dos educadores e estudantes.
+- **Mensageria em tempo real (WebSocket e RabbitMQ):** Avaliar a segurança da comunicação em tempo real para evitar interceptações e ataques de spoofing.
+- **Integração com IA generativa:** Garantir que os dados enviados para a API de IA sejam tratados de forma segura e que não exponham informações sensíveis.
+
 ---
 
 **3. Quais partes do projeto exigirão um teste de penetração por um grupo externo à equipe?**
