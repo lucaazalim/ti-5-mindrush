@@ -42,7 +42,7 @@ export async function POST(
     );
   }
 
-  const createdParticipant = await db
+  const [createdParticipant] = await db
     .insert(participants)
     .values({
       matchId: match.data.id,
