@@ -51,7 +51,7 @@ class _PinScreenState extends State<PinScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => NameScreen(), // Passando o match, se necessário
+            builder: (context) => NameScreen(match: match),
           ),
         );
       } catch (e) {

@@ -32,4 +32,5 @@ class Match {
       'createdAt': createdAt.toIso8601String(),
     };
   }
+
 }

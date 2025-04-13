@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:mindrush/modules/match/logic/alternative.dart';
 import 'package:mindrush/modules/match/logic/question.dart';
-
 import 'package:mindrush/modules/match/presentation/match_question.dart';
 
+import '../data/match.dart';
+import '../data/dto/register-participant.dart';
+import '../logic/api/match_service.dart';
+
 class NameScreen extends StatefulWidget {
-  const NameScreen({super.key});
+
+  final Match match;
+  const NameScreen({super.key, required this.match});
 
   @override
   State<NameScreen> createState() => _NameScreenState();
+
 }
 
-class _NameScreenState extends State<NameScreen> {
 
+class _NameScreenState extends State<NameScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   String? _nameError;
@@ -24,8 +30,8 @@ class _NameScreenState extends State<NameScreen> {
   }
 
   void _submitForm() async {
-
     String name = _nameController.text.trim();
+
     if (name.isEmpty || name.length < 2) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -33,14 +39,10 @@ class _NameScreenState extends State<NameScreen> {
           backgroundColor: Colors.red,
         ),
       );
-
-      //adicionar aqui o metodo post de criação de usuário.
-      
       return;
     }
 
     if (_formKey.currentState!.validate()) {
-      // Exibir o loading
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -52,12 +54,13 @@ class _NameScreenState extends State<NameScreen> {
           );
         },
       );
+    }
 
-      // Simular um atraso para o loading (substitua por sua lógica real)
+    try {
+      final dto = RegisterParticipant(nickname: name);
+      final participant = await MatchService.registerParticipant(widget.match.pin, dto);
 
-      await Future.delayed(const Duration(seconds: 2));
-
-      Navigator.pop(context); // Remove o loading
+      Navigator.pop(context); // Fecha o loading
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -69,10 +72,10 @@ class _NameScreenState extends State<NameScreen> {
               timeLimit: 30,
               quizId: 100,
               alternatives: [
-                Alternative(id:1, answer: 'Rio de Janeiro', correct: false),
-                Alternative(id:2, answer: 'São Paulo', correct: false),
-                Alternative(id:3, answer: 'Brasília', correct: true),
-                Alternative(id:4, answer: 'Salvador', correct: false),
+                Alternative(id: 1, answer: 'Rio de Janeiro', correct: false),
+                Alternative(id: 2, answer: 'São Paulo', correct: false),
+                Alternative(id: 3, answer: 'Brasília', correct: true),
+                Alternative(id: 4, answer: 'Salvador', correct: false),
               ],
             ),
             onResponder: (resposta) {
@@ -81,12 +84,18 @@ class _NameScreenState extends State<NameScreen> {
           ),
         ),
       );
-
-
+    } catch (e) {
+      Navigator.pop(context); // Garante que o loading seja fechado em caso de erro
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Erro ao registrar participante: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 
-
+  // 🔻 ESTE build ESTAVA FORA DA CLASSE, AGORA ESTÁ CORRETAMENTE DENTRO
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,45 +115,45 @@ class _NameScreenState extends State<NameScreen> {
                   ),
                   const SizedBox(height: 40),
                   Container(
-                      width: 212,
-                      height: 40,
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child:
-
-                        TextFormField(
-                          controller: _nameController,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 18, // Ajusta o tamanho do texto
-                          ),
-                          textAlignVertical: TextAlignVertical.center,// Centraliza o texto digitado
-                          decoration: InputDecoration(
-                            floatingLabelAlignment: FloatingLabelAlignment.start,
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            labelText: "Apelido", // Define o label diretamente
-                            labelStyle: const TextStyle(
-                              color: Colors.black87,
-                              fontSize: 18,
-                            ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10), // Ajuste do padding interno
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
-                              borderSide: const BorderSide(color: Colors.white),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(6),
-                              borderSide: const BorderSide(color: Colors.blue),
-                            ),
-                          ),
-
+                    width: 212,
+                    height: 40,
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                    child: TextFormField(
+                      controller: _nameController,
+                      validator: (value) {
+                        if (value == null || value.trim().length < 2) {
+                          return 'O nome deve ter pelo menos 2 caracteres.';
+                        }
+                        return null;
+                      },
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                      textAlignVertical: TextAlignVertical.center,
+                      decoration: InputDecoration(
+                        floatingLabelAlignment: FloatingLabelAlignment.start,
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        labelText: "Apelido",
+                        labelStyle: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 18,
                         ),
-
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(6),
+                          borderSide: const BorderSide(color: Colors.blue),
+                        ),
+                      ),
+                    ),
                   ),
-
                   const SizedBox(height: 5),
-
                   SizedBox(
                     width: 212,
                     height: 40,
@@ -166,7 +175,6 @@ class _NameScreenState extends State<NameScreen> {
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
