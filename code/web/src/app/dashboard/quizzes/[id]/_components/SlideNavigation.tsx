@@ -2,10 +2,10 @@
 
 import { Button } from "~/components/ui/button";
 import { Trash2 } from "lucide-react";
-import { type QuestionWithAnswers } from "~/lib/types";
+import { type QuestionWithRawAlternatives } from "~/lib/types";
 
 interface SlideNavigationProps {
-  questions: QuestionWithAnswers[];
+  questions: QuestionWithRawAlternatives[];
   currentSlide: number;
   onSlideChange: (index: number) => void;
   onAdd: () => void;

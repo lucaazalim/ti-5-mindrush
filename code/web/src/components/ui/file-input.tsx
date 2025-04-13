@@ -1,5 +1,5 @@
-import { Input } from "~/components/ui/input"
-import { Label } from "~/components/ui/label"
+import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 
 export function InputFile() {
   return (
@@ -7,5 +7,5 @@ export function InputFile() {
       <Label htmlFor="picture">Picture</Label>
       <Input id="picture" type="file" />
     </div>
-  )
+  );
 }

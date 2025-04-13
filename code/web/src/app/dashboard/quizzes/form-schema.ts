@@ -1,16 +1,18 @@
-import {z} from "zod";
-import {useFormContext} from "react-hook-form";
+import { z } from "zod";
+import { useFormContext } from "react-hook-form";
 
 export type CreateQuizSchema = z.infer<typeof quizCreateSchema>;
 
 export function useCreateQuizFormContext() {
-    return useFormContext<CreateQuizSchema>();
+  return useFormContext<CreateQuizSchema>();
 }
 
 const baseFields = {
   educatorId: z.string().uuid(),
   title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-  description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
+  description: z
+    .string()
+    .min(8, "A descrição deve ter pelo menos 8 caracteres"),
 };
 
 const blankSchema = z.object({

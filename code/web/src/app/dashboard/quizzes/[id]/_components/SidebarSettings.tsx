@@ -10,11 +10,11 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { type QuizType } from "./QuizManualForm";
-import { type QuestionWithAnswers } from "~/lib/types";
+import { type QuestionWithRawAlternatives } from "~/lib/types";
 
 interface Props {
-  question: QuestionWithAnswers;
-  onUpdate: (updated: Partial<QuestionWithAnswers>) => void;
+  question: QuestionWithRawAlternatives;
+  onUpdate: (updated: Partial<QuestionWithRawAlternatives>) => void;
   onSubmit: () => void;
 }
 

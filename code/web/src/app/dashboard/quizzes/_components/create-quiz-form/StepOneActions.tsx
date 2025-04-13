@@ -1,7 +1,10 @@
 "use client";
 
 import { Button } from "~/components/ui/button";
-import { CreateQuizSchema, useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
+import {
+  type CreateQuizSchema,
+  useCreateQuizFormContext,
+} from "~/app/dashboard/quizzes/form-schema";
 
 interface StepOneActionsProps {
   setStep: (step: number) => void;
@@ -23,15 +26,14 @@ export default function StepOneActions({
         className="mt-2 w-1/2"
         onClick={async () => {
           const isValid = await form.trigger(["title", "description"]);
-        
+
           if (isValid) {
             if (selectedType === "BLANK") {
               await form.handleSubmit(onSubmit)();
             } else {
               setStep(2);
             }
-          }          
-        
+          }
         }}
       >
         {selectedType === "BLANK" ? "Criar Quiz" : "Continuar ->"}

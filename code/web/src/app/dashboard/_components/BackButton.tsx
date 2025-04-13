@@ -25,11 +25,11 @@ export default function BackButton({ href, className }: BackButtonProps) {
       }}
       className={cn(
         className,
-        "flex flex-row items-center gap-1 text-primary hover:brightness-125 border-b-2 border-primary",
+        "flex flex-row items-center gap-1 border-b-2 border-primary text-primary hover:brightness-125",
       )}
     >
       <ArrowLeft className="size-4" />
-      <span className="font-semibold text-sm">VOLTAR</span>
+      <span className="text-sm font-semibold">VOLTAR</span>
     </button>
   );
 }

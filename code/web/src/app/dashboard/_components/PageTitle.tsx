@@ -7,7 +7,7 @@ export default function PageTitle({
   ...props
 }: HTMLAttributes<HTMLHeadingElement>) {
   return (
-    <h1 className={cn(className, "font-semibold text-2xl")} {...props}>
+    <h1 className={cn(className, "text-2xl font-semibold")} {...props}>
       {children}
     </h1>
   );

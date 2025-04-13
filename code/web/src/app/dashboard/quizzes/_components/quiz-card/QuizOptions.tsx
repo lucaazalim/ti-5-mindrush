@@ -21,7 +21,7 @@ interface QuizOptionsProps {
 }
 
 export default function QuizOptions({ quiz }: QuizOptionsProps) {
-  const { id, title, description } = quiz;
+  const { id, title } = quiz;
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
   const router = useRouter();

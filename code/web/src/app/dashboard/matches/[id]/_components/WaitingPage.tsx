@@ -82,9 +82,10 @@ export default function WaitingPage() {
               className="flex flex-row items-center rounded-lg bg-primary/20"
             >
               <div className="rounded-bl-lg rounded-tl-lg bg-primary p-3">
-                <img
+                <Image
                   src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${participant}`}
                   className="size-16 drop-shadow-lg"
+                  alt={`Avatar de ${participant}`}
                 />
               </div>
               <span className="truncate p-3 font-semibold">{participant}</span>

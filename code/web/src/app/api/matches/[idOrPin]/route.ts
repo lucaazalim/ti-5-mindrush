@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getMatchByIdOrPin } from "~/server/actions/match-actions";
-import {isFailure} from "~/lib/result";
+import { isFailure } from "~/lib/result";
 
 export async function GET(
   req: NextRequest,

@@ -6,9 +6,17 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
-    experimental: {
-        nodeMiddleware: true
-    }
+  experimental: {
+    nodeMiddleware: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+      },
+    ],
+  },
 };
 
 export default config;

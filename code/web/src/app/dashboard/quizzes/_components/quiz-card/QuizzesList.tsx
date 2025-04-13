@@ -2,7 +2,7 @@
 
 import QuizOptions from "./QuizOptions";
 import { Button } from "~/components/ui/button";
-import type { QuizWithCount } from "~/lib/types";
+import type { QuizWithQuestionCount } from "~/lib/types";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "~/lib/constants";
 import { createMatch } from "~/server/actions/match-actions";
@@ -10,11 +10,10 @@ import { isFailure } from "~/lib/result";
 import { toast } from "sonner";
 
 interface QuizzesListProps {
-  quizzes: QuizWithCount[];
+  quizzes: QuizWithQuestionCount[];
 }
 
 export default function QuizzesList({ quizzes }: QuizzesListProps) {
-
   const router = useRouter();
 
   const newMatch = async (quizId: string) => {
@@ -26,7 +25,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
     toast.success("Partida criada com sucesso!");
     const id = result.data.id;
     router.push(ROUTES.MATCH(id));
-  }
+  };
 
   return (
     <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -37,10 +36,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
             className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md"
           >
             <div className="relative flex h-32 items-center justify-center bg-gray-200">
-              <Button
-                className="mt-4 h-11"
-                onClick={() => newMatch(quiz.id)}
-              >
+              <Button className="mt-4 h-11" onClick={() => newMatch(quiz.id)}>
                 Criar Partida
               </Button>
 
@@ -51,14 +47,14 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
             </div>
 
             <div className="relative flex flex-1 flex-col justify-between px-4 py-5">
-                <div className="space-y-1">
-                  <h3 className="text-sm font-semibold">{quiz.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {quiz.description}
-                  </p>
-                </div>
+              <div className="space-y-1">
+                <h3 className="text-sm font-semibold">{quiz.title}</h3>
+                <p className="text-sm text-muted-foreground">
+                  {quiz.description}
+                </p>
+              </div>
 
-              <QuizOptions quiz={quiz}/>
+              <QuizOptions quiz={quiz} />
             </div>
           </div>
         ))

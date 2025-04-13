@@ -25,7 +25,7 @@ import {
 import { useRouter } from "next/navigation";
 import { ROUTES } from "~/lib/constants";
 import { toast } from "sonner";
-import { isFailure, isSuccess } from "~/lib/result";
+import { isSuccess } from "~/lib/result";
 
 export function CreateQuizModal({ educatorId }: { educatorId: string }) {
   const [step, setStep] = useState(1);

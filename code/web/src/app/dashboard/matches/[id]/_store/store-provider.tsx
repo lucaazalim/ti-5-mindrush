@@ -1,11 +1,11 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useRef } from "react";
+import { createContext, type ReactNode, useContext, useRef } from "react";
 import { useStore } from "zustand/react";
 import {
   createMatchStore,
-  MatchState,
-  MatchStore,
+  type MatchState,
+  type MatchStore,
 } from "~/app/dashboard/matches/[id]/_store/store";
 
 export type MatchStoreApi = ReturnType<typeof createMatchStore>;

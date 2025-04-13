@@ -26,14 +26,12 @@ export type Match = InferSelectModel<typeof matches>;
 export type Participant = InferSelectModel<typeof participants>;
 export type QuizAnswer = InferSelectModel<typeof quizAnswers>;
 
-// Insert/Update types (e.g. for creating or updating entries)
+// Insert types (e.g. for creating or updating entries)
 export type NewUser = InferInsertModel<typeof users>;
 export type NewAccount = InferInsertModel<typeof accounts>;
 export type NewSession = InferInsertModel<typeof sessions>;
 export type NewVerificationToken = InferInsertModel<typeof verificationTokens>;
 export type NewQuiz = InferInsertModel<typeof quizzes>;
-export type UpdateQuiz = Pick<Quiz, "id" | "title" | "description">;
-export type QuizWithCount = Quiz & { questionCount: number };
 export type NewQuestion = InferInsertModel<typeof questions>;
 export type NewQuestionQuizAlternative = InferInsertModel<
   typeof quizQuestionsAlternatives
@@ -42,7 +40,21 @@ export type NewMatch = InferInsertModel<typeof matches>;
 export type NewParticipant = InferInsertModel<typeof participants>;
 export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;
 
-export type QuestionWithAnswers = Question & {
+// Other types
+
+export type UpdateQuiz = Pick<Quiz, "id" | "title" | "description">;
+
+export type QuizWithQuestionCount = Quiz & { questionCount: number };
+
+export type QuizWithQuestionsAndAlternatives = Quiz & {
+  questions: QuestionWithAlternatives[];
+};
+
+export type QuestionWithAlternatives = Question & {
+  alternatives: QuestionQuizAlternative[];
+};
+
+export type QuestionWithRawAlternatives = Question & {
   answers: string[];
   correctAnswerIndex: number;
 };

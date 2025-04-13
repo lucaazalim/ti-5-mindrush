@@ -2,7 +2,7 @@
 
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
-import { Trash2, Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { cn } from "~/lib/utils";
 
 interface Props {

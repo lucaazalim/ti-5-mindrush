@@ -60,7 +60,7 @@ export async function createMatch(
   const result = await db.insert(matches).values(newMatch).returning();
 
   if (result.length > 0) {
-    return succeed(result[0]!);
+    return succeed(result[0]);
   }
 
   return fail("Ocorreu um erro ao criar a partida.");

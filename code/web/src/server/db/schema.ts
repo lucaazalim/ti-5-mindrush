@@ -22,10 +22,7 @@ import {type AdapterAccount} from "next-auth/adapters";
 export const createTable = pgTableCreator((name) => `mindrush_${name}`);
 
 export const users = createTable("user", {
-  id: uuid("id")
-    .notNull()
-    .primaryKey()
-    .defaultRandom(),
+  id: uuid("id").notNull().primaryKey().defaultRandom(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("email_verified", {
@@ -117,7 +114,9 @@ export const quizzes = createTable("quiz", {
     .references(() => users.id),
   title: text("title").notNull(),
   description: text("description").notNull(),
-  type: text("type", { enum: ["BLANK", "THEME_GENERATED", "PDF_GENERATED"] }).notNull(),
+  type: text("type", {
+    enum: ["BLANK", "THEME_GENERATED", "PDF_GENERATED"],
+  }).notNull(),
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
@@ -157,7 +156,9 @@ export const matches = createTable("match", {
     .notNull()
     .references(() => quizzes.id, { onDelete: "cascade" }),
   pin: text("pin").notNull(),
-  state: text("state", { enum: ["WAITING", "RUNNING", "PAUSED", "ENDED"] }).notNull(),
+  state: text("state", {
+    enum: ["WAITING", "RUNNING", "PAUSED", "ENDED"],
+  }).notNull(),
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),

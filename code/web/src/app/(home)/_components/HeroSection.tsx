@@ -4,6 +4,7 @@ import { ReactTyped } from "react-typed";
 import Image from "next/image";
 import mobile from "public/home/mobile.png";
 import * as motion from "motion/react-client";
+
 export const HeroSection = () => {
   return (
     <div className="m-auto py-40 text-center text-secondary" id="home">

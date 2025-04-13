@@ -1,11 +1,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getMatchByIdOrPin } from "~/server/actions/match-actions";
 import { participantCreationParser } from "~/lib/parsers";
-import { z } from "zod";
+import type { z } from "zod";
 import { db } from "~/server/db";
 import { participants } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
-import {isFailure} from "~/lib/result";
+import { isFailure } from "~/lib/result";
 
 export async function POST(
   req: NextRequest,

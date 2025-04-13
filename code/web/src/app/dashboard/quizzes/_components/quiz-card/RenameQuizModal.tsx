@@ -32,8 +32,11 @@ const renameQuizSchema = z.object({
     .min(8, "A descrição deve ter pelo menos 8 caracteres"),
 });
 
-export default function RenameQuizModal({ open, setIsRenameDialogOpen, quizInput }: RenameQuizModalProps) {
-
+export default function RenameQuizModal({
+  open,
+  setIsRenameDialogOpen,
+  quizInput,
+}: RenameQuizModalProps) {
   const router = useRouter();
 
   const renameQuizForm = useForm<UpdateQuiz>({
@@ -42,7 +45,7 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quizInput
     defaultValues: {
       id: quizInput.id,
       title: quizInput.title,
-      description : quizInput.description,
+      description: quizInput.description,
     },
   });
 

@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { db } from "~/server/db";
-import { questions, quizQuestionsAlternatives } from "~/server/db/schema"; 
+import { questions, quizQuestionsAlternatives } from "~/server/db/schema";
 import { uuidParser } from "~/lib/parsers";
 
 const questionSchema = z.object({
@@ -49,7 +49,7 @@ export async function saveQuestionsAndAnswers(data: unknown) {
 
       await db.insert(quizQuestionsAlternatives).values(alternatives);
     }
-  } catch (error) {
+  } catch {
     throw new Error("Erro interno ao salvar perguntas.");
   }
 }

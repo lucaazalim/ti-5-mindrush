@@ -35,7 +35,7 @@ export default function QuizStepTwoPDF() {
             >
               <Upload className="mb-2 h-6 w-6 text-gray-500" />
               <span className="text-sm font-medium text-gray-700">
-                {fileName ? fileName : "Clique para enviar um arquivo PDF"}
+                {fileName ?? "Clique para enviar um arquivo PDF"}
               </span>
               <Input
                 type="file"

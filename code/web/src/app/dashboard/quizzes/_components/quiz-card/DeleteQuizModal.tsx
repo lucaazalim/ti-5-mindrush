@@ -3,7 +3,13 @@
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "~/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "~/components/ui/dialog";
 import { deleteQuiz } from "~/server/actions/quiz-actions";
 
 interface DeleteQuizModalProps {
@@ -13,9 +19,14 @@ interface DeleteQuizModalProps {
   title: string;
 }
 
-export default function DeleteQuizModal({ open, setIsDeleteDialogOpen, id, title }: DeleteQuizModalProps) {
+export default function DeleteQuizModal({
+  open,
+  setIsDeleteDialogOpen,
+  id,
+  title,
+}: DeleteQuizModalProps) {
   const router = useRouter();
-  
+
   return (
     <Dialog open={open} onOpenChange={setIsDeleteDialogOpen}>
       <DialogContent>
@@ -26,7 +37,10 @@ export default function DeleteQuizModal({ open, setIsDeleteDialogOpen, id, title
           </DialogDescription>
         </DialogHeader>
         <div className="mt-2 flex gap-2">
-          <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+          <Button
+            variant="outline"
+            onClick={() => setIsDeleteDialogOpen(false)}
+          >
             Cancelar
           </Button>
           <Button

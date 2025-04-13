@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { type QuestionWithAnswers } from "~/lib/types";
 import { QuestionEditor } from "./QuestionEditor";
 import { AnswersManager } from "./AnswersManager";
 import { SlideNavigation } from "./SlideNavigation";
@@ -9,10 +8,14 @@ import { SidebarSettings } from "./SidebarSettings";
 import { saveQuestionsAndAnswers } from "~/server/actions/question-actions";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import type {
+  QuestionWithAlternatives,
+  QuestionWithRawAlternatives,
+} from "~/lib/types";
 
 interface Props {
   quizId: string;
-  initialQuestions?: QuestionWithAnswers[];
+  initialQuestions?: QuestionWithAlternatives[];
 }
 
 export type QuizType = "QUIZ" | "TRUE_OR_FALSE";
@@ -21,9 +24,13 @@ export default function QuizManualForm({
   quizId,
   initialQuestions = [],
 }: Props) {
-  const [questions, setQuestions] = useState<QuestionWithAnswers[]>(
+  const [questions, setQuestions] = useState<QuestionWithRawAlternatives[]>(
     initialQuestions.length > 0
-      ? initialQuestions
+      ? initialQuestions.map((q) => ({
+          ...q,
+          answers: q.alternatives.map((a) => a.answer),
+          correctAnswerIndex: q.alternatives.findIndex((a) => a.correct),
+        }))
       : [
           {
             id: "",
@@ -44,7 +51,9 @@ export default function QuizManualForm({
   const currentQuestion = questions[currentSlide];
   if (!currentQuestion) return null;
 
-  const updateCurrentQuestion = (updated: Partial<QuestionWithAnswers>) => {
+  const updateCurrentQuestion = (
+    updated: Partial<QuestionWithRawAlternatives>,
+  ) => {
     setQuestions((prev) =>
       prev.map((q, i) => (i === currentSlide ? { ...q, ...updated } : q)),
     );
@@ -59,7 +68,7 @@ export default function QuizManualForm({
   };
 
   const handleAddQuestion = () => {
-    const newQuestion: QuestionWithAnswers = {
+    const newQuestion: QuestionWithRawAlternatives = {
       id: "",
       question: "",
       quizId,
