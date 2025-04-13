@@ -35,7 +35,7 @@ export async function POST(
     .from(participants)
     .where(eq(participants.nickname, payload.nickname));
 
-  if (exists) {
+  if (exists.length > 0) {
     return NextResponse.json(
       "O apelido escolhido já está sendo usado por outro participante.",
       { status: 400 },
@@ -52,3 +52,4 @@ export async function POST(
 
   return NextResponse.json(createdParticipant, { status: 200 });
 }
+  
