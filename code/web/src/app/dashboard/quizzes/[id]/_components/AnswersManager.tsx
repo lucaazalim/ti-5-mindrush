@@ -20,7 +20,6 @@ export function AnswersManager({
   onChangeAnswers,
   onChangeCorrectIndex,
 }: Props) {
-  const test: any = "";
   const isVF = type === "TRUE_OR_FALSE";
 
   const updateAnswer = (index: number, value: string) => {
