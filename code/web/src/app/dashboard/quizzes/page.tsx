@@ -3,12 +3,17 @@ import QuizzesList from "~/app/dashboard/quizzes/_components/quiz-card/QuizzesLi
 import { getAllQuizzes } from "~/server/actions/quiz-actions";
 import { CreateQuizModal } from "./_components/CreateQuizModal";
 import { auth } from "~/server/auth";
+import { isFailure } from "~/lib/result";
 
 export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const dataAuth = await auth();
-  const quizzes = await getAllQuizzes();
+  const quizzesResult = await getAllQuizzes();
+
+  if (isFailure(quizzesResult)) {
+    return <div>Falha ao carregar quizzes.</div>;
+  }
 
   return (
     <div>
@@ -17,7 +22,7 @@ export default async function Page() {
         <CreateQuizModal educatorId={dataAuth?.user?.id ?? ""} />
       </div>
 
-      <QuizzesList quizzes={quizzes} />
+      <QuizzesList quizzes={quizzesResult.data} />
     </div>
   );
 }

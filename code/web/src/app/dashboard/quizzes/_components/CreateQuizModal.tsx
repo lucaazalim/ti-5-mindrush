@@ -25,6 +25,7 @@ import {
 import { useRouter } from "next/navigation";
 import { ROUTES } from "~/lib/constants";
 import { toast } from "sonner";
+import { isFailure, isSuccess } from "~/lib/result";
 
 export function CreateQuizModal({ educatorId }: { educatorId: string }) {
   const [step, setStep] = useState(1);
@@ -44,16 +45,13 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
   const selectedType = methods.watch("type");
 
   async function onSubmit(values: CreateQuizSchema) {
-    try {
-      const result = await createQuiz(values);
-      toast.success("Quiz criado com sucesso!");
-      
-      if (result?.id) {
-        router.push(ROUTES.QUIZ(result.id));
-      } 
+    const result = await createQuiz(values);
 
-    } catch (error) {
-      toast.error("Erro ao criar o quiz. Tente novamente.");
+    if (isSuccess(result)) {
+      toast.success("Quiz criado com sucesso!");
+      router.push(ROUTES.QUIZ(result.data.id));
+    } else {
+      toast.error(result.error);
     }
   }
 
@@ -88,7 +86,6 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
             )}
           </form>
         </FormProvider>
-
       </DialogContent>
     </Dialog>
   );

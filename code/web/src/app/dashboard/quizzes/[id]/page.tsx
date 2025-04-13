@@ -5,6 +5,7 @@ import {
 import type { QuizType } from "./_components/QuizManualForm";
 import QuizManualForm from "./_components/QuizManualForm";
 import { notFound } from "next/navigation";
+import { isFailure } from "~/lib/result";
 
 export default async function Page({
   params,
@@ -14,15 +15,21 @@ export default async function Page({
   const { id } = await params;
   const quizResult = await getQuizById(id);
 
-  if (!quizResult || typeof quizResult !== "object" || "error" in quizResult) {
+  if (isFailure(quizResult)) {
     return notFound();
   }
 
-  const questionsFromDb = await getQuestionsByQuizId(id);
+  const questionsResult = await getQuestionsByQuizId(id);
 
-  const questions = questionsFromDb.map((q) => {
-    const answers = q.alternatives.map((alt) => alt.answer);
-    const correctIndex = q.alternatives.findIndex((alt) => alt.correct);
+  if (isFailure(questionsResult)) {
+    return notFound();
+  }
+
+  const questions = questionsResult.data.map((q) => {
+    const answers = q.alternatives.map((alt: { answer: string }) => alt.answer);
+    const correctIndex = q.alternatives.findIndex(
+      (alt: { correct: boolean }) => alt.correct,
+    );
 
     return {
       id: q.id,

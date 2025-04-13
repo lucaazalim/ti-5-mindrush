@@ -4,7 +4,7 @@ import { z } from "zod";
 import { db } from "../db";
 import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 import { eq } from "drizzle-orm";
-import { NewQuiz, type Quiz, type UpdateQuiz } from "~/lib/types";
+import { NewQuiz, Question, QuizWithCount, type Quiz, type UpdateQuiz } from "~/lib/types";
 import { uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 
@@ -27,64 +27,79 @@ const quizSchema = z.object({
   pdfBase64: z.string().optional(),
 });
 
-export async function getAllQuizzes() {
-  const alQuizzes = await db.select().from(quizzes);
+export async function getAllQuizzes(): Promise<Result<QuizWithCount[], string>> {
+  try {
+    const allQuizzes = await db.select().from(quizzes);
+    const quizQuestions = await db
+      .select({ id: questions.id, quizId: questions.quizId })
+      .from(questions);
 
-  const quizQuestions = await db
-    .select({ id: questions.id, quizId: questions.quizId })
-    .from(questions);
+    const questionCountByQuiz: Record<string, number> = {};
+    quizQuestions.forEach((q) => {
+      questionCountByQuiz[q.quizId] = (questionCountByQuiz[q.quizId] ?? 0) + 1;
+    });
 
-  const questionCountByQuiz: Record<string, number> = {};
-
-  quizQuestions.forEach((q) => {
-    questionCountByQuiz[q.quizId] = (questionCountByQuiz[q.quizId] ?? 0) + 1;
-  });
-
-  return alQuizzes.map((q) => ({
-    ...q,
-    questionCount: questionCountByQuiz[q.id] ?? 0,
-  }));
+    return succeed(
+      allQuizzes.map((q) => ({
+        ...q,
+        questionCount: questionCountByQuiz[q.id] ?? 0,
+      })),
+    );
+  } catch (error) {
+    return fail("Falha ao buscar quizzes.");
+  }
 }
 
 export async function getQuizById(id: string): Promise<Result<Quiz, string>> {
   const parsedId = uuidParser.safeParse(id);
-
   if (parsedId.error) {
-    return fail(parsedId.error.message);
+    return fail("ID inválido.");
   }
 
-  const result = await db.select().from(quizzes).where(eq(quizzes.id, id));
-  const quiz = result[0];
+  try {
+    const result = await db.select().from(quizzes).where(eq(quizzes.id, id));
+    const quiz = result[0];
 
-  if (!quiz) {
-    return fail("Quiz não encontrado.");
+    if (!quiz) {
+      return fail("Quiz não encontrado.");
+    }
+
+    return succeed(quiz);
+  } catch (error) {
+    return fail("Falha ao buscar quiz pelo ID.");
   }
-
-  return succeed(quiz);
 }
 
-export async function createQuiz(quizData: NewQuiz): Promise<{ id: string }> {
+export async function createQuiz(
+  quizData: NewQuiz,
+): Promise<Result<Quiz, string>> {
   const parsedData = quizSchema.safeParse(quizData);
   if (!parsedData.success) {
-    throw new Error("Dados inválidos para criação do quiz");
+    return fail("Dados inválidos para criação do quiz.");
   }
 
-  const [created] = await db
-    .insert(quizzes)
-    .values(parsedData.data)
-    .returning({ id: quizzes.id });
+  try {
+    const [createdQuiz] = await db
+      .insert(quizzes)
+      .values(parsedData.data)
+      .returning();
 
-  if (!created?.id) {
-    throw new Error("Falha ao criar quiz: ID não retornado");
+    if (!createdQuiz) {
+      return fail("Falha ao criar o quiz.");
+    }
+
+    return succeed(createdQuiz);
+  } catch (error) {
+    return fail("Falha ao criar o quiz.");
   }
-
-  return created;
 }
 
-export async function updateQuiz(updateData: UpdateQuiz) {
+export async function updateQuiz(
+  updateData: UpdateQuiz,
+): Promise<Result<Quiz, string>> {
   const parsedId = uuidParser.safeParse(updateData.id);
   if (!parsedId.success) {
-    throw new Error("ID inválido");
+    return fail("ID inválido.");
   }
 
   const updateSchema = z.object({
@@ -94,33 +109,65 @@ export async function updateQuiz(updateData: UpdateQuiz) {
 
   const parsedUpdate = updateSchema.safeParse(updateData);
   if (!parsedUpdate.success) {
-    throw new Error("Dados inválidos para atualização do quiz");
+    return fail("Dados inválidos para atualização do quiz.");
   }
 
-  return db.update(quizzes).set(parsedUpdate.data).where(eq(quizzes.id, updateData.id));
+  try {
+    const [updatedQuiz] = await db
+      .update(quizzes)
+      .set(parsedUpdate.data)
+      .where(eq(quizzes.id, updateData.id))
+      .returning();
+
+    if (!updatedQuiz) {
+      return fail("Falha ao atualizar o quiz.");
+    }
+
+    return succeed(updatedQuiz);
+  } catch (error) {
+    return fail("Falha ao atualizar o quiz.");
+  }
 }
 
-export async function deleteQuiz(id: string) {
+export async function deleteQuiz(id: string): Promise<Result<void, string>> {
   const parsedId = uuidParser.safeParse(id);
 
   if (!parsedId.success) {
-    throw new Error("ID inválido");
+    return fail("ID inválido.");
   }
 
-  return db.delete(quizzes).where(eq(quizzes.id, id));
+  try {
+    await db.delete(quizzes).where(eq(quizzes.id, id));
+    return succeed();
+  } catch (error) {
+    return fail("Falha ao deletar quiz.");
+  }
 }
 
-export async function getQuestionsByQuizId(quizId: string) {
-  const allQuestions = await db
-    .select()
-    .from(questions)
-    .where(eq(questions.quizId, quizId));
+export async function getQuestionsByQuizId(
+  quizId: string,
+): Promise<Result<Question[], string>> {
+  const parsedId = uuidParser.safeParse(quizId);
+  if (!parsedId.success) {
+    return fail("ID do quiz inválido.");
+  }
 
-  const allAlternatives = await db.select().from(quizQuestionsAlternatives);
+  try {
+    const allQuestions = await db
+      .select()
+      .from(questions)
+      .where(eq(questions.quizId, quizId));
 
-  return allQuestions.map((q) => ({
-    ...q,
-    type: q.type === "TRUE_OR_FALSE" ? "TRUE_OR_FALSE" : "QUIZ",
-    alternatives: allAlternatives.filter((a) => a.questionId === q.id),
-  }));
+    const allAlternatives = await db.select().from(quizQuestionsAlternatives);
+
+    const questionsWithAlternatives = allQuestions.map((q) => ({
+      ...q,
+      type: q.type === "TRUE_OR_FALSE" ? "TRUE_OR_FALSE" : "QUIZ",
+      alternatives: allAlternatives.filter((a) => a.questionId === q.id),
+    }));
+
+    return succeed(questionsWithAlternatives);
+  } catch (error) {
+    return fail("Falha ao buscar questões do quiz.");
+  }
 }
