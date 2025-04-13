@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { QuestionType, type QuestionWithRawAlternatives } from "~/lib/types";
-import { QUESTION_TYPES, QUESTION_TYPES_NAMES } from "~/lib/constants";
+import { QUESTION_TYPES_NAMES } from "~/lib/constants";
 
 interface Props {
   question: QuestionWithRawAlternatives;
