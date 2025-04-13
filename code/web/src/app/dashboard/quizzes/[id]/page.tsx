@@ -5,10 +5,14 @@ import {
 import type { QuizType } from "./_components/QuizManualForm";
 import QuizManualForm from "./_components/QuizManualForm";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const id = params.id;
-
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
   const quizResult = await getQuizById(id);
+
   if (!quizResult || typeof quizResult !== "object" || "error" in quizResult) {
     return <div className="p-4 text-red-500">Quiz não encontrado.</div>;
   }
