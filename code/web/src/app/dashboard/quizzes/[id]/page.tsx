@@ -4,6 +4,7 @@ import {
 } from "~/server/actions/quiz-actions";
 import type { QuizType } from "./_components/QuizManualForm";
 import QuizManualForm from "./_components/QuizManualForm";
+import { notFound } from "next/navigation";
 
 export default async function Page({
   params,
@@ -14,7 +15,7 @@ export default async function Page({
   const quizResult = await getQuizById(id);
 
   if (!quizResult || typeof quizResult !== "object" || "error" in quizResult) {
-    return <div className="p-4 text-red-500">Quiz não encontrado.</div>;
+    return notFound();
   }
 
   const questionsFromDb = await getQuestionsByQuizId(id);
