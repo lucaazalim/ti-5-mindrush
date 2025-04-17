@@ -39,7 +39,10 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
       title: "",
       description: "",
       type: "BLANK",
-    },
+      theme: "",          
+      difficulty: "EASY", 
+      language: "",  
+    } as CreateQuizSchema,
   });
 
   const selectedType = methods.watch("type");
