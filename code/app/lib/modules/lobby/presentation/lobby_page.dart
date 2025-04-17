@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mindrush/modules/lobby/data/participant.dart';
-import 'package:mindrush/modules/match/logic/alternative.dart';
-import 'package:mindrush/modules/match/logic/question.dart';
+import 'package:mindrush/modules/match/data/alternative.dart';
+import 'package:mindrush/modules/match/data/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
 
 class LobbyPage extends StatefulWidget {

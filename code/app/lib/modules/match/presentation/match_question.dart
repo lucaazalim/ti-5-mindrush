@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mindrush/modules/match/logic/question.dart';
+import 'package:mindrush/modules/match/data/question.dart';
 
 class MatchQuestionScreen extends StatefulWidget {
   final Question question;

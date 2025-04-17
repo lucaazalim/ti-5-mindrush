@@ -1,4 +1,4 @@
-import 'package:mindrush/modules/match/logic/alternative.dart';
+import 'package:mindrush/modules/match/data/alternative.dart';
 
 class Question {
   final int id;
