@@ -13,8 +13,6 @@ class _PinScreenState extends State<PinScreen> {
   final TextEditingController _pinController = TextEditingController();
   String? _pinError; // Variável para armazenar a mensagem de erro
 
-  // Mock de PINs válidos (substitua com a validação real)
-  final List<String> validPins = ['1234', '5678', 'abcd'];
 
   @override
   void dispose() {

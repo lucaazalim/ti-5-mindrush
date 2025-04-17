@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mindrush/modules/lobby/data/participant.dart';
+import 'package:mindrush/modules/lobby/presentation/lobby_page.dart';
 import 'package:mindrush/modules/match/logic/alternative.dart';
 import 'package:mindrush/modules/match/logic/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
@@ -58,32 +60,19 @@ class _NameScreenState extends State<NameScreen> {
 
     try {
       final dto = RegisterParticipant(nickname: name);
-      final participant = await MatchService.registerParticipant(widget.match.pin, dto);
+      final Participant participant = await MatchService.registerParticipant(widget.match.pin, dto);
 
-      Navigator.pop(context); // Fecha o loading
+      Navigator.pop(context);
+      // Fecha o loading
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => MatchQuestionScreen(
-            question: Question(
-              id: 1,
-              type: 'match',
-              question: 'Qual é a capital do Brasil?',
-              timeLimit: 30,
-              quizId: 100,
-              alternatives: [
-                Alternative(id: 1, answer: 'Rio de Janeiro', correct: false),
-                Alternative(id: 2, answer: 'São Paulo', correct: false),
-                Alternative(id: 3, answer: 'Brasília', correct: true),
-                Alternative(id: 4, answer: 'Salvador', correct: false),
-              ],
-            ),
-            onResponder: (resposta) {
-              print('Resposta selecionada: $resposta');
-            },
-          ),
+          builder: (context) => LobbyPage(participant: participant),
         ),
       );
+
+
     } catch (e) {
       Navigator.pop(context); // Garante que o loading seja fechado em caso de erro
       ScaffoldMessenger.of(context).showSnackBar(

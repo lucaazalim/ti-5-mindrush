@@ -20,4 +20,12 @@ class Participant {
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'nickname': nickname,
+      'total_points': totalPoints,
+      'matchId': matchId,
+    };
+  }
 }
