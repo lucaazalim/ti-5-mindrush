@@ -1,17 +1,18 @@
-import {relations, sql} from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
-    boolean,
-    index,
-    integer,
-    pgTableCreator,
-    primaryKey,
-    text,
-    timestamp,
-    unique,
-    uuid,
-    varchar,
+  boolean,
+  index,
+  integer,
+  pgTableCreator,
+  primaryKey,
+  text,
+  timestamp,
+  unique,
+  uuid,
+  varchar,
 } from "drizzle-orm/pg-core";
-import {type AdapterAccount} from "next-auth/adapters";
+import { type AdapterAccount } from "next-auth/adapters";
+import { ParticipantNickname, Uuid } from "~/lib/branded-types";
 import { QUESTION_TYPES } from "~/lib/constants";
 
 /**
@@ -23,7 +24,7 @@ import { QUESTION_TYPES } from "~/lib/constants";
 export const createTable = pgTableCreator((name) => `mindrush_${name}`);
 
 export const users = createTable("user", {
-  id: uuid("id").notNull().primaryKey().defaultRandom(),
+  id: uuid("id").notNull().primaryKey().defaultRandom().$type<Uuid>(),
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("email_verified", {
@@ -42,10 +43,9 @@ export const accounts = createTable(
   {
     userId: uuid("user_id")
       .notNull()
-      .references(() => users.id),
-    type: varchar("type", { length: 255 })
-      .$type<AdapterAccount["type"]>()
-      .notNull(),
+      .references(() => users.id)
+      .$type<Uuid>(),
+    type: varchar("type", { length: 255 }).$type<AdapterAccount["type"]>().notNull(),
     provider: varchar("provider", { length: 255 }).notNull(),
     providerAccountId: varchar("provider_account_id", {
       length: 255,
@@ -73,12 +73,11 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
 export const sessions = createTable(
   "session",
   {
-    sessionToken: varchar("session_token", { length: 255 })
-      .notNull()
-      .primaryKey(),
+    sessionToken: varchar("session_token", { length: 255 }).notNull().primaryKey(),
     userId: uuid("user_id")
       .notNull()
-      .references(() => users.id),
+      .references(() => users.id)
+      .$type<Uuid>(),
     expires: timestamp("expires", {
       mode: "date",
       withTimezone: true,
@@ -109,8 +108,9 @@ export const verificationTokens = createTable(
 );
 
 export const quizzes = createTable("quiz", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
   educatorId: uuid("educator_id")
+    .$type<Uuid>()
     .notNull()
     .references(() => users.id),
   title: text("title").notNull(),
@@ -124,10 +124,11 @@ export const quizzes = createTable("quiz", {
 });
 
 export const questions = createTable("question", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
   quizId: uuid("quiz_id")
     .notNull()
-    .references(() => quizzes.id, { onDelete: "cascade" }),
+    .references(() => quizzes.id, { onDelete: "cascade" })
+    .$type<Uuid>(),
   type: text("type", { enum: QUESTION_TYPES }).notNull(),
   question: text("question").notNull(),
   timeLimit: integer("time_limit").notNull(),
@@ -136,30 +137,32 @@ export const questions = createTable("question", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const quizQuestionsAlternatives = createTable(
-  "quiz_question_alternative",
-  {
-    id: uuid("id").primaryKey().defaultRandom(),
-    questionId: uuid("question_id")
-      .notNull()
-      .references(() => questions.id, { onDelete: "cascade" }),
-    answer: text("answer").notNull(),
-    correct: boolean("correct").notNull(),
-    createdAt: timestamp("created_at")
-      .notNull()
-      .default(sql`CURRENT_TIMESTAMP`),
-  },
-);
+export const quizQuestionsAlternatives = createTable("quiz_question_alternative", {
+  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
+  questionId: uuid("question_id")
+    .notNull()
+    .references(() => questions.id, { onDelete: "cascade" })
+    .$type<Uuid>(),
+  answer: text("answer").notNull(),
+  correct: boolean("correct").notNull(),
+  createdAt: timestamp("created_at")
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
+});
 
 export const matches = createTable("match", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
   quizId: uuid("quiz_id")
     .notNull()
-    .references(() => quizzes.id, { onDelete: "cascade" }),
+    .references(() => quizzes.id, { onDelete: "cascade" })
+    .$type<Uuid>(),
   pin: text("pin").notNull(),
   state: text("state", {
     enum: ["WAITING", "RUNNING", "PAUSED", "ENDED"],
   }).notNull(),
+  currentQuestionId: uuid("current_question_id")
+    .references(() => questions.id, { onDelete: "set null" })
+    .$type<Uuid | null>(),
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
@@ -168,12 +171,13 @@ export const matches = createTable("match", {
 export const participants = createTable(
   "participant",
   {
-    id: uuid("id").primaryKey().defaultRandom(),
-    nickname: text("nickname").notNull(),
+    id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
+    nickname: text("nickname").notNull().$type<ParticipantNickname>(),
     total_points: integer("total_points").notNull().default(0),
     matchId: uuid("match_id")
       .notNull()
-      .references(() => matches.id),
+      .references(() => matches.id)
+      .$type<Uuid>(),
   },
   (table) => ({
     nicknameMatchIdx: unique().on(table.nickname, table.matchId),
@@ -183,16 +187,19 @@ export const participants = createTable(
 export const quizAnswers = createTable(
   "quiz_answer",
   {
-    id: uuid("id").primaryKey().defaultRandom(),
+    id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
     participantId: uuid("participant_id")
       .notNull()
-      .references(() => participants.id),
+      .references(() => participants.id)
+      .$type<Uuid>(),
     questionId: uuid("question_id")
       .notNull()
-      .references(() => questions.id),
+      .references(() => questions.id)
+      .$type<Uuid>(),
     matchId: uuid("match_id")
       .notNull()
-      .references(() => matches.id),
+      .references(() => matches.id)
+      .$type<Uuid>(),
     alternative: text("alternative").notNull(),
     points: integer("points").notNull(),
     createdAt: timestamp("created_at")
@@ -200,10 +207,6 @@ export const quizAnswers = createTable(
       .default(sql`CURRENT_TIMESTAMP`),
   },
   (table) => ({
-    participantQuestionMatchIdx: unique().on(
-      table.participantId,
-      table.questionId,
-      table.matchId,
-    ),
+    participantQuestionMatchIdx: unique().on(table.participantId, table.questionId, table.matchId),
   }),
 );

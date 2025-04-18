@@ -47,8 +47,8 @@ Student <-- MobileApp : Renders a waiting screen
 
 Educator -> WebApp : Press "Start Match" or "Next Question" button
 WebApp -> ServerActions : nextQuestion()
-Educator <-- ServerActions : OK
 ServerActions -> WSS : broadcastNextQuestion(question)
+Educator <-- ServerActions : Renders the question
 WSS -> MobileApp : nextQuestion(question)
 Student <-- MobileApp : Renders the first/next question
 

@@ -1,33 +1,27 @@
 "use server";
 
 import { db } from "~/server/db";
-import { matches } from "~/server/db/schema";
+import {
+  matches,
+  participants,
+  questions,
+  quizQuestionsAlternatives,
+  quizzes,
+} from "~/server/db/schema";
 import { matchIdOrPinParser, uuidParser } from "~/lib/parsers";
-import { eq } from "drizzle-orm";
-import type { Match, NewMatch } from "~/lib/types";
+import { eq, inArray } from "drizzle-orm";
+import { type Match, type NewMatch, type PopulatedMatch, type SimpleError } from "~/lib/types";
+import { isMatchPin, isUuid, MatchPin, Uuid } from "~/lib/branded-types";
 import { fail, isFailure, Result, succeed } from "~/lib/result";
 import { auth } from "~/server/auth";
 
 export async function getMatchByIdOrPin(
-  idOrPin: string,
-): Promise<Result<Match, { message: string; status: number }>> {
-  const parsedIdOrPin = matchIdOrPinParser.safeParse(idOrPin);
-
-  if (parsedIdOrPin.error) {
-    return fail({
-      message: "O ID ou PIN da partida informado é inválido.",
-      status: 400,
-    });
-  }
-
+  idOrPin: MatchPin | Uuid,
+): Promise<Result<Match, SimpleError>> {
   const result = await db
     .select()
     .from(matches)
-    .where(
-      uuidParser.safeParse(idOrPin).success
-        ? eq(matches.id, parsedIdOrPin.data)
-        : eq(matches.pin, parsedIdOrPin.data),
-    );
+    .where(isUuid(idOrPin) ? eq(matches.id, idOrPin) : eq(matches.pin, idOrPin));
 
   const match = result[0];
 
@@ -41,9 +35,62 @@ export async function getMatchByIdOrPin(
   return succeed(match);
 }
 
-export async function createMatch(
-  quizId: string,
-): Promise<Result<Match, string>> {
+export async function getPopulatedMatchById(
+  id: Uuid,
+): Promise<Result<PopulatedMatch, SimpleError>> {
+  const matchWithQuizResult = await db
+    .select()
+    .from(matches)
+    .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
+    .where(eq(matches.id, id));
+
+  const matchWithQuiz = matchWithQuizResult[0];
+
+  if (!matchWithQuiz) {
+    return fail({
+      message: "Partida não encontrada.",
+      status: 404,
+    });
+  }
+
+  const questionsResult = await db
+    .select()
+    .from(questions)
+    .where(eq(questions.quizId, matchWithQuiz.quiz.id));
+
+  const alternativesResult = await db
+    .select()
+    .from(quizQuestionsAlternatives)
+    .where(
+      inArray(
+        quizQuestionsAlternatives.questionId,
+        questionsResult.map((q) => q.id),
+      ),
+    );
+
+  const participantsResult = await db
+    .select()
+    .from(participants)
+    .where(eq(participants.matchId, matchWithQuiz.match.id));
+
+  const populatedMatch = {
+    ...matchWithQuiz.match,
+    quiz: {
+      ...matchWithQuiz.quiz,
+      questions: questionsResult.map((question) => ({
+        ...question,
+        alternatives: alternativesResult.filter(
+          (alternative) => alternative.questionId === question.id,
+        ),
+      })),
+    },
+    participants: participantsResult,
+  };
+
+  return succeed(populatedMatch);
+}
+
+export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> {
   const session = await auth();
 
   if (!session) {
@@ -52,7 +99,7 @@ export async function createMatch(
 
   const newMatch: NewMatch = {
     quizId: quizId,
-    pin: generateRandomPin(),
+    pin: (Math.floor(Math.random() * 900000) + 100000).toString(),
     state: "WAITING",
     createdAt: new Date(),
   };
@@ -66,20 +113,14 @@ export async function createMatch(
   return fail("Ocorreu um erro ao criar a partida.");
 }
 
-function generateRandomPin(): string {
-  return (Math.floor(Math.random() * 900000) + 100000).toString();
-}
-
-export async function startMatch(
-  matchId: string,
-): Promise<Result<Match, string>> {
+export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
   const session = await auth();
 
   if (!session) {
     return fail("Não autenticado.");
   }
 
-  const matchResult = await getMatchByIdOrPin(matchId);
+  const matchResult = await getPopulatedMatchById(matchId);
 
   if (isFailure(matchResult)) {
     return fail(matchResult.error.message);
@@ -87,13 +128,21 @@ export async function startMatch(
 
   const match = matchResult.data;
 
+  // TODO make sure the user is the owner of the match
+
   if (match.state !== "WAITING") {
     return fail("Partida já iniciada.");
   }
 
+  const firstQuestion = match.quiz.questions[0];
+
+  if (!firstQuestion) {
+    return fail("O quiz não possui questões.");
+  }
+
   const updateResult = await db
     .update(matches)
-    .set({ state: "RUNNING" })
+    .set({ state: "RUNNING", currentQuestionId: firstQuestion.id })
     .where(eq(matches.id, match.id))
     .returning();
 
@@ -103,5 +152,5 @@ export async function startMatch(
     return fail("Não foi possível atualizar a partida.");
   }
 
-  return succeed(updatedMatch);
+  return succeed({ updatedMatch, ...match });
 }

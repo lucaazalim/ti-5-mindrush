@@ -3,6 +3,7 @@
 import QuizOptions from "./QuizOptions";
 import { Button } from "~/components/ui/button";
 import type { QuizWithQuestionCount } from "~/lib/types";
+import type { Uuid } from "~/lib/branded-types";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "~/lib/constants";
 import { createMatch } from "~/server/actions/match-actions";
@@ -16,15 +17,16 @@ interface QuizzesListProps {
 export default function QuizzesList({ quizzes }: QuizzesListProps) {
   const router = useRouter();
 
-  const newMatch = async (quizId: string) => {
+  const newMatch = async (quizId: Uuid) => {
     const result = await createMatch(quizId);
+
     if (isFailure(result)) {
       toast.error("Erro ao criar partida: " + result.error);
       return;
     }
+
     toast.success("Partida criada com sucesso!");
-    const id = result.data.id;
-    router.push(ROUTES.MATCH(id));
+    router.push(ROUTES.MATCH(result.data.id));
   };
 
   return (
@@ -41,17 +43,14 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
               </Button>
 
               <span className="absolute right-2 top-2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
-                {quiz.questionCount}{" "}
-                {quiz.questionCount === 1 ? "pergunta" : "perguntas"}
+                {quiz.questionCount} {quiz.questionCount === 1 ? "pergunta" : "perguntas"}
               </span>
             </div>
 
             <div className="relative flex flex-1 flex-col justify-between px-4 py-5">
               <div className="space-y-1">
                 <h3 className="text-sm font-semibold">{quiz.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {quiz.description}
-                </p>
+                <p className="text-sm text-muted-foreground">{quiz.description}</p>
               </div>
 
               <QuizOptions quiz={quiz} />

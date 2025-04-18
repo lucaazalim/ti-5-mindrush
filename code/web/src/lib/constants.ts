@@ -1,3 +1,5 @@
+import { Uuid } from "./branded-types";
+
 export type Route = `/${string}`;
 
 export const ROUTES: {
@@ -5,25 +7,22 @@ export const ROUTES: {
   HOME: Route;
   DASHBOARD: Route;
   QUIZZES: Route;
-  QUIZ: (id: string) => Route;
+  QUIZ: (id: Uuid) => Route;
   MATCHES: Route;
-  MATCH: (id: string) => Route;
+  MATCH: (id: Uuid) => Route;
 } = {
   API: "/api",
   HOME: "/",
   DASHBOARD: "/dashboard",
   QUIZZES: "/dashboard/quizzes",
-  QUIZ: (id: string) => `/dashboard/quizzes/${id}`,
+  QUIZ: (id: Uuid) => `/dashboard/quizzes/${id}`,
   MATCHES: "/dashboard/matches",
-  MATCH: (id: string) => `/dashboard/matches/${id}`,
+  MATCH: (id: Uuid) => `/dashboard/matches/${id}`,
 };
 
 export const QUESTION_TYPES = ["QUIZ", "TRUE_OR_FALSE"] as const;
 
-export const QUESTION_TYPES_NAMES: Record<
-  (typeof QUESTION_TYPES)[number],
-  string
-> = {
+export const QUESTION_TYPES_NAMES: Record<(typeof QUESTION_TYPES)[number], string> = {
   QUIZ: "Quiz",
   TRUE_OR_FALSE: "Verdadeiro ou falso",
 };

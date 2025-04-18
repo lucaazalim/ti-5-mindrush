@@ -1,17 +1,19 @@
-import { getMatchByIdOrPin } from "~/server/actions/match-actions";
+import { getMatchByIdOrPin, getPopulatedMatchById } from "~/server/actions/match-actions";
 import { isFailure } from "~/lib/result";
 import QRCode from "qrcode";
 import { notFound } from "next/navigation";
 import { MatchStoreProvider } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import MatchPage from "~/app/dashboard/matches/[id]/_components/MatchPage";
+import { isUuid } from "~/lib/branded-types";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const result = await getMatchByIdOrPin(id);
+
+  if (!isUuid(id)) {
+    throw new Error("O ID da partida informado é inválido.");
+  }
+
+  const result = await getPopulatedMatchById(id);
 
   if (isFailure(result)) {
     notFound();

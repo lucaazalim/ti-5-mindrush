@@ -8,7 +8,7 @@ export const uuidParser = z.string().uuid({
 
 // Participant
 
-export const participantNicknameParser = z.string().min(3).max(20);
+export const participantNicknameParser = z.string().min(3).max(20).brand<"ParticipantNickname">();
 
 export const participantCreationParser = z.object({
   nickname: participantNicknameParser,
