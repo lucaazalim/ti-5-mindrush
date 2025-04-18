@@ -23,7 +23,7 @@ export default function WaitingParticipants() {
           <div key={participant.id} className="flex flex-row items-center rounded-lg bg-primary/20">
             <div className="rounded-bl-lg rounded-tl-lg bg-primary p-3">
               <Image
-                src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${participant}`}
+                src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${participant.nickname}`}
                 className="drop-shadow-lg"
                 alt={`Avatar de ${participant}`}
                 width={50}
