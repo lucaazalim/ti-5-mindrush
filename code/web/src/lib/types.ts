@@ -1,4 +1,5 @@
 import { type InferInsertModel, type InferSelectModel } from "drizzle-orm";
+import { z } from "zod";
 import {
   type accounts,
   type matches,
@@ -11,6 +12,12 @@ import {
   type users,
   type verificationTokens,
 } from "~/server/db/schema";
+import { matchPinParser, participantNicknameParser, uuidParser } from "./parsers";
+
+export type SimpleError = {
+  message: string;
+  status: number;
+};
 
 // Select types (e.g. for reading from DB)
 export type User = InferSelectModel<typeof users>;
@@ -36,7 +43,7 @@ export type NewMatch = InferInsertModel<typeof matches>;
 export type NewParticipant = InferInsertModel<typeof participants>;
 export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;
 
-// Joined types
+// Joined data types
 
 export type PopulatedMatch = Match & {
   quiz: QuizWithQuestionsAndAlternatives;
@@ -51,12 +58,7 @@ export type QuestionWithAlternatives = Question & {
   alternatives: QuestionQuizAlternative[];
 };
 
-// Other types
-
-export type SimpleError = {
-  message: string;
-  status: number;
-};
+// Other data types
 
 export type QuestionType = Question["type"];
 
@@ -68,3 +70,21 @@ export type QuestionWithRawAlternatives = Question & {
   answers: string[];
   correctAnswerIndex: number;
 };
+
+export type Uuid = z.infer<typeof uuidParser>;
+
+export function isUuid(uuid: string): uuid is Uuid {
+  return uuidParser.safeParse(uuid).success;
+}
+
+export type ParticipantNickname = z.infer<typeof participantNicknameParser>;
+
+export function isParticipantNickname(nickname: string): nickname is ParticipantNickname {
+  return participantNicknameParser.safeParse(nickname).success;
+}
+
+export type MatchPin = z.infer<typeof matchPinParser>;
+
+export function isMatchPin(pin: string): pin is MatchPin {
+  return matchPinParser.safeParse(pin).success;
+}

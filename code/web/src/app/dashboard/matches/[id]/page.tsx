@@ -1,10 +1,9 @@
-import { getMatchByIdOrPin, getPopulatedMatchById } from "~/server/actions/match-actions";
-import { isFailure } from "~/lib/result";
-import QRCode from "qrcode";
 import { notFound } from "next/navigation";
-import { MatchStoreProvider } from "~/app/dashboard/matches/[id]/_store/store-provider";
+import QRCode from "qrcode";
 import MatchPage from "~/app/dashboard/matches/[id]/_components/MatchPage";
-import { isUuid } from "~/lib/branded-types";
+import { MatchStoreProvider } from "~/app/dashboard/matches/[id]/_store/store-provider";
+import { isUuid } from "~/lib/types";
+import { selectPopulatedMatchById } from "~/server/data/match";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -13,13 +12,11 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     throw new Error("O ID da partida informado é inválido.");
   }
 
-  const result = await getPopulatedMatchById(id);
+  const match = await selectPopulatedMatchById(id);
 
-  if (isFailure(result)) {
+  if (!match) {
     notFound();
   }
-
-  const { data: match } = result;
 
   // TODO não consegui solucionar o problema abaixo sem usar eslint-disable-next-line.
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment

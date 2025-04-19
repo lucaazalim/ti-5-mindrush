@@ -13,7 +13,7 @@ export default function WaitingParticipants() {
     channel?.bind("new-participant-event", (data: NewParticipantEvent) => {
       addParticipant(data.participant);
     });
-  }, [channel]);
+  }, [channel, addParticipant]);
 
   return (
     <>
@@ -25,7 +25,7 @@ export default function WaitingParticipants() {
               <Image
                 src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${participant.nickname}`}
                 className="drop-shadow-lg"
-                alt={`Avatar de ${participant}`}
+                alt={`Avatar de ${participant.nickname}`}
                 width={50}
                 height={50}
               />

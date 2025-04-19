@@ -1,94 +1,9 @@
 "use server";
 
-import { db } from "~/server/db";
-import {
-  matches,
-  participants,
-  questions,
-  quizQuestionsAlternatives,
-  quizzes,
-} from "~/server/db/schema";
-import { matchIdOrPinParser, uuidParser } from "~/lib/parsers";
-import { eq, inArray } from "drizzle-orm";
-import { type Match, type NewMatch, type PopulatedMatch, type SimpleError } from "~/lib/types";
-import { isMatchPin, isUuid, MatchPin, Uuid } from "~/lib/branded-types";
-import { fail, isFailure, Result, succeed } from "~/lib/result";
+import { fail, Result, succeed } from "~/lib/result";
+import { Uuid, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
 import { auth } from "~/server/auth";
-
-export async function getMatchByIdOrPin(
-  idOrPin: MatchPin | Uuid,
-): Promise<Result<Match, SimpleError>> {
-  const result = await db
-    .select()
-    .from(matches)
-    .where(isUuid(idOrPin) ? eq(matches.id, idOrPin) : eq(matches.pin, idOrPin));
-
-  const match = result[0];
-
-  if (!match) {
-    return fail({
-      message: "Partida não encontrada.",
-      status: 404,
-    });
-  }
-
-  return succeed(match);
-}
-
-export async function getPopulatedMatchById(
-  id: Uuid,
-): Promise<Result<PopulatedMatch, SimpleError>> {
-  const matchWithQuizResult = await db
-    .select()
-    .from(matches)
-    .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
-    .where(eq(matches.id, id));
-
-  const matchWithQuiz = matchWithQuizResult[0];
-
-  if (!matchWithQuiz) {
-    return fail({
-      message: "Partida não encontrada.",
-      status: 404,
-    });
-  }
-
-  const questionsResult = await db
-    .select()
-    .from(questions)
-    .where(eq(questions.quizId, matchWithQuiz.quiz.id));
-
-  const alternativesResult = await db
-    .select()
-    .from(quizQuestionsAlternatives)
-    .where(
-      inArray(
-        quizQuestionsAlternatives.questionId,
-        questionsResult.map((q) => q.id),
-      ),
-    );
-
-  const participantsResult = await db
-    .select()
-    .from(participants)
-    .where(eq(participants.matchId, matchWithQuiz.match.id));
-
-  const populatedMatch = {
-    ...matchWithQuiz.match,
-    quiz: {
-      ...matchWithQuiz.quiz,
-      questions: questionsResult.map((question) => ({
-        ...question,
-        alternatives: alternativesResult.filter(
-          (alternative) => alternative.questionId === question.id,
-        ),
-      })),
-    },
-    participants: participantsResult,
-  };
-
-  return succeed(populatedMatch);
-}
+import { insertMatch, selectPopulatedMatchById, updateMatch } from "../data/match";
 
 export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> {
   const session = await auth();
@@ -104,13 +19,13 @@ export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> 
     createdAt: new Date(),
   };
 
-  const result = await db.insert(matches).values(newMatch).returning();
+  const result = await insertMatch(newMatch);
 
-  if (result.length > 0) {
-    return succeed(result[0]);
+  if (!result) {
+    return fail("Falha ao criar a partida.");
   }
 
-  return fail("Ocorreu um erro ao criar a partida.");
+  return succeed(result);
 }
 
 export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
@@ -120,15 +35,11 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
     return fail("Não autenticado.");
   }
 
-  const matchResult = await getPopulatedMatchById(matchId);
+  const match = await selectPopulatedMatchById(matchId);
 
-  if (isFailure(matchResult)) {
-    return fail(matchResult.error.message);
+  if (!match) {
+    return fail("Partida não encontrada.");
   }
-
-  const match = matchResult.data;
-
-  // TODO make sure the user is the owner of the match
 
   if (match.state !== "WAITING") {
     return fail("Partida já iniciada.");
@@ -140,13 +51,10 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
     return fail("O quiz não possui questões.");
   }
 
-  const updateResult = await db
-    .update(matches)
-    .set({ state: "RUNNING", currentQuestionId: firstQuestion.id })
-    .where(eq(matches.id, match.id))
-    .returning();
-
-  const updatedMatch = updateResult[0];
+  const updatedMatch = await updateMatch(match.id, {
+    state: "RUNNING",
+    currentQuestionId: firstQuestion.id,
+  });
 
   if (!updatedMatch) {
     return fail("Não foi possível atualizar a partida.");

@@ -1,19 +1,15 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { getMatchByIdOrPin } from "~/server/actions/match-actions";
-import { isFailure } from "~/lib/result";
+import { selectMatchByIdOrPin } from "~/server/data/match";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ idOrPin: string }> },
-) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ idOrPin: string }> }) {
   const { idOrPin } = await params;
-  const result = await getMatchByIdOrPin(idOrPin);
+  const match = await selectMatchByIdOrPin(idOrPin);
 
-  if (isFailure(result)) {
-    return NextResponse.json(result.error.message, {
-      status: result.error.status,
+  if (!match) {
+    return NextResponse.json("Match not found.", {
+      status: 404,
     });
   }
 
-  return NextResponse.json(result.data, { status: 200 });
+  return NextResponse.json(match, { status: 200 });
 }

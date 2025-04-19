@@ -4,7 +4,7 @@ import type { Participant, PopulatedMatch } from "~/lib/types";
 
 export type MatchState = {
   match: PopulatedMatch;
-  channel: Channel | undefined;
+  channel?: Channel;
   qrCodeBase64: string;
 };
 

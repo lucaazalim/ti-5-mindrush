@@ -1,10 +1,11 @@
 import { eq } from "drizzle-orm";
+import jwt from "jsonwebtoken";
 import { type NextRequest, NextResponse } from "next/server";
 import type { z } from "zod";
-import { isMatchPin, isUuid } from "~/lib/branded-types";
+import { env } from "~/env";
 import { participantCreationParser } from "~/lib/parsers";
-import { isFailure } from "~/lib/result";
-import { getMatchByIdOrPin } from "~/server/actions/match-actions";
+import { isMatchPin, isUuid } from "~/lib/types";
+import { selectMatchByIdOrPin } from "~/server/data/match";
 import { db } from "~/server/db";
 import { participants } from "~/server/db/schema";
 import { callMatchEvent, NewParticipantEvent } from "~/server/event-publisher";
@@ -18,11 +19,11 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ idO
     });
   }
 
-  const match = await getMatchByIdOrPin(idOrPin);
+  const match = await selectMatchByIdOrPin(idOrPin);
 
-  if (isFailure(match)) {
-    return NextResponse.json(match.error.message, {
-      status: match.error.status,
+  if (!match) {
+    return NextResponse.json("A partida informada não existe.", {
+      status: 404,
     });
   }
 
@@ -48,7 +49,7 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ idO
   const [createdParticipant] = await db
     .insert(participants)
     .values({
-      matchId: match.data.id,
+      matchId: match.id,
       nickname: payload.nickname,
     })
     .returning();
@@ -59,7 +60,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ idO
     });
   }
 
-  callMatchEvent(new NewParticipantEvent(createdParticipant));
+  await callMatchEvent(new NewParticipantEvent(createdParticipant));
 
-  return NextResponse.json(createdParticipant, { status: 200 });
+  const token = jwt.sign(createdParticipant.id, env.PARTICIPANT_TOKEN_SECRET_KEY);
+
+  return NextResponse.json(
+    {
+      ...createdParticipant,
+      token,
+    },
+    { status: 200 },
+  );
 }

@@ -12,8 +12,8 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
-import { ParticipantNickname, Uuid } from "~/lib/branded-types";
 import { QUESTION_TYPES } from "~/lib/constants";
+import { ParticipantNickname, Uuid } from "~/lib/types";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same

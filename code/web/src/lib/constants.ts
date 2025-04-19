@@ -1,4 +1,4 @@
-import { Uuid } from "./branded-types";
+import { Uuid } from "./types";
 
 export type Route = `/${string}`;
 

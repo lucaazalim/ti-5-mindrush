@@ -1,13 +1,12 @@
 import Pusher from "pusher";
 import { env } from "~/env";
-import { Uuid } from "~/lib/branded-types";
-import { Participant } from "~/lib/types";
+import { Participant, Uuid } from "~/lib/types";
 
 export const pusherSender = new Pusher({
   appId: env.PUSHER_APP_ID,
   key: env.NEXT_PUBLIC_PUSHER_APP_KEY,
-  secret: env.PUSHER_APP_SECRET!,
-  cluster: env.NEXT_PUBLIC_PUSHER_CLUSTER!,
+  secret: env.PUSHER_APP_SECRET,
+  cluster: env.NEXT_PUBLIC_PUSHER_CLUSTER,
   useTLS: true,
 });
 
@@ -32,6 +31,6 @@ export class NewParticipantEvent extends MatchEvent {
   }
 }
 
-export function callMatchEvent(matchEvent: MatchEvent) {
-  pusherSender.trigger(`match-${matchEvent.matchId}`, matchEvent.name, matchEvent);
+export async function callMatchEvent(matchEvent: MatchEvent) {
+  return pusherSender.trigger(`presence-match-${matchEvent.matchId}`, matchEvent.name, matchEvent);
 }

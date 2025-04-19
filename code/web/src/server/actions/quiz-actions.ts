@@ -1,41 +1,31 @@
 "use server";
 
-import { z } from "zod";
-import { db } from "../db";
-import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 import { eq } from "drizzle-orm";
-import type {
-  NewQuiz,
-  Quiz,
-  QuizWithQuestionCount,
-  QuizWithQuestionsAndAlternatives,
-  UpdateQuiz,
-} from "~/lib/types";
+import { z } from "zod";
 import { uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
+import {
+  type NewQuiz,
+  type Quiz,
+  type QuizWithQuestionCount,
+  type QuizWithQuestionsAndAlternatives,
+  type UpdateQuiz,
+} from "~/lib/types";
+import { db } from "../db";
+import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 
 const quizSchema = z.object({
   educatorId: uuidParser,
   title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-  description: z
-    .string()
-    .min(8, "A descrição deve ter pelo menos 8 caracteres"),
+  description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
   type: z.enum(["BLANK", "THEME_GENERATED", "PDF_GENERATED"]),
-  theme: z
-    .string()
-    .min(3, "O tema deve ter pelo menos 3 caracteres")
-    .optional(),
+  theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres").optional(),
   difficulty: z.enum(["EASY", "MEDIUM", "HARD"]).optional(),
-  language: z
-    .string()
-    .min(2, "O idioma deve ter pelo menos 2 caracteres")
-    .optional(),
+  language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres").optional(),
   pdfBase64: z.string().optional(),
 });
 
-export async function getAllQuizzes(): Promise<
-  Result<QuizWithQuestionCount[], string>
-> {
+export async function getAllQuizzes(): Promise<Result<QuizWithQuestionCount[], string>> {
   try {
     const allQuizzes = await db.select().from(quizzes);
     const quizQuestions = await db
@@ -58,39 +48,14 @@ export async function getAllQuizzes(): Promise<
   }
 }
 
-export async function getQuizById(id: string): Promise<Result<Quiz, string>> {
-  const parsedId = uuidParser.safeParse(id);
-  if (parsedId.error) {
-    return fail("ID inválido.");
-  }
-
-  try {
-    const result = await db.select().from(quizzes).where(eq(quizzes.id, id));
-    const quiz = result[0];
-
-    if (!quiz) {
-      return fail("Quiz não encontrado.");
-    }
-
-    return succeed(quiz);
-  } catch {
-    return fail("Falha ao buscar quiz pelo ID.");
-  }
-}
-
-export async function createQuiz(
-  quizData: NewQuiz,
-): Promise<Result<Quiz, string>> {
+export async function createQuiz(quizData: NewQuiz): Promise<Result<Quiz, string>> {
   const parsedData = quizSchema.safeParse(quizData);
   if (!parsedData.success) {
     return fail("Dados inválidos para criação do quiz.");
   }
 
   try {
-    const [createdQuiz] = await db
-      .insert(quizzes)
-      .values(parsedData.data)
-      .returning();
+    const [createdQuiz] = await db.insert(quizzes).values(parsedData.data).returning();
 
     if (!createdQuiz) {
       return fail("Falha ao criar o quiz.");
@@ -102,9 +67,7 @@ export async function createQuiz(
   }
 }
 
-export async function updateQuiz(
-  updateData: UpdateQuiz,
-): Promise<Result<Quiz, string>> {
+export async function updateQuiz(updateData: UpdateQuiz): Promise<Result<Quiz, string>> {
   const parsedId = uuidParser.safeParse(updateData.id);
   if (!parsedId.success) {
     return fail("ID inválido.");
@@ -162,10 +125,7 @@ export async function getQuizWithQuestionsAndAlternatives(
 
   try {
     // Fetch the quiz by ID
-    const quizResult = await db
-      .select()
-      .from(quizzes)
-      .where(eq(quizzes.id, quizId));
+    const quizResult = await db.select().from(quizzes).where(eq(quizzes.id, quizId));
     const quiz = quizResult[0];
 
     if (!quiz) {
@@ -173,10 +133,7 @@ export async function getQuizWithQuestionsAndAlternatives(
     }
 
     // Fetch all questions for the quiz
-    const allQuestions = await db
-      .select()
-      .from(questions)
-      .where(eq(questions.quizId, quizId));
+    const allQuestions = await db.select().from(questions).where(eq(questions.quizId, quizId));
 
     // Fetch all alternatives for the questions
     const allAlternatives = await db.select().from(quizQuestionsAlternatives);
