@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { PresenceChannelData } from "pusher";
 import { auth } from "~/server/auth";
-import { selectQuizById } from "~/server/data/quiz";
+import { selectQuizByMatchId } from "~/server/data/quiz";
 import { pusherSender } from "~/server/event-publisher";
 
 export async function POST(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     user_info: session,
   };
 
-  const quiz = await selectQuizById(matchId);
+  const quiz = await selectQuizByMatchId(matchId);
 
   if (!quiz) {
     return new NextResponse("The match's associated quiz does not exist.", { status: 403 });

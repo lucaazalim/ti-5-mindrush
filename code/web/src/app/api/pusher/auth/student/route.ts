@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { PresenceChannelData } from "pusher";
 import { env } from "~/env";
 import { uuidParser } from "~/lib/parsers";
-import { getParticipantById } from "~/server/data/participant";
+import { selectParticipantById } from "~/server/data/participant";
 import { pusherSender } from "~/server/event-publisher";
 
 export async function POST(req: NextRequest) {
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     return new NextResponse("The provided participant token is invalid.", { status: 403 });
   }
 
-  const participant = await getParticipantById(participantId);
+  const participant = await selectParticipantById(participantId);
 
   if (!participant) {
     return new NextResponse(

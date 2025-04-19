@@ -4,10 +4,12 @@ import { db } from "../db";
 import { matches, participants, questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
 
 export async function insertMatch(match: NewMatch): Promise<Match | undefined> {
+  // TODO authorization
   return (await db.insert(matches).values(match).returning())[0];
 }
 
 export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | undefined> {
+  // TODO authorization
   return (
     await db
       .select()
@@ -17,6 +19,7 @@ export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | und
 }
 
 export async function selectPopulatedMatchById(id: Uuid): Promise<PopulatedMatch | undefined> {
+  // TODO authorization
   const matchWithQuizResult = await db
     .select()
     .from(matches)
@@ -67,5 +70,6 @@ export async function selectPopulatedMatchById(id: Uuid): Promise<PopulatedMatch
 }
 
 export async function updateMatch(id: Uuid, updates: Partial<Match>): Promise<Match | undefined> {
+  // TODO authorization
   return (await db.update(matches).set(updates).where(eq(matches.id, id)).returning())[0];
 }

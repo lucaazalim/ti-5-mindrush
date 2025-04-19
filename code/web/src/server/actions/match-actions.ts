@@ -29,12 +29,6 @@ export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> 
 }
 
 export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
-  const session = await auth();
-
-  if (!session) {
-    return fail("Não autenticado.");
-  }
-
   const match = await selectPopulatedMatchById(matchId);
 
   if (!match) {

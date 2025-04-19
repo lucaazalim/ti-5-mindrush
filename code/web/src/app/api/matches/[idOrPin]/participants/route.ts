@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import jwt from "jsonwebtoken";
 import { type NextRequest, NextResponse } from "next/server";
 import type { z } from "zod";
@@ -6,8 +5,7 @@ import { env } from "~/env";
 import { participantCreationParser } from "~/lib/parsers";
 import { isMatchPin, isUuid } from "~/lib/types";
 import { selectMatchByIdOrPin } from "~/server/data/match";
-import { db } from "~/server/db";
-import { participants } from "~/server/db/schema";
+import { existsParticipantWithNickname, insertParticipant } from "~/server/data/participant";
 import { callMatchEvent, NewParticipantEvent } from "~/server/event-publisher";
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ idOrPin: string }> }) {
@@ -35,24 +33,16 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ idO
     });
   }
 
-  const exists = await db
-    .select()
-    .from(participants)
-    .where(eq(participants.nickname, payload.nickname));
-
-  if (exists.length > 0) {
+  if (await existsParticipantWithNickname(match.id, payload.nickname)) {
     return NextResponse.json("O apelido escolhido já está sendo usado por outro participante.", {
       status: 400,
     });
   }
 
-  const [createdParticipant] = await db
-    .insert(participants)
-    .values({
-      matchId: match.id,
-      nickname: payload.nickname,
-    })
-    .returning();
+  const createdParticipant = await insertParticipant({
+    matchId: match.id,
+    nickname: payload.nickname,
+  });
 
   if (!createdParticipant) {
     return NextResponse.json("Erro ao criar participante.", {
