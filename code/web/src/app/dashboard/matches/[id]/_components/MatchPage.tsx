@@ -5,6 +5,14 @@ import RunningPage from "~/app/dashboard/matches/[id]/_components/RunningPage";
 import WaitingPage from "~/app/dashboard/matches/[id]/_components/WaitingPage";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import pusherClient from "~/lib/pusher-client";
+import { Match } from "~/lib/types";
+import EndedPage from "./EndedPage";
+
+const Components: Record<Match["state"], React.FC> = {
+  WAITING: WaitingPage,
+  RUNNING: RunningPage,
+  ENDED: EndedPage,
+};
 
 export default function MatchPage() {
   const match = useMatchStore((state) => state.match);
@@ -22,11 +30,8 @@ export default function MatchPage() {
     };
   }, [match.id, setChannel]);
 
-  if (match.state === "WAITING") {
-    return <WaitingPage />;
-  } else if (match.state === "RUNNING") {
-    return <RunningPage />;
-  }
+  console.log(match.state);
 
-  return null;
+  const Component = Components[match.state];
+  return Component ? <Component /> : null;
 }

@@ -1,7 +1,7 @@
 import { eq, inArray } from "drizzle-orm";
 import { NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
 import { db } from "../db";
-import { matches, participants, questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
+import { matches, participants, questionAlternatives, questions, quizzes } from "../db/schema";
 
 export async function insertMatch(match: NewMatch): Promise<Match | undefined> {
   // TODO authorization
@@ -35,14 +35,15 @@ export async function selectPopulatedMatchById(id: Uuid): Promise<PopulatedMatch
   const questionsResult = await db
     .select()
     .from(questions)
-    .where(eq(questions.quizId, matchWithQuiz.quiz.id));
+    .where(eq(questions.quizId, matchWithQuiz.quiz.id))
+    .orderBy(questions.order);
 
   const alternativesResult = await db
     .select()
-    .from(quizQuestionsAlternatives)
+    .from(questionAlternatives)
     .where(
       inArray(
-        quizQuestionsAlternatives.questionId,
+        questionAlternatives.questionId,
         questionsResult.map((q) => q.id),
       ),
     );

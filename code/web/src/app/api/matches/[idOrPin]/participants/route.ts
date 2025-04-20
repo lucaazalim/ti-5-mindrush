@@ -1,12 +1,16 @@
 import jwt from "jsonwebtoken";
 import { type NextRequest, NextResponse } from "next/server";
-import type { z } from "zod";
+import { z } from "zod";
 import { env } from "~/env";
-import { participantCreationParser } from "~/lib/parsers";
+import { participantNicknameParser } from "~/lib/parsers";
 import { isMatchPin, isUuid } from "~/lib/types";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { existsParticipantWithNickname, insertParticipant } from "~/server/data/participant";
 import { callMatchEvent, NewParticipantEvent } from "~/server/event-publisher";
+
+const payloadParser = z.object({
+  nickname: participantNicknameParser,
+});
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ idOrPin: string }> }) {
   const { idOrPin } = await params;
@@ -25,9 +29,15 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ idO
     });
   }
 
-  const payload = (await req.json()) as z.infer<typeof participantCreationParser>;
+  if (match.state !== "WAITING") {
+    return NextResponse.json("A partida já foi iniciada.", {
+      status: 400,
+    });
+  }
 
-  if (participantCreationParser.safeParse(payload).error) {
+  const payload = (await req.json()) as z.infer<typeof payloadParser>;
+
+  if (payloadParser.safeParse(payload).error) {
     return NextResponse.json("O conteúdo da requisição é inválido.", {
       status: 400,
     });

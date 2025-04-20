@@ -1,27 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import { QuestionEditor } from "./QuestionEditor";
-import { AnswersManager } from "./AnswersManager";
-import { SlideNavigation } from "./SlideNavigation";
-import { SidebarSettings } from "./SidebarSettings";
-import { saveQuestionsAndAnswers } from "~/server/actions/question-actions";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
-import type {
-  QuestionWithAlternatives,
-  QuestionWithRawAlternatives,
-} from "~/lib/types";
+import type { QuestionWithAlternatives, QuestionWithRawAlternatives } from "~/lib/types";
+import { saveQuestionsAndAlternatives } from "~/server/actions/question-actions";
+import { AnswersManager } from "./AnswersManager";
+import { QuestionEditor } from "./QuestionEditor";
+import { SidebarSettings } from "./SidebarSettings";
+import { SlideNavigation } from "./SlideNavigation";
 
 interface Props {
   quizId: string;
   initialQuestions?: QuestionWithAlternatives[];
 }
 
-export default function QuizManualForm({
-  quizId,
-  initialQuestions = [],
-}: Props) {
+export default function QuizManualForm({ quizId, initialQuestions = [] }: Props) {
   const [questions, setQuestions] = useState<QuestionWithRawAlternatives[]>(
     initialQuestions.length > 0
       ? initialQuestions.map((q) => ({
@@ -49,12 +43,8 @@ export default function QuizManualForm({
   const currentQuestion = questions[currentSlide];
   if (!currentQuestion) return null;
 
-  const updateCurrentQuestion = (
-    updated: Partial<QuestionWithRawAlternatives>,
-  ) => {
-    setQuestions((prev) =>
-      prev.map((q, i) => (i === currentSlide ? { ...q, ...updated } : q)),
-    );
+  const updateCurrentQuestion = (updated: Partial<QuestionWithRawAlternatives>) => {
+    setQuestions((prev) => prev.map((q, i) => (i === currentSlide ? { ...q, ...updated } : q)));
   };
 
   const handleChangeAnswer = (answers: string[]) => {
@@ -96,7 +86,7 @@ export default function QuizManualForm({
 
   const handleSubmit = async () => {
     try {
-      await saveQuestionsAndAnswers({
+      await saveQuestionsAndAlternatives({
         quizId,
         questions: questions.map((q) => ({
           text: q.question,

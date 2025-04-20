@@ -3,7 +3,13 @@
 import { fail, Result, succeed } from "~/lib/result";
 import { Uuid, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
 import { auth } from "~/server/auth";
-import { insertMatch, selectPopulatedMatchById, updateMatch } from "../data/match";
+import {
+  insertMatch,
+  selectMatchByIdOrPin,
+  selectPopulatedMatchById,
+  updateMatch,
+} from "../data/match";
+import { callMatchEvent, MatchEndedEvent, NextMatchQuestionEvent } from "../event-publisher";
 
 export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> {
   const session = await auth();
@@ -32,11 +38,15 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
   const match = await selectPopulatedMatchById(matchId);
 
   if (!match) {
-    return fail("Partida não encontrada.");
+    return fail("A partida não foi encontrada.");
   }
 
   if (match.state !== "WAITING") {
-    return fail("Partida já iniciada.");
+    return fail("A partida já foi iniciada.");
+  }
+
+  if (match.participants.length < 1) {
+    return fail("A partida não pode ser iniada sem nenhum participante.");
   }
 
   const firstQuestion = match.quiz.questions[0];
@@ -51,8 +61,76 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
   });
 
   if (!updatedMatch) {
+    return fail("Não foi possível iniciar a partida.");
+  }
+
+  await callMatchEvent(new NextMatchQuestionEvent(match.id, firstQuestion));
+
+  return succeed({ ...match, ...updatedMatch });
+}
+
+export async function nextQuestion(matchId: Uuid) {
+  const match = await selectPopulatedMatchById(matchId);
+
+  if (!match) {
+    return fail("A partida não foi encontrada.");
+  }
+
+  if (match.state !== "RUNNING") {
+    return fail("A partida não está em andamento.");
+  }
+
+  const currentQuestionIndex = match.quiz.questions.findIndex(
+    (question) => question.id === match.currentQuestionId,
+  );
+
+  const nextQuestion = match.quiz.questions[currentQuestionIndex + 1];
+
+  if (!nextQuestion) {
+    return fail("Não há mais perguntas.");
+  }
+
+  const updatedMatch = await updateMatch(match.id, {
+    currentQuestionId: nextQuestion.id,
+  });
+
+  if (!updatedMatch) {
+    return fail("Não foi possível avançar para a próxima questão.");
+  }
+
+  await callMatchEvent(
+    new NextMatchQuestionEvent(match.id, {
+      ...nextQuestion,
+      alternatives: nextQuestion.alternatives.map((alternative) => ({
+        ...alternative,
+        correct: undefined, // Makes sure the correct answer is not shared with the participants
+      })),
+    }),
+  );
+
+  return succeed({ ...match, ...updatedMatch });
+}
+
+export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
+  const match = await selectMatchByIdOrPin(matchId);
+
+  if (!match) {
+    return fail("Partida não encontrada.");
+  }
+
+  if (match.state === "ENDED") {
+    return fail("Partida já encerrada.");
+  }
+
+  const updatedMatch = await updateMatch(match.id, {
+    state: "ENDED",
+  });
+
+  if (!updatedMatch) {
     return fail("Não foi possível atualizar a partida.");
   }
 
-  return succeed({ updatedMatch, ...match });
+  await callMatchEvent(new MatchEndedEvent(match.id));
+
+  return succeed(updatedMatch);
 }

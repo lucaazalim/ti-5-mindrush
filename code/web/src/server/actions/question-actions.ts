@@ -1,10 +1,12 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "~/server/db";
-import { questions, quizQuestionsAlternatives } from "~/server/db/schema";
-import { uuidParser } from "~/lib/parsers";
 import { QUESTION_TYPES } from "~/lib/constants";
+import { uuidParser } from "~/lib/parsers";
+import { fail, Result, succeed } from "~/lib/result";
+import { NewQuestionAlternative } from "~/lib/types";
+import { db } from "~/server/db";
+import { questionAlternatives, questions } from "~/server/db/schema";
 
 const questionSchema = z.object({
   quizId: uuidParser,
@@ -18,39 +20,40 @@ const questionSchema = z.object({
   ),
 });
 
-export async function saveQuestionsAndAnswers(
+export async function saveQuestionsAndAlternatives(
   data: z.infer<typeof questionSchema>,
-) {
+): Promise<Result<void, string>> {
   const parsed = questionSchema.safeParse(data);
 
   if (!parsed.success) {
-    throw new Error("Dados inválidos para salvar perguntas.");
+    return fail("Os dados de questões e alternativas informados são inválidos.");
   }
 
   const { quizId, questions: parsedQuestions } = parsed.data;
 
-  try {
-    for (const parsedQuestion of parsedQuestions) {
-      const questionId = crypto.randomUUID();
+  for (const parsedQuestion of parsedQuestions) {
+    const createdQuestion = (
+      await db
+        .insert(questions)
+        .values({
+          quizId,
+          question: parsedQuestion.text,
+          type: parsedQuestion.type,
+          timeLimit: 20,
+        })
+        .returning()
+    )[0];
 
-      await db.insert(questions).values({
-        id: questionId,
-        quizId,
-        question: parsedQuestion.text,
-        type: parsedQuestion.type,
-        timeLimit: 20,
-      });
+    if (!createdQuestion) continue;
 
-      const alternatives = parsedQuestion.answers.map((answer, index) => ({
-        id: crypto.randomUUID(),
-        questionId,
-        answer,
-        correct: index === parsedQuestion.correctAnswerIndex,
-      }));
+    const alternatives: NewQuestionAlternative[] = parsedQuestion.answers.map((answer, index) => ({
+      questionId: createdQuestion.id,
+      answer,
+      correct: index === parsedQuestion.correctAnswerIndex,
+    }));
 
-      await db.insert(quizQuestionsAlternatives).values(alternatives);
-    }
-  } catch {
-    throw new Error("Erro interno ao salvar perguntas.");
+    await db.insert(questionAlternatives).values(alternatives);
   }
+
+  return succeed();
 }

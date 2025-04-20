@@ -2,17 +2,16 @@ import { z } from "zod"; // Generic
 
 // Generic
 
-export const uuidParser = z.string().uuid({
-  message: "O ID informado é inválido.",
-});
+export const uuidParser = z
+  .string()
+  .uuid({
+    message: "O ID informado é inválido.",
+  })
+  .brand<"Uuid">();
 
 // Participant
 
 export const participantNicknameParser = z.string().min(3).max(20).brand<"ParticipantNickname">();
-
-export const participantCreationParser = z.object({
-  nickname: participantNicknameParser,
-});
 
 // Match
 

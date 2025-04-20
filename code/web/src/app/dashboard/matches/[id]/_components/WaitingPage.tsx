@@ -8,7 +8,7 @@ import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provide
 import { Button } from "~/components/ui/button";
 import { ROUTES } from "~/lib/constants";
 import { isFailure } from "~/lib/result";
-import { startMatch } from "~/server/actions/match-actions";
+import { endMatch, startMatch } from "~/server/actions/match-actions";
 import WaitingParticipants from "./WaitingParticipants";
 
 export default function WaitingPage() {
@@ -24,8 +24,22 @@ export default function WaitingPage() {
       return;
     }
 
+    console.log(result.data);
+
     setMatch(result.data);
     toast("Partida iniciada!");
+  }
+
+  async function onEndMatchButtonClicked() {
+    const result = await endMatch(match.id);
+
+    if (isFailure(result)) {
+      toast.error(result.error);
+      return;
+    }
+
+    setMatch({ ...match, ...result.data });
+    toast("Partida encerrada!");
   }
 
   return (
@@ -46,9 +60,9 @@ export default function WaitingPage() {
             <Play />
             Iniciar partida
           </Button>
-          <Button variant="outline" size="lg" className="grow">
+          <Button variant="outline" size="lg" className="grow" onClick={onEndMatchButtonClicked}>
             <CircleX />
-            Cancelar partida
+            Encerrar partida
           </Button>
         </div>
         <WaitingParticipants />

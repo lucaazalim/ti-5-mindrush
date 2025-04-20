@@ -4,15 +4,9 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
-import {
-  type NewQuiz,
-  type Quiz,
-  type QuizWithQuestionCount,
-  type QuizWithQuestionsAndAlternatives,
-  type UpdateQuiz,
-} from "~/lib/types";
+import { isUuid, type NewQuiz, type Quiz, type UpdateQuiz } from "~/lib/types";
 import { db } from "../db";
-import { questions, quizQuestionsAlternatives, quizzes } from "../db/schema";
+import { quizzes } from "../db/schema";
 
 const quizSchema = z.object({
   educatorId: uuidParser,
@@ -24,29 +18,6 @@ const quizSchema = z.object({
   language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres").optional(),
   pdfBase64: z.string().optional(),
 });
-
-export async function getAllQuizzes(): Promise<Result<QuizWithQuestionCount[], string>> {
-  try {
-    const allQuizzes = await db.select().from(quizzes);
-    const quizQuestions = await db
-      .select({ id: questions.id, quizId: questions.quizId })
-      .from(questions);
-
-    const questionCountByQuiz: Record<string, number> = {};
-    quizQuestions.forEach((q) => {
-      questionCountByQuiz[q.quizId] = (questionCountByQuiz[q.quizId] ?? 0) + 1;
-    });
-
-    return succeed(
-      allQuizzes.map((q) => ({
-        ...q,
-        questionCount: questionCountByQuiz[q.id] ?? 0,
-      })),
-    );
-  } catch {
-    return fail("Falha ao buscar quizzes.");
-  }
-}
 
 export async function createQuiz(quizData: NewQuiz): Promise<Result<Quiz, string>> {
   const parsedData = quizSchema.safeParse(quizData);
@@ -101,9 +72,7 @@ export async function updateQuiz(updateData: UpdateQuiz): Promise<Result<Quiz, s
 }
 
 export async function deleteQuiz(id: string): Promise<Result<void, string>> {
-  const parsedId = uuidParser.safeParse(id);
-
-  if (!parsedId.success) {
+  if (!isUuid(id)) {
     return fail("ID inválido.");
   }
 
@@ -112,44 +81,5 @@ export async function deleteQuiz(id: string): Promise<Result<void, string>> {
     return succeed();
   } catch {
     return fail("Falha ao deletar quiz.");
-  }
-}
-
-export async function getQuizWithQuestionsAndAlternatives(
-  quizId: string,
-): Promise<Result<QuizWithQuestionsAndAlternatives, string>> {
-  const parsedId = uuidParser.safeParse(quizId);
-  if (!parsedId.success) {
-    return fail("ID do quiz inválido.");
-  }
-
-  try {
-    // Fetch the quiz by ID
-    const quizResult = await db.select().from(quizzes).where(eq(quizzes.id, quizId));
-    const quiz = quizResult[0];
-
-    if (!quiz) {
-      return fail("Quiz não encontrado.");
-    }
-
-    // Fetch all questions for the quiz
-    const allQuestions = await db.select().from(questions).where(eq(questions.quizId, quizId));
-
-    // Fetch all alternatives for the questions
-    const allAlternatives = await db.select().from(quizQuestionsAlternatives);
-
-    // Map questions to include their alternatives
-    const questionsWithAlternatives = allQuestions.map((q) => ({
-      ...q,
-      alternatives: allAlternatives.filter((a) => a.questionId === q.id),
-    }));
-
-    // Return the quiz with questions and alternatives
-    return succeed({
-      ...quiz,
-      questions: questionsWithAlternatives,
-    });
-  } catch {
-    return fail("Falha ao buscar quiz com questões e alternativas.");
   }
 }

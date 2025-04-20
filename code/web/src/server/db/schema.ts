@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { eq, relations, sql } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -8,6 +8,7 @@ import {
   text,
   timestamp,
   unique,
+  uniqueIndex,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
@@ -123,32 +124,48 @@ export const quizzes = createTable("quiz", {
     .default(sql`CURRENT_TIMESTAMP`),
 });
 
-export const questions = createTable("question", {
-  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
-  quizId: uuid("quiz_id")
-    .notNull()
-    .references(() => quizzes.id, { onDelete: "cascade" })
-    .$type<Uuid>(),
-  type: text("type", { enum: QUESTION_TYPES }).notNull(),
-  question: text("question").notNull(),
-  timeLimit: integer("time_limit").notNull(),
-  createdAt: timestamp("created_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-});
+export const questions = createTable(
+  "question",
+  {
+    id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
+    quizId: uuid("quiz_id")
+      .notNull()
+      .references(() => quizzes.id, { onDelete: "cascade" })
+      .$type<Uuid>(),
+    type: text("type", { enum: QUESTION_TYPES }).notNull(),
+    image: text("image"),
+    question: text("question").notNull(),
+    timeLimit: integer("time_limit").notNull(),
+    order: integer("order").notNull().default(0),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => ({
+    uniqueIndex: uniqueIndex().on(table.order, table.quizId),
+  }),
+);
 
-export const quizQuestionsAlternatives = createTable("quiz_question_alternative", {
-  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
-  questionId: uuid("question_id")
-    .notNull()
-    .references(() => questions.id, { onDelete: "cascade" })
-    .$type<Uuid>(),
-  answer: text("answer").notNull(),
-  correct: boolean("correct").notNull(),
-  createdAt: timestamp("created_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-});
+export const questionAlternatives = createTable(
+  "question_alternative",
+  {
+    id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
+    questionId: uuid("question_id")
+      .notNull()
+      .references(() => questions.id, { onDelete: "cascade" })
+      .$type<Uuid>(),
+    answer: text("answer").notNull(),
+    correct: boolean("correct").notNull(),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => ({
+    uniqueIndex: uniqueIndex()
+      .on(table.questionId, table.correct)
+      .where(eq(table.correct, sql`true`)),
+  }),
+);
 
 export const matches = createTable("match", {
   id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
@@ -158,7 +175,7 @@ export const matches = createTable("match", {
     .$type<Uuid>(),
   pin: text("pin").notNull(),
   state: text("state", {
-    enum: ["WAITING", "RUNNING", "PAUSED", "ENDED"],
+    enum: ["WAITING", "RUNNING", "ENDED"],
   }).notNull(),
   currentQuestionId: uuid("current_question_id")
     .references(() => questions.id, { onDelete: "set null" })
@@ -200,8 +217,13 @@ export const quizAnswers = createTable(
       .notNull()
       .references(() => matches.id)
       .$type<Uuid>(),
-    alternative: text("alternative").notNull(),
+    alternative: uuid("alternative_id")
+      .notNull()
+      .references(() => questionAlternatives.id)
+      .$type<Uuid>(),
+    correct: boolean("correct").notNull(),
     points: integer("points").notNull(),
+    time: integer("time").notNull(),
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
