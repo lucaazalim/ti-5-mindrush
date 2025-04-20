@@ -24,8 +24,6 @@ export default function WaitingPage() {
       return;
     }
 
-    console.log(result.data);
-
     setMatch(result.data);
     toast("Partida iniciada!");
   }

@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import { PresenceChannelData } from "pusher";
 import { env } from "~/env";
-import { uuidParser } from "~/lib/parsers";
+import { isUuid } from "~/lib/types";
 import { selectParticipantById } from "~/server/data/participant";
 import { pusherSender } from "~/server/event-publisher";
 
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
   const participantId = jwt.verify(participantToken, env.PARTICIPANT_TOKEN_SECRET_KEY);
 
-  if (typeof participantId !== "string" || !uuidParser.safeParse(participantId).success) {
+  if (typeof participantId !== "string" || !isUuid(participantId)) {
     return new NextResponse("The provided participant token is invalid.", { status: 403 });
   }
 

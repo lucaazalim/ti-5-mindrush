@@ -1,5 +1,6 @@
-import { z } from "zod";
 import { useFormContext } from "react-hook-form";
+import { z } from "zod";
+import { uuidParser } from "~/lib/parsers";
 
 export type CreateQuizSchema = z.infer<typeof quizCreateSchema>;
 
@@ -8,11 +9,9 @@ export function useCreateQuizFormContext() {
 }
 
 const baseFields = {
-  educatorId: z.string().uuid(),
+  educatorId: uuidParser,
   title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-  description: z
-    .string()
-    .min(8, "A descrição deve ter pelo menos 8 caracteres"),
+  description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
 };
 
 const blankSchema = z.object({

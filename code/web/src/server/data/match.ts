@@ -1,30 +1,64 @@
-import { eq, inArray } from "drizzle-orm";
+import { and, eq, getTableColumns, inArray } from "drizzle-orm";
+import { forbidden, unauthorized } from "next/navigation";
 import { NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
+import { auth } from "../auth";
 import { db } from "../db";
 import { matches, participants, questionAlternatives, questions, quizzes } from "../db/schema";
+import { selectQuizById, selectQuizByMatchId } from "./quiz";
 
 export async function insertMatch(match: NewMatch): Promise<Match | undefined> {
-  // TODO authorization
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const quiz = await selectQuizById(match.quizId);
+
+  if (!quiz) {
+    return undefined;
+  }
+
+  if (quiz.educatorId !== session.user.id) {
+    return forbidden();
+  }
+
   return (await db.insert(matches).values(match).returning())[0];
 }
 
 export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | undefined> {
-  // TODO authorization
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
   return (
     await db
-      .select()
+      .select(getTableColumns(matches))
       .from(matches)
-      .where(isUuid(idOrPin) ? eq(matches.id, idOrPin) : eq(matches.pin, idOrPin))
+      .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
+      .where(
+        and(
+          isUuid(idOrPin) ? eq(matches.id, idOrPin) : eq(matches.pin, idOrPin),
+          eq(quizzes.educatorId, session.user.id as Uuid),
+        ),
+      )
   )[0];
 }
 
-export async function selectPopulatedMatchById(id: Uuid): Promise<PopulatedMatch | undefined> {
-  // TODO authorization
+export async function selectPopulatedMatchById(matchId: Uuid): Promise<PopulatedMatch | undefined> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
   const matchWithQuizResult = await db
     .select()
     .from(matches)
     .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
-    .where(eq(matches.id, id));
+    .where(and(eq(matches.id, matchId), eq(quizzes.educatorId, session.user.id as Uuid)));
 
   const matchWithQuiz = matchWithQuizResult[0];
 
@@ -70,7 +104,25 @@ export async function selectPopulatedMatchById(id: Uuid): Promise<PopulatedMatch
   return populatedMatch;
 }
 
-export async function updateMatch(id: Uuid, updates: Partial<Match>): Promise<Match | undefined> {
-  // TODO authorization
-  return (await db.update(matches).set(updates).where(eq(matches.id, id)).returning())[0];
+export async function updateMatch(
+  matchId: Uuid,
+  updates: Partial<Match>,
+): Promise<Match | undefined> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const quiz = await selectQuizByMatchId(matchId);
+
+  if (!quiz) {
+    return undefined;
+  }
+
+  if (quiz.educatorId !== session.user.id) {
+    return forbidden();
+  }
+
+  return (await db.update(matches).set(updates).where(eq(matches.id, matchId)).returning())[0];
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "~/components/ui/button";
 import { Trash2 } from "lucide-react";
+import { Button } from "~/components/ui/button";
 import { type QuestionWithRawAlternatives } from "~/lib/types";
 
 interface SlideNavigationProps {
@@ -21,11 +21,7 @@ export function SlideNavigation({
 }: SlideNavigationProps) {
   return (
     <aside className="flex h-full w-[200px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
-      <Button
-        type="button"
-        onClick={onAdd}
-        className="h-[8px] w-[140px] rounded-sm"
-      >
+      <Button type="button" onClick={onAdd} className="h-[8px] w-[140px] rounded-sm">
         Novo Slide
       </Button>
 
@@ -47,14 +43,9 @@ export function SlideNavigation({
               </button>
             )}
 
-            <button
-              type="button"
-              className="w-full text-left"
-              onClick={() => onSlideChange(index)}
-            >
+            <button type="button" className="w-full text-left" onClick={() => onSlideChange(index)}>
               <div className="mb-1 text-xs font-semibold">
-                {index + 1}.{" "}
-                {q.type === "QUIZ" ? "Quiz" : "Verdadeiro ou falso"}
+                {index + 1}. {q.type === "QUIZ" ? "Quiz" : "Verdadeiro ou falso"}
               </div>
 
               <div className="flex flex-wrap gap-1">
@@ -62,7 +53,7 @@ export function SlideNavigation({
                   <div
                     key={i}
                     className={`rounded border px-1 text-xs ${
-                      q.correctAnswerIndex === i
+                      q.correctIndex === i
                         ? "border-green-500 text-green-600"
                         : "border-muted text-muted-foreground"
                     }`}

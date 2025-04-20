@@ -1,6 +1,7 @@
 import { and, count, eq, getTableColumns, inArray } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import {
+  NewQuiz,
   Quiz,
   Uuid,
   type QuizWithQuestionCount,
@@ -10,11 +11,30 @@ import { auth } from "../auth";
 import { db } from "../db";
 import { matches, questionAlternatives, questions, quizzes } from "../db/schema";
 
+export async function insertQuiz(newQuiz: Omit<NewQuiz, "educatorId">): Promise<Quiz> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const [createdQuiz] = await db
+    .insert(quizzes)
+    .values({ ...newQuiz, educatorId: session.user.id as Uuid })
+    .returning();
+
+  if (!createdQuiz) {
+    throw new Error("Failed to create quiz.");
+  }
+
+  return createdQuiz;
+}
+
 export async function selectQuizByMatchId(matchId: Uuid): Promise<Quiz | undefined> {
   const session = await auth();
 
   if (!session) {
-    throw unauthorized();
+    return unauthorized();
   }
 
   const result = await db
@@ -32,7 +52,7 @@ export async function selectQuizById(quizId: Uuid): Promise<Quiz | undefined> {
   const session = await auth();
 
   if (!session) {
-    throw unauthorized();
+    return unauthorized();
   }
 
   return (
@@ -47,7 +67,7 @@ export async function selectAllQuizzesWithQuestionCount(): Promise<QuizWithQuest
   const session = await auth();
 
   if (!session) {
-    throw unauthorized();
+    return unauthorized();
   }
 
   const allQuizzes: QuizWithQuestionCount[] = await db
@@ -59,8 +79,6 @@ export async function selectAllQuizzesWithQuestionCount(): Promise<QuizWithQuest
     .leftJoin(questions, eq(questions.quizId, quizzes.id))
     .where(eq(quizzes.educatorId, session.user.id as Uuid))
     .groupBy(quizzes.id);
-
-  console.log(allQuizzes);
 
   return allQuizzes;
 }
@@ -101,4 +119,37 @@ export async function selectQuizWithQuestionsAndAlternatives(
     ...quiz,
     questions: questionsWithAlternatives,
   };
+}
+
+export async function updateQuiz(
+  quizId: Uuid,
+  updatedQuiz: Partial<Quiz>,
+): Promise<Quiz | undefined> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const [updated] = await db
+    .update(quizzes)
+    .set(updatedQuiz)
+    .where(and(eq(quizzes.id, quizId), eq(quizzes.educatorId, session.user.id as Uuid)))
+    .returning();
+
+  return updated;
+}
+
+export async function deleteQuiz(quizId: Uuid): Promise<boolean> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const result = await db
+    .delete(quizzes)
+    .where(and(eq(quizzes.id, quizId), eq(quizzes.educatorId, session.user.id as Uuid)));
+
+  return result.count > 0;
 }

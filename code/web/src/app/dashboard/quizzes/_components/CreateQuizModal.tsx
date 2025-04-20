@@ -1,33 +1,26 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogTrigger,
-} from "~/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 
 import { createQuiz } from "~/server/actions/quiz-actions";
 
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { type CreateQuizSchema, quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
+import { ROUTES } from "~/lib/constants";
+import { isSuccess } from "~/lib/result";
+import { Uuid } from "~/lib/types";
 import QuizStepOne from "./create-quiz-form/QuizStepOne";
-import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoTheme";
 import QuizStepTwoPDF from "./create-quiz-form/QuizStepTwoPDF";
+import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoTheme";
 import StepOneActions from "./create-quiz-form/StepOneActions";
 import StepTwoActions from "./create-quiz-form/StepTwoActions";
-import {
-  type CreateQuizSchema,
-  quizCreateSchema,
-} from "~/app/dashboard/quizzes/form-schema";
-import { useRouter } from "next/navigation";
-import { ROUTES } from "~/lib/constants";
-import { toast } from "sonner";
-import { isSuccess } from "~/lib/result";
 
-export function CreateQuizModal({ educatorId }: { educatorId: string }) {
+export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
   const [step, setStep] = useState(1);
   const router = useRouter();
 
@@ -39,9 +32,9 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
       title: "",
       description: "",
       type: "BLANK",
-      theme: "",          
-      difficulty: "EASY", 
-      language: "",  
+      theme: "",
+      difficulty: "EASY",
+      language: "",
     } as CreateQuizSchema,
   });
 
@@ -72,11 +65,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: string }) {
             {step === 1 && (
               <>
                 <QuizStepOne />
-                <StepOneActions
-                  selectedType={selectedType}
-                  setStep={setStep}
-                  onSubmit={onSubmit}
-                />
+                <StepOneActions selectedType={selectedType} setStep={setStep} onSubmit={onSubmit} />
               </>
             )}
 

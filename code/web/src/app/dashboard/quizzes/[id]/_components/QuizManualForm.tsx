@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import type { QuestionWithAlternatives, QuestionWithRawAlternatives } from "~/lib/types";
+import type { QuestionWithAlternatives, QuestionWithRawAlternatives, Uuid } from "~/lib/types";
 import { saveQuestionsAndAlternatives } from "~/server/actions/question-actions";
 import { AnswersManager } from "./AnswersManager";
 import { QuestionEditor } from "./QuestionEditor";
@@ -11,30 +11,34 @@ import { SidebarSettings } from "./SidebarSettings";
 import { SlideNavigation } from "./SlideNavigation";
 
 interface Props {
-  quizId: string;
+  quizId: Uuid;
   initialQuestions?: QuestionWithAlternatives[];
 }
 
 export default function QuizManualForm({ quizId, initialQuestions = [] }: Props) {
+  function getDummyQuestion(): QuestionWithRawAlternatives {
+    return {
+      id: "" as Uuid,
+      question: "",
+      quizId: quizId,
+      type: "QUIZ",
+      createdAt: new Date(),
+      timeLimit: 30,
+      answers: ["", "", "", ""],
+      correctIndex: 0,
+      image: null,
+      order: 0,
+    };
+  }
+
   const [questions, setQuestions] = useState<QuestionWithRawAlternatives[]>(
     initialQuestions.length > 0
-      ? initialQuestions.map((q) => ({
-          ...q,
-          answers: q.alternatives.map((a) => a.answer),
-          correctAnswerIndex: q.alternatives.findIndex((a) => a.correct),
+      ? initialQuestions.map((quiz) => ({
+          ...quiz,
+          answers: quiz.alternatives.map((alternative) => alternative.answer),
+          correctIndex: quiz.alternatives.findIndex((a) => a.correct),
         }))
-      : [
-          {
-            id: "",
-            question: "",
-            quizId,
-            type: "QUIZ",
-            createdAt: new Date(),
-            timeLimit: 30,
-            answers: ["", "", "", ""],
-            correctAnswerIndex: 0,
-          },
-        ],
+      : [getDummyQuestion()],
   );
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -52,21 +56,11 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
   };
 
   const handleChangeCorrectIndex = (index: number) => {
-    updateCurrentQuestion({ correctAnswerIndex: index });
+    updateCurrentQuestion({ correctIndex: index });
   };
 
   const handleAddQuestion = () => {
-    const newQuestion: QuestionWithRawAlternatives = {
-      id: "",
-      question: "",
-      quizId,
-      type: "QUIZ",
-      createdAt: new Date(),
-      timeLimit: 30,
-      answers: ["", "", "", ""],
-      correctAnswerIndex: 0,
-    };
-
+    const newQuestion: QuestionWithRawAlternatives = getDummyQuestion();
     setQuestions((prev) => [...prev, newQuestion]);
     setCurrentSlide(questions.length);
   };
@@ -91,7 +85,7 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
         questions: questions.map((q) => ({
           text: q.question,
           answers: q.answers,
-          correctAnswerIndex: q.correctAnswerIndex,
+          correctAnswerIndex: q.correctIndex,
           type: q.type,
         })),
       });
@@ -124,7 +118,7 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
         <AnswersManager
           type={currentQuestion.type}
           answers={currentQuestion.answers}
-          correctAnswerIndex={currentQuestion.correctAnswerIndex}
+          correctAnswerIndex={currentQuestion.correctIndex}
           onChangeAnswers={handleChangeAnswer}
           onChangeCorrectIndex={handleChangeCorrectIndex}
         />

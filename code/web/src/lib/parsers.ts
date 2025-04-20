@@ -9,6 +9,13 @@ export const uuidParser = z
   })
   .brand<"Uuid">();
 
+// Quiz
+
+export const updateQuizParser = z.object({
+  title: z.string().min(3).optional(),
+  description: z.string().min(8).optional(),
+});
+
 // Participant
 
 export const participantNicknameParser = z.string().min(3).max(20).brand<"ParticipantNickname">();

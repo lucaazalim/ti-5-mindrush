@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { Pencil, Settings2, TextCursorInput, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +11,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { ROUTES } from "~/lib/constants";
+import type { Quiz } from "~/lib/types";
 import DeleteQuizModal from "./DeleteQuizModal";
 import RenameQuizModal from "./RenameQuizModal";
-import type { Quiz } from "~/lib/types";
-import { useRouter } from "next/navigation";
-import { ROUTES } from "~/lib/constants";
 
 interface QuizOptionsProps {
   quiz: Quiz;
@@ -36,10 +36,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
           <DropdownMenuLabel>Opções do quiz</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => router.push(ROUTES.QUIZ(id))}
-          >
+          <DropdownMenuItem className="cursor-pointer" onClick={() => router.push(ROUTES.QUIZ(id))}>
             <Pencil className="mr-2 h-4 w-4" />
             Editar
           </DropdownMenuItem>
@@ -67,7 +64,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
       <RenameQuizModal
         open={isRenameDialogOpen}
         setIsRenameDialogOpen={setIsRenameDialogOpen}
-        quizInput={quiz}
+        quiz={quiz}
       />
 
       <DeleteQuizModal

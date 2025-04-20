@@ -1,12 +1,10 @@
 "use server";
 
-import { eq } from "drizzle-orm";
 import { z } from "zod";
-import { uuidParser } from "~/lib/parsers";
+import { updateQuizParser, uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { isUuid, type NewQuiz, type Quiz, type UpdateQuiz } from "~/lib/types";
-import { db } from "../db";
-import { quizzes } from "../db/schema";
+import { deleteQuiz, insertQuiz, updateQuiz } from "../data/quiz";
 
 const quizSchema = z.object({
   educatorId: uuidParser,
@@ -21,65 +19,50 @@ const quizSchema = z.object({
 
 export async function createQuiz(quizData: NewQuiz): Promise<Result<Quiz, string>> {
   const parsedData = quizSchema.safeParse(quizData);
+
   if (!parsedData.success) {
-    return fail("Dados inválidos para criação do quiz.");
+    return fail("Os dados informados para a criação do quiz são inválidos.");
   }
 
   try {
-    const [createdQuiz] = await db.insert(quizzes).values(parsedData.data).returning();
-
-    if (!createdQuiz) {
-      return fail("Falha ao criar o quiz.");
-    }
-
-    return succeed(createdQuiz);
+    return succeed(await insertQuiz(parsedData.data));
   } catch {
     return fail("Falha ao criar o quiz.");
   }
 }
 
-export async function updateQuiz(updateData: UpdateQuiz): Promise<Result<Quiz, string>> {
-  const parsedId = uuidParser.safeParse(updateData.id);
-  if (!parsedId.success) {
-    return fail("ID inválido.");
+export async function editQuiz(
+  quizId: string,
+  updateData: UpdateQuiz,
+): Promise<Result<Quiz, string>> {
+  if (!isUuid(quizId)) {
+    return fail("O ID informado é inválido.");
   }
 
-  const updateSchema = z.object({
-    title: z.string().min(3).optional(),
-    description: z.string().min(8).optional(),
-  });
-
-  const parsedUpdate = updateSchema.safeParse(updateData);
-  if (!parsedUpdate.success) {
-    return fail("Dados inválidos para atualização do quiz.");
+  if (!updateQuizParser.safeParse(updateData).success) {
+    return fail("Os dados informados para a atualização do quiz são inválidos.");
   }
 
   try {
-    const [updatedQuiz] = await db
-      .update(quizzes)
-      .set(parsedUpdate.data)
-      .where(eq(quizzes.id, updateData.id))
-      .returning();
-
-    if (!updatedQuiz) {
-      return fail("Falha ao atualizar o quiz.");
-    }
-
-    return succeed(updatedQuiz);
+    const updatedQuiz = await updateQuiz(quizId, updateData);
+    return updatedQuiz
+      ? succeed(updatedQuiz)
+      : fail("O quiz que você está tentando editar não existe.");
   } catch {
     return fail("Falha ao atualizar o quiz.");
   }
 }
 
-export async function deleteQuiz(id: string): Promise<Result<void, string>> {
+export async function destroyQuiz(id: string): Promise<Result<void, string>> {
   if (!isUuid(id)) {
     return fail("ID inválido.");
   }
 
   try {
-    await db.delete(quizzes).where(eq(quizzes.id, id));
-    return succeed();
+    return (await deleteQuiz(id))
+      ? succeed()
+      : fail("O quiz que você está tentando deletar não existe.");
   } catch {
-    return fail("Falha ao deletar quiz.");
+    return fail("Houve um erro ao deletar o quiz.");
   }
 }

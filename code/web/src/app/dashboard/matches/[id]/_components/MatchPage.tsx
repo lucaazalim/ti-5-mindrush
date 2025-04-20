@@ -30,8 +30,6 @@ export default function MatchPage() {
     };
   }, [match.id, setChannel]);
 
-  console.log(match.state);
-
   const Component = Components[match.state];
   return Component ? <Component /> : null;
 }

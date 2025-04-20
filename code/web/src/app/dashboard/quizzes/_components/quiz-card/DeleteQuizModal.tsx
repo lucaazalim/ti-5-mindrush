@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { deleteQuiz } from "~/server/actions/quiz-actions";
+import { destroyQuiz } from "~/server/actions/quiz-actions";
 
 interface DeleteQuizModalProps {
   open: boolean;
@@ -32,21 +32,16 @@ export default function DeleteQuizModal({
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Excluir quiz - {title}</DialogTitle>
-          <DialogDescription>
-            Esta ação excluirá permanentemente o quiz.
-          </DialogDescription>
+          <DialogDescription>Esta ação excluirá permanentemente o quiz.</DialogDescription>
         </DialogHeader>
         <div className="mt-2 flex gap-2">
-          <Button
-            variant="outline"
-            onClick={() => setIsDeleteDialogOpen(false)}
-          >
+          <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
             Cancelar
           </Button>
           <Button
             variant="destructive"
             onClick={async () => {
-              await deleteQuiz(id);
+              await destroyQuiz(id);
               toast.success("Quiz excluído com sucesso!");
               router.refresh();
             }}
