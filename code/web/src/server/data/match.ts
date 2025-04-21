@@ -27,23 +27,12 @@ export async function insertMatch(match: NewMatch): Promise<Match | undefined> {
 }
 
 export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | undefined> {
-  const session = await auth();
-
-  if (!session) {
-    return unauthorized();
-  }
-
   return (
     await db
       .select(getTableColumns(matches))
       .from(matches)
       .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
-      .where(
-        and(
-          isUuid(idOrPin) ? eq(matches.id, idOrPin) : eq(matches.pin, idOrPin),
-          eq(quizzes.educatorId, session.user.id as Uuid),
-        ),
-      )
+      .where(isUuid(idOrPin) ? eq(matches.id, idOrPin) : eq(matches.pin, idOrPin))
   )[0];
 }
 
