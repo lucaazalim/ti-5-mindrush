@@ -52,6 +52,12 @@ const config = {
             message:
               "You should manage the database directly from Server Actions. Use a method of the data layer.",
           },
+          {
+            target: "./src/app",
+            from: "./src/server/db",
+            message:
+              "You should not manage the database directly from the app folder. Use a method of the data layer.",
+          },
         ],
       },
     ],
