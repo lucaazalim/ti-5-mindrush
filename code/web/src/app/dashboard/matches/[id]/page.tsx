@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     notFound();
   }
 
-  // TODO não consegui solucionar o problema abaixo sem usar eslint-disable-next-line.
+  // This is a workaround and should be fixed in the future.
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const qrCodeBase64 = await QRCode.toDataURL(match.pin);
 

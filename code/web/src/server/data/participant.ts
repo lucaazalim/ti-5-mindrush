@@ -17,6 +17,5 @@ export async function existsParticipantWithNickname(matchId: Uuid, nickname: Par
 }
 
 export async function selectParticipantById(id: Uuid): Promise<Participant | undefined> {
-  // TODO authorization
   return (await db.select().from(participants).where(eq(participants.id, id)))[0];
 }
