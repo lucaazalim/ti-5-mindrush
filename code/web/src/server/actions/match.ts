@@ -66,10 +66,10 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
 
   await callMatchEvent(new NextMatchQuestionEvent(match.id, firstQuestion));
 
-  return succeed({ ...match, ...updatedMatch });
+  return succeed({ ...match, ...updatedMatch, currentQuestion: firstQuestion });
 }
 
-export async function nextQuestion(matchId: Uuid) {
+export async function nextQuestion(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
   const match = await selectPopulatedMatchById(matchId);
 
   if (!match) {
@@ -103,12 +103,12 @@ export async function nextQuestion(matchId: Uuid) {
       ...nextQuestion,
       alternatives: nextQuestion.alternatives.map((alternative) => ({
         ...alternative,
-        correct: undefined, // Makes sure the correct answer is not shared with the participants
+        correct: undefined, // This avoid the correct answer to be shared with the participants
       })),
     }),
   );
 
-  return succeed({ ...match, ...updatedMatch });
+  return succeed({ ...match, ...updatedMatch, currentQuestion: nextQuestion });
 }
 
 export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {

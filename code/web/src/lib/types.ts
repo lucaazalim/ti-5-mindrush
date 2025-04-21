@@ -53,6 +53,7 @@ export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;
 
 export type PopulatedMatch = Match & {
   quiz: QuizWithQuestionsAndAlternatives;
+  currentQuestion: QuestionWithAlternatives | null;
   participants: Participant[];
 };
 

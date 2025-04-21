@@ -4,6 +4,7 @@ import { NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/t
 import { auth } from "../auth";
 import { db } from "../db";
 import { matches, participants, questionAlternatives, questions, quizzes } from "../db/schema";
+import { selectQuestionWithAlternatives } from "./question";
 import { selectQuizById, selectQuizByMatchId } from "./quiz";
 
 export async function insertMatch(match: NewMatch): Promise<Match | undefined> {
@@ -43,22 +44,24 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
     return unauthorized();
   }
 
-  const matchWithQuizResult = await db
-    .select()
-    .from(matches)
-    .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
-    .where(and(eq(matches.id, matchId), eq(quizzes.educatorId, session.user.id as Uuid)));
-
-  const matchWithQuiz = matchWithQuizResult[0];
+  const matchWithQuiz = (
+    await db
+      .select()
+      .from(matches)
+      .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
+      .where(and(eq(matches.id, matchId), eq(quizzes.educatorId, session.user.id as Uuid)))
+  )[0];
 
   if (!matchWithQuiz) {
     return undefined;
   }
 
+  const { quiz, match } = matchWithQuiz;
+
   const questionsResult = await db
     .select()
     .from(questions)
-    .where(eq(questions.quizId, matchWithQuiz.quiz.id))
+    .where(eq(questions.quizId, quiz.id))
     .orderBy(questions.order);
 
   const alternativesResult = await db
@@ -71,13 +74,18 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
       ),
     );
 
+  const currentQuestionWithAlternatives = match.currentQuestionId
+    ? ((await selectQuestionWithAlternatives(match.currentQuestionId)) ?? null)
+    : null;
+
   const participantsResult = await db
     .select()
     .from(participants)
     .where(eq(participants.matchId, matchWithQuiz.match.id));
 
-  const populatedMatch = {
+  return {
     ...matchWithQuiz.match,
+    currentQuestion: currentQuestionWithAlternatives,
     quiz: {
       ...matchWithQuiz.quiz,
       questions: questionsResult.map((question) => ({
@@ -89,8 +97,6 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
     },
     participants: participantsResult,
   };
-
-  return populatedMatch;
 }
 
 export async function updateMatch(

@@ -17,7 +17,8 @@ export async function createQuestionsAndAlternatives(
   try {
     await insertQuestionsAndAlternatives(parsedData.data.quizId, parsedData.data);
     return succeed();
-  } catch {
+  } catch (e) {
+    console.error(e);
     return fail("Houve um problema ao criar as questões.");
   }
 }

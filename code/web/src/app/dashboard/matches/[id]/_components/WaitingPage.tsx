@@ -1,44 +1,16 @@
 "use client";
 
-import { CircleX, Play } from "lucide-react";
 import Image from "next/image";
-import { toast } from "sonner";
 import BackButton from "~/app/dashboard/_components/BackButton";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
-import { Button } from "~/components/ui/button";
 import { ROUTES } from "~/lib/constants";
-import { isFailure } from "~/lib/result";
-import { endMatch, startMatch } from "~/server/actions/match";
 import WaitingParticipants from "./WaitingParticipants";
+import { EndMatchButton } from "./buttons/EndMatchButton";
+import { StartMatchButton } from "./buttons/StartMatchButton";
 
 export default function WaitingPage() {
-  const setMatch = useMatchStore((state) => state.setMatch);
   const match = useMatchStore((state) => state.match);
   const qrcode = useMatchStore((state) => state.qrCodeBase64);
-
-  async function onStartMatchButtonClicked() {
-    const result = await startMatch(match.id);
-
-    if (isFailure(result)) {
-      toast.error(result.error);
-      return;
-    }
-
-    setMatch(result.data);
-    toast("Partida iniciada!");
-  }
-
-  async function onEndMatchButtonClicked() {
-    const result = await endMatch(match.id);
-
-    if (isFailure(result)) {
-      toast.error(result.error);
-      return;
-    }
-
-    setMatch({ ...match, ...result.data });
-    toast("Partida encerrada!");
-  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -54,14 +26,8 @@ export default function WaitingPage() {
           </div>
         </div>
         <div className="flex flex-grow flex-row gap-5 rounded-lg bg-background p-10">
-          <Button size="lg" className="grow" onClick={onStartMatchButtonClicked}>
-            <Play />
-            Iniciar partida
-          </Button>
-          <Button variant="outline" size="lg" className="grow" onClick={onEndMatchButtonClicked}>
-            <CircleX />
-            Encerrar partida
-          </Button>
+          <StartMatchButton />
+          <EndMatchButton />
         </div>
         <WaitingParticipants />
       </div>

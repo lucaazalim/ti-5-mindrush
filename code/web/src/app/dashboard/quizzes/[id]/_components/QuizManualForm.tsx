@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ROUTES } from "~/lib/constants";
+import { isFailure } from "~/lib/result";
 import type { QuestionWithAlternatives, QuestionWithRawAlternatives, Uuid } from "~/lib/types";
 import { createQuestionsAndAlternatives } from "~/server/actions/question";
 import { AnswersManager } from "./AnswersManager";
@@ -27,7 +29,7 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
       alternatives: ["", "", "", ""],
       correctAlternativeIndex: 0,
       image: null,
-      order: 0,
+      order: Math.floor(Math.random() * 1000), // TODO temporary!
     };
   }
 
@@ -79,23 +81,24 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
   };
 
   const handleSubmit = async () => {
-    try {
-      await createQuestionsAndAlternatives({
-        quizId,
-        questions: questions.map((q) => ({
-          question: q.question,
-          alternatives: q.alternatives,
-          correctAlternativeIndex: q.correctAlternativeIndex,
-          type: q.type,
-        })),
-      });
+    const result = await createQuestionsAndAlternatives({
+      quizId,
+      questions: questions.map((question) => ({
+        question: question.question,
+        order: question.order,
+        alternatives: question.alternatives,
+        correctAlternativeIndex: question.correctAlternativeIndex,
+        type: question.type,
+      })),
+    });
 
-      toast.success("Perguntas salvas com sucesso!");
-      router.push("/dashboard/quizzes");
-    } catch (error) {
-      toast.error("Erro ao salvar perguntas.");
-      console.error(error);
+    if (isFailure(result)) {
+      toast.error(result.error);
+      return;
     }
+
+    toast.success("Questões salvas com sucesso!");
+    router.push(ROUTES.QUIZZES);
   };
 
   return (
