@@ -8,6 +8,7 @@ import "./src/env.js";
 const config = {
   experimental: {
     nodeMiddleware: true,
+    authInterrupts: true,
   },
   images: {
     dangerouslyAllowSVG: true,
