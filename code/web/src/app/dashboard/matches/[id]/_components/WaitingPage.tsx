@@ -8,7 +8,7 @@ import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provide
 import { Button } from "~/components/ui/button";
 import { ROUTES } from "~/lib/constants";
 import { isFailure } from "~/lib/result";
-import { endMatch, startMatch } from "~/server/actions/match-actions";
+import { endMatch, startMatch } from "~/server/actions/match";
 import WaitingParticipants from "./WaitingParticipants";
 
 export default function WaitingPage() {

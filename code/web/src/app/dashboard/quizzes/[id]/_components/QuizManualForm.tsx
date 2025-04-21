@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { QuestionWithAlternatives, QuestionWithRawAlternatives, Uuid } from "~/lib/types";
-import { saveQuestionsAndAlternatives } from "~/server/actions/question-actions";
+import { createQuestionsAndAlternatives } from "~/server/actions/question";
 import { AnswersManager } from "./AnswersManager";
 import { QuestionEditor } from "./QuestionEditor";
 import { SidebarSettings } from "./SidebarSettings";
@@ -24,8 +24,8 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
       type: "QUIZ",
       createdAt: new Date(),
       timeLimit: 30,
-      answers: ["", "", "", ""],
-      correctIndex: 0,
+      alternatives: ["", "", "", ""],
+      correctAlternativeIndex: 0,
       image: null,
       order: 0,
     };
@@ -35,8 +35,8 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
     initialQuestions.length > 0
       ? initialQuestions.map((quiz) => ({
           ...quiz,
-          answers: quiz.alternatives.map((alternative) => alternative.answer),
-          correctIndex: quiz.alternatives.findIndex((a) => a.correct),
+          alternatives: quiz.alternatives.map((alternative) => alternative.answer),
+          correctAlternativeIndex: quiz.alternatives.findIndex((a) => a.correct),
         }))
       : [getDummyQuestion()],
   );
@@ -52,11 +52,11 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
   };
 
   const handleChangeAnswer = (answers: string[]) => {
-    updateCurrentQuestion({ answers });
+    updateCurrentQuestion({ alternatives: answers });
   };
 
   const handleChangeCorrectIndex = (index: number) => {
-    updateCurrentQuestion({ correctIndex: index });
+    updateCurrentQuestion({ correctAlternativeIndex: index });
   };
 
   const handleAddQuestion = () => {
@@ -80,12 +80,12 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
 
   const handleSubmit = async () => {
     try {
-      await saveQuestionsAndAlternatives({
+      await createQuestionsAndAlternatives({
         quizId,
         questions: questions.map((q) => ({
-          text: q.question,
-          answers: q.answers,
-          correctAnswerIndex: q.correctIndex,
+          question: q.question,
+          alternatives: q.alternatives,
+          correctAlternativeIndex: q.correctAlternativeIndex,
           type: q.type,
         })),
       });
@@ -117,8 +117,8 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
         />
         <AnswersManager
           type={currentQuestion.type}
-          answers={currentQuestion.answers}
-          correctAnswerIndex={currentQuestion.correctIndex}
+          answers={currentQuestion.alternatives}
+          correctAnswerIndex={currentQuestion.correctAlternativeIndex}
           onChangeAnswers={handleChangeAnswer}
           onChangeCorrectIndex={handleChangeCorrectIndex}
         />

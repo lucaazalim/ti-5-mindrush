@@ -4,7 +4,7 @@ const config = {
   parserOptions: {
     project: true,
   },
-  plugins: ["@typescript-eslint", "drizzle"],
+  plugins: ["@typescript-eslint", "drizzle", "import"],
   extends: [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended-type-checked",
@@ -39,6 +39,20 @@ const config = {
       "error",
       {
         drizzleObjectName: ["db", "ctx.db"],
+      },
+    ],
+    // Rule to prevent accessing the database directly from Server Actions, and instead use a method of the data layer.
+    "import/no-restricted-paths": [
+      "error",
+      {
+        zones: [
+          {
+            target: "./src/server/actions",
+            from: "./src/server/db",
+            message:
+              "You should manage the database directly from Server Actions. Use a method of the data layer.",
+          },
+        ],
       },
     ],
   },

@@ -49,11 +49,11 @@ export function SlideNavigation({
               </div>
 
               <div className="flex flex-wrap gap-1">
-                {q.answers.map((_, i) => (
+                {q.alternatives.map((_, i) => (
                   <div
                     key={i}
                     className={`rounded border px-1 text-xs ${
-                      q.correctIndex === i
+                      q.correctAlternativeIndex === i
                         ? "border-green-500 text-green-600"
                         : "border-muted text-muted-foreground"
                     }`}

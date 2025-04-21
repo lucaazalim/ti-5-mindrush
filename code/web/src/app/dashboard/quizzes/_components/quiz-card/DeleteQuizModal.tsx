@@ -10,7 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "~/components/ui/dialog";
-import { destroyQuiz } from "~/server/actions/quiz-actions";
+import { destroyQuiz } from "~/server/actions/quiz";
 
 interface DeleteQuizModalProps {
   open: boolean;

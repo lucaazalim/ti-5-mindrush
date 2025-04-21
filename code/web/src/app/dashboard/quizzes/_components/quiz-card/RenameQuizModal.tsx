@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "~/components/ui/dialog";
 import { Form } from "~/components/ui/form";
 import { Quiz, UpdateQuiz } from "~/lib/types";
-import { editQuiz } from "~/server/actions/quiz-actions";
+import { editQuiz } from "~/server/actions/quiz";
 import QuizBasicInfo from "../create-quiz-form/QuizBasicInfo";
 
 type Props = {

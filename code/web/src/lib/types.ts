@@ -12,7 +12,13 @@ import {
   type users,
   type verificationTokens,
 } from "~/server/db/schema";
-import { matchPinParser, participantNicknameParser, updateQuizParser, uuidParser } from "./parsers";
+import {
+  matchPinParser,
+  participantNicknameParser,
+  questionAndAlternativesParser,
+  updateQuizParser,
+  uuidParser,
+} from "./parsers";
 
 export type SimpleError = {
   message: string;
@@ -71,9 +77,11 @@ export type UpdateQuiz = z.infer<typeof updateQuizParser>;
 export type QuizWithQuestionCount = Quiz & { questionCount: number };
 
 export type QuestionWithRawAlternatives = Question & {
-  answers: string[];
-  correctIndex: number;
+  alternatives: string[];
+  correctAlternativeIndex: number;
 };
+
+export type RawQuestionsWithAlternatives = z.infer<typeof questionAndAlternativesParser>;
 
 export type Uuid = z.infer<typeof uuidParser>;
 

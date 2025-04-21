@@ -6,7 +6,7 @@ import { Button } from "~/components/ui/button";
 import { ROUTES } from "~/lib/constants";
 import { isFailure } from "~/lib/result";
 import type { QuizWithQuestionCount, Uuid } from "~/lib/types";
-import { createMatch } from "~/server/actions/match-actions";
+import { createMatch } from "~/server/actions/match";
 import QuizOptions from "./QuizOptions";
 
 interface QuizzesListProps {
