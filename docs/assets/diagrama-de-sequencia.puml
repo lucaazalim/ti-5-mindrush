@@ -1,13 +1,16 @@
 @startuml
+!define GET <color:blue>GET</color>
+!define POST <color:green>POST</color>
+
 actor Educator
 actor Student
 
 participant "Mobile App" as MobileApp
 participant "Web App" as WebApp
 participant "Server Actions" as ServerActions
-participant "REST API" as RESTAPI
+participant "API" as API
 participant "RabbitMQ Broker" as RabbitMQ
-participant "WebSocket Server" as WSS
+participant "Pusher (WS/API)" as Pusher
 participant "Database" as DB
 
 == Match Creation ==
@@ -17,41 +20,71 @@ Educator <-- WebApp : Renders the quiz list
 Educator -> WebApp : Press "Create Match" button from a specific quiz
 WebApp -> ServerActions : createMatch(quizId)
 ServerActions -> ServerActions : generateRandomPin()
-ServerActions -> DB : INSERT INTO matches [...]
-ServerActions <-- DB : Created match, including ID
-WebApp <-- ServerActions : Match data, including the generated PIN
+ServerActions -> DB : Inserts match into matches table
+ServerActions <-- DB : Created match data
+WebApp <-- ServerActions : Created match data
 WebApp -> WebApp : Redirects to /dashboard/matches/[matchId]
-Educator <-- WebApp : Renders the QR code, PIN and match control buttons
+Educator <-- WebApp : Renders the match waiting page, including\nQR code, PIN, participants list and controls.
 
 == Students Join ==
 
 Student -> MobileApp : Opens the app
 Student <-- MobileApp : Renders the PIN input screen
 Student -> MobileApp : Provides match PIN or scans QR code
-MobileApp -> RESTAPI : GET /matches/[PIN]
-MobileApp <-- RESTAPI : Match data, including ID
+MobileApp -> API : <b>GET /api/matches/[match PIN]</b>
+MobileApp <-- API : Match data
 Student <-- MobileApp : Renders the nickname input screen
 
 Student -> MobileApp : Provides a nickname
-MobileApp -> RESTAPI : POST /matches/[match ID]/participants
-RESTAPI -> DB : INSERT INTO participants [...]
-RESTAPI <-- DB : Created participant, including ID
-MobileApp <-- RESTAPI : Participant data, including a secret token
+MobileApp -> API : <b>POST /api/matches/[match ID or PIN]/participants</b>
+note right
+    { "nickname": John }
+end note
+API -> DB : Insert participant into participants table
+API <-- DB : Created participant data
+API -> API : Generate token with participant's ID as the payload
+MobileApp <-- API : Created participant data, and the token
 
-MobileApp -> WSS : Connect, providing token for authentication
-MobileApp <-- WSS : OK
+MobileApp -> API : <b>POST /api/pusher/participant</b>
+note right
+    This step generates the Pusher's auth token, that will be needed
+    to establish the connection to the match's channel.
 
-Student <-- MobileApp : Renders a waiting screen
+    The <b>Authorization: Bearer <participant's token></b> header must be provided.
 
-== Match Start or Next Question ==
+    This is done automatically by the Pusher's SDK.
+end note
 
-Educator -> WebApp : Press "Start Match" or "Next Question" button
-WebApp -> ServerActions : nextQuestion()
-ServerActions -> WSS : broadcastNextQuestion(question)
-Educator <-- ServerActions : Renders the question
-WSS -> MobileApp : nextQuestion(question)
-Student <-- MobileApp : Renders the first/next question
+API -> Pusher : Authorizes the connection to the channel
+API <-- Pusher : Pusher auth token and channel data
+MobileApp <-- API : Pusher auth token and channel data
+
+MobileApp -> Pusher : Connect to the match's channel
+MobileApp <-- Pusher : Connection established
+
+Student <-- MobileApp : Renders the waiting screen
+
+== Match Start ==
+
+Educator -> WebApp : Press "Start Match" button
+WebApp -> ServerActions : startMatch(matchId)
+ServerActions -> Pusher : Publishes <b>next-match-question-event</b> to the match's channel
+WebApp <-- ServerActions : Updated match with the first question
+Educator <-- WebApp : Renders the first question
+
+== First/Next Question ==
+
+Pusher -> MobileApp : <b>next-match-question-event</b>
+MobileApp -> API : <b>GET /api/matches/[match ID or PIN]/current-question</b>
+note right
+    The <b>Authorization: Bearer <participant's token></b> header must be provided.
+end note
+MobileApp <-- API : Current question data with alternatives
+Student <-- MobileApp : Renders the question
 
 == Student Answers Question ==
+
+Student -> MobileApp : Chooses an alternative
+MobileApp -> API : <b>POST /api/matches/[match ID or PIN]/answers</b>
 
 @enduml
