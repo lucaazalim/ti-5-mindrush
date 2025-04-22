@@ -64,17 +64,17 @@ export default function RunningPage() {
           })}
         </div>
         <div className="grid grid-cols-4 gap-3 rounded-3xl bg-background p-5">
-          <div className="relative col-span-2 overflow-hidden">
-            <div className="absolute flex flex-row items-center gap-1.5">
-              <span className="flex flex-row items-center gap-1 rounded-full border-2 p-1.5 font-semibold">
+          <div className="relative col-span-2 h-16 overflow-hidden">
+            <div className="absolute flex h-full flex-row items-center gap-1.5">
+              <div className="flex h-full w-16 flex-col items-center justify-center rounded-full border-2 p-1.5 font-semibold">
                 <User className="size-4" />
                 {match.participants.length}
-              </span>
+              </div>
               {match.participants.slice(0, 20).map((participant) => (
                 <TooltipProvider key={participant.id}>
                   <Tooltip delayDuration={0}>
                     <TooltipTrigger asChild>
-                      <Avatar className="border-2">
+                      <Avatar className="size-16 border-2">
                         <AvatarImage
                           src={getAvatarUrl(participant.nickname)}
                           alt={participant.nickname}
