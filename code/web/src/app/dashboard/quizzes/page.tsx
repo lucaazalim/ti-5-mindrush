@@ -4,6 +4,7 @@ import QuizzesList from "~/app/dashboard/quizzes/_components/quiz-card/QuizzesLi
 import { Uuid } from "~/lib/types";
 import { auth } from "~/server/auth";
 import { selectAllQuizzesWithQuestionCount } from "~/server/data/quiz";
+import Main from "../_components/Main";
 import { CreateQuizModal } from "./_components/CreateQuizModal";
 
 export const dynamic = "force-dynamic";
@@ -18,13 +19,13 @@ export default async function Page() {
   const allQuizzes = await selectAllQuizzesWithQuestionCount();
 
   return (
-    <div>
+    <Main>
       <div className="flex flex-row justify-between">
         <PageTitle className="mt-1">Meus quizzes</PageTitle>
         <CreateQuizModal educatorId={(session.user.id as Uuid) ?? ""} />
       </div>
 
       <QuizzesList quizzes={allQuizzes} />
-    </div>
+    </Main>
   );
 }

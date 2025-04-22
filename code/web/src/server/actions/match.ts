@@ -64,7 +64,7 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
     return fail("Não foi possível iniciar a partida.");
   }
 
-  await callMatchEvent(new NextMatchQuestionEvent(match.id, firstQuestion));
+  await callMatchEvent(new NextMatchQuestionEvent(match.id));
 
   return succeed({ ...match, ...updatedMatch, currentQuestion: firstQuestion });
 }
@@ -98,15 +98,7 @@ export async function nextQuestion(matchId: Uuid): Promise<Result<PopulatedMatch
     return fail("Não foi possível avançar para a próxima questão.");
   }
 
-  await callMatchEvent(
-    new NextMatchQuestionEvent(match.id, {
-      ...nextQuestion,
-      alternatives: nextQuestion.alternatives.map((alternative) => ({
-        ...alternative,
-        correct: undefined, // This avoid the correct answer to be shared with the participants
-      })),
-    }),
-  );
+  await callMatchEvent(new NextMatchQuestionEvent(match.id));
 
   return succeed({ ...match, ...updatedMatch, currentQuestion: nextQuestion });
 }

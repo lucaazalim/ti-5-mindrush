@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import PageTitle from "~/app/dashboard/_components/PageTitle";
+import { getAvatarUrl } from "~/lib/utils";
 import { NewParticipantEvent } from "~/server/event-publisher";
 import { useMatchStore } from "../_store/store-provider";
 
@@ -23,7 +24,7 @@ export default function WaitingParticipants() {
           <div key={participant.id} className="flex flex-row items-center rounded-lg bg-primary/20">
             <div className="rounded-bl-lg rounded-tl-lg bg-primary p-3">
               <Image
-                src={`https://api.dicebear.com/9.x/adventurer/svg?seed=${participant.nickname}`}
+                src={getAvatarUrl(participant.nickname)}
                 className="drop-shadow-lg"
                 alt={`Avatar de ${participant.nickname}`}
                 width={50}

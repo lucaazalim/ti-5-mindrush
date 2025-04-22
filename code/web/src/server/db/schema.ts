@@ -142,7 +142,7 @@ export const questions = createTable(
       .default(sql`CURRENT_TIMESTAMP`),
   },
   (table) => ({
-    uniqueIndex: uniqueIndex().on(table.order, table.quizId),
+    uniqueOrderIndex: uniqueIndex().on(table.order, table.quizId),
   }),
 );
 
@@ -156,14 +156,16 @@ export const questionAlternatives = createTable(
       .$type<Uuid>(),
     answer: text("answer").notNull(),
     correct: boolean("correct").notNull(),
+    order: integer("order").notNull().default(0),
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
   },
   (table) => ({
-    uniqueIndex: uniqueIndex()
+    uniqueCorrectAnswerIndex: uniqueIndex()
       .on(table.questionId, table.correct)
       .where(eq(table.correct, sql`true`)),
+    uniqueOrderIndex: uniqueIndex().on(table.questionId, table.order),
   }),
 );
 
@@ -197,7 +199,7 @@ export const participants = createTable(
       .$type<Uuid>(),
   },
   (table) => ({
-    nicknameMatchIdx: unique().on(table.nickname, table.matchId),
+    uniqueNicknameIndex: unique().on(table.nickname, table.matchId),
   }),
 );
 
@@ -229,6 +231,6 @@ export const quizAnswers = createTable(
       .default(sql`CURRENT_TIMESTAMP`),
   },
   (table) => ({
-    participantQuestionMatchIdx: unique().on(table.participantId, table.questionId, table.matchId),
+    uniqueParticipantAnswerIndex: unique().on(table.participantId, table.questionId, table.matchId),
   }),
 );

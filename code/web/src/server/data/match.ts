@@ -72,7 +72,8 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
         questionAlternatives.questionId,
         questionsResult.map((q) => q.id),
       ),
-    );
+    )
+    .orderBy(questionAlternatives.order);
 
   const currentQuestionWithAlternatives = match.currentQuestionId
     ? ((await selectQuestionWithAlternatives(match.currentQuestionId)) ?? null)

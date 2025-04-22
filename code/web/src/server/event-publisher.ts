@@ -1,6 +1,6 @@
 import Pusher from "pusher";
 import { env } from "~/env";
-import { Participant, QuestionWithAlternativesWithoutCorrect, Uuid } from "~/lib/types";
+import { Participant, Uuid } from "~/lib/types";
 
 export const pusherSender = new Pusher({
   appId: env.PUSHER_APP_ID,
@@ -32,11 +32,8 @@ export class NewParticipantEvent extends MatchEvent {
 }
 
 export class NextMatchQuestionEvent extends MatchEvent {
-  question: QuestionWithAlternativesWithoutCorrect;
-
-  constructor(matchId: Uuid, question: QuestionWithAlternativesWithoutCorrect) {
+  constructor(matchId: Uuid) {
     super(matchId, "next-match-question-event");
-    this.question = question;
   }
 }
 

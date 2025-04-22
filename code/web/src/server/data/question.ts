@@ -82,7 +82,8 @@ export async function selectQuestionWithAlternatives(
   const alternatives = await db
     .select()
     .from(questionAlternatives)
-    .where(eq(questionAlternatives.questionId, questionId));
+    .where(eq(questionAlternatives.questionId, questionId))
+    .orderBy(questionAlternatives.order);
 
   return {
     ...question,
