@@ -240,7 +240,7 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 | RF4    | O educador gera um quiz a partir de um documento PDF usando IA generativa.     | Opcional       | Web            |
 | RF5    | O educador gerencia as questões dos quizzes.                                   | Essencial      | Web            |
 | RF6    | O educador gera uma partida a partir de um quiz.                               | Essencial      | Web            |
-| RF7    | O educador inicia, pausa e encerra uma partida.                                | Essencial      | Web            |
+| RF7    | O educador inicia e encerra uma partida.                                       | Essencial      | Web            |
 | RF8    | O educador acompanha o andamento da partida.                                   | Desejável      | Web            |
 | RF9    | O estudante informa um código para acessar uma partida.                        | Essencial      | Móvel          |
 | RF10   | O estudante escaneia um código QR para acessar uma partida.                    | Opcional       | Móvel          |
@@ -332,7 +332,7 @@ Breve descrição do diagrama:
 4. **Execução de Quizzes**
 
    - O educador pode iniciar uma partida de quiz.
-   - O educador pode pausar e encerrar a partida a qualquer momento.
+   - O educador pode encerrar a partida a qualquer momento.
    - O educador pode visualizar o andamento da partida e o desempenho dos estudantes.
 
 5. **Participação dos Estudantes**
@@ -355,7 +355,7 @@ A seguir, são apresentadas as histórias de usuário para o **MindRush**, estru
 | -------------- | ---------------------------------------------------------- | ------------------------------------------------------ |
 | **Educador**   | Criar quizzes personalizados                               | Avaliar o aprendizado dos estudantes de forma dinâmica |
 | **Educador**   | Gerar quizzes automaticamente com IA generativa            | Economizar tempo na criação de perguntas               |
-| **Educador**   | Iniciar, pausar e encerrar uma partida de quiz             | Controlar o ritmo da atividade em sala de aula         |
+| **Educador**   | Iniciar e encerrar uma partida de quiz                     | Controlar o ritmo da atividade em sala de aula         |
 | **Educador**   | Acompanhar o progresso dos estudantes durante o quiz       | Identificar dificuldades em tempo real                 |
 | **Educador**   | Visualizar o ranking dos participantes ao final da partida | Estimular o engajamento dos estudantes                 |
 | **Educador**   | Compartilhar um código para os estudantes entrarem no quiz | Facilitar o acesso e participação na atividade         |
@@ -429,7 +429,7 @@ O diagrama da Figura 4 representa o modelo de dados do sistema.
 - A **tabela `quiz`** contém os quizzes criados pelos educadores, com campos para título, descrição e data de criação, além da relação com o educador responsável.
 - A **tabela `question`** guarda as perguntas dos quizzes, com informações como o tipo da pergunta (múltipla escolha ou verdadeiro/falso), o texto da pergunta e o limite de tempo.
 - A **tabela `question_quiz_alternatives`** registra as alternativas das perguntas do tipo múltipla escolha, identificando qual alternativa é a correta.
-- A **tabela `match`** representa as sessões (ou partidas) de execução dos quizzes, contendo o código PIN da partida e o estado atual (aguardando, em execução, pausada ou finalizada).
+- A **tabela `match`** representa as sessões (ou partidas) de execução dos quizzes, contendo o código PIN da partida e o estado atual (aguardando, em execução ou finalizada).
 - A **tabela `participant`** armazena os participantes que ingressaram em uma partida, identificados pelo apelido e pelo vínculo com a partida específica.
 - A **tabela `quiz_answer`** registra as respostas dos participantes para cada pergunta de uma determinada partida, garantindo que cada combinação de participante, pergunta e partida seja única.
 
@@ -519,7 +519,7 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 ![Wireframe web RF06](./assets/wireframes/web-iniciar%20partida.png "Wireframe web RF06 - Iniciar Partida")
 
-### RF7: O educador inicia, pausa e encerra uma partida.
+### RF7: O educador inicia e encerra uma partida.
 
 ![Wireframe web RF07](assets/wireframes/web-pausar-ou-encerrar-partida.png "Wireframe web RF07")
 
