@@ -20,11 +20,6 @@ import {
   uuidParser,
 } from "./parsers";
 
-export type SimpleError = {
-  message: string;
-  status: number;
-};
-
 // Select types (e.g. for reading from DB)
 export type User = InferSelectModel<typeof users>;
 export type Account = InferSelectModel<typeof accounts>;
@@ -83,6 +78,8 @@ export type QuestionWithRawAlternatives = Question & {
 };
 
 export type RawQuestionsWithAlternatives = z.infer<typeof questionAndAlternativesParser>;
+
+// Branded types
 
 export type Uuid = z.infer<typeof uuidParser>;
 

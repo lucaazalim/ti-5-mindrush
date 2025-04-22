@@ -1,37 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PresenceChannelData } from "pusher";
-import { authParticipant } from "~/app/api/participant-auth";
+import { ChannelAuthResponse, PresenceChannelData } from "pusher";
+import { APIError, apiErrorResponse, authParticipant } from "~/app/api/api";
 import { isFailure } from "~/lib/result";
-import { selectParticipantById } from "~/server/data/participant";
 import { pusherSender } from "~/server/event-publisher";
 
-export async function POST(req: NextRequest) {
-  const auth = authParticipant(req);
+export async function POST(
+  req: NextRequest,
+): Promise<NextResponse<ChannelAuthResponse | APIError>> {
+  const participant = await authParticipant(req);
 
-  if (isFailure(auth)) {
-    return new NextResponse(auth.error, { status: 401 });
+  if (isFailure(participant)) {
+    return apiErrorResponse(participant.error);
   }
-
-  const participant = await selectParticipantById(auth.data);
 
   if (!participant) {
-    return new NextResponse(
-      "The participant ID extracted from the participant token does not match an existing participant.",
-      { status: 403 },
-    );
+    return apiErrorResponse({
+      status: 403,
+      message: "Participant not found.",
+      code: "participant_not_found",
+    });
   }
+
+  const { id: participantId, matchId } = participant.data;
 
   const requestData = await req.formData();
   const socketId = requestData.get("socket_id") as string;
   const channelName = requestData.get("channel_name") as string;
-  const matchId = channelName.replace("presence-match-", "");
 
-  if (participant.matchId !== matchId) {
-    return new NextResponse("The participant ID ", { status: 403 });
+  if (matchId !== channelName.slice(-36)) {
+    return apiErrorResponse({
+      status: 403,
+      message: "The participant's match ID does not match the channel's match ID.",
+      code: "match_id_mismatch",
+    });
   }
 
   const user: PresenceChannelData = {
-    user_id: participant.id,
+    user_id: participantId,
     user_info: participant,
   };
 

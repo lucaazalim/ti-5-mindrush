@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { APIError, apiErrorResponse } from "~/app/api/api";
 import { env } from "~/env";
 import { participantNicknameParser } from "~/lib/parsers";
-import { isMatchPin, isUuid } from "~/lib/types";
+import { isMatchPin, isUuid, Participant } from "~/lib/types";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { existsParticipantWithNickname, insertParticipant } from "~/server/data/participant";
 import { callMatchEvent, NewParticipantEvent } from "~/server/event-publisher";
@@ -12,40 +13,57 @@ const payloadParser = z.object({
   nickname: participantNicknameParser,
 });
 
-export async function POST(req: NextRequest, { params }: { params: Promise<{ idOrPin: string }> }) {
+type CreatedParticipant = Participant & {
+  token: string;
+};
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ idOrPin: string }> },
+): Promise<NextResponse<CreatedParticipant | APIError>> {
   const { idOrPin } = await params;
 
   if (!(isMatchPin(idOrPin) || isUuid(idOrPin))) {
-    return NextResponse.json("O ID ou PIN da partida informado é inválido.", {
+    return apiErrorResponse({
       status: 400,
+      message: "The match ID or PIN provided is invalid.",
+      code: "invalid_match_id_or_pin",
     });
   }
 
   const match = await selectMatchByIdOrPin(idOrPin);
 
   if (!match) {
-    return NextResponse.json("A partida informada não existe.", {
+    return apiErrorResponse({
       status: 404,
+      message: "Match not found.",
+      code: "match_not_found",
     });
   }
 
   if (match.state !== "WAITING") {
-    return NextResponse.json("A partida já foi iniciada.", {
+    return apiErrorResponse({
       status: 400,
+      message: "The match is already running.",
+      code: "match_already_running",
     });
   }
 
   const payload = (await req.json()) as z.infer<typeof payloadParser>;
 
   if (payloadParser.safeParse(payload).error) {
-    return NextResponse.json("O conteúdo da requisição é inválido.", {
+    return apiErrorResponse({
       status: 400,
+      message: "The request's payload is invalid.",
+      code: "invalid_payload",
     });
   }
 
   if (await existsParticipantWithNickname(match.id, payload.nickname)) {
-    return NextResponse.json("O apelido escolhido já está sendo usado por outro participante.", {
+    return apiErrorResponse({
       status: 400,
+      message: "The provided nickname is already being used by another participant.",
+      code: "nickname_already_used",
     });
   }
 
@@ -55,8 +73,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ idO
   });
 
   if (!createdParticipant) {
-    return NextResponse.json("Erro ao criar participante.", {
+    return apiErrorResponse({
       status: 500,
+      message: "There was an error while trying to create the participant.",
+      code: "participant_creation_error",
     });
   }
 

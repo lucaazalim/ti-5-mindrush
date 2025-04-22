@@ -1,15 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PresenceChannelData } from "pusher";
+import { ChannelAuthResponse, PresenceChannelData } from "pusher";
+import { APIError, apiErrorResponse } from "~/app/api/api";
 import { isUuid } from "~/lib/types";
 import { auth } from "~/server/auth";
 import { selectQuizByMatchId } from "~/server/data/quiz";
 import { pusherSender } from "~/server/event-publisher";
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+): Promise<NextResponse<ChannelAuthResponse | APIError>> {
   const session = await auth();
 
   if (!session) {
-    return new NextResponse("You are not authenticated as an educator.", { status: 401 });
+    return apiErrorResponse({
+      status: 401,
+      message: "You are not authenticated as an educator.",
+      code: "unauthenticated_educator",
+    });
   }
 
   const requestData = await req.formData();
@@ -18,7 +25,11 @@ export async function POST(req: NextRequest) {
   const matchId = channelName.replace("presence-match-", "");
 
   if (!isUuid(matchId)) {
-    return new NextResponse("Invalid match ID.", { status: 400 });
+    return apiErrorResponse({
+      status: 400,
+      message: "Invalid match ID.",
+      code: "invalid_match_id",
+    });
   }
 
   const user: PresenceChannelData = {
@@ -29,7 +40,11 @@ export async function POST(req: NextRequest) {
   const quiz = await selectQuizByMatchId(matchId);
 
   if (!quiz) {
-    return new NextResponse("The match's associated quiz does not exist.", { status: 403 });
+    return apiErrorResponse({
+      status: 403,
+      message: "The match's associated quiz does not exist.",
+      code: "quiz_not_found",
+    });
   }
 
   const authResponse = pusherSender.authorizeChannel(socketId, channelName, user);

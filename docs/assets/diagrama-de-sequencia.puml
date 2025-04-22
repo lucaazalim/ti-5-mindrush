@@ -1,4 +1,5 @@
-@startuml
+@startuml MindRush
+
 !define GET <color:blue>GET</color>
 !define POST <color:green>POST</color>
 
@@ -32,42 +33,55 @@ Student -> MobileApp : Opens the app
 Student <-- MobileApp : Renders the PIN input screen
 Student -> MobileApp : Provides match PIN or scans QR code
 MobileApp -> API : <b>GET /api/matches/[match PIN]</b>
-MobileApp <-- API : Match data
-Student <-- MobileApp : Renders the nickname input screen
 
-Student -> MobileApp : Provides a nickname
-MobileApp -> API : <b>POST /api/matches/[match ID or PIN]/participants</b>
-note right
-    { "nickname": John }
-end note
-API -> DB : Insert participant into participants table
-API <-- DB : Created participant data
-API -> API : Generate token with participant's ID as the payload
-MobileApp <-- API : Created participant data, and the token
+alt 200 OK
+    MobileApp <-- API : Match data
+    Student <-- MobileApp : Renders the nickname input screen
 
-MobileApp -> API : <b>POST /api/pusher/participant</b>
-note right
-    This step generates the Pusher's auth token, that will be needed
-    to establish the connection to the match's channel.
+    Student -> MobileApp : Provides a nickname
+    MobileApp -> API : <b>POST /api/matches/[match ID or PIN]/participants</b>
+    note right
+        ""{ "nickname": John }""
+    end note
+    API -> DB : Insert participant into participants table
+    API <-- DB : Created participant data
+    API -> API : Generate token with participant's ID as the payload
+    MobileApp <-- API : Created participant data, and the token
 
-    The <b>Authorization: Bearer <participant's token></b> header must be provided.
+    MobileApp -> API : <b>POST /api/pusher/participant</b>
+    note right
+        This step generates the Pusher's auth token, that will be needed
+        to establish the connection to the match's channel.
 
-    This is done automatically by the Pusher's SDK.
-end note
+        The <b>Authorization: Bearer <participant's token></b> header must be provided.
 
-API -> Pusher : Authorizes the connection to the channel
-API <-- Pusher : Pusher auth token and channel data
-MobileApp <-- API : Pusher auth token and channel data
+        This is done automatically by the Pusher's SDK.
+    end note
 
-MobileApp -> Pusher : Connect to the match's channel
-MobileApp <-- Pusher : Connection established
+    API -> Pusher : Authorizes the connection to the channel
+    API <-- Pusher : Pusher auth token and channel data
 
-Student <-- MobileApp : Renders the waiting screen
+    alt 200 OK
+        MobileApp <-- API : Pusher auth token and channel data
+
+        MobileApp -> Pusher : Connect to the match's channel
+        MobileApp <-- Pusher : Connection established
+
+        Student <-- MobileApp : Renders the waiting screen
+    else 400 Bad Request
+
+    end
+else 404 Not Found
+    MobileApp <-- API : Match not found
+    Student <-- MobileApp : Renders match not found error message
+end
 
 == Match Start ==
 
 Educator -> WebApp : Press "Start Match" button
 WebApp -> ServerActions : startMatch(matchId)
+ServerActions -> DB : Updates match state and current question
+ServerActions <-- DB
 ServerActions -> Pusher : Publishes <b>next-match-question-event</b> to the match's channel
 WebApp <-- ServerActions : Updated match with the first question
 Educator <-- WebApp : Renders the first question
@@ -75,7 +89,7 @@ Educator <-- WebApp : Renders the first question
 == First/Next Question ==
 
 Pusher -> MobileApp : <b>next-match-question-event</b>
-MobileApp -> API : <b>GET /api/matches/[match ID or PIN]/current-question</b>
+MobileApp -> API : <b>GET /api/matches/current-question</b>
 note right
     The <b>Authorization: Bearer <participant's token></b> header must be provided.
 end note
@@ -85,6 +99,7 @@ Student <-- MobileApp : Renders the question
 == Student Answers Question ==
 
 Student -> MobileApp : Chooses an alternative
-MobileApp -> API : <b>POST /api/matches/[match ID or PIN]/answers</b>
+MobileApp -> API : <b>POST /api/matches/answers</b>
+MobileApp <-- API : OK
 
 @enduml
