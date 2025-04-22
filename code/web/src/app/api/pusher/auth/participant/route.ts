@@ -1,25 +1,18 @@
-import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import { PresenceChannelData } from "pusher";
-import { env } from "~/env";
-import { isUuid } from "~/lib/types";
+import { authParticipant } from "~/app/api/participant-auth";
+import { isFailure } from "~/lib/result";
 import { selectParticipantById } from "~/server/data/participant";
 import { pusherSender } from "~/server/event-publisher";
 
 export async function POST(req: NextRequest) {
-  const participantToken = req.headers.get("Token");
+  const auth = authParticipant(req);
 
-  if (!participantToken) {
-    return new NextResponse("You need to provide a participant token in the 'Token' header.");
+  if (isFailure(auth)) {
+    return new NextResponse(auth.error, { status: 401 });
   }
 
-  const participantId = jwt.verify(participantToken, env.PARTICIPANT_TOKEN_SECRET_KEY);
-
-  if (typeof participantId !== "string" || !isUuid(participantId)) {
-    return new NextResponse("The provided participant token is invalid.", { status: 403 });
-  }
-
-  const participant = await selectParticipantById(participantId);
+  const participant = await selectParticipantById(auth.data);
 
   if (!participant) {
     return new NextResponse(

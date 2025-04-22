@@ -1,9 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
+import { authParticipant } from "~/app/api/participant-auth";
+import { isFailure } from "~/lib/result";
 import { isMatchPin, isUuid } from "~/lib/types";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { selectQuestionWithAlternatives } from "~/server/data/question";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ idOrPin: string }> }) {
+  const auth = authParticipant(req);
+
+  if (isFailure(auth)) {
+    return new NextResponse(auth.error, { status: 401 });
+  }
+
   const { idOrPin } = await params;
 
   if (!(isMatchPin(idOrPin) || isUuid(idOrPin))) {
