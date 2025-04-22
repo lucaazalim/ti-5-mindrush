@@ -6,7 +6,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import { cn, getAvatarUrl } from "~/lib/utils";
 import { useMatchStore } from "../../_store/store-provider";
 import { EndMatchButton } from "../buttons/EndMatchButton";
-import { NextQuestionButton } from "../buttons/NextQuestionButton";
+import { NextQuestionButton } from "./SkipQuestionButton";
+import CountdownBar from "./CountdownBar";
 
 const SymbolsAndColors = [
   { icon: Triangle, color: "bg-red-500" },
@@ -26,7 +27,8 @@ export default function RunningPage() {
 
   return (
     <>
-      <Main className="flex max-w-full flex-col justify-center gap-12 px-16 py-12">
+      <Main className="flex max-w-full flex-col justify-center gap-5 px-16 py-12">
+        <CountdownBar />
         <div className="flex items-center justify-between gap-5 rounded-3xl bg-background p-10">
           <ReactTyped
             className="text-6xl font-medium drop-shadow-md"

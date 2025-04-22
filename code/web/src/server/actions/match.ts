@@ -49,24 +49,7 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
     return fail("A partida não pode ser iniada sem nenhum participante.");
   }
 
-  const firstQuestion = match.quiz.questions[0];
-
-  if (!firstQuestion) {
-    return fail("O quiz não possui questões.");
-  }
-
-  const updatedMatch = await updateMatch(match.id, {
-    state: "RUNNING",
-    currentQuestionId: firstQuestion.id,
-  });
-
-  if (!updatedMatch) {
-    return fail("Não foi possível iniciar a partida.");
-  }
-
-  await callMatchEvent(new NextMatchQuestionEvent(match.id));
-
-  return succeed({ ...match, ...updatedMatch, currentQuestion: firstQuestion });
+  return await updateCurrentQuestion(match, "RUNNING");
 }
 
 export async function nextQuestion(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
@@ -80,6 +63,10 @@ export async function nextQuestion(matchId: Uuid): Promise<Result<PopulatedMatch
     return fail("A partida não está em andamento.");
   }
 
+  return await updateCurrentQuestion(match);
+}
+
+async function updateCurrentQuestion(match: PopulatedMatch, newState?: Match["state"]) {
   const currentQuestionIndex = match.quiz.questions.findIndex(
     (question) => question.id === match.currentQuestionId,
   );
@@ -87,11 +74,13 @@ export async function nextQuestion(matchId: Uuid): Promise<Result<PopulatedMatch
   const nextQuestion = match.quiz.questions[currentQuestionIndex + 1];
 
   if (!nextQuestion) {
-    return fail("Não há mais perguntas.");
+    return fail("O quiz não possui mais questões.");
   }
 
   const updatedMatch = await updateMatch(match.id, {
     currentQuestionId: nextQuestion.id,
+    currentQuestionEndsAt: new Date(Date.now() + nextQuestion.timeLimit * 1000),
+    ...(newState && { state: newState }),
   });
 
   if (!updatedMatch) {

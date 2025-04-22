@@ -182,6 +182,7 @@ export const matches = createTable("match", {
   currentQuestionId: uuid("current_question_id")
     .references(() => questions.id, { onDelete: "set null" })
     .$type<Uuid | null>(),
+  currentQuestionEndsAt: timestamp("current_question_ends_at"),
   createdAt: timestamp("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),

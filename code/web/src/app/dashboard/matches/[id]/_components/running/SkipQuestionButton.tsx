@@ -1,3 +1,4 @@
+import { SkipForward } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { isFailure } from "~/lib/result";
@@ -24,7 +25,8 @@ export function NextQuestionButton() {
 
   return (
     <Button onClick={onNextQuestionButtonClicked} disabled={!hasNextQuestion}>
-      Próxima questão
+      <SkipForward />
+      Pular questão
     </Button>
   );
 }
