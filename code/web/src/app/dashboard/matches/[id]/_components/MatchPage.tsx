@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import RunningPage from "~/app/dashboard/matches/[id]/_components/RunningPage";
-import WaitingPage from "~/app/dashboard/matches/[id]/_components/WaitingPage";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import pusherClient from "~/lib/pusher-client";
 import { Match } from "~/lib/types";
 import EndedPage from "./EndedPage";
+import RunningPage from "./running/RunningPage";
+import WaitingPage from "./waiting/WaitingPage";
 
 const Components: Record<Match["state"], React.FC> = {
   WAITING: WaitingPage,

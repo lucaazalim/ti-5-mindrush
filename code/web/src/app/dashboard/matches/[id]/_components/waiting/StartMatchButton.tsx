@@ -18,7 +18,6 @@ export function StartMatchButton() {
     }
 
     setMatch(result.data);
-    toast("Partida iniciada!");
   }
 
   return (

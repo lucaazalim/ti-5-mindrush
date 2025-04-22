@@ -4,9 +4,9 @@ import Main from "~/app/dashboard/_components/Main";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import { cn, getAvatarUrl } from "~/lib/utils";
-import { useMatchStore } from "../_store/store-provider";
-import { EndMatchButton } from "./buttons/EndMatchButton";
-import { NextQuestionButton } from "./buttons/NextQuestionButton";
+import { useMatchStore } from "../../_store/store-provider";
+import { EndMatchButton } from "../buttons/EndMatchButton";
+import { NextQuestionButton } from "../buttons/NextQuestionButton";
 
 const SymbolsAndColors = [
   { icon: Triangle, color: "bg-red-500" },
