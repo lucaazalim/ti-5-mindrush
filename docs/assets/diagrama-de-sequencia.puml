@@ -34,47 +34,37 @@ Student <-- MobileApp : Renders the PIN input screen
 Student -> MobileApp : Provides match PIN or scans QR code
 MobileApp -> API : <b>GET /api/matches/[match PIN]</b>
 
-alt 200 OK
-    MobileApp <-- API : Match data
-    Student <-- MobileApp : Renders the nickname input screen
+MobileApp <-- API : Match data
+Student <-- MobileApp : Renders the nickname input screen
 
-    Student -> MobileApp : Provides a nickname
-    MobileApp -> API : <b>POST /api/matches/[match ID or PIN]/participants</b>
-    note right
-        ""{ "nickname": John }""
-    end note
-    API -> DB : Insert participant into participants table
-    API <-- DB : Created participant data
-    API -> API : Generate token with participant's ID as the payload
-    MobileApp <-- API : Created participant data, and the token
+Student -> MobileApp : Provides a nickname
+MobileApp -> API : <b>POST /api/matches/[match ID or PIN]/participants</b>
+note right
+    ""{ "nickname": John }""
+end note
+API -> DB : Insert participant into participants table
+API <-- DB : Created participant data
+API -> API : Generate token with participant's ID as the payload
+MobileApp <-- API : Created participant data, and the token
 
-    MobileApp -> API : <b>POST /api/pusher/participant</b>
-    note right
-        This step generates the Pusher's auth token, that will be needed
-        to establish the connection to the match's channel.
+MobileApp -> API : <b>POST /api/pusher/participant</b>
+note right
+    This step generates the Pusher's auth token, that will be needed
+    to establish the connection to the match's channel.
 
-        The <b>Authorization: Bearer <participant's token></b> header must be provided.
+    The <b>Authorization: Bearer <participant's token></b> header must be provided.
 
-        This is done automatically by the Pusher's SDK.
-    end note
+    This is done automatically by the Pusher's SDK.
+end note
 
-    API -> Pusher : Authorizes the connection to the channel
-    API <-- Pusher : Pusher auth token and channel data
+API -> Pusher : Authorizes the connection to the channel
+API <-- Pusher : Pusher auth token and channel data
+MobileApp <-- API : Pusher auth token and channel data
 
-    alt 200 OK
-        MobileApp <-- API : Pusher auth token and channel data
+MobileApp -> Pusher : Connect to the match's channel
+MobileApp <-- Pusher : Connection established
 
-        MobileApp -> Pusher : Connect to the match's channel
-        MobileApp <-- Pusher : Connection established
-
-        Student <-- MobileApp : Renders the waiting screen
-    else 400 Bad Request
-
-    end
-else 404 Not Found
-    MobileApp <-- API : Match not found
-    Student <-- MobileApp : Renders match not found error message
-end
+Student <-- MobileApp : Renders the waiting screen
 
 == Match Start ==
 
