@@ -6,8 +6,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import { cn, getAvatarUrl } from "~/lib/utils";
 import { useMatchStore } from "../../_store/store-provider";
 import { EndMatchButton } from "../buttons/EndMatchButton";
-import { NextQuestionButton } from "./SkipQuestionButton";
 import CountdownBar from "./CountdownBar";
+import { NextQuestionButton } from "./SkipQuestionButton";
 
 const SymbolsAndColors = [
   { icon: Triangle, color: "bg-red-500" },
@@ -38,13 +38,13 @@ export default function RunningPage() {
             showCursor={false}
           />
           {currentQuestion.image && (
-            <div className="place-self-end">
+            <picture className="place-self-end">
               <img
                 src={currentQuestion.image}
                 alt="Imagem da questão"
                 className="h-96 w-auto rounded-3xl drop-shadow-lg"
               />
-            </div>
+            </picture>
           )}
         </div>
         <div className="grid grid-cols-2 gap-3">

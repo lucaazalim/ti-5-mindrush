@@ -40,11 +40,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ idOr
     });
   }
 
-  return {
+  return NextResponse.json({
     ...currentQuestion,
     alternatives: currentQuestion.alternatives.map((alternative) => ({
       ...alternative,
       correct: undefined, // This avoid the correct answer to be shared with the participants
     })),
-  };
+  });
 }
