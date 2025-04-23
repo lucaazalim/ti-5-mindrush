@@ -3,12 +3,14 @@ class Participant {
   final String nickname;
   final int totalPoints;
   final String matchId;
+  final String token;
 
   Participant({
     required this.id,
     required this.nickname,
     required this.totalPoints,
     required this.matchId,
+    required this.token
   });
 
   factory Participant.fromJson(Map<String, dynamic> json) {
@@ -17,6 +19,7 @@ class Participant {
       nickname: json['nickname'],
       totalPoints: json['total_points'],
       matchId: json['matchId'],
+      token: json['token'],
     );
   }
 
@@ -26,6 +29,7 @@ class Participant {
       'nickname': nickname,
       'total_points': totalPoints,
       'matchId': matchId,
+      'token': token
     };
   }
 }
