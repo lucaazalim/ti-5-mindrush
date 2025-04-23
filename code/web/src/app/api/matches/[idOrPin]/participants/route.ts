@@ -49,17 +49,19 @@ export async function POST(
     });
   }
 
-  const payload = (await req.json()) as z.infer<typeof payloadParser>;
+  const payload = payloadParser.safeParse(await req.json());
 
-  if (payloadParser.safeParse(payload).error) {
+  if (!payload.success) {
     return apiErrorResponse({
       status: 400,
-      message: "The request's payload is invalid.",
+      message: "Invalid payload: " + payload.error.message,
       code: "invalid_payload",
     });
   }
 
-  if (await existsParticipantWithNickname(match.id, payload.nickname)) {
+  const { nickname } = payload.data;
+
+  if (await existsParticipantWithNickname(match.id, nickname)) {
     return apiErrorResponse({
       status: 400,
       message: "The provided nickname is already being used by another participant.",
@@ -69,7 +71,7 @@ export async function POST(
 
   const createdParticipant = await insertParticipant({
     matchId: match.id,
-    nickname: payload.nickname,
+    nickname: nickname,
   });
 
   if (!createdParticipant) {

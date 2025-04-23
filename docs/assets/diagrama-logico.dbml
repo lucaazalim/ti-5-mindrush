@@ -1,74 +1,108 @@
-Table educator {
-  id uuid [primary key]
-  name string [not null]
-  email string [not null, unique]
-  password string [not null]
-  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+Project mindrush {
+  database_type: "PostgreSQL"
 }
 
-Table quiz {
-  id uuid [primary key]
-  educator_id uuid [not null]
-  title string [not null]
-  description string [not null]
-  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+Table users {
+  id uuid [pk]
+  name text
+  email text [not null]
+  email_verified timestamp
+  image text
 }
 
-Table question {
-  id uuid [primary key]
-  quiz_id uuid [not null]
-  type enum('QUIZ', 'TRUE_OR_FALSE')
-  question string [not null]
-  time_limit integer [not null]
-  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+Table accounts {
+  user_id uuid [not null, ref: > users.id]
+  type text [not null]
+  provider text [not null]
+  provider_account_id text [not null]
+  refresh_token text
+  access_token text
+  expires_at int
+  token_type text
+  scope text
+  id_token text
+  session_state text
+
+  primary key (provider, provider_account_id)
+  index account_user_id_idx (user_id)
 }
 
-Table question_quiz_alternatives {
-  id uuid [primary key]
-  question_id uuid [not null]
-  answer string [not null]
+Table sessions {
+  session_token text [pk]
+  user_id uuid [not null, ref: > users.id]
+  expires timestamp [not null]
+
+  index session_user_id_idx (user_id)
+}
+
+Table verification_tokens {
+  identifier text [not null]
+  token text [not null]
+  expires timestamp [not null]
+
+  primary key (identifier, token)
+}
+
+Table quizzes {
+  id uuid [pk]
+  educator_id uuid [not null, ref: > users.id]
+  title text [not null]
+  description text [not null]
+  type text [not null]
+  created_at timestamp [not null]
+}
+
+Table questions {
+  id uuid [pk]
+  quiz_id uuid [not null, ref: > quizzes.id]
+  type text [not null]
+  image text
+  question text [not null]
+  time_limit int [not null]
+  order int [not null]
+  created_at timestamp [not null]
+
+  unique index (order, quiz_id)
+}
+
+Table quiz_question_alternatives {
+  id uuid [pk]
+  question_id uuid [not null, ref: > questions.id]
+  answer text [not null]
   correct boolean [not null]
-  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+  created_at timestamp [not null]
+
+  unique index (question_id, correct) [note: "Only one correct alternative per question"]
 }
 
-Table match {
-  id uuid [primary key]
-  quiz_id uuid [not null]
-  pin string [not null]
-  state enum('WAITING', 'RUNNING', 'PAUSED', 'ENDED') [not null]
-  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+Table matches {
+  id uuid [pk]
+  quiz_id uuid [not null, ref: > quizzes.id]
+  pin text [not null]
+  state text [not null]
+  current_question_id uuid [ref: > questions.id]
+  created_at timestamp [not null]
 }
 
-Table participant {
-  id uuid [primary key]
-  nickname string [not null]
+Table participants {
+  id uuid [pk]
+  nickname text [not null]
   total_points int [not null]
-  match_id uuid [not null]
+  match_id uuid [not null, ref: > matches.id]
 
-  indexes {
-    (nickname, match_id) [unique]
-  }
+  unique index (nickname, match_id)
 }
 
-Table quiz_answer {
-  id uuid [primary key]
-  participant_id uuid [not null]
-  question_id uuid [not null]
-  match_id uuid [not null]
-  alternative string [not null]
+Table quiz_answers {
+  id uuid [pk]
+  participant_id uuid [not null, ref: > participants.id]
+  question_id uuid [not null, ref: > questions.id]
+  match_id uuid [not null, ref: > matches.id]
+  alternative_id uuid [not null, ref: > quiz_question_alternatives.id]
+  correct boolean [not null]
   points int [not null]
-  created_at timestamp [not null, default: `CURRENT_TIMESTAMP()`]
+  time int [not null]
+  created_at timestamp [not null]
 
-  indexes {
-    (participant_id, question_id, match_id) [unique]
-  }
+  unique index (participant_id, question_id, match_id)
 }
-
-Ref: "educator"."id" < "quiz"."educator_id"
-Ref: "quiz"."id" < "match"."quiz_id"
-Ref: "quiz"."id" < "question"."quiz_id"
-Ref: "question"."id" < "question_quiz_alternatives"."question_id"
-Ref: "match"."id" < "participant"."match_id"
-Ref: "participant"."id" < "quiz_answer"."participant_id"
-Ref: "question"."id" < "quiz_answer"."question_id"
-Ref: "match"."id" < "quiz_answer"."match_id"

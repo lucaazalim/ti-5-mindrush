@@ -35,14 +35,14 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
           <div
             key={quiz.id}
             className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md dark:bg-zinc-900 dark:shadow"
-            >
+          >
             <div className="relative flex h-32 items-center justify-center bg-gray-200 dark:bg-zinc-800">
               <Button className="mt-4 h-11" onClick={() => newMatch(quiz.id)}>
                 Criar Partida
               </Button>
 
               <span className="absolute right-2 top-2 rounded-full bg-blue-600 px-3 py-0.5 text-xs font-semibold text-white">
-                {quiz.questionCount} {quiz.questionCount === 1 ? "pergunta" : "perguntas"}
+                {quiz.questionCount} {quiz.questionCount === 1 ? "questão" : "questões"}
               </span>
             </div>
 

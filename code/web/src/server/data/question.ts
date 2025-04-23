@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import {
   NewQuestionAlternative,
@@ -9,6 +9,7 @@ import {
 import { auth } from "../auth";
 import { db } from "../db";
 import { questionAlternatives, questions, quizzes } from "../db/schema";
+import { DataAccessOptions } from "./types";
 
 export async function insertQuestionsAndAlternatives(
   quizId: Uuid,
@@ -61,10 +62,11 @@ export async function insertQuestionsAndAlternatives(
 
 export async function selectQuestionWithAlternatives(
   questionId: Uuid,
+  options?: DataAccessOptions,
 ): Promise<QuestionWithAlternatives | undefined> {
   const session = await auth();
 
-  if (!session) {
+  if (!options?.internal && !session) {
     return unauthorized();
   }
 
@@ -73,7 +75,11 @@ export async function selectQuestionWithAlternatives(
       .select()
       .from(questions)
       .innerJoin(quizzes, eq(questions.quizId, quizzes.id))
-      .where(eq(questions.id, questionId))
+      .where(
+        options?.internal
+          ? eq(questions.id, questionId)
+          : and(eq(questions.id, questionId), eq(quizzes.educatorId, session!.user.id as Uuid)),
+      )
       .orderBy(questions.order)
   )[0];
 
@@ -81,11 +87,7 @@ export async function selectQuestionWithAlternatives(
     return undefined;
   }
 
-  const { quiz, question } = questionWithQuiz;
-
-  if (quiz.educatorId !== session.user.id) {
-    return unauthorized();
-  }
+  const { question } = questionWithQuiz;
 
   const alternatives = await db
     .select()
