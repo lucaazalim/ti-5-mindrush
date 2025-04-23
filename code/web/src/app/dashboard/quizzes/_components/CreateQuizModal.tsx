@@ -19,7 +19,6 @@ import QuizStepTwoPDF from "./create-quiz-form/QuizStepTwoPDF";
 import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoTheme";
 import StepOneActions from "./create-quiz-form/StepOneActions";
 import StepTwoActions from "./create-quiz-form/StepTwoActions";
-import { uuidParser } from "~/lib/parsers";
 
 export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
   const [step, setStep] = useState(1);
@@ -29,7 +28,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
     resolver: zodResolver(quizCreateSchema),
     mode: "onChange",
     defaultValues: {
-      educatorId: uuidParser.parse(educatorId),
+      educatorId,
       title: "",
       description: "",
       type: "BLANK",
