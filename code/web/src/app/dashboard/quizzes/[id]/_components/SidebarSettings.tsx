@@ -26,7 +26,7 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
             onValueChange={(value: Question["type"]) => onUpdate({ type: value })}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Tipo de pergunta" />
+              <SelectValue placeholder="Tipo de questão" />
             </SelectTrigger>
             <SelectContent>
               {Object.entries(QUESTION_TYPES_NAMES).map(([key, value]) => (
