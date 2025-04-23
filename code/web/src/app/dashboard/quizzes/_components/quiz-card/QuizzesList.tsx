@@ -34,9 +34,9 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
         quizzes.map((quiz) => (
           <div
             key={quiz.id}
-            className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md"
-          >
-            <div className="relative flex h-32 items-center justify-center bg-gray-200">
+            className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md dark:bg-zinc-900 dark:shadow"
+            >
+            <div className="relative flex h-32 items-center justify-center bg-gray-200 dark:bg-zinc-800">
               <Button className="mt-4 h-11" onClick={() => newMatch(quiz.id)}>
                 Criar Partida
               </Button>

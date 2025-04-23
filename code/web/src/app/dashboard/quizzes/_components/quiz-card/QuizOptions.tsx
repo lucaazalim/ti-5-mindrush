@@ -29,7 +29,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+        <DropdownMenuTrigger className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
           <Settings2 size={20} />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
