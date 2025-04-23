@@ -21,15 +21,15 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
   function getDummyQuestion(): QuestionWithRawAlternatives {
     return {
       id: "" as Uuid,
+      quizId,
       question: "",
-      quizId: quizId,
       type: "QUIZ",
-      createdAt: new Date(),
       timeLimit: 30,
+      image: null,
+      createdAt: new Date(),
+      order: Math.floor(Math.random() * 1000),
       alternatives: ["", "", "", ""],
       correctAlternativeIndex: 0,
-      image: null,
-      order: Math.floor(Math.random() * 1000), // TODO temporary!
     };
   }
 
@@ -37,6 +37,7 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
     initialQuestions.length > 0
       ? initialQuestions.map((quiz) => ({
           ...quiz,
+          image: quiz.image ?? null,
           alternatives: quiz.alternatives.map((alternative) => alternative.answer),
           correctAlternativeIndex: quiz.alternatives.findIndex((a) => a.correct),
         }))
@@ -63,8 +64,11 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
 
   const handleAddQuestion = () => {
     const newQuestion: QuestionWithRawAlternatives = getDummyQuestion();
-    setQuestions((prev) => [...prev, newQuestion]);
-    setCurrentSlide(questions.length);
+    setQuestions((prev) => {
+      const updated = [...prev, newQuestion];
+      setCurrentSlide(updated.length - 1);
+      return updated;
+    });
   };
 
   const handleDeleteQuestion = (index: number) => {
@@ -117,7 +121,10 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
         <QuestionEditor
           value={currentQuestion.question}
           onChange={(val) => updateCurrentQuestion({ question: val })}
+          imageBase64={currentQuestion.image ?? undefined}
+          onImageChange={(image) => updateCurrentQuestion({ image })}
         />
+
         <AnswersManager
           type={currentQuestion.type}
           answers={currentQuestion.alternatives}
