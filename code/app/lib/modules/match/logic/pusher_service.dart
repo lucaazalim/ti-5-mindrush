@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 typedef PusherEventCallback = void Function(String eventName, dynamic data);
@@ -7,8 +9,10 @@ class PusherService extends ChangeNotifier {
   final String apiKey;
   final String cluster;
   final String channelName;
+  final String authEndpoint;
+  final String? userToken; // Pode ser nulo se não estiver autenticado
 
-  final PusherChannelsFlutter _pusher = PusherChannelsFlutter.getInstance();
+  PusherChannelsFlutter pusher = PusherChannelsFlutter.getInstance();
 
   bool _isConnected = false;
   bool get isConnected => _isConnected;
@@ -19,27 +23,49 @@ class PusherService extends ChangeNotifier {
     required this.apiKey,
     required this.cluster,
     required this.channelName,
+    required this.authEndpoint,
+    this.userToken,
   });
 
-  /// Conecta e começa a escutar eventos
   Future<void> connect() async {
     try {
-      await _pusher.init(
+      await pusher.init(
         apiKey: apiKey,
         cluster: cluster,
+        authEndpoint: authEndpoint,
         onConnectionStateChange: (currentState, previousState) {
           debugPrint("📶 Estado: $previousState ➡️ $currentState");
         },
         onError: (message, code, exception) {
           debugPrint("❌ Erro: $message");
         },
+        onAuthorizer: (channelName, socketId, options) async {
+          final response = await http.post(
+            Uri.parse(authEndpoint),
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              if (userToken != null) 'Authorization': 'Bearer $userToken',
+            },
+            body: {
+              'socket_id': socketId,
+              'channel_name': channelName,
+            },
+          );
+
+          if (response.statusCode == 200) {
+            return response.body;
+          } else {
+            debugPrint("❗ Erro ao autenticar: ${response.body}");
+            throw Exception("Autenticação Pusher falhou");
+          }
+        },
       );
 
-      await _pusher.connect();
+      await pusher.connect();
       _isConnected = true;
-      notifyListeners(); // 🟢 Notifica a UI
+      notifyListeners();
 
-      await _pusher.subscribe(
+      await pusher.subscribe(
         channelName: channelName,
         onEvent: (event) {
           if (event != null && event.eventName != null) {
@@ -55,11 +81,10 @@ class PusherService extends ChangeNotifier {
         },
       );
     } catch (e) {
-      debugPrint("❗ Falha ao conectar: $e");
+      debugPrint("❗ Falha ao conectar com autenticação: $e");
     }
   }
 
-  /// Adiciona um callback para um evento específico
   void addEventListener(String eventName, PusherEventCallback callback) {
     if (_eventListeners[eventName] == null) {
       _eventListeners[eventName] = [];
@@ -67,16 +92,15 @@ class PusherService extends ChangeNotifier {
     _eventListeners[eventName]!.add(callback);
   }
 
-  /// Remove um listener específico
   void removeEventListener(String eventName, PusherEventCallback callback) {
     _eventListeners[eventName]?.remove(callback);
   }
 
   Future<void> disconnect() async {
-    await _pusher.unsubscribe(channelName: channelName);
-    await _pusher.disconnect();
+    await pusher.unsubscribe(channelName: channelName);
+    await pusher.disconnect();
     _isConnected = false;
-    notifyListeners(); // 🔴 Notifica a UI
+    notifyListeners();
     _eventListeners.clear();
   }
 }

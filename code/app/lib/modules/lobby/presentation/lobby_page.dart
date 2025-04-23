@@ -3,6 +3,7 @@ import 'package:mindrush/modules/lobby/data/participant.dart';
 import 'package:mindrush/modules/match/data/alternative.dart';
 import 'package:mindrush/modules/match/data/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
+import 'package:mindrush/modules/match/logic/pusher_service.dart'; // Importe o seu PusherService
 
 class LobbyPage extends StatefulWidget {
   final Participant participant;
@@ -14,9 +15,23 @@ class LobbyPage extends StatefulWidget {
 }
 
 class _LobbyPageState extends State<LobbyPage> {
+  late PusherService _pusherService;  // Instância do PusherService
+
   @override
   void initState() {
     super.initState();
+
+    // Criação do PusherService diretamente no estado
+    _pusherService = PusherService(
+      apiKey: '9341498703db8ab930c9',
+      cluster: 'sa1',
+      channelName: 'mindrush',
+      authEndpoint: 'localhost:3002/api/pusher/auth',
+      userToken: widget.participant.token,  // Se necessário, senão pode ser null
+    );
+
+    // Conectar ao Pusher e começar a escutar os eventos
+    _connectPusher();
 
     // Espera 4 segundos antes de redirecionar
     Future.delayed(const Duration(seconds: 6), () {
@@ -24,7 +39,6 @@ class _LobbyPageState extends State<LobbyPage> {
         context,
         MaterialPageRoute(
           builder: (context) => MatchQuestionScreen(
-            // Exemplo de dados, modifique conforme seu caso
             question: Question(
               id: 1,
               type: 'match',
@@ -44,6 +58,42 @@ class _LobbyPageState extends State<LobbyPage> {
           ),
         ),
       );
+    });
+  }
+
+  // Função para conectar ao Pusher
+  Future<void> _connectPusher() async {
+    await _pusherService.connect();
+
+    // Adiciona o ouvinte de eventos
+    _pusherService.addEventListener('start_game', (eventName, data) {
+      // Aqui você pode pegar os dados e redirecionar para a tela de questões
+      if (data != null) {
+        // Passando para o MatchQuestionScreen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MatchQuestionScreen(
+              question: Question(
+                id: 1,
+                type: 'match',
+                question: 'Qual é a capital do Brasil?',
+                timeLimit: 30,
+                quizId: 100,
+                alternatives: [
+                  Alternative(id: 1, answer: 'Rio de Janeiro', correct: false),
+                  Alternative(id: 2, answer: 'São Paulo', correct: false),
+                  Alternative(id: 3, answer: 'Brasília', correct: true),
+                  Alternative(id: 4, answer: 'Salvador', correct: false),
+                ],
+              ), // Supondo que `data` seja um JSON da questão
+              onResponder: (resposta) {
+                print('Resposta selecionada: $resposta');
+              },
+            ),
+          ),
+        );
+      }
     });
   }
 
@@ -98,5 +148,12 @@ class _LobbyPageState extends State<LobbyPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Desconecte e remova os ouvintes quando a tela for descartada
+    _pusherService.disconnect();
+    super.dispose();
   }
 }
