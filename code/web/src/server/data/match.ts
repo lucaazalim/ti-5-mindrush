@@ -100,6 +100,26 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
   };
 }
 
+export async function searchActiveMatchByQuizId(quizId: Uuid): Promise<Match | undefined> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const [match] = await db
+    .select()
+    .from(matches)
+    .where(
+      and(
+        eq(matches.quizId, quizId),
+        inArray(matches.state, ["WAITING", "RUNNING"])
+      )
+    );
+
+  return match;
+}
+
 export async function updateMatch(
   matchId: Uuid,
   updates: Partial<Match>,
