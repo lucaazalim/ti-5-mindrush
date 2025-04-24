@@ -100,7 +100,7 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
   };
 }
 
-export async function searchActiveMatchByQuizId(quizId: Uuid): Promise<Match | undefined> {
+export async function checkActiveMatchByQuizId(quizId: Uuid): Promise<Match | undefined> {
   const session = await auth();
 
   if (!session) {
