@@ -22,7 +22,7 @@ export function SlideNavigation({
   return (
     <aside className="flex h-full w-[200px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
       <Button type="button" onClick={onAdd} className="h-[8px] w-[140px] rounded-sm">
-        Novo Slide
+        Nova questão
       </Button>
 
       <div className="flex w-full flex-col items-center gap-4">

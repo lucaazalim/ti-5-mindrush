@@ -21,9 +21,14 @@ export async function insertQuestionsAndAlternatives(
     return unauthorized();
   }
 
-  // TODO should this insert new questions every time? What about updating the questions and alternatives?
-  // TODO authorization (only the owner of the quiz can create new questions and alternatives, for example)
-  // TODO optimize to one or two queries, as queries inside for loops is a bad idea. Learn about "batch insert".
+  const existingOrders = await db
+    .select({ order: questions.order })
+    .from(questions)
+    .where(eq(questions.quizId, quizId));
+
+  let nextOrder = existingOrders.length
+    ? Math.max(...existingOrders.map((q) => q.order ?? 0)) + 1
+    : 0;
 
   for (const parsedQuestion of data.questions) {
     const createdQuestion = (
@@ -34,6 +39,8 @@ export async function insertQuestionsAndAlternatives(
           question: parsedQuestion.question,
           type: parsedQuestion.type,
           timeLimit: 20,
+          image: parsedQuestion.image ?? null,
+          order: nextOrder++, 
         })
         .returning()
     )[0];
@@ -45,6 +52,7 @@ export async function insertQuestionsAndAlternatives(
         questionId: createdQuestion.id,
         answer,
         correct: index === parsedQuestion.correctAlternativeIndex,
+        order: index, 
       }),
     );
 

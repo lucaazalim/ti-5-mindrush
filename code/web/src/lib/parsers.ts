@@ -33,6 +33,7 @@ export const questionAndAlternativesParser = z.object({
         .max(4, "A questão deve ter no máximo 4 alternativas."),
       correctAlternativeIndex: z.number().min(0),
       type: z.enum(QUESTION_TYPES),
+      image: z.string().url().nullable().optional(),
     }),
   ),
 });
