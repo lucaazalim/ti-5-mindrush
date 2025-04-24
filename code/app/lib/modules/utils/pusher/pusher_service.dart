@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
+import './event-handler.dart';
+
 typedef PusherEventCallback = void Function(String eventName, dynamic data);
 
 class PusherService extends ChangeNotifier {
@@ -115,6 +117,10 @@ class PusherService extends ChangeNotifier {
     print("📡 Evento recebido:");
     print("📛 Nome do evento: ${event.eventName}");
     print("📝 Dados recebidos: ${event.data}");
+
+    final eventHandler = GlobalEventHandler();
+    eventHandler.emit(event.eventName, event.data);
+
   }
 
   void onDecryptionFailure(String event, String reason) {
