@@ -169,24 +169,33 @@ export const questionAlternatives = createTable(
   }),
 );
 
-export const matches = createTable("match", {
-  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
-  quizId: uuid("quiz_id")
-    .notNull()
-    .references(() => quizzes.id, { onDelete: "cascade" })
-    .$type<Uuid>(),
-  pin: text("pin").notNull(),
-  state: text("state", {
-    enum: ["WAITING", "RUNNING", "ENDED"],
-  }).notNull(),
-  currentQuestionId: uuid("current_question_id")
-    .references(() => questions.id, { onDelete: "set null" })
-    .$type<Uuid | null>(),
-  currentQuestionEndsAt: timestamp("current_question_ends_at"),
-  createdAt: timestamp("created_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-});
+export const matches = createTable(
+  "match",
+  {
+    id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
+    quizId: uuid("quiz_id")
+      .notNull()
+      .references(() => quizzes.id, { onDelete: "cascade" })
+      .$type<Uuid>(),
+    pin: text("pin").notNull(),
+    state: text("state", {
+      enum: ["WAITING", "RUNNING", "ENDED"],
+    }).notNull(),
+    currentQuestionId: uuid("current_question_id")
+      .references(() => questions.id, { onDelete: "set null" })
+      .$type<Uuid | null>(),
+    currentQuestionEndsAt: timestamp("current_question_ends_at"),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => ({
+    uniqueActiveMatchPerQuiz: uniqueIndex("unique_active_match_per_quiz")
+      .on(table.quizId)
+      .where(sql`${table.state} in ('WAITING', 'RUNNING')`),
+  }),
+);
+
 
 export const participants = createTable(
   "participant",
