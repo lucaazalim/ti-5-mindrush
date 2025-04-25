@@ -42,7 +42,9 @@ export async function GET(
     });
   }
 
-  const currentQuestion = await selectQuestionWithAlternatives(match.currentQuestionId);
+  const currentQuestion = await selectQuestionWithAlternatives(match.currentQuestionId, {
+    internal: true,
+  });
 
   if (!currentQuestion) {
     return apiErrorResponse({
