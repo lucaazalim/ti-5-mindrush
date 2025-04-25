@@ -1,4 +1,4 @@
-import { eq, relations, sql } from "drizzle-orm";
+import { eq, inArray, relations, sql } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -13,7 +13,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
-import { QUESTION_TYPES } from "~/lib/constants";
+import { MATCH_STATUSES, QUESTION_TYPES } from "~/lib/constants";
 import { ParticipantNickname, Uuid } from "~/lib/types";
 
 /**
@@ -179,7 +179,7 @@ export const matches = createTable(
       .$type<Uuid>(),
     pin: text("pin").notNull(),
     status: text("status", {
-      enum: ["WAITING", "RUNNING", "ENDED"],
+      enum: MATCH_STATUSES,
     }).notNull(),
     currentQuestionId: uuid("current_question_id")
       .references(() => questions.id, { onDelete: "set null" })
@@ -192,7 +192,7 @@ export const matches = createTable(
   (table) => ({
     uniqueActiveMatchPerQuiz: uniqueIndex("unique_active_match_per_quiz")
       .on(table.quizId)
-      .where(sql`${table.status} in ('WAITING', 'RUNNING')`),
+      .where(inArray(table.status, ["WAITING", "RUNNING"])),
   }),
 );
 
