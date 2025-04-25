@@ -41,7 +41,7 @@ export async function POST(
     });
   }
 
-  if (match.state !== "WAITING") {
+  if (match.status !== "WAITING") {
     return apiErrorResponse({
       status: 400,
       message: "The match is already running.",

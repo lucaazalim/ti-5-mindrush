@@ -178,7 +178,7 @@ export const matches = createTable(
       .references(() => quizzes.id, { onDelete: "cascade" })
       .$type<Uuid>(),
     pin: text("pin").notNull(),
-    state: text("state", {
+    status: text("status", {
       enum: ["WAITING", "RUNNING", "ENDED"],
     }).notNull(),
     currentQuestionId: uuid("current_question_id")
@@ -192,10 +192,9 @@ export const matches = createTable(
   (table) => ({
     uniqueActiveMatchPerQuiz: uniqueIndex("unique_active_match_per_quiz")
       .on(table.quizId)
-      .where(sql`${table.state} in ('WAITING', 'RUNNING')`),
+      .where(sql`${table.status} in ('WAITING', 'RUNNING')`),
   }),
 );
-
 
 export const participants = createTable(
   "participant",

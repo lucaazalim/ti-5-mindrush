@@ -110,12 +110,7 @@ export async function checkActiveMatchByQuizId(quizId: Uuid): Promise<Match | un
   const [match] = await db
     .select()
     .from(matches)
-    .where(
-      and(
-        eq(matches.quizId, quizId),
-        inArray(matches.state, ["WAITING", "RUNNING"])
-      )
-    );
+    .where(and(eq(matches.quizId, quizId), inArray(matches.status, ["WAITING", "RUNNING"])));
 
   return match;
 }

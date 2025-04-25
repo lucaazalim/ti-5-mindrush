@@ -26,7 +26,7 @@ export async function GET(
     });
   }
 
-  if (match.state !== "RUNNING") {
+  if (match.status !== "RUNNING") {
     return apiErrorResponse({
       status: 400,
       message: "The match state must be RUNNING.",
