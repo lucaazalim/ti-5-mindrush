@@ -135,7 +135,7 @@ export const questions = createTable(
     type: text("type", { enum: QUESTION_TYPES }).notNull(),
     image: text("image"),
     question: text("question").notNull(),
-    timeLimit: integer("time_limit").notNull(),
+    initialTimeLimit: integer("initial_time_limit").notNull(),
     order: integer("order").notNull().default(0),
     createdAt: timestamp("created_at")
       .notNull()
@@ -155,7 +155,7 @@ export const questionAlternatives = createTable(
       .references(() => questions.id, { onDelete: "cascade" })
       .$type<Uuid>(),
     answer: text("answer").notNull(),
-    correct: boolean("correct").notNull(),
+    isCorrect: boolean("is_correct").notNull(),
     order: integer("order").notNull().default(0),
     createdAt: timestamp("created_at")
       .notNull()
@@ -163,8 +163,8 @@ export const questionAlternatives = createTable(
   },
   (table) => ({
     uniqueCorrectAnswerIndex: uniqueIndex()
-      .on(table.questionId, table.correct)
-      .where(eq(table.correct, sql`true`)),
+      .on(table.questionId, table.isCorrect)
+      .where(eq(table.isCorrect, sql`true`)),
     uniqueOrderIndex: uniqueIndex().on(table.questionId, table.order),
   }),
 );
@@ -184,6 +184,7 @@ export const matches = createTable(
     currentQuestionId: uuid("current_question_id")
       .references(() => questions.id, { onDelete: "set null" })
       .$type<Uuid | null>(),
+    currentQuestionStartedAt: timestamp("current_question_started_at"),
     currentQuestionEndsAt: timestamp("current_question_ends_at"),
     createdAt: timestamp("created_at")
       .notNull()
@@ -228,13 +229,13 @@ export const quizAnswers = createTable(
       .notNull()
       .references(() => matches.id)
       .$type<Uuid>(),
-    alternative: uuid("alternative_id")
+    alternativeId: uuid("alternative_id")
       .notNull()
       .references(() => questionAlternatives.id)
       .$type<Uuid>(),
-    correct: boolean("correct").notNull(),
+    isCorrect: boolean("is_correct").notNull(),
     points: integer("points").notNull(),
-    time: integer("time").notNull(),
+    timeTaken: integer("time_taken").notNull(),
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),

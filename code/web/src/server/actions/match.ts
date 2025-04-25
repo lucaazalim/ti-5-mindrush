@@ -79,6 +79,7 @@ async function updateCurrentQuestion(match: PopulatedMatch, newStatus?: MatchSta
 
   const updatedMatch = await updateMatch(match.id, {
     currentQuestionId: nextQuestion.id,
+    currentQuestionStartedAt: new Date(),
     currentQuestionEndsAt: new Date(Date.now() + nextQuestion.timeLimit * 1000),
     ...(newStatus && { status: newStatus }),
   });
