@@ -69,6 +69,7 @@ export type QuestionWithAlternativesWithoutCorrect = Question & {
 // Other data types
 
 export type MatchStatus = Match["status"];
+export type QuestionType = Question["type"];
 
 export type UpdateQuiz = z.infer<typeof updateQuizParser>;
 

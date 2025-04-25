@@ -22,6 +22,8 @@ export const ROUTES: {
 
 export const QUESTION_TYPES = ["QUIZ", "TRUE_OR_FALSE"] as const;
 
+export const MATCH_STATUSES = ["WAITING", "RUNNING", "ENDED"] as const;
+
 export const QUESTION_TYPES_NAMES: Record<(typeof QUESTION_TYPES)[number], string> = {
   QUIZ: "Quiz",
   TRUE_OR_FALSE: "Verdadeiro ou falso",
