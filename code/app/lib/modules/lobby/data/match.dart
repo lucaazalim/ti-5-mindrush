@@ -2,14 +2,14 @@ class Match {
   final String id;
   final String quizId;
   final String pin;
-  final String state;
+  final String status;
   final DateTime createdAt;
 
   Match({
     required this.id,
     required this.quizId,
     required this.pin,
-    required this.state,
+    required this.status,
     required this.createdAt,
   });
 
@@ -18,7 +18,7 @@ class Match {
       id: json['id'],
       quizId: json['quizId'],
       pin: json['pin'],
-      state: json['state'],
+      status: json['status'],
       createdAt: DateTime.parse(json['createdAt']),
     );
   }
@@ -28,7 +28,7 @@ class Match {
       'id': id,
       'quizId': quizId,
       'pin': pin,
-      'state': state,
+      'status': status,
       'createdAt': createdAt.toIso8601String(),
     };
   }

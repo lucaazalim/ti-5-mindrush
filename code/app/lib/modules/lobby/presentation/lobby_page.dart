@@ -1,15 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:mindrush/modules/lobby/data/participant.dart';
-import 'package:mindrush/modules/match/data/alternative.dart';
 import 'package:mindrush/modules/match/data/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
+import 'package:mindrush/modules/match/logic/api/match_service.dart';
 
 import 'package:mindrush/modules/utils/pusher/pusher_service.dart'; // Importe o seu PusherService
 import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart'; // Importe o seu PusherService
 import 'package:mindrush/modules/utils/pusher/pusher-provider.dart'; // Importe o seu PusherService
 import 'package:mindrush/modules/utils/pusher/event-handler.dart';
+
+final envApiUrl = dotenv.env['API_URL'];
+final envApiKey = dotenv.env['API_KEY'] ?? "";
+final envCluster = dotenv.env['CLUSTER'] ?? "";
 
 class LobbyPage extends ConsumerStatefulWidget {
 
@@ -24,56 +31,47 @@ class LobbyPage extends ConsumerStatefulWidget {
 class _LobbyPageState extends ConsumerState<LobbyPage> {
 
   late PusherService _pusherService;
-
+  Question? question;
 
   @override
   void initState() {
+
     super.initState();
 
     final pusherParams = PusherServiceParams(
-      apiKey: '9341498703db8ab930c9',
-      cluster: 'sa1',
+      apiKey: envApiKey,
+      cluster: envCluster,
       channelName: 'presence-match-${widget.participant.matchId}',
-      authEndpoint: 'http://localhost:3000/api/pusher/auth/participant',
+      authEndpoint: '$envApiUrl/pusher/auth/participant',
       userToken: widget.participant.token,
     );
 
     _pusherService = ref.read(pusherServiceProvider(pusherParams));
 
-
     final handler = GlobalEventHandler();
-    handler.on('hi', (data) {
-      print("GlobalEventHanddler escutou hi");
+
+    handler.on('next-match-question-event', (data) async {
+      try {
+        final openQuestion = await MatchService.fetchCurrentQuestion(widget.participant);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MatchQuestionScreen(
+              participant: widget.participant,
+              question: openQuestion,
+            ),
+          ),
+        );
+      } catch (e) {
+
+        print('Erro ao buscar a questão atual: $e');
+
+      }
     });
 
     _pusherService.connect();
 
-    // Espera 4 segundos antes de redirecionar
-    Future.delayed(const Duration(seconds: 10), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MatchQuestionScreen(
-            question: Question(
-              id: 1,
-              type: 'match',
-              question: 'Qual é a capital do Brasil?',
-              timeLimit: 30,
-              quizId: 100,
-              alternatives: [
-                Alternative(id: 1, answer: 'Rio de Janeiro', correct: false),
-                Alternative(id: 2, answer: 'São Paulo', correct: false),
-                Alternative(id: 3, answer: 'Brasília', correct: true),
-                Alternative(id: 4, answer: 'Salvador', correct: false),
-              ],
-            ),
-            onResponder: (resposta) {
-              print('Resposta selecionada: $resposta');
-            },
-          ),
-        ),
-      );
-    });
   }
 
 

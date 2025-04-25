@@ -69,7 +69,7 @@ class PusherService extends ChangeNotifier {
 
     print("🔐 Iniciando autenticação Pusher...");
     print("📡 Enviando para endpoint: $authUrl");
-    print("📡 Enviando para endpoint: $userToken");
+    print("📡 Enviando para token do usuário: $userToken");
     print("📨 Dados do body: socket_id=$socketId, channel_name=$channelName");
 
     final result = await http.post(
