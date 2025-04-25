@@ -40,7 +40,7 @@ export async function insertQuestionsAndAlternatives(
           type: parsedQuestion.type,
           timeLimit: 20,
           image: parsedQuestion.image ?? null,
-          order: nextOrder++, 
+          order: nextOrder++,
         })
         .returning()
     )[0];
@@ -52,7 +52,7 @@ export async function insertQuestionsAndAlternatives(
         questionId: createdQuestion.id,
         answer,
         correct: index === parsedQuestion.correctAlternativeIndex,
-        order: index, 
+        order: index,
       }),
     );
 

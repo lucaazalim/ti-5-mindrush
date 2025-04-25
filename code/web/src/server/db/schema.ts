@@ -135,7 +135,7 @@ export const questions = createTable(
     type: text("type", { enum: QUESTION_TYPES }).notNull(),
     image: text("image"),
     question: text("question").notNull(),
-    initialTimeLimit: integer("initial_time_limit").notNull(),
+    timeLimit: integer("time_limit").notNull(),
     order: integer("order").notNull().default(0),
     createdAt: timestamp("created_at")
       .notNull()

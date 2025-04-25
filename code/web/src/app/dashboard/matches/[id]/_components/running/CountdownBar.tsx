@@ -25,11 +25,14 @@ export default function CountdownBar() {
     return () => clearInterval(interval);
   }, [match]);
 
-  if (!match.currentQuestion || !match.currentQuestionEndsAt) {
+  const { currentQuestion, currentQuestionStartedAt, currentQuestionEndsAt } = match;
+
+  if (!currentQuestion || !currentQuestionStartedAt || !currentQuestionEndsAt) {
     return;
   }
 
-  const progress = timeLeft ? (timeLeft / (match.currentQuestion?.timeLimit * 1000)) * 100 : 0;
+  const timeLimit = currentQuestionEndsAt.getTime() - currentQuestionStartedAt.getTime();
+  const progress = timeLeft ? (timeLeft / timeLimit) * 100 : 100;
 
-  return <Progress value={progress} className="h-10"  />;
+  return <Progress value={progress} className="h-10" />;
 }
