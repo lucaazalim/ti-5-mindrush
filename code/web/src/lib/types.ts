@@ -20,6 +20,8 @@ import {
   uuidParser,
 } from "./parsers";
 
+type StrictOmit<T, K extends keyof T> = Omit<T, K>;
+
 // Select types (e.g. for reading from DB)
 export type User = InferSelectModel<typeof users>;
 export type Account = InferSelectModel<typeof accounts>;
@@ -60,7 +62,7 @@ export type QuestionWithAlternatives = Question & {
   alternatives: QuestionAlternative[];
 };
 
-export type QuestionQuizAlternativeWithoutCorrect = Omit<QuestionAlternative, "correct">;
+export type QuestionQuizAlternativeWithoutCorrect = StrictOmit<QuestionAlternative, "isCorrect">;
 
 export type QuestionWithAlternativesWithoutCorrect = Question & {
   alternatives: QuestionQuizAlternativeWithoutCorrect[];

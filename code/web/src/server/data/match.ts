@@ -1,4 +1,4 @@
-import { and, eq, getTableColumns, inArray } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { forbidden, unauthorized } from "next/navigation";
 import { NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
 import { auth } from "../auth";
@@ -30,9 +30,8 @@ export async function insertMatch(match: NewMatch): Promise<Match | undefined> {
 export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | undefined> {
   return (
     await db
-      .select(getTableColumns(matches))
+      .select()
       .from(matches)
-      .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
       .where(isUuid(idOrPin) ? eq(matches.id, idOrPin) : eq(matches.pin, idOrPin))
   )[0];
 }

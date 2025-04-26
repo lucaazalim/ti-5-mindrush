@@ -32,7 +32,7 @@ export default function CountdownBar() {
   }
 
   const timeLimit = currentQuestionEndsAt.getTime() - currentQuestionStartedAt.getTime();
-  const progress = timeLeft ? (timeLeft / timeLimit) * 100 : 100;
+  const progress = timeLeft === undefined ? 100 : (timeLeft / timeLimit) * 100;
 
   return <Progress value={progress} className="h-10" />;
 }

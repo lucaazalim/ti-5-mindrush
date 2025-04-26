@@ -58,7 +58,7 @@ export async function GET(
     ...currentQuestion,
     alternatives: currentQuestion.alternatives.map((alternative) => ({
       ...alternative,
-      correct: undefined, // This avoid the correct answer to be shared with the participants
+      isCorrect: undefined, // This avoid the correct answer to be shared with the participants
     })),
   });
 }

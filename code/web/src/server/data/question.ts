@@ -51,7 +51,7 @@ export async function insertQuestionsAndAlternatives(
       (answer, index) => ({
         questionId: createdQuestion.id,
         answer,
-        correct: index === parsedQuestion.correctAlternativeIndex,
+        isCorrect: index === parsedQuestion.correctAlternativeIndex,
         order: index,
       }),
     );
@@ -62,11 +62,11 @@ export async function insertQuestionsAndAlternatives(
 
 export async function selectQuestionWithAlternatives(
   questionId: Uuid,
-  options?: DataAccessOptions,
+  { internal = false }: DataAccessOptions = {},
 ): Promise<QuestionWithAlternatives | undefined> {
   const session = await auth();
 
-  if (!options?.internal && !session) {
+  if (!internal && !session) {
     return unauthorized();
   }
 
@@ -76,7 +76,7 @@ export async function selectQuestionWithAlternatives(
       .from(questions)
       .innerJoin(quizzes, eq(questions.quizId, quizzes.id))
       .where(
-        options?.internal
+        internal
           ? eq(questions.id, questionId)
           : and(eq(questions.id, questionId), eq(quizzes.educatorId, session!.user.id as Uuid)),
       )
