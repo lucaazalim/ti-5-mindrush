@@ -1,9 +1,9 @@
-import { SkipForward } from "lucide-react";
+import { CircleArrowRight, SkipForward } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { isFailure } from "~/lib/result";
 import { nextQuestion } from "~/server/actions/match";
-import { useMatchStore } from "../../_store/store-provider";
+import { useMatchStore } from "../_store/store-provider";
 
 export function NextQuestionButton() {
   const match = useMatchStore((state) => state.match);
@@ -22,11 +22,21 @@ export function NextQuestionButton() {
   }
 
   const hasNextQuestion = match.currentQuestionId !== match.quiz.questions.at(-1)?.id;
+  const timesUp = match.currentQuestionEndsAt && match.currentQuestionEndsAt.getTime() < Date.now();
 
   return (
     <Button onClick={onNextQuestionButtonClicked} disabled={!hasNextQuestion}>
-      <SkipForward />
-      Pular questão
+      {timesUp ? (
+        <>
+          <CircleArrowRight />
+          <span>Próxima questão</span>
+        </>
+      ) : (
+        <>
+          <SkipForward />
+          <span>Pular questão</span>
+        </>
+      )}
     </Button>
   );
 }

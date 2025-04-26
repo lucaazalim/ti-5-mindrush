@@ -5,8 +5,8 @@ import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provide
 import pusherClient from "~/lib/pusher-client";
 import { MatchStatus } from "~/lib/types";
 import EndedPage from "./EndedPage";
-import RunningPage from "./running/RunningPage";
-import WaitingPage from "./waiting/WaitingPage";
+import RunningPage from "./RunningPage";
+import WaitingPage from "./WaitingPage";
 
 const Components: Record<MatchStatus, React.FC> = {
   WAITING: WaitingPage,

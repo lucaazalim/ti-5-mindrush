@@ -5,7 +5,7 @@ import BackButton from "~/app/dashboard/_components/BackButton";
 import Main from "~/app/dashboard/_components/Main";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import { ROUTES } from "~/lib/constants";
-import { EndMatchButton } from "../buttons/EndMatchButton";
+import { EndMatchButton } from "./EndMatchButton";
 import { StartMatchButton } from "./StartMatchButton";
 import WaitingParticipants from "./WaitingParticipants";
 

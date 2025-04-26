@@ -2,7 +2,7 @@ import { User } from "lucide-react";
 import { Avatar, AvatarImage } from "~/components/ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 import { getAvatarUrl } from "~/lib/utils";
-import { useMatchStore } from "../../_store/store-provider";
+import { useMatchStore } from "../_store/store-provider";
 
 export default function ParticipantsList() {
   const match = useMatchStore((state) => state.match);

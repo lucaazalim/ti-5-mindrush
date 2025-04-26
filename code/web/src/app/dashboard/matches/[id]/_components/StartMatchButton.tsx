@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { isFailure } from "~/lib/result";
 import { startMatch } from "~/server/actions/match";
-import { useMatchStore } from "../../_store/store-provider";
+import { useMatchStore } from "../_store/store-provider";
 
 export function StartMatchButton() {
   const setMatch = useMatchStore((state) => state.setMatch);

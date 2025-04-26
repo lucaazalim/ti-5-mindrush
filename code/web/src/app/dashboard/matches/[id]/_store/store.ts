@@ -6,12 +6,14 @@ export type MatchState = {
   match: PopulatedMatch;
   channel?: Channel;
   qrCodeBase64: string;
+  timeLeft: number | undefined;
 };
 
 export type MatchActions = {
   setMatch: (match: PopulatedMatch) => void;
   setChannel: (channel: Channel | undefined) => void;
   addParticipant: (participant: Participant) => void;
+  setTimeLeft: (timeLeft: number) => void;
 };
 
 export type MatchStore = MatchState & MatchActions;
@@ -28,5 +30,6 @@ export const createMatchStore = (initState: MatchState) => {
           participants: [...state.match.participants, participant],
         },
       })),
+    setTimeLeft: (timeLeft: number) => set({ timeLeft: timeLeft }),
   }));
 };

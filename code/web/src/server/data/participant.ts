@@ -16,6 +16,6 @@ export async function existsParticipantWithNickname(matchId: Uuid, nickname: Par
   return result.length > 0;
 }
 
-export async function selectParticipantById(id: Uuid): Promise<Participant | undefined> {
-  return (await db.select().from(participants).where(eq(participants.id, id)))[0];
+export async function selectParticipantById(participantId: Uuid): Promise<Participant | undefined> {
+  return (await db.select().from(participants).where(eq(participants.id, participantId)))[0];
 }

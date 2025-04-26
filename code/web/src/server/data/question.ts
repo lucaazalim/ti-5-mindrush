@@ -1,6 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import {
+  DataAccessOptions,
   NewQuestionAlternative,
   QuestionWithAlternatives,
   RawQuestionsWithAlternatives,
@@ -9,7 +10,6 @@ import {
 import { auth } from "../auth";
 import { db } from "../db";
 import { questionAlternatives, questions, quizzes } from "../db/schema";
-import { DataAccessOptions } from "./types";
 
 export async function insertQuestionsAndAlternatives(
   quizId: Uuid,

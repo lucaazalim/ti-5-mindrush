@@ -101,9 +101,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const existingAnswer = await selectQuizAnswer(participantId, currentQuestion.id, {
-    internal: true,
-  });
+  const existingAnswer = await selectQuizAnswer(participantId, currentQuestion.id);
 
   if (existingAnswer) {
     return apiErrorResponse({
@@ -119,18 +117,15 @@ export async function POST(req: NextRequest) {
   const timeTaken = Date.now() - match.currentQuestionStartedAt.getTime(); // ms
   const points = isCorrect ? Math.round((1 - timeTaken / timeLimit) * 1000) : 0;
 
-  await insertQuizAnswer(
-    {
-      participantId,
-      questionId: currentQuestion.id,
-      matchId,
-      alternativeId,
-      isCorrect,
-      timeTaken,
-      points,
-    },
-    { internal: true },
-  );
+  await insertQuizAnswer({
+    participantId,
+    questionId: currentQuestion.id,
+    matchId,
+    alternativeId,
+    isCorrect,
+    timeTaken,
+    points,
+  });
 
   return new NextResponse(null, {
     status: 201,

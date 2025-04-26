@@ -4,7 +4,7 @@ import { NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/t
 import { auth } from "../auth";
 import { db } from "../db";
 import { matches, participants, questionAlternatives, questions, quizzes } from "../db/schema";
-import { selectQuestionWithAlternatives } from "./question";
+import { selectQuizAnswersByQuestionId } from "./answer";
 import { selectQuizById, selectQuizByMatchId } from "./quiz";
 
 export async function insertMatch(match: NewMatch): Promise<Match | undefined> {
@@ -74,9 +74,37 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
     )
     .orderBy(questionAlternatives.order);
 
-  const currentQuestionWithAlternatives = match.currentQuestionId
-    ? ((await selectQuestionWithAlternatives(match.currentQuestionId)) ?? null)
-    : null;
+  let currentQuestionWithAlternativesAndCount = null;
+
+  if (match.currentQuestionId) {
+    const currentQuestion = questionsResult.find(
+      (question) => question.id === match.currentQuestionId,
+    );
+
+    if (!currentQuestion) {
+      return undefined;
+    }
+
+    const currentQuestionAnswers = await selectQuizAnswersByQuestionId(
+      match.id,
+      currentQuestion.id,
+    );
+
+    console.log(currentQuestionAnswers);
+
+    const currentQuestionAlternatives = alternativesResult
+      .filter((alternative) => alternative.questionId === match.currentQuestionId)
+      .map((alternative) => ({
+        ...alternative,
+        count: currentQuestionAnswers.filter((answer) => answer.alternativeId === alternative.id)
+          .length,
+      }));
+
+    currentQuestionWithAlternativesAndCount = {
+      ...currentQuestion,
+      alternatives: currentQuestionAlternatives,
+    };
+  }
 
   const participantsResult = await db
     .select()
@@ -85,7 +113,7 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
 
   return {
     ...matchWithQuiz.match,
-    currentQuestion: currentQuestionWithAlternatives,
+    currentQuestion: currentQuestionWithAlternativesAndCount,
     quiz: {
       ...matchWithQuiz.quiz,
       questions: questionsResult.map((question) => ({

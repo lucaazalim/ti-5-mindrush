@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import PageTitle from "~/app/dashboard/_components/PageTitle";
 import { getAvatarUrl } from "~/lib/utils";
 import { NewParticipantEvent } from "~/server/event-publisher";
-import { useMatchStore } from "../../_store/store-provider";
+import { useMatchStore } from "../_store/store-provider";
 
 export default function WaitingParticipants() {
   const match = useMatchStore((state) => state.match);

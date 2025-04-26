@@ -20,9 +20,16 @@ import {
   uuidParser,
 } from "./parsers";
 
+// Utility types
+
 type StrictOmit<T, K extends keyof T> = Omit<T, K>;
 
-// Select types (e.g. for reading from DB)
+export type DataAccessOptions = {
+  internal?: boolean;
+};
+
+// Infered select types
+
 export type User = InferSelectModel<typeof users>;
 export type Account = InferSelectModel<typeof accounts>;
 export type Session = InferSelectModel<typeof sessions>;
@@ -34,7 +41,8 @@ export type Match = InferSelectModel<typeof matches>;
 export type Participant = InferSelectModel<typeof participants>;
 export type QuizAnswer = InferSelectModel<typeof quizAnswers>;
 
-// Insert types (e.g. for creating or updating entries)
+// Infered insert types
+
 export type NewUser = InferInsertModel<typeof users>;
 export type NewAccount = InferInsertModel<typeof accounts>;
 export type NewSession = InferInsertModel<typeof sessions>;
@@ -46,11 +54,17 @@ export type NewMatch = InferInsertModel<typeof matches>;
 export type NewParticipant = InferInsertModel<typeof participants>;
 export type NewQuizAnswer = InferInsertModel<typeof quizAnswers>;
 
-// Joined data types
+// Joined types
 
 export type PopulatedMatch = Match & {
   quiz: QuizWithQuestionsAndAlternatives;
-  currentQuestion: QuestionWithAlternatives | null;
+  currentQuestion:
+    | (Question & {
+        alternatives: (QuestionAlternative & {
+          count: number;
+        })[];
+      })
+    | null;
   participants: Participant[];
 };
 
@@ -62,18 +76,9 @@ export type QuestionWithAlternatives = Question & {
   alternatives: QuestionAlternative[];
 };
 
-export type QuestionQuizAlternativeWithoutCorrect = StrictOmit<QuestionAlternative, "isCorrect">;
-
 export type QuestionWithAlternativesWithoutCorrect = Question & {
-  alternatives: QuestionQuizAlternativeWithoutCorrect[];
+  alternatives: StrictOmit<QuestionAlternative, "isCorrect">[];
 };
-
-// Other data types
-
-export type MatchStatus = Match["status"];
-export type QuestionType = Question["type"];
-
-export type UpdateQuiz = z.infer<typeof updateQuizParser>;
 
 export type QuizWithQuestionCount = Quiz & { questionCount: number };
 
@@ -81,6 +86,13 @@ export type QuestionWithRawAlternatives = Question & {
   alternatives: string[];
   correctAlternativeIndex: number;
 };
+
+// Other types
+
+export type MatchStatus = Match["status"];
+export type QuestionType = Question["type"];
+
+export type UpdateQuiz = z.infer<typeof updateQuizParser>;
 
 export type RawQuestionsWithAlternatives = z.infer<typeof questionAndAlternativesParser>;
 

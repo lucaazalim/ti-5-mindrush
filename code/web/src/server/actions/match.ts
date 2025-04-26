@@ -34,6 +34,16 @@ export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> 
   return succeed(result);
 }
 
+export async function getUpdatedMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
+  const match = await selectPopulatedMatchById(matchId);
+
+  if (!match) {
+    return fail("A partida não foi encontrada.");
+  }
+
+  return succeed(match);
+}
+
 export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
   const match = await selectPopulatedMatchById(matchId);
 
@@ -66,7 +76,10 @@ export async function nextQuestion(matchId: Uuid): Promise<Result<PopulatedMatch
   return await updateCurrentQuestion(match);
 }
 
-async function updateCurrentQuestion(match: PopulatedMatch, newStatus?: MatchStatus) {
+async function updateCurrentQuestion(
+  match: PopulatedMatch,
+  newStatus?: MatchStatus,
+): Promise<Result<PopulatedMatch, string>> {
   const currentQuestionIndex = match.quiz.questions.findIndex(
     (question) => question.id === match.currentQuestionId,
   );
@@ -90,7 +103,17 @@ async function updateCurrentQuestion(match: PopulatedMatch, newStatus?: MatchSta
 
   await callMatchEvent(new NextMatchQuestionEvent(match.id));
 
-  return succeed({ ...match, ...updatedMatch, currentQuestion: nextQuestion });
+  return succeed({
+    ...match,
+    ...updatedMatch,
+    currentQuestion: {
+      ...nextQuestion,
+      alternatives: nextQuestion.alternatives.map((alternative) => ({
+        ...alternative,
+        count: 0,
+      })),
+    },
+  });
 }
 
 export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {

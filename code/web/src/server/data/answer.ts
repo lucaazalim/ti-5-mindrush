@@ -1,44 +1,25 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import { NewQuizAnswer, QuizAnswer, Uuid } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { quizAnswers } from "../db/schema";
-import { selectPopulatedMatchById } from "./match";
-import { DataAccessOptions } from "./types";
+import { participants, quizAnswers } from "../db/schema";
+import { selectQuizByMatchId } from "./quiz";
 
-export async function insertQuizAnswer(
-  quizAnswer: NewQuizAnswer,
-  { internal = false }: DataAccessOptions = {},
-) {
-  const session = await auth();
-
-  if (!internal) {
-    if (!session) {
-      return unauthorized();
-    }
-
-    const match = await selectPopulatedMatchById(quizAnswer.matchId);
-
-    if (!match || match.quiz.educatorId !== session.user.id) {
-      return unauthorized();
-    }
-  }
-
-  await db.insert(quizAnswers).values(quizAnswer);
+export async function insertQuizAnswer(quizAnswer: NewQuizAnswer) {
+  await db.transaction(async (transaction) => {
+    await transaction.insert(quizAnswers).values(quizAnswer);
+    await transaction
+      .update(participants)
+      .set({ totalPoints: sql`${participants.totalPoints} + ${quizAnswer.points}` })
+      .where(eq(participants.id, quizAnswer.participantId));
+  });
 }
 
 export async function selectQuizAnswer(
   participantId: Uuid,
   questionId: Uuid,
-  { internal = false }: DataAccessOptions = {},
 ): Promise<QuizAnswer | undefined> {
-  const session = await auth();
-
-  if (!internal && !session) {
-    return unauthorized();
-  }
-
   return (
     await db
       .select()
@@ -47,4 +28,26 @@ export async function selectQuizAnswer(
         and(eq(quizAnswers.questionId, questionId), eq(quizAnswers.participantId, participantId)),
       )
   )[0];
+}
+
+export async function selectQuizAnswersByQuestionId(
+  matchId: Uuid,
+  questionId: Uuid,
+): Promise<QuizAnswer[]> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const quiz = await selectQuizByMatchId(matchId);
+
+  if (!quiz || quiz.educatorId !== session.user.id) {
+    return unauthorized();
+  }
+
+  return await db
+    .select()
+    .from(quizAnswers)
+    .where(and(eq(quizAnswers.matchId, matchId), eq(quizAnswers.questionId, questionId)));
 }
