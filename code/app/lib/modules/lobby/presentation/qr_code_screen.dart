@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mindrush/modules/lobby/logic/api/match_service.dart';
+import 'package:mindrush/modules/lobby/logic/api/lobby_service.dart';
 import 'package:mindrush/modules/lobby/presentation/name_screen.dart';
-import 'package:mobile_scanner/mobile_scanner.dart'; // Substitui qr_code_scanner por mobile_scanner
+import 'package:mobile_scanner/mobile_scanner.dart'; 
 
 class QrCodeScreen extends StatefulWidget {
   const QrCodeScreen({super.key});
