@@ -68,6 +68,11 @@ export type PopulatedMatch = Match & {
   participants: Participant[];
 };
 
+export type QuizWithQuestionCountAndActiveMatch = Quiz & {
+  questionCount: number;
+  activeMatch: Match | null;
+};
+
 export type QuizWithQuestionsAndAlternatives = Quiz & {
   questions: QuestionWithAlternatives[];
 };
@@ -80,7 +85,6 @@ export type QuestionWithAlternativesWithoutCorrect = Question & {
   alternatives: StrictOmit<QuestionAlternative, "isCorrect">[];
 };
 
-export type QuizWithQuestionCount = Quiz & { questionCount: number };
 
 export type QuestionWithRawAlternatives = Question & {
   alternatives: string[];

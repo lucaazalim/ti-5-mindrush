@@ -5,16 +5,15 @@ import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { ROUTES } from "~/lib/constants";
 import { isFailure } from "~/lib/result";
-import type { Match, QuizWithQuestionCount, Uuid } from "~/lib/types";
+import type { QuizWithQuestionCountAndActiveMatch, Uuid } from "~/lib/types";
 import { createMatch } from "~/server/actions/match";
 import QuizOptions from "./QuizOptions";
 
 interface QuizzesListProps {
-  quizzes: QuizWithQuestionCount[];
-  activeMatches: Record<Uuid, Match | undefined>;
+  quizzes: QuizWithQuestionCountAndActiveMatch[];
 }
 
-export default function QuizzesList({ quizzes, activeMatches }: QuizzesListProps) {
+export default function QuizzesList({ quizzes }: QuizzesListProps) {
   const router = useRouter();
 
   const newMatch = async (quizId: Uuid) => {
@@ -33,7 +32,7 @@ export default function QuizzesList({ quizzes, activeMatches }: QuizzesListProps
     <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {quizzes.length > 0 ? (
         quizzes.map((quiz) => {
-          const activeMatch = activeMatches[quiz.id];
+          const activeMatch = quiz.activeMatch;
 
           return (
             <div

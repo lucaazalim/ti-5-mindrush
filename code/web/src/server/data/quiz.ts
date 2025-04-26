@@ -3,8 +3,8 @@ import { unauthorized } from "next/navigation";
 import {
   NewQuiz,
   Quiz,
+  QuizWithQuestionCountAndActiveMatch,
   Uuid,
-  type QuizWithQuestionCount,
   type QuizWithQuestionsAndAlternatives,
 } from "~/lib/types";
 import { auth } from "../auth";
@@ -63,24 +63,32 @@ export async function selectQuizById(quizId: Uuid): Promise<Quiz | undefined> {
   )[0];
 }
 
-export async function selectAllQuizzesWithQuestionCount(): Promise<QuizWithQuestionCount[]> {
+export async function selectAllQuizzesWithQuestionCountAndActiveMatch(): Promise<QuizWithQuestionCountAndActiveMatch[]> {
   const session = await auth();
 
   if (!session) {
     return unauthorized();
   }
 
-  const allQuizzes: QuizWithQuestionCount[] = await db
+  const quizzesWithExtras: QuizWithQuestionCountAndActiveMatch[] = await db
     .select({
       ...getTableColumns(quizzes),
       questionCount: count(),
+      activeMatch: getTableColumns(matches),
     })
     .from(quizzes)
     .leftJoin(questions, eq(questions.quizId, quizzes.id))
+    .leftJoin(
+      matches,
+       and (
+        eq(matches.quizId, quizzes.id),
+        inArray(matches.status, ["WAITING", "RUNNING"]),
+       )
+    )
     .where(eq(quizzes.educatorId, session.user.id as Uuid))
-    .groupBy(quizzes.id);
+    .groupBy(quizzes.id, matches.id);
 
-  return allQuizzes;
+  return quizzesWithExtras;
 }
 
 export async function selectQuizWithQuestionsAndAlternatives(
