@@ -4,7 +4,6 @@ import QuizzesList from "~/app/dashboard/quizzes/_components/quiz-card/QuizzesLi
 import { Uuid } from "~/lib/types";
 import { auth } from "~/server/auth";
 import { selectAllQuizzesWithQuestionCountAndActiveMatch } from "~/server/data/quiz";
-import { checkActiveMatchByQuizId } from "~/server/data/match";
 import Main from "../_components/Main";
 import { CreateQuizModal } from "./_components/CreateQuizModal";
 

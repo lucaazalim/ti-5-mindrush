@@ -63,7 +63,9 @@ export async function selectQuizById(quizId: Uuid): Promise<Quiz | undefined> {
   )[0];
 }
 
-export async function selectAllQuizzesWithQuestionCountAndActiveMatch(): Promise<QuizWithQuestionCountAndActiveMatch[]> {
+export async function selectAllQuizzesWithQuestionCountAndActiveMatch(): Promise<
+  QuizWithQuestionCountAndActiveMatch[]
+> {
   const session = await auth();
 
   if (!session) {
@@ -80,10 +82,7 @@ export async function selectAllQuizzesWithQuestionCountAndActiveMatch(): Promise
     .leftJoin(questions, eq(questions.quizId, quizzes.id))
     .leftJoin(
       matches,
-       and (
-        eq(matches.quizId, quizzes.id),
-        inArray(matches.status, ["WAITING", "RUNNING"]),
-       )
+      and(eq(matches.quizId, quizzes.id), inArray(matches.status, ["WAITING", "RUNNING"])),
     )
     .where(eq(quizzes.educatorId, session.user.id as Uuid))
     .groupBy(quizzes.id, matches.id);
