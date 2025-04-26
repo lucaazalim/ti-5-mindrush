@@ -618,5 +618,5 @@ _Inclua o URL do repositório (Github, Bitbucket, etc) onde você armazenou o c�
 | --------------------- | ---------- | ----------------------------- |
 | Repositório de código | GitHub     | https://github.com/XXXXXXX    |
 | Hospedagem do site    | Heroku     | https://XXXXXXX.herokuapp.com |
-| Protótipo Interativo  | Figma      | https://encr.pw/l4sVl         |
+| Protótipo Interativo  | Figma      | https://www.figma.com/design/DcDtqzVkWQUl8jz5oM1LvG/MindRUSH?node-id=0-1&p=f&t=hCi66TTuAL3XCmL6-0         |
 | Documentação de teste | Github     | https://githun.com/xxxx       |
