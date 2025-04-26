@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "~/components/ui/button";
 import Image from "next/image";
 import mobile from "public/home/mobile.png";
+import pc from "public/home/pc.png"
 import * as motion from "motion/react-client";
 
 const Benefits = () => {

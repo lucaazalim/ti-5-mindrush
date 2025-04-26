@@ -3,6 +3,8 @@ import { Button } from "~/components/ui/button";
 import { ReactTyped } from "react-typed";
 import Image from "next/image";
 import mobile from "public/home/mobile.png";
+import bemVindo from "public/home/mobile-1.png";
+import avatar from "public/home/avatar.png";
 import * as motion from "motion/react-client";
 
 export const HeroSection = () => {
@@ -43,7 +45,7 @@ export const HeroSection = () => {
           className="-rotate-15 absolute left-0 z-10 transform"
         >
           <Image
-            src={mobile}
+            src={bemVindo}
             alt="Phone Left"
             width={250}
             height={250}
@@ -75,7 +77,7 @@ export const HeroSection = () => {
           className="rotate-15 absolute right-0 z-10 transform"
         >
           <Image
-            src={mobile}
+            src={avatar}
             alt="Phone Right"
             width={250}
             height={250}
