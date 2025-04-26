@@ -32,10 +32,11 @@ export const QUESTION_TYPES_NAMES: Record<(typeof QUESTION_TYPES)[number], strin
 
 export const QUESTION_VISUALS: {
   icon: LucideIcon;
-  color: string;
+  colorClassName: string;
+  cssVariable: `hsl(var(${string}))`;
 }[] = [
-  { icon: Triangle, color: "bg-red-500" },
-  { icon: Diamond, color: "bg-blue-500" },
-  { icon: Circle, color: "bg-yellow-500" },
-  { icon: Square, color: "bg-green-500" },
+  { icon: Triangle, colorClassName: "bg-red-500", cssVariable: "hsl(var(--first-alternative))" },
+  { icon: Diamond, colorClassName: "bg-blue-500", cssVariable: "hsl(var(--second-alternative))" },
+  { icon: Circle, colorClassName: "bg-yellow-500", cssVariable: "hsl(var(--third-alternative))" },
+  { icon: Square, colorClassName: "bg-green-500", cssVariable: "hsl(var(--fourth-alternative))" },
 ];

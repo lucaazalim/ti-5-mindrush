@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Container from "~/app/dashboard/_components/Container";
 import Main from "~/app/dashboard/_components/Main";
 import { isFailure } from "~/lib/result";
 import { getUpdatedMatch } from "~/server/actions/match";
@@ -6,7 +7,7 @@ import { useMatchStore } from "../_store/store-provider";
 import CountdownBar from "./CountdownBar";
 import { EndMatchButton } from "./EndMatchButton";
 import { NextQuestionButton } from "./NextQuestionButton";
-import PartialRanking from "./PartialRanking";
+import PartialRanking from "./PartialSummary";
 import ParticipantsList from "./ParticipantsList";
 import Question from "./Question";
 
@@ -60,11 +61,11 @@ export default function RunningPage() {
           <CountdownBar />
         </>
       )}
-      <div className="grid grid-cols-4 gap-3 rounded-3xl bg-background p-5">
+      <Container className="grid grid-cols-4 gap-3">
         <ParticipantsList />
         <NextQuestionButton />
         <EndMatchButton />
-      </div>
+      </Container>
     </Main>
   );
 }

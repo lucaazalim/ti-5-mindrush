@@ -1,6 +1,7 @@
 import { useMatchStore } from "../_store/store-provider";
+import AlternativeStats from "./AlternativeStats";
 
-export default function PartialRanking() {
+export default function PartialSummary() {
   const match = useMatchStore((state) => state.match);
 
   if (!match.currentQuestion) {
@@ -8,10 +9,8 @@ export default function PartialRanking() {
   }
 
   return (
-    <>
-      {match.currentQuestion?.alternatives.map((alternative) => (
-        <p key={alternative.id}>{alternative.count}</p>
-      ))}
-    </>
+    <div className="grid grid-cols-2 gap-3">
+      <AlternativeStats />
+    </div>
   );
 }

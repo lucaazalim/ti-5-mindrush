@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import BackButton from "~/app/dashboard/_components/BackButton";
+import Container from "~/app/dashboard/_components/Container";
 import Main from "~/app/dashboard/_components/Main";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import { ROUTES } from "~/lib/constants";
@@ -18,11 +19,11 @@ export default function WaitingPage() {
       <BackButton href={ROUTES.QUIZZES} className="w-fit" />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row gap-5">
-          <div className="flex-grow content-center rounded-lg bg-background p-10">
+          <Container className="flex-grow content-center p-10">
             <h1 className="">PIN da partida</h1>
             <h2 className="text-5xl font-bold">{match.pin}</h2>
-          </div>
-          <div className="flex flex-row items-center justify-between gap-5 rounded-lg bg-background">
+          </Container>
+          <Container className="flex flex-row items-center justify-between gap-5 p-1">
             <Image
               src={qrcode}
               alt="QR Code"
@@ -30,12 +31,12 @@ export default function WaitingPage() {
               height={160}
               className="rounded-lg dark:invert"
             />
-          </div>
+          </Container>
         </div>
-        <div className="flex flex-grow flex-row gap-5 rounded-lg bg-background p-10">
+        <Container className="flex flex-grow flex-row gap-5">
           <StartMatchButton />
           <EndMatchButton />
-        </div>
+        </Container>
         <WaitingParticipants />
       </div>
     </Main>

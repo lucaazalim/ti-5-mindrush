@@ -38,7 +38,7 @@ export default function Question() {
       </div>
       <div className="grid grid-cols-2 gap-3">
         {currentQuestion.alternatives.map((alternative, index) => {
-          const { icon: Icon, color } = QUESTION_VISUALS[index]!;
+          const { icon: Icon, colorClassName: color } = QUESTION_VISUALS[index]!;
 
           return (
             <div

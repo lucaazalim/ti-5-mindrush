@@ -21,7 +21,7 @@ export function StartMatchButton() {
   }
 
   return (
-    <Button size="lg" className="grow" onClick={onStartMatchButtonClicked}>
+    <Button className="grow" onClick={onStartMatchButtonClicked}>
       <Play />
       Iniciar partida
     </Button>

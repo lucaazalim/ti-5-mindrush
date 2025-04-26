@@ -1,10 +1,10 @@
 "use client";
 
-import { Input } from "~/components/ui/input";
+import { Plus, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { Plus, Trash2, Circle, Diamond, Square, Triangle } from "lucide-react";
-import { cn } from "~/lib/utils";
+import { Input } from "~/components/ui/input";
 import { QUESTION_VISUALS } from "~/lib/constants";
+import { cn } from "~/lib/utils";
 
 interface Props {
   type: "QUIZ" | "TRUE_OR_FALSE";
@@ -53,7 +53,7 @@ export function AnswersManager({
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {answers.map((answer, index) => {
-          const { icon: Icon, color } = QUESTION_VISUALS[index]!;
+          const { icon: Icon, colorClassName: color } = QUESTION_VISUALS[index]!;
 
           return (
             <div key={index} className="relative flex items-center gap-2">
