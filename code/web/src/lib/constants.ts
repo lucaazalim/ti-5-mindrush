@@ -1,3 +1,4 @@
+import { Circle, Diamond, LucideIcon, Square, Triangle } from "lucide-react";
 import { Uuid } from "./types";
 
 export type Route = `/${string}`;
@@ -28,3 +29,13 @@ export const QUESTION_TYPES_NAMES: Record<(typeof QUESTION_TYPES)[number], strin
   QUIZ: "Quiz",
   TRUE_OR_FALSE: "Verdadeiro ou falso",
 };
+
+export const QUESTION_VISUALS: {
+  icon: LucideIcon;
+  color: string;
+}[] = [
+  { icon: Triangle, color: "bg-red-500" },
+  { icon: Diamond, color: "bg-blue-500" },
+  { icon: Circle, color: "bg-yellow-500" },
+  { icon: Square, color: "bg-green-500" },
+];

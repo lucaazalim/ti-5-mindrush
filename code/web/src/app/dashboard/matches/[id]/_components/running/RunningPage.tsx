@@ -1,19 +1,12 @@
-import { Circle, Diamond, Square, Triangle } from "lucide-react";
 import { ReactTyped } from "react-typed";
 import Main from "~/app/dashboard/_components/Main";
+import { QUESTION_VISUALS } from "~/lib/constants";
 import { cn } from "~/lib/utils";
 import { useMatchStore } from "../../_store/store-provider";
 import { EndMatchButton } from "../buttons/EndMatchButton";
 import CountdownBar from "./CountdownBar";
 import ParticipantsList from "./ParticipantsList";
 import { NextQuestionButton } from "./SkipQuestionButton";
-
-const SymbolsAndColors = [
-  { icon: Triangle, color: "bg-red-500" },
-  { icon: Diamond, color: "bg-blue-500" },
-  { icon: Circle, color: "bg-yellow-500" },
-  { icon: Square, color: "bg-green-500" },
-];
 
 export default function RunningPage() {
   const match = useMatchStore((state) => state.match);
@@ -48,7 +41,7 @@ export default function RunningPage() {
         </div>
         <div className="grid grid-cols-2 gap-3">
           {currentQuestion.alternatives.map((alternative, index) => {
-            const { icon: Icon, color } = SymbolsAndColors[index]!;
+            const { icon: Icon, color } = QUESTION_VISUALS[index]!;
 
             return (
               <div
