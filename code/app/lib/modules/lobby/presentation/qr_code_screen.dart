@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mindrush/modules/lobby/logic/api/lobby_service.dart';
 import 'package:mindrush/modules/lobby/presentation/name_screen.dart';
+import 'package:mindrush/modules/match/logic/api/match_service.dart';
 import 'package:mobile_scanner/mobile_scanner.dart'; 
 
 class QrCodeScreen extends StatefulWidget {
@@ -35,7 +36,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
         );
 
         try {
-          final match = await MatchService.validateMatch(code);
+          final match = await LobbyService.validateMatch(code);
           Navigator.pop(context); // Fecha o loading
           Navigator.pushReplacement(
             context,

@@ -4,7 +4,7 @@ import '../../data/participant.dart';
 import '../../data/match.dart';
 import '../../data/dto/register-participant.dart';
 
-class MatchService {
+class LobbyService {
   static final Dio _dio = DioClient().dio; // Usa a instância configurada
 
   static Future<Match> validateMatch(String pin) async {

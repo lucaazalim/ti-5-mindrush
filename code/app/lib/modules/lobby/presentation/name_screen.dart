@@ -60,7 +60,7 @@ class _NameScreenState extends State<NameScreen> {
 
     try {
       final dto = RegisterParticipant(nickname: name);
-      final Participant participant = await MatchService.registerParticipant(widget.match.pin, dto);
+      final Participant participant = await LobbyService.registerParticipant(widget.match.pin, dto);
 
       Navigator.pop(context);
       // Fecha o loading

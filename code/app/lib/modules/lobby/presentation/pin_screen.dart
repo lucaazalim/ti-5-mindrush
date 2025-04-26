@@ -41,7 +41,7 @@ class _PinScreenState extends State<PinScreen> {
 
       try {
         // Tenta validar o PIN através da API
-        final match = await MatchService.validateMatch(_pinController.text);
+        final match = await LobbyService.validateMatch(_pinController.text);
 
         // Se chegou aqui, o match foi encontrado com sucesso
         Navigator.pop(context); // Remove o loading

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:mindrush/modules/lobby/data/participant.dart';
+import 'package:mindrush/modules/lobby/logic/api/lobby_service.dart';
 import 'package:mindrush/modules/lobby/presentation/lobby_page.dart';
 import 'package:mindrush/modules/match/data/question.dart';
 
@@ -38,22 +39,20 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
   String? respostaSelecionada;
 
   void responder(String resposta) {
+
     setState(() {
       respondido = true;
       respostaSelecionada = resposta;
     });
 
-    Future.delayed(const Duration(milliseconds: 500), () {
-      print("resposta");
-    });
   }
 
   Color _corPorIndice(int index) {
     const coresFixas = [
       Colors.red,
       Colors.blue,
-      Colors.green,
       Colors.orange,
+      Colors.green,
     ];
     return coresFixas[index % coresFixas.length];
   }

@@ -17,7 +17,7 @@ class Participant {
     return Participant(
       id: json['id'],
       nickname: json['nickname'],
-      totalPoints: json['total_points'],
+      totalPoints: json['totalPoints'],
       matchId: json['matchId'],
       token: json['token'],
     );
@@ -27,7 +27,7 @@ class Participant {
     return {
       'id': id,
       'nickname': nickname,
-      'total_points': totalPoints,
+      'totalPoints': totalPoints,
       'matchId': matchId,
       'token': token
     };

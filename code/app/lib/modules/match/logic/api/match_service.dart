@@ -29,6 +29,38 @@ class MatchService {
       throw Exception('Failed to fetch match: $e');
 
     }
+
+  }
+
+  static Future answerQuestion(Participant participant, String alternativeId) async {
+
+    try{
+
+      String token = participant.token;
+
+      final response = await _dio.post('/matches/answers',
+          options: Options(
+            headers: {
+              "Authorization": "Bearer $token",
+            },
+          ),
+          data: {
+            "matchId": participant.matchId,
+            "participantId": participant.id,
+            "alternativeId": alternativeId
+          }
+      );
+
+      return;
+
+    }catch (e, stackTrace){
+
+      print('Erro ao enviar resposta: $e');
+      print('StackTrace: $stackTrace');
+      throw Exception('Failed to send answer: $e');
+
+    }
+
   }
 
 }
