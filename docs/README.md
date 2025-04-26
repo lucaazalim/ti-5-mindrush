@@ -473,11 +473,11 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 ![Wireframe partida](assets/wireframes/app-partida.png "Wireframe partida")
 
-### Resposta correta.
+#### RF12: Resposta correta.
 
 ![Wireframe resposta-correta](assets/wireframes/app-resposta-correta.png "Wireframe resposta-correta")
 
-### Resposta errada.
+#### RF12: Resposta errada.
 
 ![Wireframe resposta-errada](assets/wireframes/app-resposta-errada.png "Wireframe resposta-errada")
 
@@ -485,11 +485,11 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 ![Wireframe partida-vf](assets/wireframes/app-partida-vf.png "Wireframe partida-vf")
 
-### Resposta correta. (Verdadeiro ou falso)
+#### RF12: Resposta correta. (Verdadeiro ou falso)
 
 ![Wireframe resposta-correta-vf](assets/wireframes/app-resposta-correta-vf.png "Wireframe resposta-correta-vf")
 
-### Resposta errada. (Verdadeiro ou falso)
+#### RF12: Resposta errada. (Verdadeiro ou falso)
 
 ![Wireframe resposta-errada-vf](assets/wireframes/app-resposta-errada-vf.png "Wireframe resposta-errada-vf")
 
@@ -499,15 +499,15 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 ![Wireframe web RF02](assets/wireframes/web-dashboard.png "Wireframe web RF02")
 
-#### Modal para criar um quiz.
+#### RF2: Modal para criar um quiz.
 
 ![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz.png "Wireframe web RF02 - Modal inicial")
 
-#### Step para quizzes gerados por IA.
+#### RF2: Step para quizzes gerados por IA.
 
 ![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-IA.png "Wireframe web RF02 - Modal com step de opções geradas por IA")
 
-#### Step para quizzes gerados por PDF.
+#### RF2: Step para quizzes gerados por PDF.
 
 ![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-PDF.png "Wireframe web RF02 - Modal com step de opções geradas por PDF")
 
@@ -523,15 +523,17 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 ![Wireframe web RF07](assets/wireframes/web-pausar-ou-encerrar-partida.png "Wireframe web RF07")
 
-### RF8: O educador acompanha o andamento da partida (aguadar jogadores).
+### RF8: O educador acompanha o andamento da partida.
+
+#### RF8: Aguardando jogadores.
 
 ![Wireframe web RF08](assets/wireframes/web-acompanhar-partida.png "Wireframe web RF08")
 
-### RF8: O educador acompanha o andamento da partida (jogadores em sala).
+#### RF8: Jogadores em sala.
 
 ![Wireframe web RF08](assets/wireframes/web-acompanhar-partida-02.png "Wireframe web RF08")
 
-### RF8: O educador acompanha o andamento da partida (acertos acerca das questões).
+#### RF8: Acertos acerca das questões.
 
 ![Wireframe web RF08](assets/wireframes/web-pontuacao-questao.png "Wireframe web RF08")
 
