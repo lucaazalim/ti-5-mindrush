@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mindrush/modules/lobby/presentation/pin_screen.dart';
+import 'package:mindrush/modules/lobby/presentation/select_access_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const PinScreen()),
+        MaterialPageRoute(builder: (context) => const SelectAccessScreen()),
       );
     });
   }
