@@ -1,8 +1,9 @@
 "use client";
 
-import { Input } from "~/components/ui/input";
+import { Plus, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
-import { Plus, Trash2, Circle, Diamond, Square, Triangle } from "lucide-react";
+import { Input } from "~/components/ui/input";
+import { QUESTION_VISUALS } from "~/lib/constants";
 import { cn } from "~/lib/utils";
 
 interface Props {
@@ -12,13 +13,6 @@ interface Props {
   onChangeAnswers: (answers: string[]) => void;
   onChangeCorrectIndex: (index: number) => void;
 }
-
-const SymbolsAndColors = [
-  { icon: Triangle, color: "bg-red-500" },
-  { icon: Diamond, color: "bg-blue-500" },
-  { icon: Circle, color: "bg-yellow-500" },
-  { icon: Square, color: "bg-green-500" },
-];
 
 export function AnswersManager({
   type,
@@ -59,7 +53,7 @@ export function AnswersManager({
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {answers.map((answer, index) => {
-          const { icon: Icon, color } = SymbolsAndColors[index]!;
+          const { icon: Icon, colorClassName: color } = QUESTION_VISUALS[index]!;
 
           return (
             <div key={index} className="relative flex items-center gap-2">

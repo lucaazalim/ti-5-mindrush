@@ -39,7 +39,7 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
           ...quiz,
           image: quiz.image ?? null,
           alternatives: quiz.alternatives.map((alternative) => alternative.answer),
-          correctAlternativeIndex: quiz.alternatives.findIndex((a) => a.correct),
+          correctAlternativeIndex: quiz.alternatives.findIndex((a) => a.isCorrect),
         }))
       : [getDummyQuestion()],
   );

@@ -13,7 +13,7 @@ import {
 } from "~/components/ui/dialog";
 import { isFailure } from "~/lib/result";
 import { endMatch } from "~/server/actions/match";
-import { useMatchStore } from "../../_store/store-provider";
+import { useMatchStore } from "../_store/store-provider";
 
 export function EndMatchButton() {
   const setMatch = useMatchStore((state) => state.setMatch);

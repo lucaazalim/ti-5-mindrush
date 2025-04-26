@@ -8,7 +8,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { QUESTION_TYPES_NAMES } from "~/lib/constants";
-import { Question, type QuestionWithRawAlternatives } from "~/lib/types";
+import { QuestionType, type QuestionWithRawAlternatives } from "~/lib/types";
 
 interface Props {
   question: QuestionWithRawAlternatives;
@@ -23,7 +23,7 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
         <div className="space-y-2">
           <Select
             value={question.type}
-            onValueChange={(value: Question["type"]) => onUpdate({ type: value })}
+            onValueChange={(value: QuestionType) => onUpdate({ type: value })}
           >
             <SelectTrigger>
               <SelectValue placeholder="Tipo de questão" />

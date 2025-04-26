@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { isFailure } from "~/lib/result";
 import { startMatch } from "~/server/actions/match";
-import { useMatchStore } from "../../_store/store-provider";
+import { useMatchStore } from "../_store/store-provider";
 
 export function StartMatchButton() {
   const setMatch = useMatchStore((state) => state.setMatch);
@@ -21,7 +21,7 @@ export function StartMatchButton() {
   }
 
   return (
-    <Button size="lg" className="grow" onClick={onStartMatchButtonClicked}>
+    <Button className="grow" onClick={onStartMatchButtonClicked}>
       <Play />
       Iniciar partida
     </Button>

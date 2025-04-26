@@ -1,21 +1,39 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'package:mindrush/modules/lobby/data/participant.dart';
+import 'package:mindrush/modules/lobby/presentation/lobby_page.dart';
 import 'package:mindrush/modules/match/data/question.dart';
 
-class MatchQuestionScreen extends StatefulWidget {
+
+import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart';
+import 'package:mindrush/modules/utils/pusher/pusher-provider.dart';
+import 'package:mindrush/modules/utils/pusher/pusher_service.dart';
+
+final envApiUrl = dotenv.env['API_URL'];
+
+class MatchQuestionScreen extends ConsumerStatefulWidget {
   final Question question;
-  final void Function(String respostaSelecionada) onResponder;
+  final Participant participant;
+
 
   const MatchQuestionScreen({
     super.key,
     required this.question,
-    required this.onResponder,
+    required this.participant,
   });
 
   @override
-  State<MatchQuestionScreen> createState() => _MatchQuestionScreenState();
+  ConsumerState<MatchQuestionScreen> createState() => _MatchQuestionScreenState();
 }
 
-class _MatchQuestionScreenState extends State<MatchQuestionScreen> {
+class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
+
+  late PusherService _pusherService;
+
   bool respondido = false;
   String? respostaSelecionada;
 
@@ -26,7 +44,7 @@ class _MatchQuestionScreenState extends State<MatchQuestionScreen> {
     });
 
     Future.delayed(const Duration(milliseconds: 500), () {
-      widget.onResponder(resposta);
+      print("resposta");
     });
   }
 
@@ -38,6 +56,23 @@ class _MatchQuestionScreenState extends State<MatchQuestionScreen> {
       Colors.orange,
     ];
     return coresFixas[index % coresFixas.length];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+
+    final pusherParams = PusherServiceParams(
+      apiKey: '9341498703db8ab930c9',
+      cluster: 'sa1',
+      channelName: 'presence-match-${widget.participant.matchId}',
+      authEndpoint: '$envApiUrl/pusher/auth/participant',
+      userToken: widget.participant.token,
+    );
+
+    _pusherService = ref.read(pusherServiceProvider(pusherParams));
+
   }
 
   @override
@@ -82,7 +117,18 @@ class _MatchQuestionScreenState extends State<MatchQuestionScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            onPressed: respondido ? null : () => responder(alternative.answer),
+                            onPressed: respondido ? null : (){
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LobbyPage(
+                                    participant: widget.participant,
+                                  ),
+                                ),
+                              );
+
+                            },
                             child: Text(alternative.answer, textAlign: TextAlign.center),
                           ),
                         ),

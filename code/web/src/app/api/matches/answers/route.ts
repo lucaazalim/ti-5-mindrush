@@ -1,13 +1,13 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { uuidParser } from "~/lib/parsers";
 import { isFailure } from "~/lib/result";
+import { insertQuizAnswer, selectQuizAnswer } from "~/server/data/answer";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { selectQuestionWithAlternatives } from "~/server/data/question";
 import { apiErrorResponse, authParticipant } from "../../api";
 
 const payloadParser = z.object({
-  questionId: uuidParser,
   alternativeId: uuidParser,
 });
 
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const { matchId } = participant.data;
+  const { id: participantId, matchId } = participant.data;
   const match = await selectMatchByIdOrPin(matchId);
 
   if (!match) {
@@ -39,15 +39,15 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  if (match.state !== "RUNNING") {
+  if (match.status !== "RUNNING") {
     return apiErrorResponse({
       status: 400,
-      message: "The match state must be RUNNING.",
+      message: "Match is not running.",
       code: "match_not_running",
     });
   }
 
-  if (!match.currentQuestionId) {
+  if (!match.currentQuestionId || !match.currentQuestionStartedAt || !match.currentQuestionEndsAt) {
     return apiErrorResponse({
       status: 400,
       message: "The match does not have a current question.",
@@ -55,11 +55,19 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const { questionId } = payload.data;
+  if (match.currentQuestionEndsAt < new Date()) {
+    return apiErrorResponse({
+      status: 400,
+      message: "The time for answering the question has expired.",
+      code: "question_time_expired",
+    });
+  }
 
-  const question = await selectQuestionWithAlternatives(questionId);
+  const currentQuestion = await selectQuestionWithAlternatives(match.currentQuestionId, {
+    internal: true,
+  });
 
-  if (!question) {
+  if (!currentQuestion) {
     return apiErrorResponse({
       status: 404,
       message: "Question not found.",
@@ -67,5 +75,59 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // TODO
+  const correctAlternative = currentQuestion.alternatives.find(
+    (alternative) => alternative.isCorrect,
+  );
+
+  if (!correctAlternative) {
+    return apiErrorResponse({
+      status: 404,
+      message: "Current question does not have a correct alternative.",
+      code: "no_correct_alternative",
+    });
+  }
+
+  const { alternativeId } = payload.data;
+
+  const alternative = currentQuestion.alternatives.find(
+    (alternative) => alternative.id === alternativeId,
+  );
+
+  if (!alternative) {
+    return apiErrorResponse({
+      status: 404,
+      message: "Alternative not found.",
+      code: "alternative_not_found",
+    });
+  }
+
+  const existingAnswer = await selectQuizAnswer(participantId, currentQuestion.id);
+
+  if (existingAnswer) {
+    return apiErrorResponse({
+      status: 400,
+      message: "You have already answered this question.",
+      code: "already_answered",
+    });
+  }
+
+  const isCorrect = correctAlternative.id === alternativeId;
+
+  const timeLimit = currentQuestion.timeLimit * 1000; // ms
+  const timeTaken = Date.now() - match.currentQuestionStartedAt.getTime(); // ms
+  const points = isCorrect ? Math.round((1 - timeTaken / timeLimit) * 1000) : 0;
+
+  await insertQuizAnswer({
+    participantId,
+    questionId: currentQuestion.id,
+    matchId,
+    alternativeId,
+    isCorrect,
+    timeTaken,
+    points,
+  });
+
+  return new NextResponse(null, {
+    status: 201,
+  });
 }

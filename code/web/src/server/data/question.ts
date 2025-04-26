@@ -1,6 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import {
+  DataAccessOptions,
   NewQuestionAlternative,
   QuestionWithAlternatives,
   RawQuestionsWithAlternatives,
@@ -9,7 +10,6 @@ import {
 import { auth } from "../auth";
 import { db } from "../db";
 import { questionAlternatives, questions, quizzes } from "../db/schema";
-import { DataAccessOptions } from "./types";
 
 export async function insertQuestionsAndAlternatives(
   quizId: Uuid,
@@ -40,7 +40,7 @@ export async function insertQuestionsAndAlternatives(
           type: parsedQuestion.type,
           timeLimit: 20,
           image: parsedQuestion.image ?? null,
-          order: nextOrder++, 
+          order: nextOrder++,
         })
         .returning()
     )[0];
@@ -51,8 +51,8 @@ export async function insertQuestionsAndAlternatives(
       (answer, index) => ({
         questionId: createdQuestion.id,
         answer,
-        correct: index === parsedQuestion.correctAlternativeIndex,
-        order: index, 
+        isCorrect: index === parsedQuestion.correctAlternativeIndex,
+        order: index,
       }),
     );
 
@@ -62,11 +62,11 @@ export async function insertQuestionsAndAlternatives(
 
 export async function selectQuestionWithAlternatives(
   questionId: Uuid,
-  options?: DataAccessOptions,
+  { internal = false }: DataAccessOptions = {},
 ): Promise<QuestionWithAlternatives | undefined> {
   const session = await auth();
 
-  if (!options?.internal && !session) {
+  if (!internal && !session) {
     return unauthorized();
   }
 
@@ -76,7 +76,7 @@ export async function selectQuestionWithAlternatives(
       .from(questions)
       .innerJoin(quizzes, eq(questions.quizId, quizzes.id))
       .where(
-        options?.internal
+        internal
           ? eq(questions.id, questionId)
           : and(eq(questions.id, questionId), eq(quizzes.educatorId, session!.user.id as Uuid)),
       )

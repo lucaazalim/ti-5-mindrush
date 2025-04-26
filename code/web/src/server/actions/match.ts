@@ -1,7 +1,7 @@
 "use server";
 
 import { fail, Result, succeed } from "~/lib/result";
-import { Uuid, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
+import { MatchStatus, Uuid, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
 import { auth } from "~/server/auth";
 import {
   insertMatch,
@@ -21,7 +21,7 @@ export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> 
   const newMatch: NewMatch = {
     quizId: quizId,
     pin: (Math.floor(Math.random() * 900000) + 100000).toString(),
-    state: "WAITING",
+    status: "WAITING",
     createdAt: new Date(),
   };
 
@@ -34,6 +34,16 @@ export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> 
   return succeed(result);
 }
 
+export async function getUpdatedMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
+  const match = await selectPopulatedMatchById(matchId);
+
+  if (!match) {
+    return fail("A partida não foi encontrada.");
+  }
+
+  return succeed(match);
+}
+
 export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
   const match = await selectPopulatedMatchById(matchId);
 
@@ -41,7 +51,7 @@ export async function startMatch(matchId: Uuid): Promise<Result<PopulatedMatch, 
     return fail("A partida não foi encontrada.");
   }
 
-  if (match.state !== "WAITING") {
+  if (match.status !== "WAITING") {
     return fail("A partida já foi iniciada.");
   }
 
@@ -59,14 +69,17 @@ export async function nextQuestion(matchId: Uuid): Promise<Result<PopulatedMatch
     return fail("A partida não foi encontrada.");
   }
 
-  if (match.state !== "RUNNING") {
+  if (match.status !== "RUNNING") {
     return fail("A partida não está em andamento.");
   }
 
   return await updateCurrentQuestion(match);
 }
 
-async function updateCurrentQuestion(match: PopulatedMatch, newState?: Match["state"]) {
+async function updateCurrentQuestion(
+  match: PopulatedMatch,
+  newStatus?: MatchStatus,
+): Promise<Result<PopulatedMatch, string>> {
   const currentQuestionIndex = match.quiz.questions.findIndex(
     (question) => question.id === match.currentQuestionId,
   );
@@ -79,8 +92,9 @@ async function updateCurrentQuestion(match: PopulatedMatch, newState?: Match["st
 
   const updatedMatch = await updateMatch(match.id, {
     currentQuestionId: nextQuestion.id,
+    currentQuestionStartedAt: new Date(),
     currentQuestionEndsAt: new Date(Date.now() + nextQuestion.timeLimit * 1000),
-    ...(newState && { state: newState }),
+    ...(newStatus && { status: newStatus }),
   });
 
   if (!updatedMatch) {
@@ -89,7 +103,17 @@ async function updateCurrentQuestion(match: PopulatedMatch, newState?: Match["st
 
   await callMatchEvent(new NextMatchQuestionEvent(match.id));
 
-  return succeed({ ...match, ...updatedMatch, currentQuestion: nextQuestion });
+  return succeed({
+    ...match,
+    ...updatedMatch,
+    currentQuestion: {
+      ...nextQuestion,
+      alternatives: nextQuestion.alternatives.map((alternative) => ({
+        ...alternative,
+        count: 0,
+      })),
+    },
+  });
 }
 
 export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
@@ -99,12 +123,12 @@ export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
     return fail("Partida não encontrada.");
   }
 
-  if (match.state === "ENDED") {
+  if (match.status === "ENDED") {
     return fail("Partida já encerrada.");
   }
 
   const updatedMatch = await updateMatch(match.id, {
-    state: "ENDED",
+    status: "ENDED",
   });
 
   if (!updatedMatch) {

@@ -22,8 +22,12 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
   const qrCodeBase64 = await QRCode.toDataURL(match.pin);
 
+  const timeLeft = match.currentQuestionEndsAt
+    ? Math.max(0, match.currentQuestionEndsAt.getTime() - new Date().getTime())
+    : undefined;
+
   return (
-    <MatchStoreProvider match={match} qrCodeBase64={qrCodeBase64}>
+    <MatchStoreProvider match={match} qrCodeBase64={qrCodeBase64} timeLeft={timeLeft}>
       <MatchPage />
     </MatchStoreProvider>
   );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mindrush/modules/lobby/presentation/name_screen.dart';
-import '../logic/api/match_service.dart';
+import '../logic/api/lobby_service.dart';
 class PinScreen extends StatefulWidget {
   const PinScreen({super.key});
 

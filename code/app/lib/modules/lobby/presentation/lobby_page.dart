@@ -1,11 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:mindrush/modules/lobby/data/participant.dart';
-import 'package:mindrush/modules/match/data/alternative.dart';
 import 'package:mindrush/modules/match/data/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
-import 'package:mindrush/modules/match/logic/pusher_service.dart'; // Importe o seu PusherService
+import 'package:mindrush/modules/match/logic/api/match_service.dart';
 
-class LobbyPage extends StatefulWidget {
+import 'package:mindrush/modules/utils/pusher/pusher_service.dart'; // Importe o seu PusherService
+import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart'; // Importe o seu PusherService
+import 'package:mindrush/modules/utils/pusher/pusher-provider.dart'; // Importe o seu PusherService
+import 'package:mindrush/modules/utils/pusher/event-handler.dart';
+
+final envApiUrl = dotenv.env['API_URL'];
+final envApiKey = dotenv.env['API_KEY'] ?? "";
+final envCluster = dotenv.env['CLUSTER'] ?? "";
+
+class LobbyPage extends ConsumerStatefulWidget {
+
   final Participant participant;
 
   const LobbyPage({super.key, required this.participant});
@@ -14,88 +28,53 @@ class LobbyPage extends StatefulWidget {
   _LobbyPageState createState() => _LobbyPageState();
 }
 
-class _LobbyPageState extends State<LobbyPage> {
-  late PusherService _pusherService;  // Instância do PusherService
+class _LobbyPageState extends ConsumerState<LobbyPage> {
+
+  late PusherService _pusherService;
+  Question? question;
 
   @override
   void initState() {
+
     super.initState();
 
-    // Criação do PusherService diretamente no estado
-    _pusherService = PusherService(
-      apiKey: '9341498703db8ab930c9',
-      cluster: 'sa1',
-      channelName: 'mindrush',
-      authEndpoint: 'localhost:3002/api/pusher/auth',
-      userToken: widget.participant.token,  // Se necessário, senão pode ser null
+    final pusherParams = PusherServiceParams(
+      apiKey: envApiKey,
+      cluster: envCluster,
+      channelName: 'presence-match-${widget.participant.matchId}',
+      authEndpoint: '$envApiUrl/pusher/auth/participant',
+      userToken: widget.participant.token,
     );
 
-    // Conectar ao Pusher e começar a escutar os eventos
-    _connectPusher();
+    _pusherService = ref.read(pusherServiceProvider(pusherParams));
 
-    // Espera 4 segundos antes de redirecionar
-    Future.delayed(const Duration(seconds: 6), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => MatchQuestionScreen(
-            question: Question(
-              id: 1,
-              type: 'match',
-              question: 'Qual é a capital do Brasil?',
-              timeLimit: 30,
-              quizId: 100,
-              alternatives: [
-                Alternative(id: 1, answer: 'Rio de Janeiro', correct: false),
-                Alternative(id: 2, answer: 'São Paulo', correct: false),
-                Alternative(id: 3, answer: 'Brasília', correct: true),
-                Alternative(id: 4, answer: 'Salvador', correct: false),
-              ],
-            ),
-            onResponder: (resposta) {
-              print('Resposta selecionada: $resposta');
-            },
-          ),
-        ),
-      );
-    });
-  }
+    final handler = GlobalEventHandler();
 
-  // Função para conectar ao Pusher
-  Future<void> _connectPusher() async {
-    await _pusherService.connect();
+    handler.on('next-match-question-event', (data) async {
+      try {
+        final openQuestion = await MatchService.fetchCurrentQuestion(widget.participant);
 
-    // Adiciona o ouvinte de eventos
-    _pusherService.addEventListener('start_game', (eventName, data) {
-      // Aqui você pode pegar os dados e redirecionar para a tela de questões
-      if (data != null) {
-        // Passando para o MatchQuestionScreen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => MatchQuestionScreen(
-              question: Question(
-                id: 1,
-                type: 'match',
-                question: 'Qual é a capital do Brasil?',
-                timeLimit: 30,
-                quizId: 100,
-                alternatives: [
-                  Alternative(id: 1, answer: 'Rio de Janeiro', correct: false),
-                  Alternative(id: 2, answer: 'São Paulo', correct: false),
-                  Alternative(id: 3, answer: 'Brasília', correct: true),
-                  Alternative(id: 4, answer: 'Salvador', correct: false),
-                ],
-              ), // Supondo que `data` seja um JSON da questão
-              onResponder: (resposta) {
-                print('Resposta selecionada: $resposta');
-              },
+              participant: widget.participant,
+              question: openQuestion,
             ),
           ),
         );
+      } catch (e) {
+
+        print('Erro ao buscar a questão atual: $e');
+
       }
     });
+
+    _pusherService.connect();
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -152,8 +131,7 @@ class _LobbyPageState extends State<LobbyPage> {
 
   @override
   void dispose() {
-    // Desconecte e remova os ouvintes quando a tela for descartada
-    _pusherService.disconnect();
     super.dispose();
   }
+
 }

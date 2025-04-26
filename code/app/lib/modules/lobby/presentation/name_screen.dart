@@ -7,7 +7,7 @@ import 'package:mindrush/modules/match/presentation/match_question.dart';
 
 import '../data/match.dart';
 import '../data/dto/register-participant.dart';
-import '../logic/api/match_service.dart';
+import '../logic/api/lobby_service.dart';
 
 class NameScreen extends StatefulWidget {
 

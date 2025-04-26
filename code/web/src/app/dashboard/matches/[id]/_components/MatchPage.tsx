@@ -3,12 +3,12 @@
 import { useEffect } from "react";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import pusherClient from "~/lib/pusher-client";
-import { Match } from "~/lib/types";
+import { MatchStatus } from "~/lib/types";
 import EndedPage from "./EndedPage";
-import RunningPage from "./running/RunningPage";
-import WaitingPage from "./waiting/WaitingPage";
+import RunningPage from "./RunningPage";
+import WaitingPage from "./WaitingPage";
 
-const Components: Record<Match["state"], React.FC> = {
+const Components: Record<MatchStatus, React.FC> = {
   WAITING: WaitingPage,
   RUNNING: RunningPage,
   ENDED: EndedPage,
@@ -30,6 +30,6 @@ export default function MatchPage() {
     };
   }, [match.id, setChannel]);
 
-  const Component = Components[match.state];
+  const Component = Components[match.status];
   return Component ? <Component /> : null;
 }

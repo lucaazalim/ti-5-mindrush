@@ -26,7 +26,7 @@ export async function GET(
     });
   }
 
-  if (match.state !== "RUNNING") {
+  if (match.status !== "RUNNING") {
     return apiErrorResponse({
       status: 400,
       message: "The match state must be RUNNING.",
@@ -42,7 +42,9 @@ export async function GET(
     });
   }
 
-  const currentQuestion = await selectQuestionWithAlternatives(match.currentQuestionId);
+  const currentQuestion = await selectQuestionWithAlternatives(match.currentQuestionId, {
+    internal: true,
+  });
 
   if (!currentQuestion) {
     return apiErrorResponse({
@@ -56,7 +58,7 @@ export async function GET(
     ...currentQuestion,
     alternatives: currentQuestion.alternatives.map((alternative) => ({
       ...alternative,
-      correct: undefined, // This avoid the correct answer to be shared with the participants
+      isCorrect: undefined, // This avoid the correct answer to be shared with the participants
     })),
   });
 }

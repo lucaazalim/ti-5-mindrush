@@ -1,4 +1,4 @@
-import { eq, relations, sql } from "drizzle-orm";
+import { eq, inArray, relations, sql } from "drizzle-orm";
 import {
   boolean,
   index,
@@ -13,7 +13,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
-import { QUESTION_TYPES } from "~/lib/constants";
+import { MATCH_STATUSES, QUESTION_TYPES } from "~/lib/constants";
 import { ParticipantNickname, Uuid } from "~/lib/types";
 
 /**
@@ -155,7 +155,7 @@ export const questionAlternatives = createTable(
       .references(() => questions.id, { onDelete: "cascade" })
       .$type<Uuid>(),
     answer: text("answer").notNull(),
-    correct: boolean("correct").notNull(),
+    isCorrect: boolean("is_correct").notNull(),
     order: integer("order").notNull().default(0),
     createdAt: timestamp("created_at")
       .notNull()
@@ -163,37 +163,46 @@ export const questionAlternatives = createTable(
   },
   (table) => ({
     uniqueCorrectAnswerIndex: uniqueIndex()
-      .on(table.questionId, table.correct)
-      .where(eq(table.correct, sql`true`)),
+      .on(table.questionId, table.isCorrect)
+      .where(eq(table.isCorrect, sql`true`)),
     uniqueOrderIndex: uniqueIndex().on(table.questionId, table.order),
   }),
 );
 
-export const matches = createTable("match", {
-  id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
-  quizId: uuid("quiz_id")
-    .notNull()
-    .references(() => quizzes.id, { onDelete: "cascade" })
-    .$type<Uuid>(),
-  pin: text("pin").notNull(),
-  state: text("state", {
-    enum: ["WAITING", "RUNNING", "ENDED"],
-  }).notNull(),
-  currentQuestionId: uuid("current_question_id")
-    .references(() => questions.id, { onDelete: "set null" })
-    .$type<Uuid | null>(),
-  currentQuestionEndsAt: timestamp("current_question_ends_at"),
-  createdAt: timestamp("created_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-});
+export const matches = createTable(
+  "match",
+  {
+    id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
+    quizId: uuid("quiz_id")
+      .notNull()
+      .references(() => quizzes.id, { onDelete: "cascade" })
+      .$type<Uuid>(),
+    pin: text("pin").notNull(),
+    status: text("status", {
+      enum: MATCH_STATUSES,
+    }).notNull(),
+    currentQuestionId: uuid("current_question_id")
+      .references(() => questions.id, { onDelete: "set null" })
+      .$type<Uuid | null>(),
+    currentQuestionStartedAt: timestamp("current_question_started_at"),
+    currentQuestionEndsAt: timestamp("current_question_ends_at"),
+    createdAt: timestamp("created_at")
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+  },
+  (table) => ({
+    uniqueActiveMatchPerQuiz: uniqueIndex("unique_active_match_per_quiz")
+      .on(table.quizId)
+      .where(inArray(table.status, ["WAITING", "RUNNING"])),
+  }),
+);
 
 export const participants = createTable(
   "participant",
   {
     id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
     nickname: text("nickname").notNull().$type<ParticipantNickname>(),
-    total_points: integer("total_points").notNull().default(0),
+    totalPoints: integer("total_points").notNull().default(0),
     matchId: uuid("match_id")
       .notNull()
       .references(() => matches.id)
@@ -220,13 +229,13 @@ export const quizAnswers = createTable(
       .notNull()
       .references(() => matches.id)
       .$type<Uuid>(),
-    alternative: uuid("alternative_id")
+    alternativeId: uuid("alternative_id")
       .notNull()
       .references(() => questionAlternatives.id)
       .$type<Uuid>(),
-    correct: boolean("correct").notNull(),
+    isCorrect: boolean("is_correct").notNull(),
     points: integer("points").notNull(),
-    time: integer("time").notNull(),
+    timeTaken: integer("time_taken").notNull(),
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
