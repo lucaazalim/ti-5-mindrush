@@ -37,7 +37,8 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
           return (
             <div
               key={quiz.id}
-              className="flex flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md dark:bg-zinc-900 dark:shadow"
+              onClick={() => router.push(ROUTES.QUIZ(quiz.id))}
+              className="flex cursor-pointer flex-col justify-between overflow-hidden rounded-2xl bg-white shadow-sm transition hover:shadow-md dark:bg-zinc-900 dark:shadow"
             >
               <div className="relative flex h-32 items-center justify-center bg-gray-200 dark:bg-zinc-800">
                 {activeMatch ? (
