@@ -20,7 +20,7 @@ export function SlideNavigation({
   onDelete,
 }: SlideNavigationProps) {
   return (
-    <aside className="flex h-full w-[200px] flex-col items-center gap-4 border-r bg-white px-2 py-6">
+    <aside className="flex min-h-screen w-[200px] flex-col items-center gap-4 overflow-y-auto border-r bg-white px-2 py-6">
       <Button type="button" onClick={onAdd} className="h-[8px] w-[140px] rounded-sm">
         Nova questão
       </Button>
