@@ -58,6 +58,8 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
    4.3. Modelo de dados (opcional) <br />
 
 5. [Wireframes](#wireframes "Wireframes") <br />
+   5.1. Wireframe Mobile <br/>
+   5.2. Wireframe Web <br/>
 
 6. [Solução](#solucao "Projeto da Solução") <br />
 
