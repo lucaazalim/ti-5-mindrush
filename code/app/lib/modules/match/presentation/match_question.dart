@@ -8,6 +8,7 @@ import 'package:mindrush/modules/lobby/data/participant.dart';
 import 'package:mindrush/modules/lobby/logic/api/lobby_service.dart';
 import 'package:mindrush/modules/lobby/presentation/lobby_page.dart';
 import 'package:mindrush/modules/match/data/question.dart';
+import 'package:mindrush/modules/match/logic/api/match_service.dart';
 
 
 import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart';
@@ -35,15 +36,17 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
 
   late PusherService _pusherService;
 
-  bool respondido = false;
-  String? respostaSelecionada;
+  bool answered = false;
+  String? selectedAnswer;
 
-  void responder(String resposta) {
+  void answerQuestion(String selectedAnswerId) {
 
     setState(() {
-      respondido = true;
-      respostaSelecionada = resposta;
+      answered = true;
+      selectedAnswer = selectedAnswerId;
     });
+
+    MatchService.answerQuestion(widget.participant, selectedAnswerId);
 
   }
 
@@ -116,7 +119,9 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            onPressed: respondido ? null : (){
+                            onPressed: answered ? null : (){
+
+                              answerQuestion(alternative.id);
 
                               Navigator.pushReplacement(
                                 context,
