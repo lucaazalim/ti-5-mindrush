@@ -64,7 +64,8 @@ export function AnswersManager({
                 onChange={(e) => updateAnswer(index, e.target.value)}
                 onClick={() => onChangeCorrectIndex(index)}
                 className={cn(
-                  "cursor-pointer border-2 pl-10 pr-10 text-lg text-white",
+                  "cursor-pointer border-2 pl-10 pr-10 text-lg",
+                  "text-white dark:text-white",
                   "placeholder:text-white/50",
                   correctAnswerIndex === index
                     ? `border-green-500 focus-visible:ring-green-500 ${color}`
@@ -80,11 +81,12 @@ export function AnswersManager({
               >
                 <Icon className="h-4 w-4 fill-white text-white" />
               </div>
+
               {canDelete && (
                 <button
                   onClick={() => deleteAnswer(index)}
                   type="button"
-                  className="-foreground absolute right-2 top-2 text-white hover:text-destructive"
+                  className="-foreground absolute right-2 top-2 text-white hover:text-destructive dark:text-white dark:hover:text-destructive"
                 >
                   <Trash2 size={16} />
                 </button>
@@ -99,7 +101,7 @@ export function AnswersManager({
           <Button
             type="button"
             variant="outline"
-            className="rounded-sm border px-4 py-1.5 text-sm font-medium shadow-sm hover:bg-muted"
+            className="rounded-sm border px-4 py-1.5 text-sm font-medium shadow-sm hover:bg-white dark:hover:bg-muted/40"
             onClick={addAnswer}
           >
             <Plus size={14} className="mr-2" />

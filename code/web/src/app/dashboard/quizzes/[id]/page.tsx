@@ -17,10 +17,8 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   }
 
   return (
-    <>
-      <div className="flex min-h-screen w-screen bg-muted">
-        <QuizManualForm quizId={id} initialQuestions={result.questions} />
-      </div>
-    </>
+    <div className="flex min-h-screen w-full overflow-x-hidden">
+      <QuizManualForm quizId={id} initialQuestions={result.questions} />
+    </div>
   );
 }

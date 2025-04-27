@@ -18,7 +18,7 @@ interface Props {
 
 export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
   return (
-    <aside className="flex min-h-screen w-[200px] flex-col items-center gap-4 overflow-y-auto border-r bg-white px-2 py-6">
+    <aside className="flex min-h-screen w-[200px] flex-col items-center gap-4 overflow-y-auto border-r bg-white px-2 py-6 dark:bg-background">
       <div className="space-y-4">
         <div className="space-y-2">
           <Select
