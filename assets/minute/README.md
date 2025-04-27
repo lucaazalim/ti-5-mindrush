@@ -2,3 +2,4 @@
 
 - `ata-2025-02-26-kickoff.md` - Ata de kick-off do projeto.
 - `ata-2025-03-26.md` - Ata de reunião do dia 26 de março de 2025.
+- `ata-2025-04-09.md` - Ata de reunião do dia 09 de abril de 2025.
