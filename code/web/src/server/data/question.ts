@@ -1,4 +1,4 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import {
   DataAccessOptions,
@@ -21,14 +21,66 @@ export async function insertQuestionsAndAlternatives(
     return unauthorized();
   }
 
-  const existingOrders = await db
-    .select({ order: questions.order })
+  let nextOrder = 0;
+
+  for (const parsedQuestion of data.questions) {
+    const createdQuestion = (
+      await db
+        .insert(questions)
+        .values({
+          quizId,
+          question: parsedQuestion.question,
+          type: parsedQuestion.type,
+          timeLimit: 20,
+          image: parsedQuestion.image ?? null,
+          order: nextOrder++,
+        })
+        .returning()
+    )[0];
+
+    if (!createdQuestion) continue;
+
+    const alternatives: NewQuestionAlternative[] = parsedQuestion.alternatives.map(
+      (answer, index) => ({
+        questionId: createdQuestion.id,
+        answer,
+        isCorrect: index === parsedQuestion.correctAlternativeIndex,
+        order: index,
+      }),
+    );
+
+    await db.insert(questionAlternatives).values(alternatives);
+  }
+}
+
+export async function saveQuestionsAndAlternatives(
+  quizId: Uuid,
+  data: RawQuestionsWithAlternatives,
+): Promise<void> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  const existingQuestions = await db
+    .select({ id: questions.id })
     .from(questions)
     .where(eq(questions.quizId, quizId));
 
-  let nextOrder = existingOrders.length
-    ? Math.max(...existingOrders.map((q) => q.order ?? 0)) + 1
-    : 0;
+  const existingQuestionIds = existingQuestions.map((q) => q.id);
+
+  if (existingQuestionIds.length > 0) {
+    await db.delete(questionAlternatives).where(
+      inArray(questionAlternatives.questionId, existingQuestionIds),
+    );
+
+    await db.delete(questions).where(
+      inArray(questions.id, existingQuestionIds),
+    );
+  }
+
+  let nextOrder = 0;
 
   for (const parsedQuestion of data.questions) {
     const createdQuestion = (

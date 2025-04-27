@@ -3,7 +3,7 @@
 import { questionAndAlternativesParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { RawQuestionsWithAlternatives } from "~/lib/types";
-import { insertQuestionsAndAlternatives } from "../data/question";
+import { saveQuestionsAndAlternatives } from "../data/question"; 
 
 export async function createQuestionsAndAlternatives(
   data: RawQuestionsWithAlternatives,
@@ -15,10 +15,10 @@ export async function createQuestionsAndAlternatives(
   }
 
   try {
-    await insertQuestionsAndAlternatives(parsedData.data.quizId, parsedData.data);
+    await saveQuestionsAndAlternatives(parsedData.data.quizId, parsedData.data);
     return succeed();
   } catch (e) {
     console.error(e);
-    return fail("Houve um problema ao criar as questões.");
+    return fail("Houve um problema ao salvar as questões.");
   }
 }
