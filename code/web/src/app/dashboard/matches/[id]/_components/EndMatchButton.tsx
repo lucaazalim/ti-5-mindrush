@@ -32,16 +32,14 @@ export function EndMatchButton() {
     toast("Partida encerrada!");
   }
 
-  const button = (
-    <Button variant="outline" className="grow">
-      <CircleX />
-      Encerrar partida
-    </Button>
-  );
-
   return hasNextQuestion(match) ? (
     <Dialog>
-      <DialogTrigger asChild>{button}</DialogTrigger>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="grow">
+          <CircleX />
+          Interromper partida
+        </Button>
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Deseja encerrar a partida?</DialogTitle>
@@ -60,6 +58,9 @@ export function EndMatchButton() {
       </DialogContent>
     </Dialog>
   ) : (
-    button
+    <Button variant="outline" className="grow" onClick={handleConfirm}>
+      <CircleX />
+      Encerrar partida
+    </Button>
   );
 }

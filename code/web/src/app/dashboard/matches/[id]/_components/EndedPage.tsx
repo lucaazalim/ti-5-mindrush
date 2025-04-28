@@ -21,8 +21,8 @@ export default function EndedPage() {
         </>
       ) : (
         <Container>
-          <h1 className="p-5 text-center text-5xl font-medium drop-shadow-md">
-            Não houve participantes
+          <h1 className="p-5 text-center text-xl font-medium drop-shadow-md">
+            Não houve participantes nesta partida.
           </h1>
         </Container>
       )}
