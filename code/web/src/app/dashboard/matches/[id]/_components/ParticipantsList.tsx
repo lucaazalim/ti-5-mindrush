@@ -19,10 +19,7 @@ export default function ParticipantsList() {
             <Tooltip delayDuration={0}>
               <TooltipTrigger asChild>
                 <Avatar className="size-16 border-2">
-                  <AvatarImage
-                    src={getAvatarUrl(participant.nickname)}
-                    alt={participant.nickname}
-                  />
+                  <AvatarImage src={getAvatarUrl(participant)} alt={participant.nickname} />
                 </Avatar>
               </TooltipTrigger>
               <TooltipContent>

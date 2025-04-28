@@ -1,5 +1,7 @@
+import Container from "~/app/dashboard/_components/Container";
 import { useMatchStore } from "../_store/store-provider";
-import AlternativeStats from "./AlternativeStats";
+import AnswersChart from "./AnswersChart";
+import PartialRanking from "./PartialRanking";
 
 export default function PartialSummary() {
   const match = useMatchStore((state) => state.match);
@@ -10,7 +12,12 @@ export default function PartialSummary() {
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <AlternativeStats />
+      <Container>
+        <AnswersChart />
+      </Container>
+      <Container>
+        <PartialRanking />
+      </Container>
     </div>
   );
 }

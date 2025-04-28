@@ -8,7 +8,7 @@ import {
 import { QUESTION_VISUALS } from "~/lib/constants";
 import { useMatchStore } from "../_store/store-provider";
 
-export default function AlternativeStats() {
+export default function AnswersChart() {
   const match = useMatchStore((state) => state.match);
 
   const chartConfig = {

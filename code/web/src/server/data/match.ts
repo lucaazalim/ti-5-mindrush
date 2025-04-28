@@ -1,4 +1,4 @@
-import { and, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import { forbidden, unauthorized } from "next/navigation";
 import { NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
 import { auth } from "../auth";
@@ -107,7 +107,8 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
   const participantsResult = await db
     .select()
     .from(participants)
-    .where(eq(participants.matchId, matchWithQuiz.match.id));
+    .where(eq(participants.matchId, matchWithQuiz.match.id))
+    .orderBy(desc(participants.totalPoints));
 
   return {
     ...matchWithQuiz.match,
