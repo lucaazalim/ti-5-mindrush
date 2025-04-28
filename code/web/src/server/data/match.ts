@@ -90,8 +90,6 @@ export async function selectPopulatedMatchById(matchId: Uuid): Promise<Populated
       currentQuestion.id,
     );
 
-    console.log(currentQuestionAnswers);
-
     const currentQuestionAlternatives = alternativesResult
       .filter((alternative) => alternative.questionId === match.currentQuestionId)
       .map((alternative) => ({

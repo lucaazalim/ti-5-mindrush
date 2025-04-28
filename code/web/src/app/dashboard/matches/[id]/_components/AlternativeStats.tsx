@@ -23,16 +23,16 @@ export default function AlternativeStats() {
 
   const chartData =
     match.currentQuestion?.alternatives.map((alternative, index) => ({
-      alternative: alternative.id,
+      alternativeId: alternative.id,
       participants: alternative.count,
-      fill: QUESTION_VISUALS[index]?.cssVariable,
+      fill: QUESTION_VISUALS[index]?.cssVariable ?? "",
     })) ?? [];
 
   return (
     <ChartContainer config={chartConfig}>
       <BarChart accessibilityLayer data={chartData}>
         <XAxis
-          dataKey="alternative"
+          dataKey="alternativeId"
           tickLine={false}
           tickMargin={10}
           axisLine={false}
@@ -51,6 +51,7 @@ export default function AlternativeStats() {
               <Rectangle
                 {...props}
                 fillOpacity={0.8}
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
                 stroke={props.payload.fill}
                 strokeDasharray={4}
                 strokeDashoffset={4}
