@@ -7,7 +7,7 @@ import { useMatchStore } from "../_store/store-provider";
 import CountdownBar from "./CountdownBar";
 import { EndMatchButton } from "./EndMatchButton";
 import { NextQuestionButton } from "./NextQuestionButton";
-import PartialRanking from "./PartialSummary";
+import PartialRanking from "./QuestionSummary";
 import ParticipantsList from "./ParticipantsList";
 import Question from "./Question";
 
@@ -51,9 +51,11 @@ export default function RunningPage() {
     return () => clearInterval(interval);
   }, [match, setMatch, setTimeLeft]);
 
+  const timesUp = timeLeft !== undefined && timeLeft <= 0;
+
   return (
     <Main className="flex max-w-full flex-col justify-center gap-5 px-16 py-12">
-      {timeLeft !== undefined && timeLeft <= 0 ? (
+      {timesUp ? (
         <PartialRanking />
       ) : (
         <>

@@ -3,7 +3,7 @@ import { Separator } from "~/components/ui/separator";
 import { getAvatarUrl } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
 
-export default function PartialRanking() {
+export default function ParticipantLeaderboard() {
   const match = useMatchStore((state) => state.match);
 
   return (
@@ -18,7 +18,14 @@ export default function PartialRanking() {
                 <AvatarImage src={getAvatarUrl(participant)} alt={participant.nickname} />
               </Avatar>
               <span className="text-2xl font-semibold">{participant.nickname}</span>
-              <span className="ml-auto text-2xl font-bold">{participant.totalPoints}</span>
+              {participant.lastPointIncrement > 0 && (
+                <span className="font-bold text-green-500">
+                  +{participant.lastPointIncrement.toLocaleString("pt-BR")}
+                </span>
+              )}
+              <span className="ml-auto text-2xl font-bold">
+                {participant.totalPoints.toLocaleString("pt-BR")}
+              </span>
             </div>
           </li>
         ))}

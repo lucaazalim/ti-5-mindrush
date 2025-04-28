@@ -29,10 +29,7 @@ export default auth((request) => {
       "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
     );
 
-    response.headers.set(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization",
-    );
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
   }
 
   return response;

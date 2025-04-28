@@ -203,6 +203,7 @@ export const participants = createTable(
     id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
     nickname: text("nickname").notNull().$type<ParticipantNickname>(),
     totalPoints: integer("total_points").notNull().default(0),
+    lastPointIncrement: integer("last_point_increment").notNull().default(0),
     matchId: uuid("match_id")
       .notNull()
       .references(() => matches.id)

@@ -17,10 +17,9 @@ const Footer = () => {
         </div>
 
         <div className="text-lg font-semibold">
-          © 2025 - MindRush. Este site é um projeto acadêmico fictício
-          desenvolvido para fins educacionais. Nenhuma informação aqui
-          representa uma entidade real. Todas as informações foram geradas por
-          IA.
+          © 2025 - MindRush. Este site é um projeto acadêmico fictício desenvolvido para fins
+          educacionais. Nenhuma informação aqui representa uma entidade real. Todas as informações
+          foram geradas por IA.
         </div>
       </motion.div>
     </div>

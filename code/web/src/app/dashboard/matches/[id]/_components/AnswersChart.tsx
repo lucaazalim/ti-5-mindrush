@@ -1,10 +1,5 @@
-import { Bar, BarChart, Rectangle, XAxis } from "recharts";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "~/components/ui/chart";
+import { Bar, BarChart, LabelList, Rectangle, XAxis } from "recharts";
+import { ChartConfig, ChartContainer } from "~/components/ui/chart";
 import { QUESTION_VISUALS } from "~/lib/constants";
 import { useMatchStore } from "../_store/store-provider";
 
@@ -38,7 +33,6 @@ export default function AnswersChart() {
           axisLine={false}
           tickFormatter={(value) => chartConfig[value as keyof typeof chartConfig]?.label}
         />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
         <Bar
           dataKey="participants"
           strokeWidth={5}
@@ -58,7 +52,14 @@ export default function AnswersChart() {
               />
             );
           }}
-        />
+        >
+          <LabelList
+            position="inside"
+            offset={12}
+            className="fill-foreground text-3xl font-bold"
+            fontSize={12}
+          />
+        </Bar>
       </BarChart>
     </ChartContainer>
   );

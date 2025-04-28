@@ -29,31 +29,27 @@ const TestimonialsColumn = (props: {
       {[
         ...new Array(2).fill(0).map((_, index) => (
           <React.Fragment key={index}>
-            {props.testimonials.map(
-              ({ text, imageSrc, name, username }, id) => (
-                <div
-                  className="w-full max-w-xs rounded-3xl border p-10 shadow-[0_7px_14px_#EAEAEA]"
-                  key={id}
-                >
-                  <div>{text}</div>
-                  <div className="mt-5 flex items-center gap-2">
-                    <Image
-                      src={imageSrc}
-                      alt={name}
-                      className="rounded-full"
-                      width={40}
-                      height={40}
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <div className="font-medium leading-5 tracking-tight">
-                      {name}
-                    </div>
-                    <div className="leading-5 tracking-tight">{username}</div>
-                  </div>
+            {props.testimonials.map(({ text, imageSrc, name, username }, id) => (
+              <div
+                className="w-full max-w-xs rounded-3xl border p-10 shadow-[0_7px_14px_#EAEAEA]"
+                key={id}
+              >
+                <div>{text}</div>
+                <div className="mt-5 flex items-center gap-2">
+                  <Image
+                    src={imageSrc}
+                    alt={name}
+                    className="rounded-full"
+                    width={40}
+                    height={40}
+                  />
                 </div>
-              ),
-            )}
+                <div className="flex flex-col">
+                  <div className="font-medium leading-5 tracking-tight">{name}</div>
+                  <div className="leading-5 tracking-tight">{username}</div>
+                </div>
+              </div>
+            ))}
           </React.Fragment>
         )),
       ]}
@@ -89,16 +85,8 @@ export const Testimonials = () => {
       </div>
       <div className="mt-10 flex max-h-[738px] justify-center gap-6 overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]">
         <TestimonialsColumn testimonials={firstColumn} duration={15} />
-        <TestimonialsColumn
-          testimonials={secondColumn}
-          className="hidden md:block"
-          duration={19}
-        />
-        <TestimonialsColumn
-          testimonials={thirdColumn}
-          className="hidden lg:block"
-          duration={17}
-        />
+        <TestimonialsColumn testimonials={secondColumn} className="hidden md:block" duration={19} />
+        <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={17} />
       </div>
     </section>
   );
