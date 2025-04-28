@@ -5,6 +5,7 @@ import { QuestionWithAlternativesWithoutCorrect } from "~/lib/types";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { selectQuestionWithAlternatives } from "~/server/data/question";
 import { APIError, apiErrorResponse } from "../../api";
+import { hasCurrentQuestion } from "~/lib/utils";
 
 export async function GET(
   req: NextRequest,
@@ -34,7 +35,7 @@ export async function GET(
     });
   }
 
-  if (!match.currentQuestionId) {
+  if (!hasCurrentQuestion(match)) {
     return apiErrorResponse({
       status: 400,
       message: "The match does not have a current question.",

@@ -1,9 +1,10 @@
 import Container from "~/app/dashboard/_components/Container";
+import { hasNextQuestion } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
 import AnswersChart from "./AnswersChart";
-import ParticipantLeaderboard from "./ParticipantLeaderboard";
+import ListLeaderboard from "./ListLeaderboard";
 
-export default function PartialSummary() {
+export default function QuestionSummary() {
   const match = useMatchStore((state) => state.match);
 
   if (!match.currentQuestion) {
@@ -17,14 +18,14 @@ export default function PartialSummary() {
           {match.currentQuestion.question}
         </h1>
       </Container>
-      <div className="grid grid-cols-2 gap-5">
-        <Container>
+      {hasNextQuestion(match) ? (
+        <div className="grid grid-cols-2 gap-5">
           <AnswersChart />
-        </Container>
-        <Container>
-          <ParticipantLeaderboard />
-        </Container>
-      </div>
+          <ListLeaderboard />
+        </div>
+      ) : (
+        <AnswersChart />
+      )}
     </>
   );
 }

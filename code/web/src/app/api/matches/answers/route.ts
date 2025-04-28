@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { uuidParser } from "~/lib/parsers";
 import { isFailure } from "~/lib/result";
+import { hasCurrentQuestion, hasCurrentQuestionTimeEnded } from "~/lib/utils";
 import { insertQuizAnswer, selectQuizAnswer } from "~/server/data/answer";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { selectQuestionWithAlternatives } from "~/server/data/question";
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  if (!match.currentQuestionId || !match.currentQuestionStartedAt || !match.currentQuestionEndsAt) {
+  if (!hasCurrentQuestion(match)) {
     return apiErrorResponse({
       status: 400,
       message: "The match does not have a current question.",
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  if (match.currentQuestionEndsAt < new Date()) {
+  if (hasCurrentQuestionTimeEnded(match)) {
     return apiErrorResponse({
       status: 400,
       message: "The time for answering the question has expired.",

@@ -129,6 +129,9 @@ export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
 
   const updatedMatch = await updateMatch(match.id, {
     status: "ENDED",
+    currentQuestionId: null,
+    currentQuestionStartedAt: null,
+    currentQuestionEndsAt: null,
   });
 
   if (!updatedMatch) {
