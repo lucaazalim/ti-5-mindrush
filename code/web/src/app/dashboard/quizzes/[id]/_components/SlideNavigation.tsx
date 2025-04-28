@@ -3,6 +3,7 @@
 import { Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { type QuestionWithRawAlternatives } from "~/lib/types";
+import BackButton from "~/app/dashboard/_components/BackButton";
 
 interface SlideNavigationProps {
   questions: QuestionWithRawAlternatives[];
@@ -21,9 +22,13 @@ export function SlideNavigation({
 }: SlideNavigationProps) {
   return (
     <aside className="flex min-h-screen w-[200px] flex-col items-center gap-4 overflow-y-auto border-r bg-white px-2 py-6 dark:border-muted dark:bg-background">
-      <Button type="button" onClick={onAdd} className="h-[8px] w-[140px] rounded-sm">
-        Nova questão
-      </Button>
+      <div className="flex flex-col items-center gap-4">
+        <BackButton href="/dashboard/quizzes" className="w-full" />
+
+        <Button type="button" onClick={onAdd} className="h-[8px] w-[140px] rounded-sm">
+          Nova questão
+        </Button>
+      </div>
 
       <div className="flex w-full flex-col items-center gap-4">
         {questions.map((q, index) => (
