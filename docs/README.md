@@ -250,6 +250,7 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 | RF12   | O estudante responde às questões da partida em tempo real.                     | Essencial      | Móvel          |
 | RF13   | O estudante visualiza o ranque de pontuação da partida ao fim de cada questão. | Desejável      | Web            |
 | RF14   | O estudante visualiza o ranque de pontuação final ao fim da partida.           | Desejável      | Web            |
+| RF15   | O educador visualiza as partidas ocorridas anteriormente.                      | Desejável      | Web            |
 
 **Observação:** as colunas "Sprint" e "Status" foram removidas, uma vez que o planejamento e o estado de conclusão de cada requisito estão sendo controlados por meio do [GitHub Projects](https://github.com/orgs/ICEI-PUC-Minas-PPLES-TI/projects/556).
 
