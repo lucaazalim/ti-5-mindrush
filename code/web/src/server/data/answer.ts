@@ -1,18 +1,16 @@
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import { NewQuizAnswer, QuizAnswer, Uuid } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { participants, quizAnswers } from "../db/schema";
+import { quizAnswers } from "../db/schema";
+import { incrementParticipantPoints } from "./participant";
 import { selectQuizByMatchId } from "./quiz";
 
 export async function insertQuizAnswer(quizAnswer: NewQuizAnswer) {
   await db.transaction(async (transaction) => {
     await transaction.insert(quizAnswers).values(quizAnswer);
-    await transaction
-      .update(participants)
-      .set({ totalPoints: sql`${participants.totalPoints} + ${quizAnswer.points}` })
-      .where(eq(participants.id, quizAnswer.participantId));
+    await incrementParticipantPoints(transaction, quizAnswer.participantId, quizAnswer.points);
   });
 }
 

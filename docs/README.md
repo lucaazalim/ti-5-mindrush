@@ -248,8 +248,8 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 | RF10   | O estudante escaneia um código QR para acessar uma partida.                    | Opcional       | Móvel          |
 | RF11   | O estudante informa um apelido que o identificará na partida.                  | Essencial      | Móvel          |
 | RF12   | O estudante responde às questões da partida em tempo real.                     | Essencial      | Móvel          |
-| RF13   | O estudante visualiza o ranque de pontuação da partida ao fim de cada questão. | Desejável      | Móvel          |
-| RF14   | O estudante visualiza o ranque de pontuação final ao fim da partida.           | Desejável      | Móvel          |
+| RF13   | O estudante visualiza o ranque de pontuação da partida ao fim de cada questão. | Desejável      | Web            |
+| RF14   | O estudante visualiza o ranque de pontuação final ao fim da partida.           | Desejável      | Web            |
 
 **Observação:** as colunas "Sprint" e "Status" foram removidas, uma vez que o planejamento e o estado de conclusão de cada requisito estão sendo controlados por meio do [GitHub Projects](https://github.com/orgs/ICEI-PUC-Minas-PPLES-TI/projects/556).
 
@@ -616,9 +616,9 @@ _Inclua o URL do repositório (Github, Bitbucket, etc) onde você armazenou o c�
 
 ## 9.1 Ferramentas
 
-| Ambiente              | Plataforma | Link de Acesso                |
-| --------------------- | ---------- | ----------------------------- |
-| Repositório de código | GitHub     | https://github.com/XXXXXXX    |
-| Hospedagem do site    | Heroku     | https://XXXXXXX.herokuapp.com |
-| Protótipo Interativo  | Figma      | https://www.figma.com/design/DcDtqzVkWQUl8jz5oM1LvG/MindRUSH?node-id=0-1&p=f&t=hCi66TTuAL3XCmL6-0         |
-| Documentação de teste | Github     | https://githun.com/xxxx       |
+| Ambiente              | Plataforma | Link de Acesso                                                                                    |
+| --------------------- | ---------- | ------------------------------------------------------------------------------------------------- |
+| Repositório de código | GitHub     | https://github.com/XXXXXXX                                                                        |
+| Hospedagem do site    | Heroku     | https://XXXXXXX.herokuapp.com                                                                     |
+| Protótipo Interativo  | Figma      | https://www.figma.com/design/DcDtqzVkWQUl8jz5oM1LvG/MindRUSH?node-id=0-1&p=f&t=hCi66TTuAL3XCmL6-0 |
+| Documentação de teste | Github     | https://githun.com/xxxx                                                                           |

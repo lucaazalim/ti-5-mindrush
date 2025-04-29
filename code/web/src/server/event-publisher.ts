@@ -1,6 +1,7 @@
 import Pusher from "pusher";
 import { env } from "~/env";
 import { Participant, Uuid } from "~/lib/types";
+import { getMatchChannel } from "~/lib/utils";
 
 export const pusherSender = new Pusher({
   appId: env.PUSHER_APP_ID,
@@ -44,5 +45,5 @@ export class MatchEndedEvent extends MatchEvent {
 }
 
 export async function callMatchEvent(matchEvent: MatchEvent) {
-  return pusherSender.trigger(`presence-match-${matchEvent.matchId}`, matchEvent.name, matchEvent);
+  return pusherSender.trigger(getMatchChannel(matchEvent.matchId), matchEvent.name, matchEvent);
 }

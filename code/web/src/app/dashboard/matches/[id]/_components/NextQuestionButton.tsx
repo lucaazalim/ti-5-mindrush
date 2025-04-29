@@ -2,6 +2,7 @@ import { CircleArrowRight, SkipForward } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { isFailure } from "~/lib/result";
+import { hasCurrentQuestionTimeEnded, hasNextQuestion } from "~/lib/utils";
 import { nextQuestion } from "~/server/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 
@@ -21,12 +22,9 @@ export function NextQuestionButton() {
     toast("Você avançou para a próxima questão!");
   }
 
-  const hasNextQuestion = match.currentQuestionId !== match.quiz.questions.at(-1)?.id;
-  const timesUp = match.currentQuestionEndsAt && match.currentQuestionEndsAt.getTime() < Date.now();
-
   return (
-    <Button onClick={onNextQuestionButtonClicked} disabled={!hasNextQuestion}>
-      {timesUp ? (
+    <Button onClick={onNextQuestionButtonClicked} disabled={!hasNextQuestion(match)}>
+      {hasCurrentQuestionTimeEnded(match) ? (
         <>
           <CircleArrowRight />
           <span>Próxima questão</span>

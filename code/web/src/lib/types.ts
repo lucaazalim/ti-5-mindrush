@@ -85,7 +85,6 @@ export type QuestionWithAlternativesWithoutCorrect = Question & {
   alternatives: StrictOmit<QuestionAlternative, "isCorrect">[];
 };
 
-
 export type QuestionWithRawAlternatives = Question & {
   alternatives: string[];
   correctAlternativeIndex: number;

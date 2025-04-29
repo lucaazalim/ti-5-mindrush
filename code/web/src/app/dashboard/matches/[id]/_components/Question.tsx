@@ -12,10 +12,6 @@ export default function Question() {
     throw new Error("Match is running but there no current question. How did this happen?");
   }
 
-  const correctAlternative = currentQuestion.alternatives.find(
-    (alternative) => alternative.isCorrect,
-  );
-
   return (
     <>
       <div className="flex items-center justify-between gap-5 rounded-3xl bg-background p-10">

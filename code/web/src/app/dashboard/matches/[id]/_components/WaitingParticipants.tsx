@@ -24,7 +24,7 @@ export default function WaitingParticipants() {
           <div key={participant.id} className="flex flex-row items-center rounded-lg bg-primary/20">
             <div className="rounded-bl-lg rounded-tl-lg bg-primary p-3">
               <Image
-                src={getAvatarUrl(participant.nickname)}
+                src={getAvatarUrl(participant)}
                 className="drop-shadow-lg"
                 alt={`Avatar de ${participant.nickname}`}
                 width={50}

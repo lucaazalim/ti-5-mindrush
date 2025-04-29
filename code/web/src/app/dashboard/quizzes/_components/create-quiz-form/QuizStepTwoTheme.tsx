@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import {
   Select,
@@ -44,10 +38,7 @@ export default function QuizStepTwoTheme() {
             <FormItem className="space-y-1">
               <FormLabel>Dificuldade</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Escolha a dificuldade" />
                   </SelectTrigger>

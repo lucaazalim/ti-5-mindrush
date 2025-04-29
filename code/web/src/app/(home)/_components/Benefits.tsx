@@ -1,9 +1,7 @@
-import React from "react";
-import { Button } from "~/components/ui/button";
+import * as motion from "motion/react-client";
 import Image from "next/image";
 import mobile from "public/home/mobile.png";
-import pc from "public/home/pc.png"
-import * as motion from "motion/react-client";
+import { Button } from "~/components/ui/button";
 
 const Benefits = () => {
   return (
@@ -26,8 +24,8 @@ const Benefits = () => {
           viewport={{ once: true }}
           className="pb-28 text-[25px]"
         >
-          Veja como a Mind<span className="italic">Rush</span> pode revolucionar
-          a forma de ensinar e aprender.
+          Veja como a Mind<span className="italic">Rush</span> pode revolucionar a forma de ensinar
+          e aprender.
         </motion.div>
 
         <div className="flex gap-10">
@@ -58,12 +56,8 @@ const Benefits = () => {
                 viewport={{ once: true }}
                 className="mb-8 flex items-center gap-5"
               >
-                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">
-                  1
-                </p>
-                <p className="text-lg font-semibold">
-                  Crie quizzes em menos de 3 minutos
-                </p>
+                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">1</p>
+                <p className="text-lg font-semibold">Crie quizzes em menos de 3 minutos</p>
               </motion.div>
 
               <motion.div
@@ -73,12 +67,8 @@ const Benefits = () => {
                 viewport={{ once: true }}
                 className="mb-8 flex items-center gap-5"
               >
-                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">
-                  2
-                </p>
-                <p className="text-lg font-semibold">
-                  Acompanhamento em tempo real
-                </p>
+                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">2</p>
+                <p className="text-lg font-semibold">Acompanhamento em tempo real</p>
               </motion.div>
               <motion.div
                 initial={{ x: +100, opacity: 0 }}
@@ -87,12 +77,8 @@ const Benefits = () => {
                 viewport={{ once: true }}
                 className="mb-8 flex items-center gap-5"
               >
-                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">
-                  3
-                </p>
-                <p className="text-lg font-semibold">
-                  + Engajamento e interatividade
-                </p>
+                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">3</p>
+                <p className="text-lg font-semibold">+ Engajamento e interatividade</p>
               </motion.div>
 
               <motion.div
@@ -102,12 +88,8 @@ const Benefits = () => {
                 viewport={{ once: true }}
                 className="mb-24 flex items-center gap-5"
               >
-                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">
-                  4
-                </p>
-                <p className="text-lg font-semibold">
-                  Economia de tempo para você!
-                </p>
+                <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">4</p>
+                <p className="text-lg font-semibold">Economia de tempo para você!</p>
               </motion.div>
 
               <motion.div
@@ -131,9 +113,7 @@ const Benefits = () => {
           transition={{ duration: 1, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <p className="text-[40px]">
-            A solução das aulas chatas e entediantes!
-          </p>
+          <p className="text-[40px]">A solução das aulas chatas e entediantes!</p>
         </motion.div>
       </div>
     </div>

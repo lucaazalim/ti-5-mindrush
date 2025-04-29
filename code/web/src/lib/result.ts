@@ -26,10 +26,7 @@ export function isFailure<T, E>(result: Result<T, E>): result is Failure<E> {
   return result._tag === "Failure";
 }
 
-export function map<T, E, U>(
-  result: Result<T, E>,
-  f: (value: T) => U,
-): Result<U, E> {
+export function map<T, E, U>(result: Result<T, E>, f: (value: T) => U): Result<U, E> {
   return isSuccess(result) ? succeed(f(result.data)) : result;
 }
 

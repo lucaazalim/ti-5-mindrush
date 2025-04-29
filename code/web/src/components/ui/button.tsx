@@ -45,16 +45,7 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      className,
-      variant,
-      size,
-      disabled,
-      loading = false,
-      children,
-      asChild = false,
-      ...props
-    },
+    { className, variant, size, disabled, loading = false, children, asChild = false, ...props },
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
@@ -75,9 +66,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={loading || disabled}
         {...props}
       >
-        {loading && (
-          <LoaderCircle data-loader={true} className="absolute animate-spin" />
-        )}
+        {loading && <LoaderCircle data-loader={true} className="absolute animate-spin" />}
         <Slottable>{children}</Slottable>
       </Comp>
     );

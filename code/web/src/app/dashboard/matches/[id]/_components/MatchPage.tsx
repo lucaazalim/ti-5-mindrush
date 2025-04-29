@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import pusherClient from "~/lib/pusher-client";
 import { MatchStatus } from "~/lib/types";
+import { getMatchChannel } from "~/lib/utils";
 import EndedPage from "./EndedPage";
 import RunningPage from "./RunningPage";
 import WaitingPage from "./WaitingPage";
@@ -19,7 +20,7 @@ export default function MatchPage() {
   const setChannel = useMatchStore((state) => state.setChannel);
 
   useEffect(() => {
-    const channelName = `presence-match-${match.id}`;
+    const channelName = getMatchChannel(match.id);
     const channel = pusherClient.subscribe(channelName);
 
     setChannel(channel);

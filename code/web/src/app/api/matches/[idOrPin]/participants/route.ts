@@ -5,6 +5,7 @@ import { APIError, apiErrorResponse } from "~/app/api/api";
 import { env } from "~/env";
 import { participantNicknameParser } from "~/lib/parsers";
 import { isMatchPin, isUuid, Participant } from "~/lib/types";
+import { getAvatarUrl } from "~/lib/utils";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { existsParticipantWithNickname, insertParticipant } from "~/server/data/participant";
 import { callMatchEvent, NewParticipantEvent } from "~/server/event-publisher";
@@ -15,6 +16,7 @@ const payloadParser = z.object({
 
 type CreatedParticipant = Participant & {
   token: string;
+  avatarUrl: string;
 };
 
 export async function POST(
@@ -44,8 +46,8 @@ export async function POST(
   if (match.status !== "WAITING") {
     return apiErrorResponse({
       status: 400,
-      message: "The match is already running.",
-      code: "match_already_running",
+      message: "Match is already running or has already ended.",
+      code: "match_not_waiting",
     });
   }
 
@@ -90,6 +92,7 @@ export async function POST(
     {
       ...createdParticipant,
       token,
+      avatarUrl: getAvatarUrl(createdParticipant),
     },
     { status: 200 },
   );

@@ -8,6 +8,8 @@ import 'package:mindrush/modules/lobby/data/participant.dart';
 import 'package:mindrush/modules/lobby/logic/api/lobby_service.dart';
 import 'package:mindrush/modules/lobby/presentation/lobby_page.dart';
 import 'package:mindrush/modules/match/data/question.dart';
+import 'package:mindrush/modules/match/logic/api/match_service.dart';
+import 'package:mindrush/modules/match/presentation/question_timer.dart';
 
 
 import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart';
@@ -35,15 +37,17 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
 
   late PusherService _pusherService;
 
-  bool respondido = false;
-  String? respostaSelecionada;
+  bool answered = false;
+  String? selectedAnswer;
 
-  void responder(String resposta) {
+  void answerQuestion(String selectedAnswerId) {
 
     setState(() {
-      respondido = true;
-      respostaSelecionada = resposta;
+      answered = true;
+      selectedAnswer = selectedAnswerId;
     });
+
+    MatchService.answerQuestion(widget.participant, selectedAnswerId);
 
   }
 
@@ -81,6 +85,7 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
       body: SafeArea(
         child: Column(
           children: [
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
               child: Text(
@@ -93,6 +98,29 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                 textAlign: TextAlign.center,
               ),
             ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: QuestionTimer(
+                initialTime: widget.question.timeLimit, // Tempo inicial em segundos
+                onTimeExpired: () {
+
+                  if (!answered) {
+                    setState(() => answered = true);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LobbyPage(
+                          participant: widget.participant,
+                        ),
+                      ),
+                    );
+                  }
+
+                },
+              ),
+            ),
+
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -116,7 +144,9 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            onPressed: respondido ? null : (){
+                            onPressed: answered ? null : (){
+
+                              answerQuestion(alternative.id);
 
                               Navigator.pushReplacement(
                                 context,

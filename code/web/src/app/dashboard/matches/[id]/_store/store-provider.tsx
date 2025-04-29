@@ -10,18 +10,13 @@ import {
 
 export type MatchStoreApi = ReturnType<typeof createMatchStore>;
 
-export const MatchStoreContext = createContext<MatchStoreApi | undefined>(
-  undefined,
-);
+export const MatchStoreContext = createContext<MatchStoreApi | undefined>(undefined);
 
 export type MatchStoreProviderProps = MatchState & {
   children: ReactNode;
 };
 
-export const MatchStoreProvider = ({
-  children,
-  ...props
-}: MatchStoreProviderProps) => {
+export const MatchStoreProvider = ({ children, ...props }: MatchStoreProviderProps) => {
   const storeRef = useRef<MatchStoreApi>(undefined);
 
   if (!storeRef.current) {
@@ -29,9 +24,7 @@ export const MatchStoreProvider = ({
   }
 
   return (
-    <MatchStoreContext.Provider value={storeRef.current}>
-      {children}
-    </MatchStoreContext.Provider>
+    <MatchStoreContext.Provider value={storeRef.current}>{children}</MatchStoreContext.Provider>
   );
 };
 
