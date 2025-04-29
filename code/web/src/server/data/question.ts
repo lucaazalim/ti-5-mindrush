@@ -58,10 +58,7 @@ export async function saveQuestionsAndAlternatives(
   data: RawQuestionsWithAlternatives,
 ): Promise<void> {
   const session = await auth();
-
-  if (!session) {
-    return unauthorized();
-  }
+  if (!session) return unauthorized();
 
   const existingQuestions = await db
     .select({ id: questions.id })
@@ -70,45 +67,76 @@ export async function saveQuestionsAndAlternatives(
 
   const existingQuestionIds = existingQuestions.map((q) => q.id);
 
-  if (existingQuestionIds.length > 0) {
-    await db.delete(questionAlternatives).where(
-      inArray(questionAlternatives.questionId, existingQuestionIds),
-    );
+  const incomingQuestionIds = data.questions
+    .map((q) => q.id)
+    .filter((id): id is Uuid => !!id);
 
-    await db.delete(questions).where(
-      inArray(questions.id, existingQuestionIds),
+  const toDelete = existingQuestionIds.filter(
+    (id) => !incomingQuestionIds.includes(id),
+  );
+
+  if (toDelete.length > 0) {
+    await db.delete(questionAlternatives).where(
+      inArray(questionAlternatives.questionId, toDelete),
     );
+    await db.delete(questions).where(inArray(questions.id, toDelete));
   }
 
-  let nextOrder = 0;
+  let order = 0;
 
-  for (const parsedQuestion of data.questions) {
-    const createdQuestion = (
-      await db
+  for (const q of data.questions) {
+    const questionData = {
+      question: q.question,
+      type: q.type,
+      timeLimit: 20,
+      image: q.image ?? null,
+      order: order++,
+    };
+
+    if (!q.id || !existingQuestionIds.includes(q.id)) {
+      const [createdQuestion] = await db
         .insert(questions)
-        .values({
-          quizId,
-          question: parsedQuestion.question,
-          type: parsedQuestion.type,
-          timeLimit: 20,
-          image: parsedQuestion.image ?? null,
-          order: nextOrder++,
-        })
-        .returning()
-    )[0];
+        .values({ quizId, ...questionData })
+        .returning();
 
-    if (!createdQuestion) continue;
+      if (!createdQuestion) {
+        throw new Error("Erro ao criar questão.");
+      }
 
-    const alternatives: NewQuestionAlternative[] = parsedQuestion.alternatives.map(
-      (answer, index) => ({
-        questionId: createdQuestion.id,
-        answer,
-        isCorrect: index === parsedQuestion.correctAlternativeIndex,
-        order: index,
-      }),
-    );
+      const questionId = createdQuestion.id;
 
-    await db.insert(questionAlternatives).values(alternatives);
+      const alternatives: NewQuestionAlternative[] = q.alternatives.map(
+        (answer, index) => ({
+          questionId,
+          answer,
+          isCorrect: index === q.correctAlternativeIndex,
+          order: index,
+        }),
+      );
+
+      await db.insert(questionAlternatives).values(alternatives);
+    } else {
+      const questionId = q.id;
+
+      await db.update(questions)
+        .set(questionData)
+        .where(eq(questions.id, questionId));
+
+      await db.delete(questionAlternatives).where(
+        eq(questionAlternatives.questionId, questionId),
+      );
+
+      const alternatives: NewQuestionAlternative[] = q.alternatives.map(
+        (answer, index) => ({
+          questionId,
+          answer,
+          isCorrect: index === q.correctAlternativeIndex,
+          order: index,
+        }),
+      );
+
+      await db.insert(questionAlternatives).values(alternatives);
+    }
   }
 }
 

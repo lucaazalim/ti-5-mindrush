@@ -87,15 +87,17 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
   const handleSubmit = async () => {
     const result = await createQuestionsAndAlternatives({
       quizId,
-      questions: questions.map((question) => ({
-        id: question.id,
-        question: question.question,
-        order: question.order,
-        alternatives: question.alternatives,
-        correctAlternativeIndex: question.correctAlternativeIndex,
-        type: question.type,
-        image: question.image ?? null,
-      })),
+      questions: questions.map((question) => {
+        return {
+          ...(question.id ? { id: question.id } : {}),
+          question: question.question,
+          order: question.order,
+          type: question.type,
+          image: question.image ?? null,
+          alternatives: question.alternatives,
+          correctAlternativeIndex: question.correctAlternativeIndex,
+        };
+      }),
     });
 
     if (isFailure(result)) {

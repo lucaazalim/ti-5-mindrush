@@ -25,15 +25,13 @@ export const questionAndAlternativesParser = z.object({
   quizId: uuidParser,
   questions: z.array(
     z.object({
-      question: z.string().min(3, "A questão deve conter pelo menos 3 caracteres."),
-      order: z.number().nonnegative().int(),
-      alternatives: z
-        .array(z.string().min(1, "A alternativa deve conter pelo menos 1 caractere."))
-        .min(2, "A questão deve ter pelo menos 2 alternativas.")
-        .max(4, "A questão deve ter no máximo 4 alternativas."),
-      correctAlternativeIndex: z.number().min(0),
+      id: uuidParser.optional(),
+      question: z.string().min(1),
       type: z.enum(QUESTION_TYPES),
-      image: z.string().url().nullable().optional(),
+      order: z.number(),
+      image: z.string().nullable().optional(),
+      alternatives: z.array(z.string()),
+      correctAlternativeIndex: z.number(),
     }),
   ),
 });
