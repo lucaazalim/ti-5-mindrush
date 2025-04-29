@@ -3,8 +3,11 @@
 import { z } from "zod";
 import { updateQuizParser, uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
-import { isUuid, type NewQuiz, type Quiz, type UpdateQuiz } from "~/lib/types";
+import { isUuid, type Quiz, type UpdateQuiz } from "~/lib/types";
 import { deleteQuiz, insertQuiz, updateQuiz } from "../data/quiz";
+import { generateQuizByTheme } from "../../lib/openai";
+import { createQuestionsAndAlternatives } from "./question";
+import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 
 const quizSchema = z.object({
   educatorId: uuidParser,
@@ -17,8 +20,16 @@ const quizSchema = z.object({
   pdfBase64: z.string().optional(),
 });
 
-export async function createQuiz(quizData: NewQuiz): Promise<Result<Quiz, string>> {
+export async function createQuiz(quizData: z.infer<typeof quizCreateSchema>): Promise<Result<Quiz, string>> {
   const parsedData = quizSchema.safeParse(quizData);
+
+  console.log("quizData", quizData);
+
+  if (quizData.type === "THEME_GENERATED") {
+    const rawQuestionsWithAlternatives = generateQuizByTheme(quizData);
+    console.log("rawQuestionsWithAlternatives", rawQuestionsWithAlternatives);
+    await createQuestionsAndAlternatives(rawQuestionsWithAlternatives);
+  }
 
   if (!parsedData.success) {
     return fail("Os dados informados para a criação do quiz são inválidos.");

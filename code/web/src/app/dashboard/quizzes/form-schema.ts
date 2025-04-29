@@ -19,7 +19,7 @@ const blankSchema = z.object({
   type: z.literal("BLANK"),
 });
 
-const aiGeneratedSchema = z.object({
+export const aiGeneratedSchema = z.object({
   ...baseFields,
   type: z.literal("THEME_GENERATED"),
   theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres"),
