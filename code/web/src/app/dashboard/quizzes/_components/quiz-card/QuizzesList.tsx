@@ -1,5 +1,6 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
@@ -16,17 +17,25 @@ interface QuizzesListProps {
 export default function QuizzesList({ quizzes }: QuizzesListProps) {
   const router = useRouter();
 
-  const newMatch = async (quizId: Uuid) => {
-    const result = await createMatch(quizId);
+  const mutation = useMutation({
+    mutationFn: createMatch,
+    onSuccess: (result) => {
+      if (isFailure(result)) {
+        toast.error("Erro ao criar partida: " + result.error);
+        return;
+      }
 
-    if (isFailure(result)) {
-      toast.error("Erro ao criar partida: " + result.error);
-      return;
-    }
+      toast.success("Partida criada com sucesso!");
+      router.push(ROUTES.MATCH(result.data.id));
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-    toast.success("Partida criada com sucesso!");
-    router.push(ROUTES.MATCH(result.data.id));
-  };
+  function newMatch(quizId: Uuid) {
+    mutation.mutate(quizId);
+  }
 
   return (
     <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -48,7 +57,11 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
                     Acompanhar partida
                   </Button>
                 ) : (
-                  <Button className="mt-4 h-11" onClick={() => newMatch(quiz.id)}>
+                  <Button
+                    className="mt-4 h-11"
+                    onClick={() => newMatch(quiz.id)}
+                    loading={mutation.isPending}
+                  >
                     Criar Partida
                   </Button>
                 )}

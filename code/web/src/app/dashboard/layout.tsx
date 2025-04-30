@@ -4,8 +4,9 @@ import { type Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ReactNode } from "react";
 import { Toaster } from "sonner";
-import ThemeProviderWrapper from "./_components/ThemeProviderWrapper";
 import Header from "./_components/header/Header";
+import QueryProvider from "./_components/QueryProvider";
+import ThemeProviderWrapper from "./_components/ThemeProviderWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,8 +25,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
     >
       <body className="bg-[var(--color-ice)] dark:bg-black">
         <ThemeProviderWrapper>
-          <Header />
-          {children}
+          <QueryProvider>
+            <Header />
+            {children}
+          </QueryProvider>
         </ThemeProviderWrapper>
         <Toaster richColors />
       </body>

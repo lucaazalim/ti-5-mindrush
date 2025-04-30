@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import Image from "next/image";
 import Container from "~/app/dashboard/_components/Container";
+import { useSound } from "~/lib/hooks";
 import { cn, getAvatarUrl } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
 
@@ -42,6 +43,9 @@ const metadata: [PodiumMetadata, PodiumMetadata, PodiumMetadata] = [
 export default function ParticipantPodium() {
   const match = useMatchStore((state) => state.match);
 
+  const popSound = useSound("pop.mp3");
+  const trumpetSound = useSound("trumpet.mp3");
+
   return (
     <Container className="flex h-[28rem] items-end justify-center gap-10 p-10">
       {match.participants.slice(0, 3).map((participant, index) => {
@@ -58,6 +62,7 @@ export default function ParticipantPodium() {
               duration: meta.liftDuration,
               type: "spring",
             }}
+            onAnimationComplete={() => (index === 0 ? trumpetSound() : popSound())}
             key={participant.id}
             className={cn("w-[13rem] rounded-t-3xl bg-gradient-to-b text-white", meta.className)}
           >
@@ -72,7 +77,7 @@ export default function ParticipantPodium() {
               className="-mt-16 flex flex-col items-center justify-start gap-3"
             >
               <motion.div
-                initial={{ scale: 0.9 }}
+                initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
                 transition={{
                   delay: meta.liftDelay + meta.liftDuration,

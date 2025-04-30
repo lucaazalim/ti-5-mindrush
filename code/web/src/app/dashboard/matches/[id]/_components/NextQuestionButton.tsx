@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { CircleArrowRight, SkipForward } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
@@ -10,20 +11,32 @@ export function NextQuestionButton() {
   const match = useMatchStore((state) => state.match);
   const setMatch = useMatchStore((state) => state.setMatch);
 
-  async function onNextQuestionButtonClicked() {
-    const result = await nextQuestion(match.id);
+  const mutation = useMutation({
+    mutationFn: nextQuestion,
+    onSuccess: (result) => {
+      if (isFailure(result)) {
+        toast.error(result.error);
+        return;
+      }
 
-    if (isFailure(result)) {
-      toast.error(result.error);
-      return;
-    }
+      setMatch(result.data);
+      toast("Você avançou para a próxima questão!");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-    setMatch(result.data);
-    toast("Você avançou para a próxima questão!");
+  function onNextQuestionButtonClicked() {
+    mutation.mutate(match.id);
   }
 
   return (
-    <Button onClick={onNextQuestionButtonClicked} disabled={!hasNextQuestion(match)}>
+    <Button
+      onClick={onNextQuestionButtonClicked}
+      disabled={!hasNextQuestion(match)}
+      loading={mutation.isPending}
+    >
       {hasCurrentQuestionTimeEnded(match) ? (
         <>
           <CircleArrowRight />

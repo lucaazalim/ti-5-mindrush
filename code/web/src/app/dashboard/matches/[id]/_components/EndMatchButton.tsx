@@ -1,4 +1,5 @@
 import { DialogClose } from "@radix-ui/react-dialog";
+import { useMutation } from "@tanstack/react-query";
 import { CircleX } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
@@ -20,16 +21,24 @@ export function EndMatchButton() {
   const setMatch = useMatchStore((state) => state.setMatch);
   const match = useMatchStore((state) => state.match);
 
-  async function handleConfirm() {
-    const result = await endMatch(match.id);
+  const mutation = useMutation({
+    mutationFn: endMatch,
+    onSuccess: (result) => {
+      if (isFailure(result)) {
+        toast.error(result.error);
+        return;
+      }
 
-    if (isFailure(result)) {
-      toast.error(result.error);
-      return;
-    }
+      setMatch({ ...match, ...result.data });
+      toast("Partida encerrada!");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-    setMatch({ ...match, ...result.data });
-    toast("Partida encerrada!");
+  function handleConfirm() {
+    mutation.mutate(match.id);
   }
 
   return hasNextQuestion(match) ? (
@@ -37,7 +46,7 @@ export function EndMatchButton() {
       <DialogTrigger asChild>
         <Button variant="outline" className="grow">
           <CircleX />
-          Interromper partida
+          Encerrar partida
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -51,14 +60,14 @@ export function EndMatchButton() {
           <DialogClose asChild>
             <Button variant="outline">Cancelar</Button>
           </DialogClose>
-          <Button variant="destructive" onClick={handleConfirm}>
+          <Button variant="destructive" onClick={handleConfirm} loading={mutation.isPending}>
             Encerrar
           </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
   ) : (
-    <Button variant="outline" className="grow" onClick={handleConfirm}>
+    <Button variant="outline" className="grow" onClick={handleConfirm} loading={mutation.isPending}>
       <CircleX />
       Encerrar partida
     </Button>

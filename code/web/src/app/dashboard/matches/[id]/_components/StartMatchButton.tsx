@@ -1,7 +1,7 @@
+import { useMutation } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
-import { useSound } from "~/lib/hooks";
 import { isFailure } from "~/lib/result";
 import { startMatch } from "~/server/actions/match";
 import { useMatchStore } from "../_store/store-provider";
@@ -9,22 +9,28 @@ import { useMatchStore } from "../_store/store-provider";
 export function StartMatchButton() {
   const setMatch = useMatchStore((state) => state.setMatch);
   const match = useMatchStore((state) => state.match);
-  const startSound = useSound("start.mp3");
 
-  async function onStartMatchButtonClicked() {
-    const result = await startMatch(match.id);
+  const mutation = useMutation({
+    mutationFn: startMatch,
+    onSuccess: (result) => {
+      if (isFailure(result)) {
+        toast.error(result.error);
+        return;
+      }
 
-    if (isFailure(result)) {
-      toast.error(result.error);
-      return;
-    }
+      setMatch(result.data);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
 
-    setMatch(result.data);
-    startSound();
+  function onStartMatchButtonClicked() {
+    mutation.mutate(match.id);
   }
 
   return (
-    <Button className="grow" onClick={onStartMatchButtonClicked}>
+    <Button className="grow" onClick={onStartMatchButtonClicked} loading={mutation.isPending}>
       <Play />
       Iniciar partida
     </Button>

@@ -17,7 +17,7 @@ export default function SoundEffectsPlayer() {
   });
 
   useEffect(() => {
-    return subscribeToEvent(channel, "question-answered-event", startSound);
+    return subscribeToEvent(channel, "question-answered-event", popSound);
   });
 
   return null;
