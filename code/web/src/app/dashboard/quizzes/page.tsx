@@ -21,7 +21,7 @@ export default async function Page() {
   return (
     <Main>
       <div className="flex flex-row justify-between">
-        <PageTitle className="mt-1">Meus quizzes</PageTitle>
+        <PageTitle className="mt-1">Seus quizzes</PageTitle>
         <CreateQuizModal educatorId={(session.user.id as Uuid) ?? ""} />
       </div>
 
