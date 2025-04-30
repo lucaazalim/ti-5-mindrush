@@ -30,7 +30,12 @@ export function StartMatchButton() {
   }
 
   return (
-    <Button className="grow" onClick={onStartMatchButtonClicked} loading={mutation.isPending}>
+    <Button
+      className="grow"
+      onClick={onStartMatchButtonClicked}
+      disabled={match.participants.length < 1}
+      loading={mutation.isPending}
+    >
       <Play />
       Iniciar partida
     </Button>
