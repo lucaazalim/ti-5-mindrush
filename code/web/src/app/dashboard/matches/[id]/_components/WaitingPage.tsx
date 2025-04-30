@@ -1,5 +1,6 @@
 "use client";
 
+import { Download } from "lucide-react";
 import Image from "next/image";
 import BackButton from "~/app/dashboard/_components/BackButton";
 import Container from "~/app/dashboard/_components/Container";
@@ -19,17 +20,23 @@ export default function WaitingPage() {
     <Main className="flex flex-col gap-5">
       <BackButton href={ROUTES.QUIZZES} className="w-fit" />
       <QuizDescription />
-      <div className="flex flex-row gap-5">
-        <Container className="flex-grow content-center p-10">
-          <h1 className="">PIN da partida</h1>
-          <h2 className="text-5xl font-bold">{match.pin}</h2>
+      <div className="grid grid-cols-[0.4fr,0.4fr,0.2fr] gap-5">
+        <Container className="flex-grow content-center p-10 text-xl">
+          <Download className="mr-1.5 inline" />
+          <span>
+            Baixe o app <span className="font-bold">MindRush</span> para participar desta partida.
+          </span>
         </Container>
-        <Container className="flex flex-row items-center justify-between gap-5 p-1">
+        <Container className="flex flex-col items-center justify-center p-10">
+          <span>PIN da partida</span>
+          <span className="text-5xl font-black">{match.pin}</span>
+        </Container>
+        <Container className="flex flex-row items-center justify-center gap-5 p-1">
           <Image
             src={qrcode}
             alt="QR Code"
-            width={160}
-            height={160}
+            width={180}
+            height={180}
             className="rounded-lg dark:invert"
           />
         </Container>
