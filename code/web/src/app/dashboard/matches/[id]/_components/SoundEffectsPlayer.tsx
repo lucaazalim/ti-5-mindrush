@@ -16,5 +16,9 @@ export default function SoundEffectsPlayer() {
     return subscribeToEvent(channel, "next-match-question-event", startSound);
   });
 
+  useEffect(() => {
+    return subscribeToEvent(channel, "question-answered-event", startSound);
+  });
+
   return null;
 }

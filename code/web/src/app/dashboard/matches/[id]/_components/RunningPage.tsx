@@ -12,7 +12,7 @@ import { useMatchStore } from "../_store/store-provider";
 import CountdownBar from "./CountdownBar";
 import { EndMatchButton } from "./EndMatchButton";
 import { NextQuestionButton } from "./NextQuestionButton";
-import ParticipantsList from "./ParticipantsList";
+import ParticipantList from "./ParticipantList";
 import Question from "./Question";
 import QuestionSummary from "./QuestionSummary";
 
@@ -63,7 +63,7 @@ export default function RunningPage() {
         </>
       )}
       <Container className="grid grid-cols-4 gap-3">
-        <ParticipantsList />
+        <ParticipantList />
         <NextQuestionButton />
         <EndMatchButton />
       </Container>

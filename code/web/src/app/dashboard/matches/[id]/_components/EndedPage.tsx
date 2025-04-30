@@ -2,8 +2,8 @@ import BackButton from "~/app/dashboard/_components/BackButton";
 import Container from "~/app/dashboard/_components/Container";
 import Main from "~/app/dashboard/_components/Main";
 import { useMatchStore } from "../_store/store-provider";
-import ListLeaderboard from "./ListLeaderboard";
-import PodiumLeaderboard from "./PodiumLeaderboard";
+import ParticipantLeaderboard from "./ParticipantLeaderboard";
+import ParticipantPodium from "./ParticipantPodium";
 import QuizDescription from "./QuizDescription";
 
 export default function EndedPage() {
@@ -16,8 +16,8 @@ export default function EndedPage() {
       <QuizDescription />
       {hadParticipants ? (
         <>
-          <PodiumLeaderboard />
-          <ListLeaderboard />
+          <ParticipantPodium />
+          <ParticipantLeaderboard fromIndexInclusive={3} toIndexExclusive={10} />
         </>
       ) : (
         <Container>

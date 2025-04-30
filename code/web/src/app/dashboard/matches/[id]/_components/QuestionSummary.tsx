@@ -2,7 +2,7 @@ import Container from "~/app/dashboard/_components/Container";
 import { hasNextQuestion } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
 import AnswersChart from "./AnswersChart";
-import ListLeaderboard from "./ListLeaderboard";
+import ParticipantLeaderboard from "./ParticipantLeaderboard";
 
 export default function QuestionSummary() {
   const match = useMatchStore((state) => state.match);
@@ -21,7 +21,7 @@ export default function QuestionSummary() {
       {hasNextQuestion(match) ? (
         <div className="grid grid-cols-2 gap-5">
           <AnswersChart />
-          <ListLeaderboard />
+          <ParticipantLeaderboard />
         </div>
       ) : (
         <AnswersChart />
