@@ -4,11 +4,11 @@ import { z } from "zod";
 import { APIError, apiErrorResponse } from "~/app/api/api";
 import { env } from "~/env";
 import { participantNicknameParser } from "~/lib/parsers";
+import { publishMatchEvent } from "~/lib/pusher/publisher";
 import { isMatchPin, isUuid, Participant } from "~/lib/types";
 import { getAvatarUrl } from "~/lib/utils";
 import { selectMatchByIdOrPin } from "~/server/data/match";
 import { existsParticipantWithNickname, insertParticipant } from "~/server/data/participant";
-import { callMatchEvent, NewParticipantEvent } from "~/server/event-publisher";
 
 const payloadParser = z.object({
   nickname: participantNicknameParser,
@@ -84,7 +84,9 @@ export async function POST(
     });
   }
 
-  await callMatchEvent(new NewParticipantEvent(createdParticipant));
+  await publishMatchEvent(match.id, "new-participant-event", {
+    participant: createdParticipant,
+  });
 
   const token = jwt.sign(createdParticipant.id, env.PARTICIPANT_TOKEN_SECRET_KEY);
 

@@ -3,13 +3,13 @@
 import { fail, Result, succeed } from "~/lib/result";
 import { MatchStatus, Uuid, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
 import { auth } from "~/server/auth";
+import { publishMatchEvent } from "../../lib/pusher/publisher";
 import {
   insertMatch,
   selectMatchByIdOrPin,
   selectPopulatedMatchById,
   updateMatch,
 } from "../data/match";
-import { callMatchEvent, MatchEndedEvent, NextMatchQuestionEvent } from "../event-publisher";
 
 export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> {
   const session = await auth();
@@ -101,7 +101,7 @@ async function updateCurrentQuestion(
     return fail("Não foi possível avançar para a próxima questão.");
   }
 
-  await callMatchEvent(new NextMatchQuestionEvent(match.id));
+  await publishMatchEvent(match.id, "next-match-question-event");
 
   return succeed({
     ...match,
@@ -138,7 +138,7 @@ export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
     return fail("Não foi possível atualizar a partida.");
   }
 
-  await callMatchEvent(new MatchEndedEvent(match.id));
+  await publishMatchEvent(match.id, "match-ended-event");
 
   return succeed(updatedMatch);
 }

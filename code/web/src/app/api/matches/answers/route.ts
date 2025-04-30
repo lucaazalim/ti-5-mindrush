@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { uuidParser } from "~/lib/parsers";
+import { publishMatchEvent } from "~/lib/pusher/publisher";
 import { isFailure } from "~/lib/result";
 import { hasCurrentQuestion, hasCurrentQuestionTimeEnded } from "~/lib/utils";
 import { insertQuizAnswer, selectQuizAnswer } from "~/server/data/answer";
@@ -127,6 +128,8 @@ export async function POST(req: NextRequest) {
     timeTaken,
     points,
   });
+
+  await publishMatchEvent(matchId, "question-answered-event");
 
   return new NextResponse(null, {
     status: 201,

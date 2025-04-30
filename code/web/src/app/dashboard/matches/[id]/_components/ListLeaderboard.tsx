@@ -10,7 +10,7 @@ export default function ListLeaderboard() {
   return (
     <Container className="flex flex-col gap-3 px-10">
       <ol>
-        {match.participants.slice(0, 10).map((participant, index) => {
+        {match.participants.slice(0, 5).map((participant, index) => {
           const showLastPointIncrement =
             match.currentQuestion && participant.lastPointIncrement > 0;
 

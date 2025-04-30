@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChannelAuthResponse, PresenceChannelData } from "pusher";
 import { APIError, apiErrorResponse, authParticipant } from "~/app/api/api";
+import { pusherSender } from "~/lib/pusher/publisher";
 import { isFailure } from "~/lib/result";
-import { pusherSender } from "~/server/event-publisher";
 
 export async function POST(
   req: NextRequest,

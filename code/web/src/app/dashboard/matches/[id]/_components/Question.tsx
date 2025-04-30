@@ -1,4 +1,5 @@
 import { ReactTyped } from "react-typed";
+import Container from "~/app/dashboard/_components/Container";
 import { QUESTION_VISUALS } from "~/lib/constants";
 import { cn } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
@@ -14,7 +15,14 @@ export default function Question() {
 
   return (
     <>
-      <div className="flex items-center justify-between gap-5 rounded-3xl bg-background p-10">
+      <Container
+        className={cn(
+          "p-10",
+          currentQuestion.image
+            ? "grid grid-cols-2 items-center justify-between gap-5"
+            : "flex justify-center",
+        )}
+      >
         <ReactTyped
           className="text-6xl font-medium drop-shadow-md"
           strings={[currentQuestion.question]}
@@ -31,7 +39,7 @@ export default function Question() {
             />
           </picture>
         )}
-      </div>
+      </Container>
       <div className="grid grid-cols-2 gap-3">
         {currentQuestion.alternatives.map((alternative, index) => {
           const { icon: Icon, colorClassName: color } = QUESTION_VISUALS[index]!;

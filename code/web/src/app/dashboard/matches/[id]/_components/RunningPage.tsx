@@ -38,17 +38,15 @@ export default function RunningPage() {
 
       clearInterval(interval);
 
-      const updateMatch = async () => {
-        const result = await getUpdatedMatch(match.id);
+      getUpdatedMatch(match.id)
+        .then((result) => {
+          if (isFailure(result)) {
+            throw new Error(result.error);
+          }
 
-        if (isFailure(result)) {
-          throw new Error(result.error);
-        }
-
-        setMatch(result.data);
-      };
-
-      updateMatch().catch(console.error);
+          setMatch(result.data);
+        })
+        .catch(console.error);
     }, 100);
 
     return () => clearInterval(interval);
