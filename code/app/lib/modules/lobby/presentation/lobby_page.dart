@@ -79,7 +79,7 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
   @override
   Widget build(BuildContext context) {
     final avatarUrl =
-        'https://api.dicebear.com/9.x/adventurer/png?seed=${widget.participant.nickname}';
+        'https://api.dicebear.com/9.x/bottts/png?seed=${widget.participant.nickname}&textureProbability=0';
 
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
