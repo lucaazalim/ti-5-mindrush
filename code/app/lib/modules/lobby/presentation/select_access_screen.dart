@@ -18,11 +18,11 @@ class SelectAccessScreen extends StatelessWidget {
             children: [
               Image.asset(
                 'assets/images/logo.png',
-                width: 212,
+                width: 160,
               ),
               const SizedBox(height: 40),
               SizedBox(
-                width: 212,
+                width: 200,
                 height: 40,
                 child: ElevatedButton(
                   onPressed: () {
@@ -34,18 +34,18 @@ class SelectAccessScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   child: const Text(
                     "Entrar com PIN",
-                    style: TextStyle(color: Color(0xFF2C2C2C), fontSize: 18),
+                    style: TextStyle(color: Color(0xFF2C2C2C), fontSize: 16),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               SizedBox(
-                width: 212,
+                width: 200,
                 height: 40,
                 child: ElevatedButton(
                   onPressed: () {
@@ -66,14 +66,14 @@ class SelectAccessScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF2C2C2C),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   child: const Text(
                     "Ler QR Code",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 18,
+                      fontSize: 16,
                     ),
                   ),
                 ),

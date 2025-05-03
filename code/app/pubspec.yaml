@@ -68,6 +68,10 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo.png
+    - assets/images/circulo.png
+    - assets/images/losango.png
+    - assets/images/quadrado.png
+    - assets/images/triangulo.png
     - .env
   # To add assets to your application, add an assets section, like this:
   # assets:

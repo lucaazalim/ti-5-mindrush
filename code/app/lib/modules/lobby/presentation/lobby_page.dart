@@ -81,7 +81,6 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
   Widget build(BuildContext context) {
     final avatarUrl = widget.participant.avatarUrl;
 
-    print(avatarUrl);
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
       body: Center(
@@ -91,13 +90,14 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
             children: [
               Image.asset(
                 'assets/images/logo.png',
-                width: 212,
+                width: 160,
               ),
               const SizedBox(height: 40),
               // Avatar gerado por nickname
               Container(
                 width: 100,
                 height: 100,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
@@ -105,7 +105,9 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
                 child: ClipOval(
                   child: SvgPicture.network(
                     avatarUrl,
-                    fit: BoxFit.cover,
+                    width:80,
+                    height: 80,
+                    fit: BoxFit.scaleDown,
                     placeholderBuilder: (context) => CircularProgressIndicator(),
                   ),
                 ),
@@ -116,21 +118,20 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
                 style: const TextStyle(
                   fontSize: 24,
                   color: Colors.white,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-              const SizedBox(height: 30),
-              const CircularProgressIndicator(
-                color: Colors.white,
-              ),
+              // const SizedBox(height: 30),
+              // const CircularProgressIndicator(
+              //   color: Colors.white,
+              // ),
               const SizedBox(height: 20),
               const Text(
-                'Aguarde...',
+                'Aguarde a partida iniciar...',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],

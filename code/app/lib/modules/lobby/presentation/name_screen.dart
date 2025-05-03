@@ -77,7 +77,8 @@ class _NameScreenState extends State<NameScreen> {
       Navigator.pop(context); // Garante que o loading seja fechado em caso de erro
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Erro ao registrar participante: $e'),
+          //content: Text('Erro ao registrar participante: $e'),
+          content: Text('Erro ao registrar participante. Tente novamente!'),
           backgroundColor: Colors.red,
         ),
       );
@@ -100,11 +101,11 @@ class _NameScreenState extends State<NameScreen> {
                 children: [
                   Image.asset(
                     'assets/images/logo.png',
-                    width: 212,
+                    width: 160,
                   ),
                   const SizedBox(height: 40),
                   Container(
-                    width: 212,
+                    width: 200,
                     height: 40,
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
@@ -123,7 +124,7 @@ class _NameScreenState extends State<NameScreen> {
                       decoration: InputDecoration(
                         floatingLabelAlignment: FloatingLabelAlignment.start,
                         floatingLabelBehavior: FloatingLabelBehavior.never,
-                        labelText: "Apelido",
+                        labelText: "Insira o seu apelido",
                         labelStyle: const TextStyle(
                           color: Colors.black87,
                           fontSize: 18,
@@ -151,16 +152,26 @@ class _NameScreenState extends State<NameScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF2C2C2C),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                       child: const Text(
-                        'Prosseguir',
+                        'Avançar',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
                         ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: const Text(
+                      "Por segurança, não insira seu nome real!",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                   ),

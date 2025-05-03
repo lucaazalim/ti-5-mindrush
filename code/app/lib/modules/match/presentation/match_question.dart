@@ -51,6 +51,20 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
 
   }
 
+  String _iconePorIndice(int index) {
+    switch (index) {
+      case 0:
+        return 'assets/images/triangulo.png';
+      case 1:
+        return 'assets/images/losango.png'; // Losango
+      case 2:
+        return 'assets/images/circulo.png'; // Círculo preenchido
+      case 3:
+      default:
+        return 'assets/images/quadrado.png'; // Quadrado
+    }
+  }
+
   Color _corPorIndice(int index) {
     const coresFixas = [
       Colors.red,
@@ -81,91 +95,120 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // Fundo branco
+      backgroundColor: const Color(0xFF0060E1),
       body: SafeArea(
         child: Column(
           children: [
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-              child: Text(
-                widget.question.question,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black, // Texto preto
+            if (widget.question.image != null)
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(widget.question.image!, fit: BoxFit.cover),
                 ),
-                textAlign: TextAlign.center,
               ),
-            ),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: QuestionTimer(
-                initialTime: widget.question.timeLimit, // Tempo inicial em segundos
-                onTimeExpired: () {
-
-                  if (!answered) {
-                    setState(() => answered = true);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LobbyPage(
-                          participant: widget.participant,
-                        ),
-                      ),
-                    );
-                  }
-
-                },
-              ),
-            ),
-
+            // Seção branca
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      widget.question.question,
+                      style: const TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
 
-                  children: List.generate(widget.question.alternatives.length, (index) {
-                    final alternative = widget.question.alternatives[index];
-                    final cor = _corPorIndice(index);
+                    const SizedBox(height: 24),
 
-                    return Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: cor,
-                              foregroundColor: Colors.white,
-                              textStyle: const TextStyle(fontSize: 20),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                    // Alternativas
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: widget.question.alternatives.length,
+                        itemBuilder: (context, index) {
+                          final alternative = widget.question.alternatives[index];
+                          final cor = _corPorIndice(index);
+                          final imagePath = _iconePorIndice(index);
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: cor,
+                                foregroundColor: Colors.white,
+                                textStyle: const TextStyle(fontSize: 20),
+                                minimumSize: const Size.fromHeight(70),
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                              ),
+                              onPressed: answered
+                                  ? null
+                                  : () {
+                                answerQuestion(alternative.id);
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LobbyPage(
+                                      participant: widget.participant,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    imagePath,
+                                    height: 40,
+                                    width: 40,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: Text(
+                                      alternative.answer,
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            onPressed: answered ? null : (){
-
-                              answerQuestion(alternative.id);
-
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LobbyPage(
-                                    participant: widget.participant,
-                                  ),
-                                ),
-                              );
-
-                            },
-                            child: Text(alternative.answer, textAlign: TextAlign.center),
-                          ),
-                        ),
+                          );
+                        },
                       ),
-                    );
+                    ),
 
+                    const SizedBox(height: 16),
 
-                  }),
+                    QuestionTimer(
+                      initialTime: widget.question.timeLimit,
+                      onTimeExpired: () {
+                        if (!answered) {
+                          setState(() => answered = true);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LobbyPage(
+                                participant: widget.participant,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
