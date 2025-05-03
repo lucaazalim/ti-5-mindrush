@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:mindrush/modules/lobby/data/participant.dart';
 import 'package:mindrush/modules/match/data/question.dart';
@@ -78,9 +79,9 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
 
   @override
   Widget build(BuildContext context) {
-    final avatarUrl =
-        'https://api.dicebear.com/9.x/bottts/png?seed=${widget.participant.nickname}&textureProbability=0';
+    final avatarUrl = widget.participant.avatarUrl;
 
+    print(avatarUrl);
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
       body: Center(
@@ -94,10 +95,20 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
               ),
               const SizedBox(height: 40),
               // Avatar gerado por nickname
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.white,
-                backgroundImage: NetworkImage(avatarUrl),
+              Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                ),
+                child: ClipOval(
+                  child: SvgPicture.network(
+                    avatarUrl,
+                    fit: BoxFit.cover,
+                    placeholderBuilder: (context) => CircularProgressIndicator(),
+                  ),
+                ),
               ),
               const SizedBox(height: 20),
               Text(
@@ -114,7 +125,7 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Aguardando o início da partida...',
+                'Aguarde...',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,

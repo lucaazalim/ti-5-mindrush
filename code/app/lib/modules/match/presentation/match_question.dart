@@ -67,8 +67,8 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
 
 
     final pusherParams = PusherServiceParams(
-      apiKey: '9341498703db8ab930c9',
-      cluster: 'sa1',
+      apiKey: '181d4fce834f3a2416da',
+      cluster: 'us2',
       channelName: 'presence-match-${widget.participant.matchId}',
       authEndpoint: '$envApiUrl/pusher/auth/participant',
       userToken: widget.participant.token,
