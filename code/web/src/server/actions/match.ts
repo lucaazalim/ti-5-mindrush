@@ -5,6 +5,7 @@ import { MatchStatus, Uuid, type Match, type NewMatch, type PopulatedMatch } fro
 import { auth } from "~/server/auth";
 import { publishMatchEvent } from "../../lib/pusher/publisher";
 import {
+  checkActiveMatchByQuizId,
   insertMatch,
   selectMatchByIdOrPin,
   selectPopulatedMatchById,
@@ -16,6 +17,12 @@ export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> 
 
   if (!session) {
     return fail("Não autenticado.");
+  }
+
+  const existingMatch = await checkActiveMatchByQuizId(quizId);
+
+  if (existingMatch) {
+    return fail("Já existe uma partida em andamento para este quiz.");
   }
 
   const newMatch: NewMatch = {
