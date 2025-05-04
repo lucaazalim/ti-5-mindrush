@@ -1,4 +1,5 @@
 @startuml MindRush
+title Simplified diagram of MindRush's match flow
 
 !define GET <color:blue>GET</color>
 !define POST <color:green>POST</color>
@@ -10,7 +11,6 @@ participant "Mobile App" as MobileApp
 participant "Web App" as WebApp
 participant "Server Actions" as ServerActions
 participant "API" as API
-participant "RabbitMQ Broker" as RabbitMQ
 participant "Pusher (WS/API)" as Pusher
 participant "Database" as DB
 
@@ -44,6 +44,7 @@ note right
 end note
 API -> DB : Insert participant into participants table
 API <-- DB : Created participant data
+API -> Pusher : Publishes <b>new-participant-event</b> to the match's channel
 API -> API : Generate token with participant's ID as the payload
 MobileApp <-- API : Created participant data, and the token
 
@@ -66,17 +67,17 @@ MobileApp <-- Pusher : Connection established
 
 Student <-- MobileApp : Renders the waiting screen
 
-== Match Start ==
+== Educator starts the match ==
 
 Educator -> WebApp : Press "Start Match" button
 WebApp -> ServerActions : startMatch(matchId)
-ServerActions -> DB : Updates match state and current question
+ServerActions -> DB : Updates match
 ServerActions <-- DB
 ServerActions -> Pusher : Publishes <b>next-match-question-event</b> to the match's channel
 WebApp <-- ServerActions : Updated match with the first question
 Educator <-- WebApp : Renders the first question
 
-== First/Next Question ==
+== Student receives a question ==
 
 Pusher -> MobileApp : <b>next-match-question-event</b>
 MobileApp -> API : <b>GET /api/matches/current-question</b>
@@ -84,12 +85,31 @@ note right
     The <b>Authorization: Bearer <participant's token></b> header must be provided.
 end note
 MobileApp <-- API : Current question data with alternatives
-Student <-- MobileApp : Renders the question
+MobileApp -> Student : Renders the question
 
-== Student Answers Question ==
+== Student answers a question ==
 
 Student -> MobileApp : Chooses an alternative
 MobileApp -> API : <b>POST /api/matches/answers</b>
 MobileApp <-- API : OK
+Student <-- MobileApp : Renders waiting screen
+MobileApp -> API : When countdown ends, <b>POST /api/matches/participants/me</b>
+API -> DB : Fetches participant data
+API <-- DB : Participant data, incluiding total and partial points
+MobileApp <-- API : Participant data
+MobileApp -> Student : Shows total and partial points
+
+== Educator ends the match ==
+
+Educator -> WebApp : Press "End Match" button
+WebApp -> ServerActions : endMatch(matchId)
+ServerActions -> DB : Updates match
+ServerActions <-- DB
+ServerActions -> Pusher : Publishes <b>match-ended-event</b> to the match's channel
+WebApp <-- ServerActions : Updated match
+Educator <-- WebApp : Renders the match ended screen
+
+Pusher -> MobileApp : <b>match-ended-event</b>
+MobileApp -> Student : Shows the match ended screen
 
 @enduml
