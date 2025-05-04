@@ -36,7 +36,7 @@ export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | und
   )[0];
 }
 
-export async function selectAllMatches(): Promise<MatchWithQuizTitle[] | undefined> {
+export async function selectAllMatches(): Promise<MatchWithQuizTitle[]> {
   const session = await auth();
 
   if (!session) {
