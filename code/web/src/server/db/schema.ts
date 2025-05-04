@@ -189,6 +189,7 @@ export const matches = createTable(
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
+    finishedAt: timestamp("finished_at"),
   },
   (table) => ({
     uniqueActiveMatchPerQuiz: uniqueIndex("unique_active_match_per_quiz")
