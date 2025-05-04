@@ -36,6 +36,19 @@ export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | und
   )[0];
 }
 
+export async function selectAllMatches(): Promise<Match[] | undefined> {
+  const session = await auth();
+
+  if (!session) {
+    return unauthorized();
+  }
+
+  return await db
+    .select()
+    .from(matches)
+    .orderBy(desc(matches.createdAt));
+}
+
 export async function selectPopulatedMatchById(matchId: Uuid): Promise<PopulatedMatch | undefined> {
   const session = await auth();
 
