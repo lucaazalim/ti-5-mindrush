@@ -1,6 +1,6 @@
-import { and, desc, eq, inArray } from "drizzle-orm";
+import { and, desc, eq, getTableColumns, inArray } from "drizzle-orm";
 import { forbidden, unauthorized } from "next/navigation";
-import { NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
+import { MatchWithQuizTitle, NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
 import { matches, participants, questionAlternatives, questions, quizzes } from "../db/schema";
@@ -36,17 +36,24 @@ export async function selectMatchByIdOrPin(idOrPin: string): Promise<Match | und
   )[0];
 }
 
-export async function selectAllMatches(): Promise<Match[] | undefined> {
+export async function selectAllMatches(): Promise<MatchWithQuizTitle[] | undefined> {
   const session = await auth();
 
   if (!session) {
     return unauthorized();
   }
 
-  return await db
-    .select()
+  const matchesWhithQuizTitle: MatchWithQuizTitle[] = await db
+    .select({
+      ...getTableColumns(matches),
+      quizTitle: getTableColumns(quizzes).title,
+    })
     .from(matches)
+    .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
+    .where(eq(quizzes.educatorId, session.user.id as Uuid))
     .orderBy(desc(matches.createdAt));
+
+  return matchesWhithQuizTitle;
 }
 
 export async function selectPopulatedMatchById(matchId: Uuid): Promise<PopulatedMatch | undefined> {

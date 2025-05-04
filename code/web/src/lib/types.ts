@@ -68,6 +68,10 @@ export type PopulatedMatch = Match & {
   participants: Participant[];
 };
 
+export type MatchWithQuizTitle = Match & {
+  quizTitle: string;
+};
+
 export type QuizWithQuestionCountAndActiveMatch = Quiz & {
   questionCount: number;
   activeMatch: Match | null;
