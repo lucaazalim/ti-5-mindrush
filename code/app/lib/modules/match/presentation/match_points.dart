@@ -2,40 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:async';
 
 import 'package:mindrush/modules/lobby/data/participant.dart';
-import 'package:mindrush/modules/match/data/question.dart';
-import 'package:mindrush/modules/match/presentation/match_question.dart';
 import 'package:mindrush/modules/match/logic/api/match_service.dart';
+import 'package:mindrush/modules/match/presentation/match_question.dart';
 
-import 'package:mindrush/modules/utils/pusher/pusher_service.dart'; // PusherService
-import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart'; // PusherServiceParams
-import 'package:mindrush/modules/utils/pusher/pusher-provider.dart'; // PusherService Provider
-import 'package:mindrush/modules/utils/pusher/event-handler.dart'; // Event Handler
+import 'package:mindrush/modules/utils/pusher/pusher_service.dart';
+import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart';
+import 'package:mindrush/modules/utils/pusher/pusher-provider.dart';
+import 'package:mindrush/modules/utils/pusher/event-handler.dart';
 
 final envApiUrl = dotenv.env['API_URL'];
 final envApiKey = dotenv.env['API_KEY'] ?? "";
 final envCluster = dotenv.env['CLUSTER'] ?? "";
 
 class MatchPointsScreen extends ConsumerStatefulWidget {
-
   final Participant participant;
+  final int remainingTime; // Recebe o tempo restante
 
-  const MatchPointsScreen({super.key, required this.participant});
+  const MatchPointsScreen({super.key, required this.participant, required this.remainingTime});
 
   @override
   _MatchPointsScreenState createState() => _MatchPointsScreenState();
 }
 
 class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
-
   late PusherService _pusherService;
   int totalPoints = 0;
   int lastQuestionPoints = 0;
+  bool _loadingScore = true;
 
   @override
   void initState() {
     super.initState();
+    _startTimerAndFetchScore(widget.remainingTime); // Usa o remainingTime recebido
 
     final pusherParams = PusherServiceParams(
       apiKey: envApiKey,
@@ -51,10 +52,7 @@ class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
 
     handler.on('next-match-question-event', (data) async {
       try {
-        // Fetch the next question
         final openQuestion = await MatchService.fetchCurrentQuestion(widget.participant);
-
-        // Navigate to the match question screen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -69,18 +67,20 @@ class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
       }
     });
 
-    // Fetch the participant's current score
-    _fetchParticipantScore();
-
-    // Connect to Pusher
     _pusherService.connect();
+  }
+
+  Future<void> _startTimerAndFetchScore(int remainingTime) async {
+    await Future.delayed(Duration(seconds: remainingTime));
+    await _fetchParticipantScore();
+    setState(() {
+      _loadingScore = false;
+    });
   }
 
   Future<void> _fetchParticipantScore() async {
     try {
-      // A função para obter a pontuação do participante (ajustar conforme o seu API)
       final response = await MatchService.fetchParticipantData(widget.participant);
-
       setState(() {
         totalPoints = response.totalPoints ?? 0;
         lastQuestionPoints = response.lastPointIncrement ?? 0;
@@ -94,29 +94,48 @@ class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
+
       body: Center(
-        child: SingleChildScrollView(
+        child: _loadingScore
+            ? const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Aguardando resultados...',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        )
+            : SingleChildScrollView(
+          padding: const EdgeInsets.all(24.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-
-              const SizedBox(height: 40),
-              // Avatar gerado por nickname
+              const SizedBox(height: 20),
               Container(
-                width: 100,
-                height: 100,
+                width: 120,
+                height: 120,
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
                 ),
                 child: ClipOval(
                   child: SvgPicture.network(
                     widget.participant.avatarUrl!,
-                    width: 80,
-                    height: 80,
+                    width: 100,
+                    height: 100,
                     fit: BoxFit.scaleDown,
-                    placeholderBuilder: (context) => CircularProgressIndicator(),
+                    placeholderBuilder: (context) => const CircularProgressIndicator(),
                   ),
                 ),
               ),
@@ -124,28 +143,33 @@ class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
               Text(
                 widget.participant.nickname,
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 28,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 40),
-              // Pontuação total
-              Text(
-                'Pontuação Total: $totalPoints',
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 8),
+                  Text(
+                    'Pontuação Total: $totalPoints',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
-              // Pontuação da última pergunta
               Text(
-                'Pontuação da Última Pergunta: $lastQuestionPoints',
-                style: const TextStyle(
+                '(${lastQuestionPoints >= 0 ? '+' : ''}$lastQuestionPoints Pontos na Última Rodada)',
+                style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white,
+                  color: lastQuestionPoints >= 0 ? Colors.lightGreenAccent : Colors.redAccent,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
               const SizedBox(height: 40),
@@ -154,7 +178,7 @@ class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white,
+                  color: Colors.white70,
                 ),
               ),
             ],
