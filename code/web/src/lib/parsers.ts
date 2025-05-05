@@ -28,6 +28,7 @@ export const questionAndAlternativesParser = z.object({
       id: uuidParser.optional(),
       question: z.string().min(1),
       type: z.enum(QUESTION_TYPES),
+      timeLimit: z.number().min(5).max(120),
       order: z.number(),
       image: z.string().nullable().optional(),
       alternatives: z.array(z.string()),

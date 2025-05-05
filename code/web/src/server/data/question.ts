@@ -31,7 +31,7 @@ export async function insertQuestionsAndAlternatives(
           quizId,
           question: parsedQuestion.question,
           type: parsedQuestion.type,
-          timeLimit: 20,
+          timeLimit: parsedQuestion.timeLimit,
           image: parsedQuestion.image ?? null,
           order: nextOrder++,
         })
@@ -88,7 +88,7 @@ export async function saveQuestionsAndAlternatives(
     const questionData = {
       question: q.question,
       type: q.type,
-      timeLimit: 20,
+      timeLimit: q.timeLimit,
       image: q.image ?? null,
       order: order++,
     };

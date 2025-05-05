@@ -93,6 +93,7 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
           question: question.question,
           order: question.order,
           type: question.type,
+          timeLimit: question.timeLimit,
           image: question.image ?? null,
           alternatives: question.alternatives,
           correctAlternativeIndex: question.correctAlternativeIndex,
