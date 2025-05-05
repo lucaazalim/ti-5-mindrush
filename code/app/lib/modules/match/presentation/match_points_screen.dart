@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,33 +8,33 @@ import 'package:mindrush/modules/match/data/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
 import 'package:mindrush/modules/match/logic/api/match_service.dart';
 
-import 'package:mindrush/modules/utils/pusher/pusher_service.dart'; // Importe o seu PusherService
-import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart'; // Importe o seu PusherService
-import 'package:mindrush/modules/utils/pusher/pusher-provider.dart'; // Importe o seu PusherService
-import 'package:mindrush/modules/utils/pusher/event-handler.dart';
+import 'package:mindrush/modules/utils/pusher/pusher_service.dart'; // PusherService
+import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart'; // PusherServiceParams
+import 'package:mindrush/modules/utils/pusher/pusher-provider.dart'; // PusherService Provider
+import 'package:mindrush/modules/utils/pusher/event-handler.dart'; // Event Handler
 
 final envApiUrl = dotenv.env['API_URL'];
 final envApiKey = dotenv.env['API_KEY'] ?? "";
 final envCluster = dotenv.env['CLUSTER'] ?? "";
 
-class LobbyPage extends ConsumerStatefulWidget {
+class MatchPointsScreen extends ConsumerStatefulWidget {
 
   final Participant participant;
 
-  const LobbyPage({super.key, required this.participant});
+  const MatchPointsScreen({super.key, required this.participant});
 
   @override
-  _LobbyPageState createState() => _LobbyPageState();
+  _MatchPointsScreenState createState() => _MatchPointsScreenState();
 }
 
-class _LobbyPageState extends ConsumerState<LobbyPage> {
+class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
 
   late PusherService _pusherService;
-  Question? question;
+  int totalPoints = 0;
+  int lastQuestionPoints = 0;
 
   @override
   void initState() {
-
     super.initState();
 
     final pusherParams = PusherServiceParams(
@@ -53,8 +51,10 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
 
     handler.on('next-match-question-event', (data) async {
       try {
+        // Fetch the next question
         final openQuestion = await MatchService.fetchCurrentQuestion(widget.participant);
 
+        // Navigate to the match question screen
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -65,22 +65,33 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
           ),
         );
       } catch (e) {
-
-        print('Erro ao buscar a questão atual: $e');
-
+        print('Erro ao buscar a próxima questão: $e');
       }
     });
 
-    _pusherService.connect();
+    // Fetch the participant's current score
+    _fetchParticipantScore();
 
+    // Connect to Pusher
+    _pusherService.connect();
   }
 
+  Future<void> _fetchParticipantScore() async {
+    try {
+      // A função para obter a pontuação do participante (ajustar conforme o seu API)
+      final response = await MatchService.fetchParticipantData(widget.participant);
 
+      setState(() {
+        totalPoints = response.totalPoints ?? 0;
+        lastQuestionPoints = response.lastPointIncrement ?? 0;
+      });
+    } catch (e) {
+      print('Erro ao obter a pontuação: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final avatarUrl = widget.participant.avatarUrl;
-
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
       body: Center(
@@ -88,10 +99,7 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/images/logo.png',
-                width: 160,
-              ),
+
               const SizedBox(height: 40),
               // Avatar gerado por nickname
               Container(
@@ -104,8 +112,8 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
                 ),
                 child: ClipOval(
                   child: SvgPicture.network(
-                    avatarUrl!,
-                    width:80,
+                    widget.participant.avatarUrl!,
+                    width: 80,
                     height: 80,
                     fit: BoxFit.scaleDown,
                     placeholderBuilder: (context) => CircularProgressIndicator(),
@@ -121,13 +129,28 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              // const SizedBox(height: 30),
-              // const CircularProgressIndicator(
-              //   color: Colors.white,
-              // ),
+              const SizedBox(height: 40),
+              // Pontuação total
+              Text(
+                'Pontuação Total: $totalPoints',
+                style: const TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 20),
+              // Pontuação da última pergunta
+              Text(
+                'Pontuação da Última Pergunta: $lastQuestionPoints',
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 40),
               const Text(
-                'Aguarde a partida iniciar...',
+                'Aguardando próxima questão...',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -143,7 +166,7 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
 
   @override
   void dispose() {
+    _pusherService.disconnect();
     super.dispose();
   }
-
 }

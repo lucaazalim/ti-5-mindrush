@@ -16,6 +16,8 @@ import 'package:mindrush/modules/utils/pusher/pusher-service-params.dart';
 import 'package:mindrush/modules/utils/pusher/pusher-provider.dart';
 import 'package:mindrush/modules/utils/pusher/pusher_service.dart';
 
+import 'match_points_screen.dart';
+
 final envApiUrl = dotenv.env['API_URL'];
 
 class MatchQuestionScreen extends ConsumerStatefulWidget {
@@ -162,7 +164,7 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => LobbyPage(
+                                    builder: (context) => MatchPointsScreen(
                                       participant: widget.participant,
                                     ),
                                   ),
@@ -200,7 +202,7 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LobbyPage(
+                              builder: (context) => MatchPointsScreen(
                                 participant: widget.participant,
                               ),
                             ),
