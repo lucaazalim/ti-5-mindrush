@@ -30,7 +30,7 @@ export function AnswersManager({
   };
 
   const addAnswer = () => {
-    if ((isVF && answers.length >= 2) || answers.length >= 4) return;
+    if (answers.length >= 4) return;
     onChangeAnswers([...answers, ""]);
   };
 
@@ -52,7 +52,7 @@ export function AnswersManager({
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {answers.map((answer, index) => {
+        {answers.slice(0, isVF ? 2 : answers.length).map((answer, index) => {
           const { icon: Icon, colorClassName: color } = QUESTION_VISUALS[index]!;
 
           return (
@@ -60,7 +60,6 @@ export function AnswersManager({
               <Input
                 value={answer}
                 placeholder={`Resposta ${index + 1}`}
-                disabled={isVF}
                 onChange={(e) => updateAnswer(index, e.target.value)}
                 onClick={() => onChangeCorrectIndex(index)}
                 className={cn(
@@ -82,11 +81,11 @@ export function AnswersManager({
                 <Icon className="h-4 w-4 fill-white text-white" />
               </div>
 
-              {canDelete && (
+              {!isVF && canDelete && (
                 <button
                   onClick={() => deleteAnswer(index)}
                   type="button"
-                  className="-foreground absolute right-2 top-2 text-white hover:text-destructive dark:text-white dark:hover:text-destructive"
+                  className="absolute right-2 top-2 text-white hover:text-destructive dark:text-white dark:hover:text-destructive"
                 >
                   <Trash2 size={16} />
                 </button>
@@ -96,7 +95,7 @@ export function AnswersManager({
         })}
       </div>
 
-      {canAdd && (
+      {!isVF && canAdd && (
         <div className="flex justify-center">
           <Button
             type="button"

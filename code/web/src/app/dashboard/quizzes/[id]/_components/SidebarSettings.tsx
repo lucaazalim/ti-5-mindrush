@@ -23,7 +23,14 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
         <div className="space-y-2">
           <Select
             value={question.type}
-            onValueChange={(value: QuestionType) => onUpdate({ type: value })}
+            onValueChange={(value: QuestionType) => {
+              onUpdate({
+                type: value,
+                alternatives:
+                  value === "TRUE_OR_FALSE" ? ["Verdadeiro", "Falso"] : ["", "", "", ""],
+                correctAlternativeIndex: 0,
+              });
+            }}
           >
             <SelectTrigger>
               <SelectValue placeholder="Tipo de questão" />
