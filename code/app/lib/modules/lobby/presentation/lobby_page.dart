@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:mindrush/modules/lobby/data/participant.dart';
+import 'package:mindrush/modules/lobby/presentation/match_end_screen.dart';
 import 'package:mindrush/modules/lobby/presentation/pin_screen.dart';
 import 'package:mindrush/modules/match/data/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
@@ -79,7 +80,7 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => PinScreen(),
+            builder: (context) => MatchEndScreen(participant: widget.participant),
           ),
         );
       } catch (e) {
