@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:mindrush/modules/lobby/data/participant.dart';
+import 'package:mindrush/modules/lobby/presentation/pin_screen.dart';
 import 'package:mindrush/modules/match/data/question.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
 import 'package:mindrush/modules/match/logic/api/match_service.dart';
@@ -69,6 +70,24 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
         print('Erro ao buscar a questão atual: $e');
 
       }
+    });
+
+
+    handler.on('match-ended-event', (data) async {
+      try {
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PinScreen(),
+          ),
+        );
+      } catch (e) {
+
+        print('Erro ao sair da partida e rentornar ao lobby: $e');
+
+      }
+
     });
 
     _pusherService.connect();

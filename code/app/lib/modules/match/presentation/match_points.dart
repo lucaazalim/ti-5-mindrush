@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
 
 import 'package:mindrush/modules/lobby/data/participant.dart';
+import 'package:mindrush/modules/lobby/presentation/pin_screen.dart';
 import 'package:mindrush/modules/match/logic/api/match_service.dart';
 import 'package:mindrush/modules/match/presentation/match_question.dart';
 
@@ -67,7 +68,25 @@ class _MatchPointsScreenState extends ConsumerState<MatchPointsScreen> {
       }
     });
 
+    handler.on('match-ended-event', (data) async {
+      try {
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PinScreen(),
+          ),
+        );
+      } catch (e) {
+
+        print('Erro ao sair da partida e rentornar ao lobby: $e');
+
+      }
+
+    });
+
     _pusherService.connect();
+
   }
 
   Future<void> _startTimerAndFetchScore(int remainingTime) async {
