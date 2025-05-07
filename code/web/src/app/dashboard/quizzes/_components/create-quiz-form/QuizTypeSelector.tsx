@@ -1,5 +1,3 @@
-"use client";
-
 type QuizType = "BLANK" | "THEME_GENERATED" | "PDF_GENERATED";
 
 interface QuizOption {
@@ -9,7 +7,7 @@ interface QuizOption {
 }
 
 interface QuizTypeSelectorProps {
-  selectedType: string;
+  selectedType: QuizType;
   onSelect: (value: QuizType) => void;
 }
 

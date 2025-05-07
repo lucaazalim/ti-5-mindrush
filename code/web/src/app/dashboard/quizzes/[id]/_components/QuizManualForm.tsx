@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { ROUTES } from "~/lib/constants";
 import { isFailure } from "~/lib/result";
-import type { QuestionWithAlternatives, QuestionWithRawAlternatives, Uuid } from "~/lib/types";
+import type { QuestionType, QuestionWithAlternatives, QuestionWithRawAlternatives, Uuid } from "~/lib/types";
 import { createQuestionsAndAlternatives } from "~/server/actions/question";
 import { AnswersManager } from "./AnswersManager";
 import { QuestionEditor } from "./QuestionEditor";
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export default function QuizManualForm({ quizId, initialQuestions = [] }: Props) {
-  function getDummyQuestion(type: "QUIZ" | "TRUE_OR_FALSE" = "QUIZ"): QuestionWithRawAlternatives {
+  function getDummyQuestion(type: QuestionType = "QUIZ"): QuestionWithRawAlternatives {
     return {
       id: "" as Uuid,
       quizId,

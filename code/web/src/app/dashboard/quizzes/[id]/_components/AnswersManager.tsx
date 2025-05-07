@@ -2,10 +2,11 @@ import { Plus, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { QUESTION_VISUALS } from "~/lib/constants";
+import { QuestionType } from "~/lib/types";
 import { cn } from "~/lib/utils";
 
 interface Props {
-  type: "QUIZ" | "TRUE_OR_FALSE";
+  type: QuestionType;
   answers: string[];
   correctAnswerIndex: number;
   onChangeAnswers: (answers: string[]) => void;
