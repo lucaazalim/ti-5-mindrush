@@ -1,13 +1,13 @@
 "use server";
 
 import { z } from "zod";
+import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 import { updateQuizParser, uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { isUuid, type Quiz, type UpdateQuiz } from "~/lib/types";
-import { deleteQuiz, insertQuiz, updateQuiz } from "../data/quiz";
 import { generateQuizByTheme } from "../../lib/openai";
+import { deleteQuiz, insertQuiz, updateQuiz } from "../data/quiz";
 import { createQuestionsAndAlternatives } from "./question";
-import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 
 const quizSchema = z.object({
   educatorId: uuidParser,
@@ -20,7 +20,9 @@ const quizSchema = z.object({
   pdfBase64: z.string().optional(),
 });
 
-export async function createQuiz(quizData: z.infer<typeof quizCreateSchema>): Promise<Result<Quiz, string>> {
+export async function createQuiz(
+  quizData: z.infer<typeof quizCreateSchema>,
+): Promise<Result<Quiz, string>> {
   const parsedData = quizSchema.safeParse(quizData);
 
   if (!parsedData.success) {
@@ -28,23 +30,22 @@ export async function createQuiz(quizData: z.infer<typeof quizCreateSchema>): Pr
   }
 
   try {
-
-    const result = await insertQuiz(parsedData.data);
+    const quiz = await insertQuiz(parsedData.data);
 
     if (quizData.type === "THEME_GENERATED") {
       const questions = await generateQuizByTheme(quizData);
-      
+
       const rawQuestionsWithAlternatives = {
-        quizId: result.id,
+        quizId: quiz.id,
         ...questions,
-      }
-      
+      };
+
       await createQuestionsAndAlternatives(rawQuestionsWithAlternatives);
     }
 
-    return succeed(result);
-    
-  } catch {
+    return succeed(quiz);
+  } catch (e) {
+    console.error(e);
     return fail("Falha ao criar o quiz.");
   }
 }

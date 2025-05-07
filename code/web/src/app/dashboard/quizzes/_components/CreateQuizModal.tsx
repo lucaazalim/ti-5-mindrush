@@ -24,7 +24,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
   const [step, setStep] = useState(1);
   const router = useRouter();
 
-  const methods = useForm<CreateQuizSchema>({
+  const form = useForm<CreateQuizSchema>({
     resolver: zodResolver(quizCreateSchema),
     mode: "onChange",
     defaultValues: {
@@ -34,11 +34,11 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
       type: "BLANK",
       theme: "",
       difficulty: "EASY",
-      language: "",
+      language: "PORTUGUESE",
     } as CreateQuizSchema,
   });
 
-  const selectedType = methods.watch("type");
+  const selectedType = form.watch("type");
 
   async function onSubmit(values: CreateQuizSchema) {
     const result = await createQuiz(values);
@@ -60,8 +60,8 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
       <DialogContent>
         <DialogTitle>Criar um novo quiz</DialogTitle>
 
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
+        <FormProvider {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {step === 1 && (
               <>
                 <QuizStepOne />

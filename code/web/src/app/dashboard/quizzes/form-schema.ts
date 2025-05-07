@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { z } from "zod";
+import { QUIZ_DIFFICULTIES, QUIZ_LANGUAGES } from "~/lib/constants";
 import { uuidParser } from "~/lib/parsers";
 
 export type CreateQuizSchema = z.infer<typeof quizCreateSchema>;
@@ -19,12 +20,11 @@ const blankSchema = z.object({
   type: z.literal("BLANK"),
 });
 
-export const aiGeneratedSchema = z.object({
+export const themeGeneratedSchema = z.object({
   ...baseFields,
   type: z.literal("THEME_GENERATED"),
-  theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres"),
-  difficulty: z.enum(["EASY", "MEDIUM", "HARD"]),
-  language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres"),
+  difficulty: z.enum(QUIZ_DIFFICULTIES),
+  language: z.enum(QUIZ_LANGUAGES),
 });
 
 const pdfGeneratedSchema = z.object({
@@ -35,6 +35,6 @@ const pdfGeneratedSchema = z.object({
 
 export const quizCreateSchema = z.discriminatedUnion("type", [
   blankSchema,
-  aiGeneratedSchema,
+  themeGeneratedSchema,
   pdfGeneratedSchema,
 ]);

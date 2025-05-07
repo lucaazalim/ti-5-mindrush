@@ -23,11 +23,27 @@ export const ROUTES: {
 
 export const QUESTION_TYPES = ["QUIZ", "TRUE_OR_FALSE"] as const;
 
+export const QUIZ_DIFFICULTIES = ["EASY", "MEDIUM", "HARD"] as const;
+
+export const QUIZ_LANGUAGES = ["ENGLISH", "PORTUGUESE", "SPANISH"] as const;
+
 export const MATCH_STATUSES = ["WAITING", "RUNNING", "ENDED"] as const;
 
 export const QUESTION_TYPES_NAMES: Record<(typeof QUESTION_TYPES)[number], string> = {
   QUIZ: "Quiz",
   TRUE_OR_FALSE: "Verdadeiro ou falso",
+};
+
+export const QUIZ_DIFFICULTY_NAMES: Record<(typeof QUIZ_DIFFICULTIES)[number], string> = {
+  EASY: "Fácil",
+  MEDIUM: "Média",
+  HARD: "Difícil",
+};
+
+export const QUIZ_LANGUAGE_NAMES: Record<(typeof QUIZ_LANGUAGES)[number], string> = {
+  ENGLISH: "Inglês",
+  PORTUGUESE: "Português",
+  SPANISH: "Espanhol",
 };
 
 export const MATCH_STATUSES_NAMES: Record<(typeof MATCH_STATUSES)[number], string> = {
@@ -36,7 +52,10 @@ export const MATCH_STATUSES_NAMES: Record<(typeof MATCH_STATUSES)[number], strin
   ENDED: "Finalizada",
 };
 
-export const statusColorMap: Record<keyof typeof MATCH_STATUSES_NAMES, "warning" | "success" | "outline"> = {
+export const statusColorMap: Record<
+  keyof typeof MATCH_STATUSES_NAMES,
+  "warning" | "success" | "outline"
+> = {
   WAITING: "outline",
   RUNNING: "warning",
   ENDED: "success",

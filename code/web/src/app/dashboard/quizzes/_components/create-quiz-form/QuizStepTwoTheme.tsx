@@ -1,7 +1,7 @@
 "use client";
 
+import { useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
-import { Input } from "~/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
+import { QUIZ_DIFFICULTY_NAMES, QUIZ_LANGUAGE_NAMES } from "~/lib/constants";
 
 export default function QuizStepTwoTheme() {
   const form = useCreateQuizFormContext();
@@ -17,20 +17,6 @@ export default function QuizStepTwoTheme() {
   return (
     <div className="space-y-3">
       <>
-        <FormField
-          control={form.control}
-          name="theme"
-          render={({ field }) => (
-            <FormItem className="space-y-1">
-              <FormLabel>Tema</FormLabel>
-              <FormControl>
-                <Input placeholder="Digite o tema do quiz" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="difficulty"
@@ -43,9 +29,11 @@ export default function QuizStepTwoTheme() {
                     <SelectValue placeholder="Escolha a dificuldade" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="EASY">Fácil</SelectItem>
-                    <SelectItem value="MEDIUM">Média</SelectItem>
-                    <SelectItem value="HARD">Difícil</SelectItem>
+                    {Object.entries(QUIZ_DIFFICULTY_NAMES).map(([key, value]) => (
+                      <SelectItem key={key} value={key}>
+                        {value}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -61,7 +49,18 @@ export default function QuizStepTwoTheme() {
             <FormItem className="space-y-1">
               <FormLabel>Idioma</FormLabel>
               <FormControl>
-                <Input placeholder="Digite o idioma do quiz" {...field} />
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Escolha o idioma" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(QUIZ_LANGUAGE_NAMES).map(([key, value]) => (
+                      <SelectItem key={key} value={key}>
+                        {value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </FormControl>
               <FormMessage />
             </FormItem>

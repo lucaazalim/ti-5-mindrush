@@ -14,6 +14,7 @@ export const env = createEnv({
     PUSHER_APP_ID: z.string(),
     PUSHER_APP_SECRET: z.string(),
     DATABASE_URL: z.string().url(),
+    OPENAI_API_KEY: z.string(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   },
 
@@ -41,6 +42,7 @@ export const env = createEnv({
     NEXT_PUBLIC_PUSHER_APP_KEY: process.env.NEXT_PUBLIC_PUSHER_APP_KEY,
     NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
     DATABASE_URL: process.env.DATABASE_URL,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
