@@ -30,6 +30,18 @@ export const QUESTION_TYPES_NAMES: Record<(typeof QUESTION_TYPES)[number], strin
   TRUE_OR_FALSE: "Verdadeiro ou falso",
 };
 
+export const MATCH_STATUSES_NAMES: Record<(typeof MATCH_STATUSES)[number], string> = {
+  WAITING: "Aguardando",
+  RUNNING: "Em andamento",
+  ENDED: "Finalizada",
+};
+
+export const statusColorMap: Record<keyof typeof MATCH_STATUSES_NAMES, "warning" | "success" | "outline"> = {
+  WAITING: "outline",
+  RUNNING: "warning",
+  ENDED: "success",
+};
+
 export const QUESTION_VISUALS: {
   icon: LucideIcon;
   colorClassName: string;
