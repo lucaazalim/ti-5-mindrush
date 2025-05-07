@@ -31,7 +31,7 @@ export async function generateQuizByTheme(quiz: z.infer<typeof aiGeneratedSchema
         messages: [
             {
                 role: 'user',
-                content: `Crie um quiz de ${quiz.title} sobre ${quiz.theme} com ${quiz.difficulty} dificuldade em ${quiz.language}, contendo ${quantityQuestions} questoes com 4 alternativas somente uma delas sendo verdadeira. Informação adicional pode deixar sem id do quiz e das questões pois é gerado posteriormente.`,
+                content: `Crie um quiz de ${quiz.title} sobre ${quiz.theme} com ${quiz.difficulty} dificuldade em ${quiz.language}, contendo ${quantityQuestions} questoes com 4 alternativas somente uma delas sendo verdadeira.`,
             },
         ],
     });
