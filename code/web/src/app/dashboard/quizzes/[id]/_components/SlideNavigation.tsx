@@ -1,9 +1,7 @@
-"use client";
-
 import { Trash2 } from "lucide-react";
+import BackButton from "~/app/dashboard/_components/BackButton";
 import { Button } from "~/components/ui/button";
 import { type QuestionWithRawAlternatives } from "~/lib/types";
-import BackButton from "~/app/dashboard/_components/BackButton";
 
 interface SlideNavigationProps {
   questions: QuestionWithRawAlternatives[];
