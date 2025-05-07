@@ -86,11 +86,11 @@ class _PinScreenState extends State<PinScreen> {
                 children: [
                   Image.asset(
                     'assets/images/logo.png',
-                    width: 212,
+                    width: 160,
                   ),
                   const SizedBox(height: 40),
                   Container(
-                    width: 212,
+                    width: 200,
                     height: 40,
                     margin: const EdgeInsets.symmetric(vertical: 10),
                     child: TextFormField(
@@ -100,10 +100,11 @@ class _PinScreenState extends State<PinScreen> {
                         fontSize: 18,
                       ),
                       decoration: InputDecoration(
-                        hintText: "PIN da Partida",
+
+                        hintText: "PIN da partida",
                         labelStyle: const TextStyle(
                           color: Colors.black87,
-                          fontSize: 18,
+                          fontSize: 15
                         ),
                         filled: true,
                         fillColor: Colors.white,
@@ -128,18 +129,18 @@ class _PinScreenState extends State<PinScreen> {
                   ),
                   const SizedBox(height: 5),
                   SizedBox(
-                    width: 212,
+                    width: 200,
                     height: 40,
                     child: ElevatedButton(
                       onPressed: _validatePin,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF2C2C2C),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(20),
                         ),
                       ),
                       child: const Text(
-                        'Validar PIN',
+                        'Acessar partida',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,

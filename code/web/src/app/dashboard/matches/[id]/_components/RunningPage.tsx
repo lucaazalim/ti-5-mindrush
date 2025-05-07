@@ -12,7 +12,7 @@ import { useMatchStore } from "../_store/store-provider";
 import CountdownBar from "./CountdownBar";
 import { EndMatchButton } from "./EndMatchButton";
 import { NextQuestionButton } from "./NextQuestionButton";
-import ParticipantsList from "./ParticipantsList";
+import ParticipantList from "./ParticipantList";
 import Question from "./Question";
 import QuestionSummary from "./QuestionSummary";
 
@@ -38,17 +38,15 @@ export default function RunningPage() {
 
       clearInterval(interval);
 
-      const updateMatch = async () => {
-        const result = await getUpdatedMatch(match.id);
+      getUpdatedMatch(match.id)
+        .then((result) => {
+          if (isFailure(result)) {
+            throw new Error(result.error);
+          }
 
-        if (isFailure(result)) {
-          throw new Error(result.error);
-        }
-
-        setMatch(result.data);
-      };
-
-      updateMatch().catch(console.error);
+          setMatch(result.data);
+        })
+        .catch(console.error);
     }, 100);
 
     return () => clearInterval(interval);
@@ -65,7 +63,7 @@ export default function RunningPage() {
         </>
       )}
       <Container className="grid grid-cols-4 gap-3">
-        <ParticipantsList />
+        <ParticipantList />
         <NextQuestionButton />
         <EndMatchButton />
       </Container>

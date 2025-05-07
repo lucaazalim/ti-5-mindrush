@@ -18,17 +18,17 @@ interface Props {
 }
 
 export default function QuizManualForm({ quizId, initialQuestions = [] }: Props) {
-  function getDummyQuestion(): QuestionWithRawAlternatives {
+  function getDummyQuestion(type: "QUIZ" | "TRUE_OR_FALSE" = "QUIZ"): QuestionWithRawAlternatives {
     return {
       id: "" as Uuid,
       quizId,
       question: "",
-      type: "QUIZ",
+      type,
       timeLimit: 30,
       image: null,
       createdAt: new Date(),
       order: Math.floor(Math.random() * 1000),
-      alternatives: ["", "", "", ""],
+      alternatives: type === "TRUE_OR_FALSE" ? ["Verdadeiro", "Falso"] : ["", "", "", ""],
       correctAlternativeIndex: 0,
     };
   }
@@ -63,7 +63,7 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
   };
 
   const handleAddQuestion = () => {
-    const newQuestion: QuestionWithRawAlternatives = getDummyQuestion();
+    const newQuestion = getDummyQuestion();
     setQuestions((prev) => {
       const updated = [...prev, newQuestion];
       setCurrentSlide(updated.length - 1);
@@ -87,15 +87,18 @@ export default function QuizManualForm({ quizId, initialQuestions = [] }: Props)
   const handleSubmit = async () => {
     const result = await createQuestionsAndAlternatives({
       quizId,
-      questions: questions.map((question) => ({
-        id: question.id,
-        question: question.question,
-        order: question.order,
-        alternatives: question.alternatives,
-        correctAlternativeIndex: question.correctAlternativeIndex,
-        type: question.type,
-        image: question.image ?? null,
-      })),
+      questions: questions.map((question) => {
+        return {
+          ...(question.id ? { id: question.id } : {}),
+          question: question.question,
+          order: question.order,
+          type: question.type,
+          timeLimit: question.timeLimit,
+          image: question.image ?? null,
+          alternatives: question.alternatives,
+          correctAlternativeIndex: question.correctAlternativeIndex,
+        };
+      }),
     });
 
     if (isFailure(result)) {

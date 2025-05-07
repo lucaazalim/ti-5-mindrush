@@ -4,7 +4,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/comp
 import { getAvatarUrl } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
 
-export default function ParticipantsList() {
+export default function ParticipantList() {
   const match = useMatchStore((state) => state.match);
 
   return (

@@ -7,7 +7,7 @@ export default function Container({
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("rounded-3xl bg-background p-5", className)} {...props}>
+    <div className={cn("rounded-3xl border-2 bg-background p-5", className)} {...props}>
       {children}
     </div>
   );

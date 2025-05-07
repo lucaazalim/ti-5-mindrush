@@ -65,4 +65,40 @@ class MatchService {
 
   }
 
+  // Função para buscar os dados do participante (pontuação total e da última questão)
+  static Future<Participant> fetchParticipantData(Participant participant) async {
+    try {
+      String token = participant.token;
+
+      final response = await _dio.get('/matches/participants/me',
+          options: Options(
+            headers: {
+              "Authorization": "Bearer $token",
+            },
+          )
+      );
+
+      // Assume-se que o response.data contém os campos que você precisa (totalPoints e lastPointIncrement)
+      final data = response.data;
+      print('Resposta da API: ${response.data}');
+
+      print('totalPoints: ${data['totalPoints']}');
+      print('lastPointIncrement: ${data['lastPointIncrement']}');
+
+      return Participant(
+        id: data['id'],
+        nickname: data['nickname'],
+        matchId: data['matchId'],
+        token: token,
+        totalPoints: data['totalPoints'],
+        lastPointIncrement: data['lastPointIncrement'],
+        avatarUrl: data['avatarUrl'],
+      );
+    } catch (e, stackTrace) {
+      print('Erro ao buscar dados do participante: $e');
+      print('StackTrace: $stackTrace');
+      throw Exception('Failed to fetch participant data: $e');
+    }
+  }
+
 }

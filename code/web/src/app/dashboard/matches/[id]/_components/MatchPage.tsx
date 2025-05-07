@@ -2,11 +2,12 @@
 
 import { useEffect } from "react";
 import { useMatchStore } from "~/app/dashboard/matches/[id]/_store/store-provider";
-import pusherClient from "~/lib/pusher-client";
+import pusherClient from "~/lib/pusher/subscriber";
 import { MatchStatus } from "~/lib/types";
 import { getMatchChannel } from "~/lib/utils";
 import EndedPage from "./EndedPage";
 import RunningPage from "./RunningPage";
+import SoundEffectsPlayer from "./SoundEffectsPlayer";
 import WaitingPage from "./WaitingPage";
 
 const Components: Record<MatchStatus, React.FC> = {
@@ -32,5 +33,15 @@ export default function MatchPage() {
   }, [match.id, setChannel]);
 
   const Component = Components[match.status];
-  return Component ? <Component /> : null;
+
+  if (!Component) {
+    throw new Error(`No component found for match status: ${match.status}`);
+  }
+
+  return (
+    <>
+      <SoundEffectsPlayer />
+      <Component />
+    </>
+  );
 }

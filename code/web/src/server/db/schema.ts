@@ -189,6 +189,7 @@ export const matches = createTable(
     createdAt: timestamp("created_at")
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
+    finishedAt: timestamp("finished_at"),
   },
   (table) => ({
     uniqueActiveMatchPerQuiz: uniqueIndex("unique_active_match_per_quiz")
@@ -206,7 +207,7 @@ export const participants = createTable(
     lastPointIncrement: integer("last_point_increment").notNull().default(0),
     matchId: uuid("match_id")
       .notNull()
-      .references(() => matches.id)
+      .references(() => matches.id, { onDelete: "cascade" })
       .$type<Uuid>(),
   },
   (table) => ({
@@ -220,19 +221,19 @@ export const quizAnswers = createTable(
     id: uuid("id").primaryKey().defaultRandom().$type<Uuid>(),
     participantId: uuid("participant_id")
       .notNull()
-      .references(() => participants.id)
+      .references(() => participants.id, { onDelete: "cascade" })
       .$type<Uuid>(),
     questionId: uuid("question_id")
       .notNull()
-      .references(() => questions.id)
+      .references(() => questions.id, { onDelete: "cascade" })
       .$type<Uuid>(),
     matchId: uuid("match_id")
       .notNull()
-      .references(() => matches.id)
+      .references(() => matches.id, { onDelete: "cascade" })
       .$type<Uuid>(),
     alternativeId: uuid("alternative_id")
       .notNull()
-      .references(() => questionAlternatives.id)
+      .references(() => questionAlternatives.id, { onDelete: "cascade" })
       .$type<Uuid>(),
     isCorrect: boolean("is_correct").notNull(),
     points: integer("points").notNull(),

@@ -51,30 +51,41 @@ class _QuestionTimerState extends State<QuestionTimer> {
   Widget build(BuildContext context) {
     final progressValue = _timeLeft / widget.initialTime;
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        SizedBox(
-          width: 60,
-          height: 60,
-          child: CircularProgressIndicator(
-            value: progressValue,
-            strokeWidth: 4,
-            backgroundColor: Colors.grey[200],
-            valueColor: AlwaysStoppedAnimation<Color>(
-              _timeLeft > 5 ? Colors.blue : Colors.red,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Row(
+        children: [
+          // Barra de progresso animada
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: progressValue),
+                duration: const Duration(milliseconds: 500),
+                builder: (context, value, _) {
+                  return LinearProgressIndicator(
+                    value: value,
+                    minHeight: 16,
+                    backgroundColor: Colors.grey[300],
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      _timeLeft > 5 ? const Color(0xFF0060E1) : Colors.red,
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-        Text(
-          '$_timeLeft',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: _timeLeft > 5 ? Colors.blue : Colors.red,
+          const SizedBox(width: 12),
+          Text(
+            '$_timeLeft s',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: _timeLeft > 5 ? const Color(0xFF0060E1) : Colors.red,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

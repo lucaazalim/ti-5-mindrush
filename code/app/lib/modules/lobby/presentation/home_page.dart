@@ -31,17 +31,17 @@ class _HomePageState extends State<HomePage> {
           children: [
             Image.asset(
               'assets/images/logo.png',
-              width: 200,
+              width: 160,
             ),
-            const SizedBox(height: 40),
-            const Text(
-              'Bem-vindo!',
-              style: TextStyle(color: Colors.white, fontSize: 24),
-            ),
-            const SizedBox(height: 20),
-            const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            ),
+            // const SizedBox(height: 40),
+            // const Text(
+            //   'Bem-vindo!',
+            //   style: TextStyle(color: Colors.white, fontSize: 24),
+            // ),
+            // const SizedBox(height: 18),
+            // const CircularProgressIndicator(
+            //   valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            // ),
           ],
         ),
       ),
