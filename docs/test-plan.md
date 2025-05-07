@@ -22,7 +22,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 1. O botão **Acessar** está visível na página inicial.
 2. Ao clicar, a janela do Google OAuth é aberta.
 3. Após o login/consentimento no Google, o usuário é autenticado.
-4. O sistema redireciona automaticamente para **/dashboard/quizzes**.
+4. O sistema redireciona automaticamente para `/dashboard/quizzes`.
 5. Em caso de erro ou negação no Google, o sistema exibe uma mensagem apropriada.
 
 #### Critérios de Aceite
@@ -30,7 +30,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 1. O botão **Acessar** aparece corretamente na página inicial.
 2. O redirecionamento para o Google ocorre sem erros.
 3. O usuário é autenticado corretamente após o consentimento.
-4. O usuário é redirecionado automaticamente para **/dashboard/quizzes**.
+4. O usuário é redirecionado automaticamente para `/dashboard/quizzes`.
 5. Erros no processo (ex.: negação de permissão) são tratados com mensagens claras ao usuário.
 
 ---
