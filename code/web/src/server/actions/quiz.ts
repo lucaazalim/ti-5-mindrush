@@ -23,20 +23,27 @@ const quizSchema = z.object({
 export async function createQuiz(quizData: z.infer<typeof quizCreateSchema>): Promise<Result<Quiz, string>> {
   const parsedData = quizSchema.safeParse(quizData);
 
-  console.log("quizData", quizData);
-
-  if (quizData.type === "THEME_GENERATED") {
-    const rawQuestionsWithAlternatives = generateQuizByTheme(quizData);
-    console.log("rawQuestionsWithAlternatives", rawQuestionsWithAlternatives);
-    await createQuestionsAndAlternatives(rawQuestionsWithAlternatives);
-  }
-
   if (!parsedData.success) {
     return fail("Os dados informados para a criação do quiz são inválidos.");
   }
 
   try {
-    return succeed(await insertQuiz(parsedData.data));
+
+    const result = await insertQuiz(parsedData.data);
+
+    if (quizData.type === "THEME_GENERATED") {
+      const questions = await generateQuizByTheme(quizData);
+      
+      const rawQuestionsWithAlternatives = {
+        quizId: result.id,
+        ...questions,
+      }
+      
+      await createQuestionsAndAlternatives(rawQuestionsWithAlternatives);
+    }
+
+    return succeed(result);
+    
   } catch {
     return fail("Falha ao criar o quiz.");
   }
