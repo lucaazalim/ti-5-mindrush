@@ -1,6 +1,10 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { Eye } from "lucide-react";
+import Link from "next/link";
+import { Badge } from "~/components/ui/badge";
+import { MATCH_STATUSES_NAMES, ROUTES, statusColorMap } from "~/lib/constants";
 import { MatchWithQuizTitle } from "~/lib/types";
 
 export const columns: ColumnDef<MatchWithQuizTitle>[] = [
@@ -11,12 +15,20 @@ export const columns: ColumnDef<MatchWithQuizTitle>[] = [
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      const status = row.original.status;
+      return (
+        <Badge variant={statusColorMap[status]}>
+          {MATCH_STATUSES_NAMES[status]}
+        </Badge>
+      );
+    },
   },
   {
-    accessorKey: "finishedAt",
+    accessorKey: "endedAt",
     header: "Finalizado em",
     cell: ({ row }) => {
-      const date: Date | null = row.original.finishedAt;
+      const date: Date | null = row.original.endedAt;
       return date
         ? new Intl.DateTimeFormat("pt-BR", {
             day: "2-digit",
@@ -27,5 +39,15 @@ export const columns: ColumnDef<MatchWithQuizTitle>[] = [
           }).format(new Date(date))
         : "-";
     },
-  }
+  },
+  {
+    header: " ",
+    cell: ({ row }) => {
+      return (
+        <Link href={ROUTES.MATCH(row.original.id)}>
+          <Eye strokeWidth={1.5}/>
+        </Link>
+      );
+    },
+  },
 ];
