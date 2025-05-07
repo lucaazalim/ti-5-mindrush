@@ -12,14 +12,10 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ### Autenticação
 
-#### Estratégia
-
-Manual
-
 #### Comportamento Esperado
 
-- Ao clicar no botão **Acessar** na página inicial (`/`), o usuário deve ser redirecionado para a página de autorização de login do Google.
-- Após a autorização bem-sucedida, o usuário deve ser redirecionado automaticamente para **/dashboard/quizzes**, já autenticado no MindRush.
+1. Ao clicar no botão **Acessar** na página inicial (`/`), o usuário deve ser redirecionado para a página de autorização de login do Google.
+2. Após a autorização bem-sucedida, o usuário deve ser redirecionado automaticamente para `/dashboard/quizzes`, já autenticado no MindRush.
 
 #### Verificações
 
@@ -31,25 +27,21 @@ Manual
 
 #### Critérios de Aceite
 
-- ✅ O botão **Acessar** aparece corretamente na página inicial.
-- ✅ O redirecionamento para o Google ocorre sem erros.
-- ✅ O usuário é autenticado corretamente após o consentimento.
-- ✅ O usuário é redirecionado automaticamente para **/dashboard/quizzes**.
-- ✅ Erros no processo (ex.: negação de permissão) são tratados com mensagens claras ao usuário.
+1. O botão **Acessar** aparece corretamente na página inicial.
+2. O redirecionamento para o Google ocorre sem erros.
+3. O usuário é autenticado corretamente após o consentimento.
+4. O usuário é redirecionado automaticamente para **/dashboard/quizzes**.
+5. Erros no processo (ex.: negação de permissão) são tratados com mensagens claras ao usuário.
 
 ---
 
 ### Criação de Quiz
 
-#### Estratégia
-
-Ponta-a-ponta
-
 #### Comportamento Esperado
 
-- O educador pode criar um novo quiz fornecendo as informações necessárias, como título, descrição e perguntas.
-- O sistema valida os dados fornecidos e retorna um erro caso algum campo obrigatório esteja ausente ou inválido.
-- Após a criação bem-sucedida, o quiz é salvo no banco de dados e está disponível para uso.
+1. O educador pode criar um novo quiz fornecendo as informações necessárias, como título, descrição e perguntas.
+2. O sistema valida os dados fornecidos e retorna um erro caso algum campo obrigatório esteja ausente ou inválido.
+3. Após a criação bem-sucedida, o quiz é salvo no banco de dados e está disponível para uso.
 
 #### Verificações
 
@@ -60,15 +52,15 @@ Ponta-a-ponta
 
 #### Critérios de Aceite
 
-- ✅ O sistema valida corretamente os dados fornecidos.
-- ✅ O quiz é salvo no banco de dados após a criação bem-sucedida.
-- ✅ O quiz aparece na lista de quizzes disponíveis para o educador.
+1. O sistema valida corretamente os dados fornecidos.
+2. O quiz é salvo no banco de dados após a criação bem-sucedida.
+3. O quiz aparece na lista de quizzes disponíveis para o educador.
 
 ---
 
 ## Estratégia de Teste
 
-Serão utilizadas três estratégias de de testes, dependendo da funcionalidade.
+Para cada funcionalidade, serão escolhidas uma ou mais estratégias de teste das listadas abaixo.
 
 | Tipo de Teste | Descrição                                                                                                               | Ferramenta       |
 | ------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
