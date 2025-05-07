@@ -139,7 +139,7 @@ export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
     currentQuestionId: null,
     currentQuestionStartedAt: null,
     currentQuestionEndsAt: null,
-    finishedAt: new Date(),
+    endedAt: new Date(),
   });
 
   if (!updatedMatch) {
