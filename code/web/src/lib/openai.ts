@@ -1,12 +1,10 @@
-"use server";
-
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
 import { themeGeneratedSchema } from "~/app/dashboard/quizzes/form-schema";
 import { QUESTION_TYPES } from "./constants";
 
-const questionAndAlternativesParserOpenAI = z.object({
+const questionAndAlternativesSchema = z.object({
   questions: z.array(
     z.object({
       question: z.string().min(1),
@@ -25,11 +23,11 @@ export async function generateQuizByTheme(quiz: z.infer<typeof themeGeneratedSch
   const { object } = await generateObject({
     model: openai("gpt-4.1-nano"),
     maxTokens: 500,
-    schema: questionAndAlternativesParserOpenAI,
+    schema: questionAndAlternativesSchema,
     messages: [
       {
         role: "user",
-        content: `Crie um quiz sobre ${quiz.title} com dificuldade ${quiz.difficulty} em ${quiz.language}, contendo ${quantityQuestions} questoes com 4 alternativas somente uma delas sendo verdadeira.`,
+        content: `Crie um quiz sobre ${quiz.title} com dificuldade ${quiz.difficulty} em ${quiz.language}, contendo ${quantityQuestions} questões com 4 alternativas, sendo somente uma delas verdadeira.`,
       },
     ],
   });
