@@ -1,4 +1,4 @@
-import SignInButton from "../../_components/SignInButton";
+import SignInButton from "./SignInButton";
 import * as motion from "motion/react-client";
 import Link from "next/link";
 
