@@ -7,7 +7,7 @@ import { Button } from "~/components/ui/button";
 import { ROUTES } from "~/lib/constants";
 import { isFailure } from "~/lib/result";
 import { QuizWithQuestionCountAndActiveMatch } from "~/lib/types";
-import { createMatch } from "~/server/actions/match";
+import { createMatch } from "~/lib/actions/match";
 
 export default function CreateOrTrackMatchButton({
   quiz,

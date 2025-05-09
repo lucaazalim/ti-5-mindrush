@@ -5,8 +5,8 @@ import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 import { updateQuizParser, uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { isUuid, type Quiz, type UpdateQuiz } from "~/lib/types";
-import { generateQuizByTheme } from "../../lib/openai";
-import { deleteQuiz, insertQuiz, updateQuiz } from "../data/quiz";
+import { generateQuizByTheme } from "../openai";
+import { deleteQuiz, insertQuiz, updateQuiz } from "~/lib/data/quiz";
 import { createQuestionsAndAlternatives } from "./question";
 
 const quizSchema = z.object({

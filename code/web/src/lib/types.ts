@@ -11,7 +11,7 @@ import {
   type sessions,
   type users,
   type verificationTokens,
-} from "~/server/db/schema";
+} from "~/lib/db/schema";
 import {
   matchPinParser,
   participantNicknameParser,

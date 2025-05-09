@@ -3,8 +3,8 @@ import { ChannelAuthResponse, PresenceChannelData } from "pusher";
 import { APIError, apiErrorResponse } from "~/app/api/api";
 import { pusherSender } from "~/lib/pusher/publisher";
 import { isUuid } from "~/lib/types";
-import { auth } from "~/server/auth";
-import { selectQuizByMatchId } from "~/server/data/quiz";
+import { auth } from "src/lib/auth";
+import { selectQuizByMatchId } from "~/lib/data/quiz";
 
 export async function POST(
   req: NextRequest,

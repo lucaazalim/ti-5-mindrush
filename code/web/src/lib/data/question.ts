@@ -9,7 +9,7 @@ import {
 } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { questionAlternatives, questions, quizzes } from "../db/schema";
+import { questionAlternatives, questions, quizzes } from "~/lib/db/schema";
 
 export async function insertQuestionsAndAlternatives(
   quizId: Uuid,

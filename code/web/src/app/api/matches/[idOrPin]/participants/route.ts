@@ -7,8 +7,8 @@ import { participantNicknameParser } from "~/lib/parsers";
 import { publishMatchEvent } from "~/lib/pusher/publisher";
 import { isMatchPin, isUuid, Participant } from "~/lib/types";
 import { getAvatarUrl } from "~/lib/utils";
-import { selectMatchByIdOrPin } from "~/server/data/match";
-import { existsParticipantWithNickname, insertParticipant } from "~/server/data/participant";
+import { selectMatchByIdOrPin } from "~/lib/data/match";
+import { existsParticipantWithNickname, insertParticipant } from "~/lib/data/participant";
 
 const payloadParser = z.object({
   nickname: participantNicknameParser,

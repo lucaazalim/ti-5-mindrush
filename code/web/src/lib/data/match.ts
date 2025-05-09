@@ -3,7 +3,7 @@ import { forbidden, unauthorized } from "next/navigation";
 import { MatchWithQuizTitle, NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { matches, participants, questionAlternatives, questions, quizzes } from "../db/schema";
+import { matches, participants, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
 import { selectQuizAnswersByQuestionId } from "./answer";
 import { selectQuizById, selectQuizByMatchId } from "./quiz";
 

@@ -1,5 +1,5 @@
 import { Button } from "~/components/ui/button";
-import { signIn } from "~/server/auth";
+import { signIn } from "src/lib/auth";
 import { ROUTES } from "~/lib/constants";
 
 export default function SignInButton() {

@@ -2,15 +2,15 @@
 
 import { fail, Result, succeed } from "~/lib/result";
 import { MatchStatus, Uuid, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
-import { auth } from "~/server/auth";
-import { publishMatchEvent } from "../../lib/pusher/publisher";
+import { auth } from "src/lib/auth";
+import { publishMatchEvent } from "../pusher/publisher";
 import {
   checkActiveMatchByQuizId,
   insertMatch,
   selectMatchByIdOrPin,
   selectPopulatedMatchById,
   updateMatch,
-} from "../data/match";
+} from "~/lib/data/match";
 
 export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> {
   const session = await auth();

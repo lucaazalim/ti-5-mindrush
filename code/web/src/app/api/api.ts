@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
 import { fail, Result, succeed } from "~/lib/result";
 import { isUuid, Participant } from "~/lib/types";
-import { selectParticipantById } from "~/server/data/participant";
+import { selectParticipantById } from "~/lib/data/participant";
 
 export type APIError = {
   status: number;

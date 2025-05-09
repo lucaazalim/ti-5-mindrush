@@ -3,7 +3,7 @@ import { unauthorized } from "next/navigation";
 import { NewQuizAnswer, QuizAnswer, Uuid } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { quizAnswers } from "../db/schema";
+import { quizAnswers } from "~/lib/db/schema";
 import { incrementParticipantPoints } from "./participant";
 import { selectQuizByMatchId } from "./quiz";
 

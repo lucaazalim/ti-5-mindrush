@@ -3,7 +3,7 @@ import QRCode from "qrcode";
 import MatchPage from "~/app/dashboard/matches/[id]/_components/MatchPage";
 import { MatchStoreProvider } from "~/app/dashboard/matches/[id]/_store/store-provider";
 import { isUuid } from "~/lib/types";
-import { selectPopulatedMatchById } from "~/server/data/match";
+import { selectPopulatedMatchById } from "~/lib/data/match";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

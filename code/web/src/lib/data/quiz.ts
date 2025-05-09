@@ -9,7 +9,7 @@ import {
 } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { matches, questionAlternatives, questions, quizzes } from "../db/schema";
+import { matches, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
 
 export async function insertQuiz(newQuiz: Omit<NewQuiz, "educatorId">): Promise<Quiz> {
   const session = await auth();

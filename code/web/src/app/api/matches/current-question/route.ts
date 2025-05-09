@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { authParticipant } from "~/app/api/api";
 import { isFailure } from "~/lib/result";
 import { QuestionWithAlternativesWithoutCorrect } from "~/lib/types";
-import { selectMatchByIdOrPin } from "~/server/data/match";
-import { selectQuestionWithAlternatives } from "~/server/data/question";
+import { selectMatchByIdOrPin } from "~/lib/data/match";
+import { selectQuestionWithAlternatives } from "~/lib/data/question";
 import { APIError, apiErrorResponse } from "../../api";
 import { hasCurrentQuestion } from "~/lib/utils";
 

@@ -7,7 +7,7 @@ import {
   hasCurrentQuestion,
   hasCurrentQuestionTimeEnded,
 } from "~/lib/utils";
-import { getUpdatedMatch } from "~/server/actions/match";
+import { getUpdatedMatch } from "~/lib/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 import CountdownBar from "./CountdownBar";
 import { EndMatchButton } from "./EndMatchButton";

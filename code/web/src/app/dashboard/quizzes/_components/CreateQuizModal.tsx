@@ -6,7 +6,7 @@ import { FormProvider, useForm } from "react-hook-form";
 
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "~/components/ui/dialog";
 
-import { createQuiz } from "~/server/actions/quiz";
+import { createQuiz } from "~/lib/actions/quiz";
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/dialog";
 import { isFailure } from "~/lib/result";
 import { hasNextQuestion } from "~/lib/utils";
-import { endMatch } from "~/server/actions/match";
+import { endMatch } from "~/lib/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 
 export function EndMatchButton() {

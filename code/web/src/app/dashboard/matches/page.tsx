@@ -1,8 +1,8 @@
 import { unauthorized } from "next/navigation";
-import { auth } from "~/server/auth";
+import { auth } from "src/lib/auth";
 import Main from "../_components/Main";
 import PageTitle from "../_components/PageTitle";
-import { selectAllMatches } from "~/server/data/match";
+import { selectAllMatches } from "~/lib/data/match";
 import { DataTable } from "./_components/data-table";
 import { columns } from "./_components/columns";
 

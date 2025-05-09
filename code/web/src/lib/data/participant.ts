@@ -1,7 +1,7 @@
 import { and, eq, sql } from "drizzle-orm";
 import { NewParticipant, Participant, ParticipantNickname, Uuid } from "~/lib/types";
 import { db } from "../db";
-import { participants } from "../db/schema";
+import { participants } from "~/lib/db/schema";
 
 export async function insertParticipant(newParticipant: NewParticipant) {
   return (await db.insert(participants).values(newParticipant).returning())[0];

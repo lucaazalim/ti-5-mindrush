@@ -47,14 +47,14 @@ const config = {
       {
         zones: [
           {
-            target: "./src/server/actions",
-            from: "./src/server/db",
+            target: "./src/lib/actions",
+            from: "./src/lib/db",
             message:
               "You should manage the database directly from Server Actions. Use a method of the data layer.",
           },
           {
             target: "./src/app",
-            from: "./src/server/db",
+            from: "./src/lib/db",
             message:
               "You should not manage the database directly from the app folder. Use a method of the data layer.",
           },

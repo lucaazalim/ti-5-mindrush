@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "~/components/ui/dropdown-menu";
-import { auth } from "~/server/auth";
+import { auth } from "src/lib/auth";
 
 export default async function ProfileDropdownMenu() {
   const session = await auth();

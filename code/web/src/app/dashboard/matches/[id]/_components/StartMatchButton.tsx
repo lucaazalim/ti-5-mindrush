@@ -3,7 +3,7 @@ import { Play } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { isFailure } from "~/lib/result";
-import { startMatch } from "~/server/actions/match";
+import { startMatch } from "~/lib/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 
 export function StartMatchButton() {

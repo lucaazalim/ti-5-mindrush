@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { Match } from "~/lib/types";
-import { selectMatchByIdOrPin } from "~/server/data/match";
+import { selectMatchByIdOrPin } from "~/lib/data/match";
 import { APIError, apiErrorResponse } from "../../api";
 
 export async function GET(

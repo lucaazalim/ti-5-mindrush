@@ -4,9 +4,9 @@ import { uuidParser } from "~/lib/parsers";
 import { publishMatchEvent } from "~/lib/pusher/publisher";
 import { isFailure } from "~/lib/result";
 import { hasCurrentQuestion, hasCurrentQuestionTimeEnded } from "~/lib/utils";
-import { insertQuizAnswer, selectQuizAnswer } from "~/server/data/answer";
-import { selectMatchByIdOrPin } from "~/server/data/match";
-import { selectQuestionWithAlternatives } from "~/server/data/question";
+import { insertQuizAnswer, selectQuizAnswer } from "~/lib/data/answer";
+import { selectMatchByIdOrPin } from "~/lib/data/match";
+import { selectQuestionWithAlternatives } from "~/lib/data/question";
 import { apiErrorResponse, authParticipant } from "../../api";
 
 const payloadParser = z.object({

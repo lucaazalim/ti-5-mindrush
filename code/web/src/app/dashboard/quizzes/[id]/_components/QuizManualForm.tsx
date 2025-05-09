@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { ROUTES } from "~/lib/constants";
 import { isFailure } from "~/lib/result";
 import type { QuestionType, QuestionWithAlternatives, QuestionWithRawAlternatives, Uuid } from "~/lib/types";
-import { createQuestionsAndAlternatives } from "~/server/actions/question";
+import { createQuestionsAndAlternatives } from "~/lib/actions/question";
 import { AnswersManager } from "./AnswersManager";
 import { QuestionEditor } from "./QuestionEditor";
 import { SidebarSettings } from "./SidebarSettings";

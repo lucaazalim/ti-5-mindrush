@@ -1,4 +1,4 @@
-import { auth } from "~/server/auth";
+import { auth } from "src/lib/auth";
 import { ROUTES } from "~/lib/constants";
 import { NextResponse } from "next/server";
 import { type Route } from "next";

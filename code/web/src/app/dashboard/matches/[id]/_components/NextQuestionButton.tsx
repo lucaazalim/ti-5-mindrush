@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
 import { isFailure } from "~/lib/result";
 import { hasCurrentQuestionTimeEnded, hasNextQuestion } from "~/lib/utils";
-import { nextQuestion } from "~/server/actions/match";
+import { nextQuestion } from "~/lib/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 
 export function NextQuestionButton() {
