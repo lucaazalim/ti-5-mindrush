@@ -52,7 +52,7 @@ export const MATCH_STATUSES_NAMES: Record<(typeof MATCH_STATUSES)[number], strin
   ENDED: "Finalizada",
 };
 
-export const statusColorMap: Record<
+export const MATCH_STATUS_BADGE_VARIANTS: Record<
   keyof typeof MATCH_STATUSES_NAMES,
   "warning" | "success" | "outline"
 > = {

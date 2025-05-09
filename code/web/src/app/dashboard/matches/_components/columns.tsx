@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
-import { MATCH_STATUSES_NAMES, ROUTES, statusColorMap } from "~/lib/constants";
+import { MATCH_STATUSES_NAMES, ROUTES, MATCH_STATUS_BADGE_VARIANTS } from "~/lib/constants";
 import { MatchWithQuizTitle } from "~/lib/types";
 
 export const columns: ColumnDef<MatchWithQuizTitle>[] = [
@@ -18,7 +18,7 @@ export const columns: ColumnDef<MatchWithQuizTitle>[] = [
     cell: ({ row }) => {
       const status = row.original.status;
       return (
-        <Badge variant={statusColorMap[status]}>
+        <Badge variant={MATCH_STATUS_BADGE_VARIANTS[status]}>
           {MATCH_STATUSES_NAMES[status]}
         </Badge>
       );
