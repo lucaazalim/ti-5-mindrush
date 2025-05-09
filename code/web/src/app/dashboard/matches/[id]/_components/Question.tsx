@@ -1,6 +1,6 @@
 import { ReactTyped } from "react-typed";
 import Container from "~/app/dashboard/_components/Container";
-import { QUESTION_VISUALS } from "~/lib/constants";
+import { QUESTION_ALTERNATIVES_STYLING } from "~/lib/constants";
 import { cn } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
 
@@ -42,7 +42,7 @@ export default function Question() {
       </Container>
       <div className="grid grid-cols-2 gap-3">
         {currentQuestion.alternatives.map((alternative, index) => {
-          const { icon: Icon, colorClassName: color } = QUESTION_VISUALS[index]!;
+          const { icon: Icon, colorClassName: color } = QUESTION_ALTERNATIVES_STYLING[index]!;
 
           return (
             <div

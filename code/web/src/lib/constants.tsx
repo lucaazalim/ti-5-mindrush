@@ -61,7 +61,7 @@ export const MATCH_STATUS_BADGE_VARIANTS: Record<
   ENDED: "success",
 };
 
-export const QUESTION_VISUALS: {
+export const QUESTION_ALTERNATIVES_STYLING: {
   icon: LucideIcon;
   colorClassName: string;
   cssVariable: `hsl(var(${string}))`;

@@ -1,7 +1,7 @@
 import { Bar, BarChart, LabelList, Rectangle, XAxis } from "recharts";
 import Container from "~/app/dashboard/_components/Container";
 import { ChartConfig, ChartContainer } from "~/components/ui/chart";
-import { QUESTION_VISUALS } from "~/lib/constants";
+import { QUESTION_ALTERNATIVES_STYLING } from "~/lib/constants";
 import { useMatchStore } from "../_store/store-provider";
 
 export default function AnswersChart() {
@@ -21,7 +21,7 @@ export default function AnswersChart() {
     match.currentQuestion?.alternatives.map((alternative, index) => ({
       alternativeId: alternative.id,
       participants: alternative.count,
-      fill: QUESTION_VISUALS[index]?.cssVariable ?? "",
+      fill: QUESTION_ALTERNATIVES_STYLING[index]?.cssVariable ?? "",
     })) ?? [];
 
   return (

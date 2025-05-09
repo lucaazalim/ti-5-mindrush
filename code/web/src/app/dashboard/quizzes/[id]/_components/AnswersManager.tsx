@@ -1,7 +1,7 @@
 import { Plus, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { QUESTION_VISUALS } from "~/lib/constants";
+import { QUESTION_ALTERNATIVES_STYLING } from "~/lib/constants";
 import { QuestionType } from "~/lib/types";
 import { cn } from "~/lib/utils";
 
@@ -52,7 +52,7 @@ export function AnswersManager({
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {answers.slice(0, isVF ? 2 : answers.length).map((answer, index) => {
-          const { icon: Icon, colorClassName: color } = QUESTION_VISUALS[index]!;
+          const { icon: Icon, colorClassName: color } = QUESTION_ALTERNATIVES_STYLING[index]!;
 
           return (
             <div key={index} className="relative flex items-center gap-2">
