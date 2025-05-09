@@ -3,12 +3,12 @@ import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { APIError, apiErrorResponse } from "~/app/api/api";
 import { env } from "~/env";
+import { selectMatchByIdOrPin } from "~/lib/data/match";
+import { existsParticipantWithNickname, insertParticipant } from "~/lib/data/participant";
 import { participantNicknameParser } from "~/lib/parsers";
 import { publishMatchEvent } from "~/lib/pusher/publisher";
 import { isMatchPin, isUuid, Participant } from "~/lib/types";
 import { getAvatarUrl } from "~/lib/utils";
-import { selectMatchByIdOrPin } from "~/lib/data/match";
-import { existsParticipantWithNickname, insertParticipant } from "~/lib/data/participant";
 
 const payloadParser = z.object({
   nickname: participantNicknameParser,
