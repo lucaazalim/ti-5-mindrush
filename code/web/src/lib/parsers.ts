@@ -1,4 +1,4 @@
-import { z } from "zod"; // Generic
+import { z } from "zod";
 import { QUESTION_TYPES } from "./constants";
 
 // Generic
@@ -39,9 +39,14 @@ export const questionAndAlternativesParser = z.object({
 
 // Participant
 
-export const participantNicknameParser = z.string().min(3).max(20).brand<"ParticipantNickname">();
+export const participantNicknameParser = z
+  .string()
+  .trim()
+  .min(3)
+  .max(20)
+  .regex(/^[\p{L}\p{N} ]+$/u, "Nickname can only contain letters, numbers, and spaces.")
+  .brand<"ParticipantNickname">();
 
 // Match
 
 export const matchPinParser = z.string().regex(/^\d{6}$/);
-export const matchIdOrPinParser = uuidParser.or(matchPinParser);
