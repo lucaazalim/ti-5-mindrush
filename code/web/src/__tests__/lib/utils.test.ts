@@ -1,6 +1,7 @@
 import { Uuid } from "~/lib/parsers";
 import { Match, PopulatedMatch } from "../../lib/types";
 import {
+  calculateAnswerPoints,
   getAvatarUrl,
   getCurrentQuestionTimeLeft,
   getMatchChannel,
@@ -73,5 +74,25 @@ describe("utils.ts", () => {
         currentQuestionEndsAt: new Date(Date.now() + 5000),
       }),
     ).toBe(false);
+  });
+
+  test("calculateAnswerPoints returns correct points for a correct answer", () => {
+    const points = calculateAnswerPoints(true, 10000, 5000);
+    expect(points).toBe(500);
+  });
+
+  test("calculateAnswerPoints returns 0 for an incorrect answer", () => {
+    const points = calculateAnswerPoints(false, 10000, 5000);
+    expect(points).toBe(0);
+  });
+
+  test("calculateAnswerPoints handles edge case where timeTaken is 0", () => {
+    const points = calculateAnswerPoints(true, 10000, 0);
+    expect(points).toBe(1000);
+  });
+
+  test("calculateAnswerPoints handles edge case where timeTaken equals timeLimit", () => {
+    const points = calculateAnswerPoints(true, 10000, 10000);
+    expect(points).toBe(0);
   });
 });

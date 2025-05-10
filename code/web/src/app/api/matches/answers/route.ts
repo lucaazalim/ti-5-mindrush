@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { uuidParser } from "~/lib/parsers";
-import { publishMatchEvent } from "~/lib/pusher/publisher";
-import { isFailure } from "~/lib/result";
-import { hasCurrentQuestion, hasCurrentQuestionTimeEnded } from "~/lib/utils";
 import { insertQuizAnswer, selectQuizAnswer } from "~/lib/data/answer";
 import { selectMatchByIdOrPin } from "~/lib/data/match";
 import { selectQuestionWithAlternatives } from "~/lib/data/question";
+import { uuidParser } from "~/lib/parsers";
+import { publishMatchEvent } from "~/lib/pusher/publisher";
+import { isFailure } from "~/lib/result";
+import {
+  calculateAnswerPoints,
+  hasCurrentQuestion,
+  hasCurrentQuestionTimeEnded,
+} from "~/lib/utils";
 import { apiErrorResponse, authParticipant } from "../../api";
 
 const payloadParser = z.object({
@@ -117,7 +121,7 @@ export async function POST(req: NextRequest) {
 
   const timeLimit = currentQuestion.timeLimit * 1000; // ms
   const timeTaken = Date.now() - match.currentQuestionStartedAt.getTime(); // ms
-  const points = isCorrect ? Math.round((1 - timeTaken / timeLimit) * 1000) : 0;
+  const points = calculateAnswerPoints(isCorrect, timeLimit, timeTaken);
 
   await insertQuizAnswer({
     participantId,
