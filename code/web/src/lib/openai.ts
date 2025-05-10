@@ -17,6 +17,12 @@ const questionAndAlternativesSchema = z.object({
   ),
 });
 
+/**
+ * Generates a quiz based on a given theme.
+ *
+ * @param quiz The quiz object containing the theme, difficulty, and language.
+ * @returns A promise that resolves to the generated quiz object.
+ */
 export async function generateQuizByTheme(quiz: z.infer<typeof themeGeneratedSchema>) {
   const quantityQuestions = 2;
 

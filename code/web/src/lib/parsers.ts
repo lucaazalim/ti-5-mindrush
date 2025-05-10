@@ -14,6 +14,12 @@ export const uuidParser = z
 
 export type Uuid = z.infer<typeof uuidParser>;
 
+/**
+ * Parses and validates a UUID string.
+ *
+ * @param uuid The string to validate as a UUID.
+ * @returns True if the string is a valid UUID, false otherwise.
+ */
 export function isUuid(uuid: string): uuid is Uuid {
   return uuidParser.safeParse(uuid).success;
 }
@@ -59,6 +65,12 @@ export const participantNicknameParser = z
 
 export type ParticipantNickname = z.infer<typeof participantNicknameParser>;
 
+/**
+ * Parses and validates a participant nickname.
+ *
+ * @param nickname The string to validate as a participant nickname.
+ * @returns True if the string is a valid participant nickname, false otherwise.
+ */
 export function isParticipantNickname(nickname: string): nickname is ParticipantNickname {
   return participantNicknameParser.safeParse(nickname).success;
 }
@@ -69,6 +81,12 @@ export const matchPinParser = z.string().regex(/^\d{6}$/);
 
 export type MatchPin = z.infer<typeof matchPinParser>;
 
+/**
+ * Parses and validates a match PIN.
+ *
+ * @param pin The string to validate as a match PIN.
+ * @returns True if the string is a valid match PIN, false otherwise.
+ */
 export function isMatchPin(pin: string): pin is MatchPin {
   return matchPinParser.safeParse(pin).success;
 }
