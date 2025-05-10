@@ -3,10 +3,15 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { ROUTES } from "~/lib/constants";
-import { isFailure } from "~/lib/result";
-import type { QuestionType, QuestionWithAlternatives, QuestionWithRawAlternatives, Uuid } from "~/lib/types";
 import { createQuestionsAndAlternatives } from "~/lib/actions/question";
+import { ROUTES } from "~/lib/constants";
+import type { Uuid } from "~/lib/parsers";
+import { isFailure } from "~/lib/result";
+import type {
+  QuestionType,
+  QuestionWithAlternatives,
+  QuestionWithRawAlternatives,
+} from "~/lib/types";
 import { AnswersManager } from "./AnswersManager";
 import { QuestionEditor } from "./QuestionEditor";
 import { SidebarSettings } from "./SidebarSettings";

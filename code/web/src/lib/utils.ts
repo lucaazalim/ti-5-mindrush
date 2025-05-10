@@ -1,38 +1,46 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { Match, Participant, PopulatedMatch, Uuid } from "./types";
+import { Match, Participant, PopulatedMatch, RequireDefined } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getAvatarUrl(participant: Participant) {
-  return `https://api.dicebear.com/9.x/bottts/svg?seed=${participant.id}&textureProbability=0`;
+type CurrentQuestionFields = Pick<
+  Match,
+  "currentQuestionId" | "currentQuestionStartedAt" | "currentQuestionEndsAt"
+>;
+
+export function getAvatarUrl({ id }: Pick<Participant, "id">) {
+  return `https://api.dicebear.com/9.x/bottts/svg?seed=${id}&textureProbability=0`;
 }
 
-export function getMatchChannel(matchId: Uuid) {
-  return `presence-match-${matchId}`;
+export function getMatchChannel({ id }: Pick<Match, "id">) {
+  return `presence-match-${id}`;
 }
 
-export function hasCurrentQuestionTimeEnded(match: Match) {
+export function hasCurrentQuestionTimeEnded(match: Pick<Match, "currentQuestionEndsAt">) {
   return !!match.currentQuestionEndsAt && match.currentQuestionEndsAt.getTime() < Date.now();
 }
 
-export function getCurrentQuestionTimeLeft(match: PopulatedMatch): number {
+export function getCurrentQuestionTimeLeft(match: CurrentQuestionFields): number {
   if (!hasCurrentQuestion(match)) return 0;
   return Math.max(0, match.currentQuestionEndsAt.getTime() - Date.now());
 }
 
-export function hasNextQuestion(match: PopulatedMatch) {
-  return match.currentQuestionId !== match.quiz.questions.at(-1)?.id;
+export function hasNextQuestion({
+  currentQuestionId,
+  quiz,
+}: Pick<PopulatedMatch, "currentQuestionId" | "quiz">) {
+  return currentQuestionId !== quiz.questions.at(-1)?.id;
 }
 
-export function hasCurrentQuestion(match: PopulatedMatch | Match): match is typeof match & {
-  currentQuestionId: string;
-  currentQuestionStartedAt: Date;
-  currentQuestionEndsAt: Date;
-} {
+export function hasCurrentQuestion(
+  currentQuestionData: CurrentQuestionFields,
+): currentQuestionData is RequireDefined<CurrentQuestionFields, keyof CurrentQuestionFields> {
   return Boolean(
-    match.currentQuestionId && match.currentQuestionStartedAt && match.currentQuestionEndsAt,
+    currentQuestionData.currentQuestionId &&
+      currentQuestionData.currentQuestionStartedAt &&
+      currentQuestionData.currentQuestionEndsAt,
   );
 }

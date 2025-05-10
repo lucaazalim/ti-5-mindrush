@@ -1,7 +1,7 @@
 import Pusher from "pusher";
 import { env } from "~/env";
-import { Uuid } from "~/lib/types";
 import { getMatchChannel } from "~/lib/utils";
+import { Uuid } from "../parsers";
 import { EventMap } from "./types";
 
 export const pusherSender = new Pusher({

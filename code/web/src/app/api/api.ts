@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 import { env } from "~/env";
-import { fail, Result, succeed } from "~/lib/result";
-import { isUuid, Participant } from "~/lib/types";
 import { selectParticipantById } from "~/lib/data/participant";
+import { isUuid } from "~/lib/parsers";
+import { fail, Result, succeed } from "~/lib/result";
+import { Participant } from "~/lib/types";
 
 export type APIError = {
   status: number;

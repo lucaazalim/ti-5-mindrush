@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ChannelAuthResponse, PresenceChannelData } from "pusher";
-import { APIError, apiErrorResponse } from "~/app/api/api";
-import { pusherSender } from "~/lib/pusher/publisher";
-import { isUuid } from "~/lib/types";
 import { auth } from "src/lib/auth";
+import { APIError, apiErrorResponse } from "~/app/api/api";
 import { selectQuizByMatchId } from "~/lib/data/quiz";
+import { isUuid } from "~/lib/parsers";
+import { pusherSender } from "~/lib/pusher/publisher";
 
 export async function POST(
   req: NextRequest,

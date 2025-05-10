@@ -1,9 +1,9 @@
 import { unauthorized } from "next/navigation";
+import { auth } from "src/lib/auth";
 import PageTitle from "~/app/dashboard/_components/PageTitle";
 import QuizzesList from "~/app/dashboard/quizzes/_components/quiz-card/QuizzesList";
-import { Uuid } from "~/lib/types";
-import { auth } from "src/lib/auth";
 import { selectAllQuizzesWithQuestionCountAndActiveMatch } from "~/lib/data/quiz";
+import { Uuid } from "~/lib/parsers";
 import Main from "../_components/Main";
 import { CreateQuizModal } from "./_components/CreateQuizModal";
 

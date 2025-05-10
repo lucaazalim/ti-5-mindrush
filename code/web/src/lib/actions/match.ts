@@ -1,9 +1,5 @@
 "use server";
 
-import { fail, Result, succeed } from "~/lib/result";
-import { MatchStatus, Uuid, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
-import { auth } from "src/lib/auth";
-import { publishMatchEvent } from "../pusher/publisher";
 import {
   checkActiveMatchByQuizId,
   insertMatch,
@@ -11,14 +7,12 @@ import {
   selectPopulatedMatchById,
   updateMatch,
 } from "~/lib/data/match";
+import { fail, Result, succeed } from "~/lib/result";
+import { MatchStatus, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
+import { Uuid } from "../parsers";
+import { publishMatchEvent } from "../pusher/publisher";
 
 export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> {
-  const session = await auth();
-
-  if (!session) {
-    return fail("Não autenticado.");
-  }
-
   const existingMatch = await checkActiveMatchByQuizId(quizId);
 
   if (existingMatch) {

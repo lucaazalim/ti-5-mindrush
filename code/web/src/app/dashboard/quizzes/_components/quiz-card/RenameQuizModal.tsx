@@ -6,8 +6,9 @@ import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "~/components/ui/dialog";
 import { Form } from "~/components/ui/form";
-import { Quiz, UpdateQuiz } from "~/lib/types";
 import { editQuiz } from "~/lib/actions/quiz";
+import { UpdateQuiz } from "~/lib/parsers";
+import { Quiz } from "~/lib/types";
 import QuizBasicInfo from "../create-quiz-form/QuizBasicInfo";
 
 type Props = {

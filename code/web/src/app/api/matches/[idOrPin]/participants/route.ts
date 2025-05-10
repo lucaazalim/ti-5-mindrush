@@ -5,9 +5,9 @@ import { APIError, apiErrorResponse } from "~/app/api/api";
 import { env } from "~/env";
 import { selectMatchByIdOrPin } from "~/lib/data/match";
 import { existsParticipantWithNickname, insertParticipant } from "~/lib/data/participant";
-import { participantNicknameParser } from "~/lib/parsers";
+import { isMatchPin, isUuid, participantNicknameParser } from "~/lib/parsers";
 import { publishMatchEvent } from "~/lib/pusher/publisher";
-import { isMatchPin, isUuid, Participant } from "~/lib/types";
+import { Participant } from "~/lib/types";
 import { getAvatarUrl } from "~/lib/utils";
 
 const payloadParser = z.object({

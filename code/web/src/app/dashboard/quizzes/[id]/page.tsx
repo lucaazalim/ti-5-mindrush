@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { isUuid } from "~/lib/types";
 import { selectQuizWithQuestionsAndAlternatives } from "~/lib/data/quiz";
+import { isUuid } from "~/lib/parsers";
 import QuizManualForm from "./_components/QuizManualForm";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {

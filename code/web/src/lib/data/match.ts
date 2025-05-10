@@ -1,9 +1,10 @@
 import { and, desc, eq, getTableColumns, inArray } from "drizzle-orm";
 import { forbidden, unauthorized } from "next/navigation";
-import { MatchWithQuizTitle, NewMatch, Uuid, isUuid, type Match, type PopulatedMatch } from "~/lib/types";
+import { matches, participants, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
+import { MatchWithQuizTitle, NewMatch, type Match, type PopulatedMatch } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { matches, participants, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
+import { Uuid, isUuid } from "../parsers";
 import { selectQuizAnswersByQuestionId } from "./answer";
 import { selectQuizById, selectQuizByMatchId } from "./quiz";
 

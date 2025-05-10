@@ -1,9 +1,9 @@
 "use server";
 
+import { saveQuestionsAndAlternatives } from "~/lib/data/question";
 import { questionAndAlternativesParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
-import { RawQuestionsWithAlternatives } from "~/lib/types";
-import { saveQuestionsAndAlternatives } from "~/lib/data/question";
+import { RawQuestionsWithAlternatives } from "../parsers";
 
 export async function createQuestionsAndAlternatives(
   data: RawQuestionsWithAlternatives,

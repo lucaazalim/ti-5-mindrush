@@ -1,5 +1,5 @@
 import { Circle, Diamond, LucideIcon, Square, Triangle } from "lucide-react";
-import { Uuid } from "./types";
+import { Uuid } from "./parsers";
 
 export type Route = `/${string}`;
 

@@ -12,12 +12,20 @@ export const uuidParser = z
   })
   .brand<"Uuid">();
 
-// Quiz
+export type Uuid = z.infer<typeof uuidParser>;
+
+export function isUuid(uuid: string): uuid is Uuid {
+  return uuidParser.safeParse(uuid).success;
+}
+
+// Quiz Update
 
 export const updateQuizParser = z.object({
   title: z.string().min(3).optional(),
   description: z.string().min(8).optional(),
 });
+
+export type UpdateQuiz = z.infer<typeof updateQuizParser>;
 
 // Question
 
@@ -37,7 +45,9 @@ export const questionAndAlternativesParser = z.object({
   ),
 });
 
-// Participant
+export type RawQuestionsWithAlternatives = z.infer<typeof questionAndAlternativesParser>;
+
+// Participant Nickname
 
 export const participantNicknameParser = z
   .string()
@@ -47,6 +57,18 @@ export const participantNicknameParser = z
   .regex(/^[\p{L}\p{N} ]+$/u, "Nickname can only contain letters, numbers, and spaces.")
   .brand<"ParticipantNickname">();
 
-// Match
+export type ParticipantNickname = z.infer<typeof participantNicknameParser>;
+
+export function isParticipantNickname(nickname: string): nickname is ParticipantNickname {
+  return participantNicknameParser.safeParse(nickname).success;
+}
+
+// Match Pin
 
 export const matchPinParser = z.string().regex(/^\d{6}$/);
+
+export type MatchPin = z.infer<typeof matchPinParser>;
+
+export function isMatchPin(pin: string): pin is MatchPin {
+  return matchPinParser.safeParse(pin).success;
+}

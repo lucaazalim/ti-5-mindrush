@@ -1,15 +1,10 @@
 import { and, eq, inArray } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
-import {
-  DataAccessOptions,
-  NewQuestionAlternative,
-  QuestionWithAlternatives,
-  RawQuestionsWithAlternatives,
-  Uuid,
-} from "~/lib/types";
+import { questionAlternatives, questions, quizzes } from "~/lib/db/schema";
+import { DataAccessOptions, NewQuestionAlternative, QuestionWithAlternatives } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { questionAlternatives, questions, quizzes } from "~/lib/db/schema";
+import { RawQuestionsWithAlternatives, Uuid } from "../parsers";
 
 export async function insertQuestionsAndAlternatives(
   quizId: Uuid,
@@ -67,18 +62,12 @@ export async function saveQuestionsAndAlternatives(
 
   const existingQuestionIds = existingQuestions.map((q) => q.id);
 
-  const incomingQuestionIds = data.questions
-    .map((q) => q.id)
-    .filter((id): id is Uuid => !!id);
+  const incomingQuestionIds = data.questions.map((q) => q.id).filter((id): id is Uuid => !!id);
 
-  const toDelete = existingQuestionIds.filter(
-    (id) => !incomingQuestionIds.includes(id),
-  );
+  const toDelete = existingQuestionIds.filter((id) => !incomingQuestionIds.includes(id));
 
   if (toDelete.length > 0) {
-    await db.delete(questionAlternatives).where(
-      inArray(questionAlternatives.questionId, toDelete),
-    );
+    await db.delete(questionAlternatives).where(inArray(questionAlternatives.questionId, toDelete));
     await db.delete(questions).where(inArray(questions.id, toDelete));
   }
 
@@ -105,35 +94,27 @@ export async function saveQuestionsAndAlternatives(
 
       const questionId = createdQuestion.id;
 
-      const alternatives: NewQuestionAlternative[] = q.alternatives.map(
-        (answer, index) => ({
-          questionId,
-          answer,
-          isCorrect: index === q.correctAlternativeIndex,
-          order: index,
-        }),
-      );
+      const alternatives: NewQuestionAlternative[] = q.alternatives.map((answer, index) => ({
+        questionId,
+        answer,
+        isCorrect: index === q.correctAlternativeIndex,
+        order: index,
+      }));
 
       await db.insert(questionAlternatives).values(alternatives);
     } else {
       const questionId = q.id;
 
-      await db.update(questions)
-        .set(questionData)
-        .where(eq(questions.id, questionId));
+      await db.update(questions).set(questionData).where(eq(questions.id, questionId));
 
-      await db.delete(questionAlternatives).where(
-        eq(questionAlternatives.questionId, questionId),
-      );
+      await db.delete(questionAlternatives).where(eq(questionAlternatives.questionId, questionId));
 
-      const alternatives: NewQuestionAlternative[] = q.alternatives.map(
-        (answer, index) => ({
-          questionId,
-          answer,
-          isCorrect: index === q.correctAlternativeIndex,
-          order: index,
-        }),
-      );
+      const alternatives: NewQuestionAlternative[] = q.alternatives.map((answer, index) => ({
+        questionId,
+        answer,
+        isCorrect: index === q.correctAlternativeIndex,
+        order: index,
+      }));
 
       await db.insert(questionAlternatives).values(alternatives);
     }

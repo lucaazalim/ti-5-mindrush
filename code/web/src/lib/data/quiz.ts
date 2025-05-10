@@ -1,15 +1,15 @@
 import { and, count, eq, getTableColumns, inArray } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
+import { matches, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
 import {
   NewQuiz,
   Quiz,
   QuizWithQuestionCountAndActiveMatch,
-  Uuid,
   type QuizWithQuestionsAndAlternatives,
 } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
-import { matches, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
+import { Uuid } from "../parsers";
 
 export async function insertQuiz(newQuiz: Omit<NewQuiz, "educatorId">): Promise<Quiz> {
   const session = await auth();
