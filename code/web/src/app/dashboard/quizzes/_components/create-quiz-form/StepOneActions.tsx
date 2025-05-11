@@ -1,22 +1,14 @@
-"use client";
-
+import { z } from "zod";
+import { quizCreateSchema, useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
 import { Button } from "~/components/ui/button";
-import {
-  type CreateQuizSchema,
-  useCreateQuizFormContext,
-} from "~/app/dashboard/quizzes/form-schema";
 
 interface StepOneActionsProps {
   setStep: (step: number) => void;
   selectedType: string;
-  onSubmit: (values: CreateQuizSchema) => Promise<void>;
+  onSubmit: (values: z.infer<typeof quizCreateSchema>) => void;
 }
 
-export default function StepOneActions({
-  selectedType,
-  setStep,
-  onSubmit,
-}: StepOneActionsProps) {
+export default function StepOneActions({ selectedType, setStep, onSubmit }: StepOneActionsProps) {
   const form = useCreateQuizFormContext();
 
   return (
@@ -36,7 +28,7 @@ export default function StepOneActions({
           }
         }}
       >
-        {selectedType === "BLANK" ? "Criar Quiz" : "Continuar ->"}
+        {selectedType === "BLANK" ? "Confirmar" : "Continuar ->"}
       </Button>
     </div>
   );

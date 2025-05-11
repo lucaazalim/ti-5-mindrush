@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
     points,
   });
 
-  await publishMatchEvent(matchId, "question-answered-event");
+  await publishMatchEvent(match, "question-answered-event");
 
   return new NextResponse(null, {
     status: 201,

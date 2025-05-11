@@ -1,7 +1,7 @@
 import Pusher from "pusher";
 import { env } from "~/env";
 import { getMatchChannel } from "~/lib/utils";
-import { Uuid } from "../parsers";
+import { Match } from "../types";
 import { EventMap } from "./types";
 
 export const pusherSender = new Pusher({
@@ -13,10 +13,10 @@ export const pusherSender = new Pusher({
 });
 
 export async function publishMatchEvent<K extends keyof EventMap>(
-  matchId: Uuid,
+  match: Pick<Match, "id">,
   name: K,
   ...args: EventMap[K] extends never ? [] : [data: EventMap[K]]
 ) {
   const data = args[0];
-  return pusherSender.trigger(getMatchChannel(matchId), name, data ?? {});
+  return pusherSender.trigger(getMatchChannel(match), name, data ?? {});
 }

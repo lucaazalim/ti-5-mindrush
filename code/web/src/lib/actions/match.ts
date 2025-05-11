@@ -102,7 +102,7 @@ async function updateCurrentQuestion(
     return fail("Não foi possível avançar para a próxima questão.");
   }
 
-  await publishMatchEvent(match.id, "next-match-question-event");
+  await publishMatchEvent(match, "next-match-question-event");
 
   return succeed({
     ...match,
@@ -140,7 +140,7 @@ export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
     return fail("Não foi possível atualizar a partida.");
   }
 
-  await publishMatchEvent(match.id, "match-ended-event");
+  await publishMatchEvent(match, "match-ended-event");
 
   return succeed(updatedMatch);
 }

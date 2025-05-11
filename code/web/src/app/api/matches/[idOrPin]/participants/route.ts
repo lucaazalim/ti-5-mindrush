@@ -84,7 +84,7 @@ export async function POST(
     });
   }
 
-  await publishMatchEvent(match.id, "new-participant-event", {
+  await publishMatchEvent(match, "new-participant-event", {
     participant: createdParticipant,
   });
 

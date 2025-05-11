@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -10,7 +11,8 @@ import { createQuiz } from "~/lib/actions/quiz";
 
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { type CreateQuizSchema, quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
+import { z } from "zod";
+import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 import { ROUTES } from "~/lib/constants";
 import { Uuid } from "~/lib/parsers";
 import { isSuccess } from "~/lib/result";
@@ -24,7 +26,22 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
   const [step, setStep] = useState(1);
   const router = useRouter();
 
-  const form = useForm<CreateQuizSchema>({
+  const mutation = useMutation({
+    mutationFn: createQuiz,
+    onSuccess: (result) => {
+      if (isSuccess(result)) {
+        toast.success("Quiz criado com sucesso!");
+        router.push(ROUTES.QUIZ(result.data.id));
+      } else {
+        toast.error(result.error);
+      }
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const form = useForm<z.infer<typeof quizCreateSchema>>({
     resolver: zodResolver(quizCreateSchema),
     mode: "onChange",
     defaultValues: {
@@ -32,23 +49,13 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
       title: "",
       description: "",
       type: "BLANK",
-      theme: "",
-      difficulty: "EASY",
-      language: "PORTUGUESE",
-    } as CreateQuizSchema,
+    },
   });
 
   const selectedType = form.watch("type");
 
-  async function onSubmit(values: CreateQuizSchema) {
-    const result = await createQuiz(values);
-
-    if (isSuccess(result)) {
-      toast.success("Quiz criado com sucesso!");
-      router.push(ROUTES.QUIZ(result.data.id));
-    } else {
-      toast.error(result.error);
-    }
+  function onSubmit(values: z.infer<typeof quizCreateSchema>) {
+    mutation.mutate(values);
   }
 
   return (

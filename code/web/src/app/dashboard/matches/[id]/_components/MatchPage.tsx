@@ -21,7 +21,7 @@ export default function MatchPage() {
   const setChannel = useMatchStore((state) => state.setChannel);
 
   useEffect(() => {
-    const channelName = getMatchChannel(match.id);
+    const channelName = getMatchChannel(match);
     const channel = pusherClient.subscribe(channelName);
 
     setChannel(channel);
@@ -30,7 +30,7 @@ export default function MatchPage() {
       pusherClient.unsubscribe(channelName);
       setChannel(undefined);
     };
-  }, [match.id, setChannel]);
+  }, [match, setChannel]);
 
   const Component = Components[match.status];
 

@@ -7,7 +7,7 @@ export default function StepTwoActions({ setStep }: { setStep: (step: number) =>
         Voltar
       </Button>
 
-      <Button type="submit">Criar Quiz</Button>
+      <Button type="submit">Confirmar</Button>
     </div>
   );
 }
