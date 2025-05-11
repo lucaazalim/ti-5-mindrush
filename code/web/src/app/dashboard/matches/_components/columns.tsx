@@ -4,13 +4,13 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Eye } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
-import { MATCH_STATUSES_NAMES, ROUTES, MATCH_STATUS_BADGE_VARIANTS } from "~/lib/constants";
+import { MATCH_STATUS_BADGE_VARIANTS, MATCH_STATUSES_NAMES, ROUTES } from "~/lib/constants";
 import { MatchWithQuizTitle } from "~/lib/types";
 
 export const columns: ColumnDef<MatchWithQuizTitle>[] = [
   {
     accessorKey: "quizTitle",
-    header: "Quiz",
+    header: "Título do Quiz",
   },
   {
     accessorKey: "status",
@@ -18,15 +18,13 @@ export const columns: ColumnDef<MatchWithQuizTitle>[] = [
     cell: ({ row }) => {
       const status = row.original.status;
       return (
-        <Badge variant={MATCH_STATUS_BADGE_VARIANTS[status]}>
-          {MATCH_STATUSES_NAMES[status]}
-        </Badge>
+        <Badge variant={MATCH_STATUS_BADGE_VARIANTS[status]}>{MATCH_STATUSES_NAMES[status]}</Badge>
       );
     },
   },
   {
     accessorKey: "endedAt",
-    header: "Finalizado em",
+    header: "Finalizada em",
     cell: ({ row }) => {
       const date: Date | null = row.original.endedAt;
       return date
@@ -45,7 +43,7 @@ export const columns: ColumnDef<MatchWithQuizTitle>[] = [
     cell: ({ row }) => {
       return (
         <Link href={ROUTES.MATCH(row.original.id)}>
-          <Eye strokeWidth={1.5}/>
+          <Eye strokeWidth={1.5} />
         </Link>
       );
     },

@@ -1,7 +1,10 @@
+import Link from "next/link";
 import { unauthorized } from "next/navigation";
 import { auth } from "src/lib/auth";
 import PageTitle from "~/app/dashboard/_components/PageTitle";
 import QuizzesList from "~/app/dashboard/quizzes/_components/quiz-card/QuizzesList";
+import { Button } from "~/components/ui/button";
+import { ROUTES } from "~/lib/constants";
 import { selectAllQuizzesWithQuestionCountAndActiveMatch } from "~/lib/data/quiz";
 import { Uuid } from "~/lib/parsers";
 import Main from "../_components/Main";
@@ -22,7 +25,12 @@ export default async function Page() {
     <Main>
       <div className="flex flex-row justify-between">
         <PageTitle className="mt-1">Seus quizzes</PageTitle>
-        <CreateQuizModal educatorId={(session.user.id as Uuid) ?? ""} />
+        <div className="flex flex-row items-center gap-3">
+          <Link href={ROUTES.MATCHES}>
+            <Button variant="outline">Histórico de Partidas</Button>
+          </Link>
+          <CreateQuizModal educatorId={(session.user.id as Uuid) ?? ""} />
+        </div>
       </div>
 
       <QuizzesList quizzes={allQuizzes} />
