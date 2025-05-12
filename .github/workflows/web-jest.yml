@@ -1,0 +1,33 @@
+name: Jest Unit Tests
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        working-directory: code/web
+
+      - name: Run Jest tests
+        run: npm run test -- --ci --coverage
+        working-directory: code/web
+
+      - name: Upload coverage report
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: code/web/coverage/
+          retention-days: 30

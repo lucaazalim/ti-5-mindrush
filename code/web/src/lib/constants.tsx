@@ -72,4 +72,4 @@ export const QUESTION_ALTERNATIVES_STYLING: {
   { icon: Square, colorClassName: "bg-green-500", cssVariable: "hsl(var(--fourth-alternative))" },
 ];
 
-export const TEST_SESSION_TOKEN = "365636bc-fd6d-4d5f-a688-8af780dc3b05";"
+export const TEST_SESSION_TOKEN = "365636bc-fd6d-4d5f-a688-8af780dc3b05";

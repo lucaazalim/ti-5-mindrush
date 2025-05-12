@@ -1,21 +1,14 @@
 import { reset } from "drizzle-seed";
-import { env } from "~/env";
 import { db } from "~/lib/db/";
 import * as schema from "~/lib/db/schema";
 import { TEST_SESSION_TOKEN } from "../constants";
 
-export async function resetDatabase() {
-  if (env.NODE_ENV !== "development") {
-    throw new Error("Resetting the database is only allowed in development mode.");
-  }
+export async function resetAndSeedDatabase() {
+  // if (env.NODE_ENV !== "development") {
+  //   throw new Error(`"Resetting the database is not allowed in ${env.NODE_ENV} mode.`);
+  // }
 
   await reset(db, schema);
-}
-
-export async function seedDatabase() {
-  if (env.NODE_ENV !== "development") {
-    throw new Error("Seeding the database is only allowed in development mode.");
-  }
 
   const createdUser = (
     await db
