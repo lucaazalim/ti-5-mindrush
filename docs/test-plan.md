@@ -61,8 +61,8 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 5. Na nova página, é possível adicionar uma nova questão ao quiz.
 6. Para cada questão, é possível adicionar múltiplas alternativas.
 7. O sistema impede o salvamento se:
-   7.1. Não houver pelo menos uma alternativa marcada como correta.
-   7.2. Existirem campos obrigatórios em branco.
+   - Não houver pelo menos uma alternativa marcada como correta.
+   - Existirem campos obrigatórios em branco.
 8. Ao clicar em **"Salvar alterações"**, as informações são persistidas corretamente no banco de dados.
 9. A mensagem **"Quiz salvo com sucesso!"** é exibida após o salvamento bem-sucedido.
 
@@ -306,6 +306,8 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 2. A navegação entre a lista de quizzes, o histórico e o resultado da partida funciona sem erros.
 3. O ícone de olho permite acessar corretamente os relatórios de partidas finalizadas.
 4. A funcionalidade apresenta uma experiência clara e livre de inconsistências.
+
+---
 
 ## Estratégia de Teste
 
