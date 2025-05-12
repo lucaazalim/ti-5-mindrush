@@ -2,6 +2,7 @@ import { reset } from "drizzle-seed";
 import { env } from "~/env";
 import { db } from "~/lib/db/";
 import * as schema from "~/lib/db/schema";
+import { TEST_SESSION_TOKEN } from "../constants";
 
 export async function resetDatabase() {
   if (env.NODE_ENV !== "development") {
@@ -31,7 +32,7 @@ export async function seedDatabase() {
   }
 
   await db.insert(schema.sessions).values({
-    sessionToken: "365636bc-fd6d-4d5f-a688-8af780dc3b05",
+    sessionToken: TEST_SESSION_TOKEN,
     userId: createdUser.id,
     expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
   });
