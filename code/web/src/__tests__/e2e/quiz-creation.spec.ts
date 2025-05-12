@@ -41,4 +41,9 @@ test("create a new quiz from the dashboard", async ({ page, context }) => {
     await expect(page).toHaveURL(/\/dashboard\/quizzes\/[a-fA-F0-9-]{36}$/);
     await expect(page.locator("text=Quiz criado com sucesso")).toBeVisible();
   });
+
+  // Sugestões:
+  // - Adicionar outra questão;
+  // - Preencher as alternativas;
+  
 });
