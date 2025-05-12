@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import {
   checkActiveMatchByQuizId,
   insertMatch,
@@ -9,6 +10,7 @@ import {
 } from "~/lib/data/match";
 import { fail, Result, succeed } from "~/lib/result";
 import { MatchStatus, type Match, type NewMatch, type PopulatedMatch } from "~/lib/types";
+import { ROUTES } from "../constants";
 import { Uuid } from "../parsers";
 import { publishMatchEvent } from "../pusher/publisher";
 
@@ -31,6 +33,8 @@ export async function createMatch(quizId: Uuid): Promise<Result<Match, string>> 
   if (!result) {
     return fail("Falha ao criar a partida.");
   }
+
+  revalidatePath(ROUTES.QUIZZES);
 
   return succeed(result);
 }
@@ -141,6 +145,8 @@ export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
   }
 
   await publishMatchEvent(match, "match-ended-event");
+
+  revalidatePath(ROUTES.QUIZZES);
 
   return succeed(updatedMatch);
 }

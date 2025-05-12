@@ -13,13 +13,13 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
 import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
+import { Button } from "~/components/ui/button";
 import { ROUTES } from "~/lib/constants";
 import { Uuid } from "~/lib/parsers";
 import { isSuccess } from "~/lib/result";
 import QuizStepOne from "./create-quiz-form/QuizStepOne";
 import QuizStepTwoPDF from "./create-quiz-form/QuizStepTwoPDF";
 import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoTheme";
-import StepOneActions from "./create-quiz-form/StepOneActions";
 import StepTwoActions from "./create-quiz-form/StepTwoActions";
 
 export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
@@ -60,8 +60,8 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
 
   return (
     <Dialog>
-      <DialogTrigger className="rounded-3xl bg-primary px-8 py-3 text-sm font-medium text-white">
-        Criar quiz
+      <DialogTrigger asChild>
+        <Button className="rounded-3xl">Criar quiz</Button>
       </DialogTrigger>
 
       <DialogContent>
@@ -72,7 +72,26 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
             {step === 1 && (
               <>
                 <QuizStepOne />
-                <StepOneActions selectedType={selectedType} setStep={setStep} onSubmit={onSubmit} />
+                <div className="flex justify-center">
+                  <Button
+                    type="button"
+                    className="mt-2 w-1/2"
+                    loading={mutation.isPending}
+                    onClick={async () => {
+                      const isValid = await form.trigger(["title", "description"]);
+
+                      if (isValid) {
+                        if (selectedType === "BLANK") {
+                          await form.handleSubmit(onSubmit)();
+                        } else {
+                          setStep(2);
+                        }
+                      }
+                    }}
+                  >
+                    {selectedType === "BLANK" ? "Confirmar" : "Continuar ->"}
+                  </Button>
+                </div>
               </>
             )}
 

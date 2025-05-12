@@ -1,11 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 import { deleteQuiz, insertQuiz, updateQuiz } from "~/lib/data/quiz";
 import { updateQuizParser, uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { type Quiz } from "~/lib/types";
+import { ROUTES } from "../constants";
 import { generateQuizByTheme } from "../openai";
 import { isUuid, type UpdateQuiz } from "../parsers";
 import { createQuestionsAndAlternatives } from "./question";
@@ -43,6 +45,8 @@ export async function createQuiz(
 
       await createQuestionsAndAlternatives(rawQuestionsWithAlternatives);
     }
+
+    revalidatePath(ROUTES.QUIZZES);
 
     return succeed(quiz);
   } catch (e) {

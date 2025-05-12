@@ -21,6 +21,7 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
     <aside className="flex min-h-screen w-[200px] flex-col items-center gap-4 overflow-y-auto border-r bg-white px-2 py-6 dark:bg-background">
       <div className="space-y-4">
         <div className="space-y-2">
+          <label className="mb-1 block text-sm font-medium">Tipo de questão</label>
           <Select
             value={question.type}
             onValueChange={(value: QuestionType) => {

@@ -1,32 +1,44 @@
 import { expect, test } from "@playwright/test";
+import { addSessionTokenCookie, BASE_URL } from "./utils";
 
-test("has h1", async ({ page, context }) => {
-  await context.addCookies([
-    {
-      name: "authjs.session-token",
-      value: "0176122b-710f-4202-98eb-80010467ef85",
-      domain: "localhost",
-      path: "/",
-      httpOnly: true, // set to true if the cookie is HttpOnly
-      secure: false, // set to true if running over HTTPS
-      sameSite: "Lax", // or "Strict" / "None"
-    },
-  ]);
+test("create a new quiz from the dashboard", async ({ page, context }) => {
+  await test.step("Authenticate user via session cookie", async () => {
+    await addSessionTokenCookie(context);
+  });
 
-  await page.goto("http://localhost:3000/dashboard/quizzes");
+  await test.step("Navigate to quizzes dashboard", async () => {
+    await page.goto(`${BASE_URL}/dashboard/quizzes`);
+    await expect(page).toHaveURL(`${BASE_URL}/dashboard/quizzes`);
+    await expect(page.locator("h1")).toHaveText("Seus quizzes");
+  });
 
-  // Expect page to contain an h1 with the text "Seus quizzes"
+  await test.step("Open quiz creation form", async () => {
+    const criarQuizBtn = page.getByText("Criar quiz", { exact: true });
+    await expect(criarQuizBtn).toBeVisible();
+    await criarQuizBtn.click();
+  });
 
-  const h1 = page.locator("h1");
-  await expect(h1).toHaveText("Seus quizzes");
+  await test.step("Fill in quiz details", async () => {
+    const tituloInput = page.getByLabel("Título");
+    const descricaoInput = page.getByLabel("Descrição");
 
-  await page.getByText("Criar quiz", { exact: true }).click();
-  await page.getByLabel("Título").fill("Estruturas de Dados");
-  await page
-    .getByLabel("Descrição")
-    .fill(
+    await expect(tituloInput).toBeVisible();
+    await expect(descricaoInput).toBeVisible();
+
+    await tituloInput.fill("Estruturas de Dados");
+    await descricaoInput.fill(
       "Este quiz aborda conceitos fundamentais sobre estruturas de dados, incluindo pilhas, filas e árvores binárias de busca.",
     );
-  await page.getByText("Confirmar").click();
-  await page.pause();
+  });
+
+  await test.step("Submit the new quiz", async () => {
+    const confirmarBtn = page.getByText("Confirmar", { exact: true });
+    await expect(confirmarBtn).toBeVisible();
+    await confirmarBtn.click();
+  });
+
+  await test.step("Verify quiz creation success", async () => {
+    await expect(page).toHaveURL(/\/dashboard\/quizzes\/[a-fA-F0-9-]{36}$/);
+    await expect(page.locator("text=Quiz criado com sucesso")).toBeVisible();
+  });
 });
