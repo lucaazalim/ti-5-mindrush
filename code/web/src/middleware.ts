@@ -1,7 +1,7 @@
+import { type Route } from "next";
+import { NextResponse } from "next/server";
 import { auth } from "src/lib/auth";
 import { ROUTES } from "~/lib/constants";
-import { NextResponse } from "next/server";
-import { type Route } from "next";
 
 export default auth((request) => {
   // This always return the pathname WITH leading slash and WITHOUT trailing slash.
@@ -14,6 +14,7 @@ export default auth((request) => {
 
   // Redirect to home if the user is not authenticated and trying to access the dashboard
   if (matchesRoute(ROUTES.DASHBOARD) && !request.auth) {
+    console.log("User not authenticated, redirecting to home");
     const homeUrl = new URL(ROUTES.HOME, request.nextUrl.origin);
     return Response.redirect(homeUrl);
   }

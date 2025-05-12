@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { addSessionTokenCookie, BASE_URL } from "./utils";
+import { addSessionTokenCookie } from "./utils";
 
 test("create a new quiz from the dashboard", async ({ page, context }) => {
   await test.step("Authenticate user via session cookie", async () => {
@@ -7,8 +7,8 @@ test("create a new quiz from the dashboard", async ({ page, context }) => {
   });
 
   await test.step("Navigate to quizzes dashboard", async () => {
-    await page.goto(`${BASE_URL}/dashboard/quizzes`);
-    await expect(page).toHaveURL(`${BASE_URL}/dashboard/quizzes`);
+    await page.goto("/dashboard/quizzes");
+    await expect(page).toHaveURL("/dashboard/quizzes");
     await expect(page.locator("h1")).toHaveText("Seus quizzes");
   });
 
@@ -45,5 +45,4 @@ test("create a new quiz from the dashboard", async ({ page, context }) => {
   // Sugestões:
   // - Adicionar outra questão;
   // - Preencher as alternativas;
-  
 });

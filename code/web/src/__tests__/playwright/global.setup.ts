@@ -1,9 +1,31 @@
-import { expect, request, test as setup } from "@playwright/test";
-import { BASE_URL } from "./utils";
+import { test as setup } from "@playwright/test";
+import { reset } from "drizzle-seed";
+import { TEST_SESSION_TOKEN } from "~/lib/constants";
+import { db } from "~/lib/db/";
+import * as schema from "~/lib/db/schema";
 
-setup("reset and seed database", async ({}) => {
-  const apiContext = await request.newContext();
-  const response = await apiContext.get(`${BASE_URL}/api/reset-and-seed`);
-  expect(response.ok()).toBeTruthy();
-  console.log(await response.text());
+setup("reset database", async ({}) => {
+  await reset(db, schema);
+});
+
+setup("seed database", async ({}) => {
+  const createdUser = (
+    await db
+      .insert(schema.users)
+      .values({
+        name: "John Doe",
+        email: "john@doe.com",
+      })
+      .returning()
+  )[0];
+
+  if (!createdUser) {
+    throw new Error("Failed to create user.");
+  }
+
+  await db.insert(schema.sessions).values({
+    sessionToken: TEST_SESSION_TOKEN,
+    userId: createdUser.id,
+    expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
+  });
 });

@@ -1,8 +1,6 @@
 import { BrowserContext } from "@playwright/test";
 import { TEST_SESSION_TOKEN } from "~/lib/constants";
 
-export const BASE_URL = "http://localhost:3000";
-
 export async function addSessionTokenCookie(context: BrowserContext) {
   await context.addCookies([
     {

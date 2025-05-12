@@ -10,7 +10,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ## Functionalidades
 
-### Autenticação
+### Educador autentica-se
 
 #### Comportamento Esperado
 
@@ -35,28 +35,119 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ---
 
-### Criação de Quiz
+### Educador cria quiz
 
 #### Comportamento Esperado
 
-1. O educador pode criar um novo quiz fornecendo as informações necessárias, como título, descrição e perguntas.
-2. O sistema valida os dados fornecidos e retorna um erro caso algum campo obrigatório esteja ausente ou inválido.
-3. Após a criação bem-sucedida, o quiz é salvo no banco de dados e está disponível para uso.
+1.
 
 #### Verificações
 
-1. O educador preenche todos os campos obrigatórios e o quiz é criado com sucesso.
-2. O sistema retorna um erro ao tentar criar um quiz com campos obrigatórios ausentes.
-3. O sistema retorna um erro ao tentar criar um quiz com dados inválidos (ex.: título com menos de 3 caracteres).
-4. O quiz criado aparece na lista de quizzes disponíveis para o educador.
+1. ...
 
 #### Critérios de Aceite
 
-1. O sistema valida corretamente os dados fornecidos.
-2. O quiz é salvo no banco de dados após a criação bem-sucedida.
-3. O quiz aparece na lista de quizzes disponíveis para o educador.
+1. ...
 
 ---
+
+### Educador renomeia quiz
+
+#### Comportamento Esperado
+
+1.
+
+#### Verificações
+
+1. ...
+
+#### Critérios de Aceite
+
+1. ...
+
+---
+
+### Educador exclui quiz
+
+#### Comportamento Esperado
+
+1.
+
+#### Verificações
+
+1. ...
+
+#### Critérios de Aceite
+
+1. ...
+
+---
+
+### Educador cria partida
+
+#### Comportamento Esperado
+
+1.
+
+#### Verificações
+
+1. ...
+
+#### Critérios de Aceite
+
+1. ...
+
+---
+
+### Participante acessa partida
+
+#### Comportamento Esperado
+
+1.
+
+#### Verificações
+
+1. ...
+
+#### Critérios de Aceite
+
+1. ...
+
+---
+
+### Educador inicia partida
+
+---
+
+### Encerrar de partida
+
+#### Comportamento Esperado
+
+1.
+
+#### Verificações
+
+1. ...
+
+#### Critérios de Aceite
+
+1. ...
+
+---
+
+### Educador visualiza histórico de partidas
+
+#### Comportamento Esperado
+
+1.
+
+#### Verificações
+
+1. ...
+
+#### Critérios de Aceite
+
+1. ...
 
 ## Estratégia de Teste
 
