@@ -45,4 +45,6 @@ test("create a new quiz from the dashboard", async ({ page, context }) => {
   // Sugestões:
   // - Adicionar outra questão;
   // - Preencher as alternativas;
+  // - Selecionar alternativas corretas;
+  // etc.
 });
