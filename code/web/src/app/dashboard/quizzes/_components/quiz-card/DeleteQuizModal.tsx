@@ -11,25 +11,24 @@ import {
 } from "~/components/ui/dialog";
 import { destroyQuiz } from "~/lib/actions/quiz";
 import { isFailure } from "~/lib/result";
+import { Quiz } from "~/lib/types";
 
 interface DeleteQuizModalProps {
   open: boolean;
   setIsDeleteDialogOpen: (open: boolean) => void;
-  id: string;
-  title: string;
+  quiz: Quiz;
 }
 
 export default function DeleteQuizModal({
   open,
   setIsDeleteDialogOpen,
-  id,
-  title,
+  quiz,
 }: DeleteQuizModalProps) {
   const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const result = await destroyQuiz(id);
+      const result = await destroyQuiz(quiz.id);
       if (isFailure(result)) {
         throw new Error(result.error);
       }
@@ -47,7 +46,7 @@ export default function DeleteQuizModal({
     <Dialog open={open} onOpenChange={setIsDeleteDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Excluir quiz - {title}</DialogTitle>
+          <DialogTitle>Excluir quiz - {quiz.title}</DialogTitle>
           <DialogDescription>Esta ação excluirá permanentemente o quiz.</DialogDescription>
         </DialogHeader>
         <div className="mt-2 flex gap-2">

@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { addSessionTokenCookie } from "./utils";
 
-test("create a new quiz from the dashboard", async ({ page, context }) => {
+test("Create a new quiz from the dashboard", async ({ page, context }) => {
   await test.step("Authenticate user via session cookie", async () => {
     await addSessionTokenCookie(context);
   });

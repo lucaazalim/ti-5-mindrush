@@ -21,7 +21,6 @@ interface QuizOptionsProps {
 }
 
 export default function QuizOptions({ quiz }: QuizOptionsProps) {
-  const { id, title } = quiz;
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isRenameDialogOpen, setIsRenameDialogOpen] = useState(false);
   const router = useRouter();
@@ -29,14 +28,18 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-          <Settings2 size={20} />
+        <DropdownMenuTrigger className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:hover:text-white">
+          <Settings2 aria-hidden={true} size={20} />
+          <span className="sr-only">Opções do quiz</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Opções do quiz</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="cursor-pointer" onClick={() => router.push(ROUTES.QUIZ(id))}>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => router.push(ROUTES.QUIZ(quiz.id))}
+          >
             <Pencil className="mr-2 h-4 w-4" />
             Editar
           </DropdownMenuItem>
@@ -70,8 +73,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
       <DeleteQuizModal
         open={isDeleteDialogOpen}
         setIsDeleteDialogOpen={setIsDeleteDialogOpen}
-        id={id}
-        title={title}
+        quiz={quiz}
       />
     </>
   );

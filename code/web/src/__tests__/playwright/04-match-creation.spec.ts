@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { addSessionTokenCookie } from "./utils";
 
-test("rename quiz from the dashboard", async ({ page, context }) => {
+test("Create match from the dashboard", async ({ page, context }) => {
   await test.step("Authenticate user via session cookie", async () => {
     await addSessionTokenCookie(context);
   });
@@ -11,5 +11,11 @@ test("rename quiz from the dashboard", async ({ page, context }) => {
     await expect(page).toHaveURL("/dashboard/quizzes");
   });
 
-  // TODO create match
+  await test.step("Click create match button", async () => {
+    await page.getByRole("button", { name: "Criar partida" }).first().click();
+  });
+
+  await test.step("Expect redirection to match page", async () => {
+    await expect(page).toHaveURL(/\/dashboard\/matches\/[a-fA-F0-9-]{36}$/);
+  });
 });
