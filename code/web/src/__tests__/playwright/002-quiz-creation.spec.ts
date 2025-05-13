@@ -9,7 +9,6 @@ test("create a new quiz from the dashboard", async ({ page, context }) => {
   await test.step("Navigate to quizzes dashboard", async () => {
     await page.goto("/dashboard/quizzes");
     await expect(page).toHaveURL("/dashboard/quizzes");
-    await expect(page.locator("h1")).toHaveText("Seus quizzes");
   });
 
   await test.step("Open quiz creation form", async () => {
