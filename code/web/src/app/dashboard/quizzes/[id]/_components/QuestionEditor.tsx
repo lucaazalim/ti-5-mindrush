@@ -1,7 +1,7 @@
-import { Textarea } from "~/components/ui/textarea";
-import { useState, useEffect } from "react";
 import { ImagePlus, Trash2 } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { Textarea } from "~/components/ui/textarea";
 
 interface Props {
   value: string;

@@ -84,7 +84,7 @@ export function AnswersManager({
                 <button
                   onClick={() => deleteAnswer(index)}
                   type="button"
-                  className="absolute right-2 top-2 text-white hover:text-destructive dark:text-white dark:hover:text-destructive"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-destructive dark:text-white dark:hover:text-destructive"
                 >
                   <Trash2 size={16} />
                 </button>
