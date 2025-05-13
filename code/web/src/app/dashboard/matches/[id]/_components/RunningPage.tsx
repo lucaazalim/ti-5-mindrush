@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import Container from "~/app/dashboard/_components/Container";
 import Main from "~/app/dashboard/_components/Main";
+import { getUpdatedMatch } from "~/lib/actions/match";
 import { isFailure } from "~/lib/result";
 import {
   getCurrentQuestionTimeLeft,
   hasCurrentQuestion,
   hasCurrentQuestionTimeEnded,
 } from "~/lib/utils";
-import { getUpdatedMatch } from "~/lib/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 import CountdownBar from "./CountdownBar";
 import { EndMatchButton } from "./EndMatchButton";
@@ -53,7 +53,7 @@ export default function RunningPage() {
   }, [match, setMatch, setTimeLeft]);
 
   return (
-    <Main className="flex max-w-full flex-col justify-center gap-5 px-16 py-12">
+    <Main className="flex max-w-full flex-col justify-center gap-5 p-5 md:p-14">
       {hasCurrentQuestionTimeEnded(match) ? (
         <QuestionSummary />
       ) : (
@@ -62,7 +62,7 @@ export default function RunningPage() {
           <CountdownBar />
         </>
       )}
-      <Container className="grid grid-cols-4 gap-3">
+      <Container className="flex flex-col gap-3 md:grid md:grid-cols-4">
         <ParticipantList />
         <NextQuestionButton />
         <EndMatchButton />

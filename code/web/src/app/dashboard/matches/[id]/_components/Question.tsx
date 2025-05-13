@@ -19,12 +19,12 @@ export default function Question() {
         className={cn(
           "p-10",
           currentQuestion.image
-            ? "grid grid-cols-2 items-center justify-between gap-5"
+            ? "grid items-center justify-between gap-5 md:grid-cols-2"
             : "flex justify-center",
         )}
       >
         <ReactTyped
-          className="text-6xl font-medium drop-shadow-md"
+          className="text-2xl font-medium drop-shadow-md md:text-6xl"
           strings={[currentQuestion.question]}
           typeSpeed={40}
           loopCount={0}
@@ -35,7 +35,7 @@ export default function Question() {
             <img
               src={currentQuestion.image}
               alt="Imagem da questão"
-              className="h-96 w-auto rounded-3xl drop-shadow-lg"
+              className="h-full w-auto rounded-3xl drop-shadow-lg"
             />
           </picture>
         )}

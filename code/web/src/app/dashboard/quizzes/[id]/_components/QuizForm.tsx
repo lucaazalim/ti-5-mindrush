@@ -22,7 +22,7 @@ interface Props {
   initialQuestions?: QuestionWithAlternatives[];
 }
 
-export default function QuizManualForm({ quizId, initialQuestions = [] }: Props) {
+export default function QuizForm({ quizId, initialQuestions = [] }: Props) {
   function getDummyQuestion(type: QuestionType = "QUIZ"): QuestionWithRawAlternatives {
     return {
       id: "" as Uuid,

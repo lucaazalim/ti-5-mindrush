@@ -40,10 +40,13 @@ export const questionAndAlternativesParser = z.object({
   questions: z.array(
     z.object({
       id: uuidParser.optional(),
-      question: z.string().min(1),
+      question: z.string().min(1, { message: "A pergunta deve conter pelo menos 1 caractere." }),
       type: z.enum(QUESTION_TYPES),
-      timeLimit: z.number().min(5).max(120),
-      order: z.number(),
+      timeLimit: z
+        .number()
+        .min(5, { message: "O tempo limite deve ser de no mínimo 5 segundos." })
+        .max(3600, { message: "O tempo limite deve ser de no máximo 3600 segundos." }),
+      order: z.number().nonnegative(),
       image: z.string().nullable().optional(),
       alternatives: z.array(z.string()),
       correctAlternativeIndex: z.number(),

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { selectQuizWithQuestionsAndAlternatives } from "~/lib/data/quiz";
 import { isUuid } from "~/lib/parsers";
-import QuizManualForm from "./_components/QuizManualForm";
+import QuizForm from "./_components/QuizForm";
 
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
 
   return (
     <div className="flex min-h-screen w-full overflow-x-hidden">
-      <QuizManualForm quizId={id} initialQuestions={result.questions} />
+      <QuizForm quizId={id} initialQuestions={result.questions} />
     </div>
   );
 }
