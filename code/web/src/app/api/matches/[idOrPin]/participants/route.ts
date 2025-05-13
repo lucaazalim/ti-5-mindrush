@@ -96,6 +96,6 @@ export async function POST(
       token,
       avatarUrl: getAvatarUrl(createdParticipant),
     },
-    { status: 200 },
+    { status: 201 },
   );
 }

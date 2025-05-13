@@ -7,7 +7,7 @@ import { subscribeToEvent } from "~/lib/pusher/subscriber";
 import { getAvatarUrl } from "~/lib/utils";
 import { useMatchStore } from "../_store/store-provider";
 
-export default function WaitingParticipants() {
+export default function WaitingParticipantsList() {
   const match = useMatchStore((state) => state.match);
   const channel = useMatchStore((state) => state.channel);
   const addParticipant = useMatchStore((state) => state.addParticipant);

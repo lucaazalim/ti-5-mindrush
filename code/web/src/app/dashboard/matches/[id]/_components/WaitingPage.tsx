@@ -10,7 +10,7 @@ import { ROUTES } from "~/lib/constants";
 import { EndMatchButton } from "./EndMatchButton";
 import QuizDescription from "./QuizDescription";
 import { StartMatchButton } from "./StartMatchButton";
-import WaitingParticipants from "./WaitingParticipants";
+import WaitingParticipantsList from "./WaitingParticipantsList";
 
 export default function WaitingPage() {
   const match = useMatchStore((state) => state.match);
@@ -27,9 +27,16 @@ export default function WaitingPage() {
             Baixe o app <span className="font-bold">MindRush</span> para participar desta partida.
           </span>
         </Container>
-        <Container className="flex flex-col items-center justify-center p-10">
-          <span>PIN da partida</span>
-          <span className="text-5xl font-black">{match.pin}</span>
+        <Container
+          className="flex flex-col items-center justify-center rounded-3xl border-2 bg-background p-10"
+          role="group"
+          aria-labelledby="pin-label"
+          aria-describedby="pin-value"
+        >
+          <span id="pin-label">PIN da partida</span>
+          <span id="pin-value" className="text-5xl font-black">
+            {match.pin}
+          </span>
         </Container>
         <Container className="flex flex-row items-center justify-center gap-5 p-1">
           <Image
@@ -45,7 +52,7 @@ export default function WaitingPage() {
         <StartMatchButton />
         <EndMatchButton />
       </Container>
-      <WaitingParticipants />
+      <WaitingParticipantsList />
     </Main>
   );
 }

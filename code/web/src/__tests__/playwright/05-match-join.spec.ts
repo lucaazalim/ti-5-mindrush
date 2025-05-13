@@ -1,10 +1,51 @@
-// import { test } from "@playwright/test";
-// import { addSessionTokenCookie } from "./utils";
+import { expect, request, test } from "@playwright/test";
+import { addSessionTokenCookie } from "./utils";
 
-// test("rename quiz from the dashboard", async ({ page, context }) => {
-//   await test.step("Authenticate user via session cookie", async () => {
-//     await addSessionTokenCookie(context);
-//   });
+test("Participant join match", async ({ page, context }) => {
+  await test.step("Authenticate user via session cookie", async () => {
+    await addSessionTokenCookie(context);
+  });
 
-//   // TODO
-// });
+  await test.step("Navigate to quizzes dashboard", async () => {
+    await page.goto("/dashboard/quizzes");
+    await expect(page).toHaveURL("/dashboard/quizzes");
+  });
+
+  await test.step("Click track match button", async () => {
+    await page.getByRole("button", { name: "Acompanhar partida" }).first().click();
+  });
+
+  await test.step("Expect redirection to match page", async () => {
+    await expect(page).toHaveURL(/\/dashboard\/matches\/[a-fA-F0-9-]{36}$/);
+  });
+
+  let pinValue: string | null = null;
+
+  await test.step("Expect to see match PIN", async () => {
+    pinValue = await page.locator("#pin-value").textContent();
+    expect(pinValue).toBeTruthy();
+    expect(pinValue).toHaveLength(6);
+  });
+
+  await test.step("Create participant", async () => {
+    const apiContext = await request.newContext();
+
+    const response = await apiContext.post(`/api/matches/${pinValue}/participants`, {
+      data: {
+        nickname: "Richard",
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    expect(response.ok()).toBeTruthy();
+  });
+
+  await page.pause();
+
+  await test.step("Expect to see participant nickname", async () => {
+    await expect(page.getByText("Richard")).toBeVisible();
+  });
+});
