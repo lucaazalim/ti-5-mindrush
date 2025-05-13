@@ -108,41 +108,9 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ---
 
-### 4. Educador exclui quiz
+### 4. Educador cria partida
 
 #### 4.1 Comportamento Esperado
-
-1. O educador acessa a página `/dashboard/quizzes`, onde são listados seus quizzes.
-2. Ao localizar o quiz desejado, o educador clica no ícone de **configurações** correspondente.
-3. No menu que se abre, o educador clica em **"Excluir"**.
-4. Um modal ou diálogo de confirmação é exibido, solicitando que o educador confirme a exclusão.
-5. Ao clicar em **"Confirmar"**, o quiz é excluído permanentemente do sistema.
-6. O quiz removido deixa de aparecer na lista da página `/dashboard/quizzes`.
-7. Uma **mensagem de sucesso** (ex: “Quiz excluído com sucesso!”) é exibida ao usuário.
-
-#### 4.2 Verificações
-
-1. A página `/dashboard/quizzes` exibe corretamente todos os quizzes do educador.
-2. O ícone de configurações está visível e funcional para cada quiz listado.
-3. O botão **"Excluir"** está presente e funcional no menu de configurações.
-4. Ao clicar em "Excluir", é exibido um modal ou diálogo solicitando confirmação.
-5. O botão de **confirmação** está visível e funcional no modal.
-6. Após a confirmação, o quiz é removido da lista exibida na interface.
-7. A mensagem **"Quiz excluído com sucesso!"** é exibida após a exclusão.
-
-#### 4.3 Critérios de Aceite
-
-1. O educador consegue iniciar o processo de exclusão a partir do menu de configurações do quiz.
-2. A exclusão só ocorre após uma confirmação explícita por parte do usuário.
-3. O quiz não aparece mais na interface após a exclusão.
-4. Uma mensagem de sucesso é exibida para confirmar a operação.
-5. A interface permanece estável e sem erros após a exclusão do quiz.
-
----
-
-### 5. Educador cria partida
-
-#### 5.1 Comportamento Esperado
 
 1. O educador acessa a página `/dashboard/quizzes`, onde são listados seus quizzes.
 2. Em um dos quizzes listados, o educador clica no botão ou opção **"Criar partida"**.
@@ -151,7 +119,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 5. A nova partida deve estar em estado inicial (ainda não iniciada), pronta para ser configurada ou iniciada.
 6. Uma **mensagem de sucesso** (ex: “Partida criada com sucesso!”) pode ser exibida ao educador.
 
-#### 5.2 Verificações
+#### 4.2 Verificações
 
 1. A página `/dashboard/quizzes` exibe corretamente a lista de quizzes.
 2. A opção **"Criar partida"** está visível e funcional para cada quiz.
@@ -160,7 +128,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 5. A interface da página da partida reflete o estado inicial esperado.
 6. Uma mensagem de sucesso é exibida após a criação.
 
-#### 5.3 Critérios de Aceite
+#### 4.3 Critérios de Aceite
 
 1. A opção de criar uma nova partida está acessível a partir da lista de quizzes.
 2. A criação da partida ocorre de forma fluida e sem erros.
@@ -170,9 +138,9 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ---
 
-### 6. Participante acessa partida
+### 5. Participante acessa partida
 
-#### 6.1 Comportamento Esperado
+#### 5.1 Comportamento Esperado
 
 1. O participante abre o aplicativo mobile do MindRush.
 2. Na tela inicial, o participante informa o **PIN da partida** fornecido pelo educador.
@@ -182,7 +150,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 6. O nickname informado deve aparecer na interface web do educador, indicando que o participante está conectado.
 7. O participante deve visualizar uma tela de "Aguardando o início da partida".
 
-#### 6.2 Verificações
+#### 5.2 Verificações
 
 1. O aplicativo mobile está funcional e acessível ao participante.
 2. O campo para inserir o PIN está visível na tela inicial do app.
@@ -192,7 +160,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 6. O nickname do participante aparece na tela web do educador (por exemplo, na interface da partida em `/dashboard/games/[ID]`).
 7. A interface do participante exibe o estado de "Aguardando início".
 
-#### 6.3 Critérios de Aceite
+#### 5.3 Critérios de Aceite
 
 1. O participante consegue acessar o app, informar o PIN e escolher um nickname.
 2. O sistema valida o PIN corretamente e direciona o participante para a tela adequada.
@@ -202,9 +170,9 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ---
 
-### 7. Educador inicia partida
+### 6. Educador inicia partida
 
-#### 7.1 Comportamento Esperado
+#### 6.1 Comportamento Esperado
 
 1. Após criar uma partida, o educador é redirecionado para a página da partida em `/dashboard/games/[ID da partida]`.
 2. Na interface da partida, o educador visualiza os participantes conectados e a opção **"Iniciar partida"**.
@@ -214,7 +182,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
    - Impedir novos participantes de ingressarem na partida
 4. A tela do educador passa a exibir as alternativas e o tempo restante.
 
-#### 7.2 Verificações
+#### 6.2 Verificações
 
 1. A página da partida é carregada corretamente após a criação da partida.
 2. O botão **"Iniciar partida"** está visível e funcional na interface do educador.
@@ -223,7 +191,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 5. Participantes que tentam acessar a partida após seu início são impedidos de entrar (mensagem de erro).
 6. O educador visualiza o andamento da questão, com opções e tempo visíveis.
 
-#### 7.3 Critérios de Aceite
+#### 6.3 Critérios de Aceite
 
 1. O educador consegue iniciar a partida.
 2. A primeira questão do quiz é exibida imediatamente após o início.
@@ -232,9 +200,9 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ---
 
-### 8. Educador encerra partida
+### 7. Educador encerra partida
 
-#### 8.1 Comportamento Esperado
+#### 7.1 Comportamento Esperado
 
 1. O educador acessa a página da partida em `/dashboard/games/[ID da partida]`, onde pode visualizar o estado atual da partida (aguardando ou em andamento).
 2. A opção **"Encerrar partida"** está visível na interface do educador.
@@ -246,7 +214,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
    - A interface dos participantes exibe que a partida foi encerrada.
 7. A partida é marcada como **encerrada** no banco de dados e torna-se acessível apenas para visualização posterior.
 
-#### 8.2 Verificações
+#### 7.2 Verificações
 
 1. O botão **"Encerrar partida"** está visível na interface da partida.
 2. Ao clicar no botão, o comportamento varia de acordo com o progresso da partida:
@@ -256,7 +224,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 4. Após a confirmação, a interface do educador exibe os resultados.
 5. A interface dos participantes exibe uma tela informando que a partida foi encerrada.
 
-#### 8.3 Critérios de Aceite
+#### 7.3 Critérios de Aceite
 
 1. O educador consegue encerrar uma partida manualmente em qualquer momento.
 2. O sistema exibe um modal de confirmação quando a partida não estiver na última questão.
@@ -266,9 +234,9 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 ---
 
-### 9. Educador visualiza histórico de partidas
+### 8. Educador visualiza histórico de partidas
 
-#### 9.1 Comportamento Esperado
+#### 8.1 Comportamento Esperado
 
 1. O educador acessa a página `/dashboard/quizzes`, onde estão listados seus quizzes.
 2. Para cada quiz listado, há a opção **"Histórico de Partidas"** disponível.
@@ -277,7 +245,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 5. Em cada linha da tabela, há um **ícone de olho** que permite visualizar o resultado da respectiva partida.
 6. Ao clicar no ícone, o educador é redirecionado para a página de relatório final da partida selecionada.
 
-#### 9.2 Verificações
+#### 8.2 Verificações
 
 1. A opção **"Histórico de Partidas"** está visível e funcional na página `/dashboard/quizzes` para quizzes com partidas realizadas.
 2. A tabela de histórico é exibida corretamente ao clicar na opção.
@@ -286,12 +254,44 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 5. O clique no ícone redireciona corretamente para a página de resultados da partida.
 6. Os dados exibidos na página de resultado são consistentes com a execução da partida.
 
-#### 9.3 Critérios de Aceite
+#### 8.3 Critérios de Aceite
 
 1. O educador consegue visualizar o histórico de partidas associadas a um quiz.
 2. A navegação entre a lista de quizzes, o histórico e o resultado da partida funciona sem erros.
 3. O ícone de olho permite acessar corretamente os relatórios de partidas finalizadas.
 4. A funcionalidade apresenta uma experiência clara e livre de inconsistências.
+
+---
+
+### 9. Educador exclui quiz
+
+#### 9.1 Comportamento Esperado
+
+1. O educador acessa a página `/dashboard/quizzes`, onde são listados seus quizzes.
+2. Ao localizar o quiz desejado, o educador clica no ícone de **configurações** correspondente.
+3. No menu que se abre, o educador clica em **"Excluir"**.
+4. Um modal ou diálogo de confirmação é exibido, solicitando que o educador confirme a exclusão.
+5. Ao clicar em **"Confirmar"**, o quiz é excluído permanentemente do sistema.
+6. O quiz removido deixa de aparecer na lista da página `/dashboard/quizzes`.
+7. Uma **mensagem de sucesso** (ex: “Quiz excluído com sucesso!”) é exibida ao usuário.
+
+#### 9.2 Verificações
+
+1. A página `/dashboard/quizzes` exibe corretamente todos os quizzes do educador.
+2. O ícone de configurações está visível e funcional para cada quiz listado.
+3. O botão **"Excluir"** está presente e funcional no menu de configurações.
+4. Ao clicar em "Excluir", é exibido um modal ou diálogo solicitando confirmação.
+5. O botão de **confirmação** está visível e funcional no modal.
+6. Após a confirmação, o quiz é removido da lista exibida na interface.
+7. A mensagem **"Quiz excluído com sucesso!"** é exibida após a exclusão.
+
+#### 9.3 Critérios de Aceite
+
+1. O educador consegue iniciar o processo de exclusão a partir do menu de configurações do quiz.
+2. A exclusão só ocorre após uma confirmação explícita por parte do usuário.
+3. O quiz não aparece mais na interface após a exclusão.
+4. Uma mensagem de sucesso é exibida para confirmar a operação.
+5. A interface permanece estável e sem erros após a exclusão do quiz.
 
 ---
 
