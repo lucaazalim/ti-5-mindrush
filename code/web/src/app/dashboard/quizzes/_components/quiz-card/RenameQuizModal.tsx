@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -8,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "~/components/u
 import { Form } from "~/components/ui/form";
 import { editQuiz } from "~/lib/actions/quiz";
 import { UpdateQuiz } from "~/lib/parsers";
+import { isFailure } from "~/lib/result";
 import { Quiz } from "~/lib/types";
 import QuizBasicInfo from "../create-quiz-form/QuizBasicInfo";
 
@@ -25,6 +27,23 @@ const formSchema = z.object({
 export default function RenameQuizModal({ open, setIsRenameDialogOpen, quiz }: Props) {
   const router = useRouter();
 
+  const mutation = useMutation({
+    mutationFn: async (updateData: UpdateQuiz) => {
+      const result = await editQuiz(quiz.id, updateData);
+      if (isFailure(result)) {
+        throw new Error(result.error);
+      }
+    },
+    onSuccess: () => {
+      toast.success("Quiz renomeado com sucesso!");
+      setIsRenameDialogOpen(false);
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error("Erro ao renomear quiz: " + error.message);
+    },
+  });
+
   const renameQuizForm = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
@@ -34,10 +53,8 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quiz }: P
     },
   });
 
-  async function onSubmit(updateData: UpdateQuiz) {
-    await editQuiz(quiz.id, updateData);
-    toast.info("Quiz renomeado com sucesso!");
-    router.refresh();
+  function onSubmit(updateData: UpdateQuiz) {
+    mutation.mutate(updateData);
   }
 
   return (
@@ -54,7 +71,7 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quiz }: P
               <Button variant="outline" onClick={() => setIsRenameDialogOpen(false)}>
                 Cancelar
               </Button>
-              <Button>Salvar</Button>
+              <Button loading={mutation.isPending}>Salvar</Button>
             </div>
           </form>
         </Form>

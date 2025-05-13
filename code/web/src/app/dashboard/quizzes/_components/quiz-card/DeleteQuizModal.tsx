@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
@@ -9,6 +10,7 @@ import {
   DialogTitle,
 } from "~/components/ui/dialog";
 import { destroyQuiz } from "~/lib/actions/quiz";
+import { isFailure } from "~/lib/result";
 
 interface DeleteQuizModalProps {
   open: boolean;
@@ -25,6 +27,22 @@ export default function DeleteQuizModal({
 }: DeleteQuizModalProps) {
   const router = useRouter();
 
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const result = await destroyQuiz(id);
+      if (isFailure(result)) {
+        throw new Error(result.error);
+      }
+    },
+    onSuccess: () => {
+      toast.success("Quiz excluído com sucesso!");
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error("Erro ao excluir quiz: " + error.message);
+    },
+  });
+
   return (
     <Dialog open={open} onOpenChange={setIsDeleteDialogOpen}>
       <DialogContent>
@@ -38,11 +56,8 @@ export default function DeleteQuizModal({
           </Button>
           <Button
             variant="destructive"
-            onClick={async () => {
-              await destroyQuiz(id);
-              toast.success("Quiz excluído com sucesso!");
-              router.refresh();
-            }}
+            onClick={() => mutation.mutate()}
+            loading={mutation.isPending}
           >
             Excluir
           </Button>

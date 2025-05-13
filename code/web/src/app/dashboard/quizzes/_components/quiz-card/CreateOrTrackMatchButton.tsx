@@ -4,10 +4,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
+import { createMatch } from "~/lib/actions/match";
 import { ROUTES } from "~/lib/constants";
+import { Uuid } from "~/lib/parsers";
 import { isFailure } from "~/lib/result";
 import { QuizWithQuestionCountAndActiveMatch } from "~/lib/types";
-import { createMatch } from "~/lib/actions/match";
 
 export default function CreateOrTrackMatchButton({
   quiz,
@@ -17,18 +18,19 @@ export default function CreateOrTrackMatchButton({
   const router = useRouter();
 
   const mutation = useMutation({
-    mutationFn: createMatch,
-    onSuccess: (result) => {
+    mutationFn: async (quizId: Uuid) => {
+      const result = await createMatch(quizId);
       if (isFailure(result)) {
-        toast.error("Erro ao criar partida: " + result.error);
-        return;
+        throw new Error(result.error);
       }
-
+      return result.data;
+    },
+    onSuccess: (data) => {
       toast.success("Partida criada com sucesso!");
-      router.push(ROUTES.MATCH(result.data.id));
+      router.push(ROUTES.MATCH(data.id));
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast.error("Erro ao criar partida: " + error.message);
     },
   });
 
