@@ -34,15 +34,27 @@ class _NameScreenState extends State<NameScreen> {
   void _submitForm() async {
     String name = _nameController.text.trim();
 
-    if (name.isEmpty || name.length < 2) {
+    String? errorMessage;
+    if (name.isEmpty) {
+      errorMessage = 'O nome deve ser digitado';
+    } else if (name.length < 3) {
+      errorMessage = 'Mínimo de 3 caracteres';
+    } else if (name.length > 20) {
+      errorMessage = 'Máximo de 20 caracteres';
+    } else if (!nameRegex.hasMatch(name)) {
+      errorMessage = 'Somente letras, números e espaços são permitidos';
+    }
+
+    if (errorMessage != null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('O nome deve ter pelo menos 2 caracteres.'),
+        SnackBar(
+          content: Text(errorMessage!),
           backgroundColor: Colors.red,
         ),
       );
-      return;
+      return ;
     }
+
 
     if (_formKey.currentState!.validate()) {
       showDialog(
@@ -59,6 +71,7 @@ class _NameScreenState extends State<NameScreen> {
     }
 
     try {
+
       final dto = RegisterParticipant(nickname: name);
       final Participant participant = await LobbyService.registerParticipant(widget.match.pin, dto);
 
@@ -83,10 +96,13 @@ class _NameScreenState extends State<NameScreen> {
         ),
       );
     }
+
   }
 
   // 🔻 ESTE build ESTAVA FORA DA CLASSE, AGORA ESTÁ CORRETAMENTE DENTRO
   @override
+  final RegExp nameRegex = RegExp(r'^[\p{L}\p{N} ]+$', unicode: true);
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
@@ -111,10 +127,21 @@ class _NameScreenState extends State<NameScreen> {
                     child: TextFormField(
                       controller: _nameController,
                       validator: (value) {
-                        if (value == null || value.trim().length < 2) {
-                          return 'O nome deve ter pelo menos 2 caracteres.';
+
+                        if (value == null || value.isEmpty) {
+                          return 'O nome deve ser digitado';
+                        }
+                        if (value.length < 3) {
+                          return 'Minimo de 3 characteres';
+                        }
+                        if (value.length > 20) {
+                          return 'Maximo de 20 characteres';
+                        }
+                        if (!nameRegex.hasMatch(value)) {
+                            return 'Somente letras, números e espaços são permitidos';
                         }
                         return null;
+
                       },
                       style: const TextStyle(
                         color: Colors.black,
