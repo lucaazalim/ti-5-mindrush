@@ -62,7 +62,7 @@ export function AnswersManager({
                 onChange={(e) => updateAnswer(index, e.target.value)}
                 onClick={() => onChangeCorrectIndex(index)}
                 className={cn(
-                  "cursor-pointer border-2 pl-10 pr-10 text-lg",
+                  "cursor-pointer border-2 px-10 text-lg",
                   "text-white dark:text-white",
                   "placeholder:text-white/50",
                   correctAnswerIndex === index
@@ -84,7 +84,7 @@ export function AnswersManager({
                 <button
                   onClick={() => deleteAnswer(index)}
                   type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-destructive dark:text-white dark:hover:text-destructive"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white transition-all hover:scale-110"
                 >
                   <Trash2 size={16} />
                 </button>
