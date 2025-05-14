@@ -104,6 +104,9 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final imageHeight = screenHeight * 0.3; // Define a altura máxima da imagem como 30% da tela
+
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
       body: SafeArea(
@@ -114,7 +117,14 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                 padding: const EdgeInsets.all(16),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: Image.network(widget.question.image!, fit: BoxFit.cover),
+                  child: SizedBox( // Envolve o Image.network com um SizedBox
+                    height: imageHeight,
+                    width: double.infinity,
+                    child: Image.network(
+                      widget.question.image!,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
             Expanded(

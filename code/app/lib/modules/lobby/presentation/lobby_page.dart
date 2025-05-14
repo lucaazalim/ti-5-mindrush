@@ -22,7 +22,6 @@ final envApiKey = dotenv.env['API_KEY'] ?? "";
 final envCluster = dotenv.env['CLUSTER'] ?? "";
 
 class LobbyPage extends ConsumerStatefulWidget {
-
   final Participant participant;
 
   const LobbyPage({super.key, required this.participant});
@@ -31,15 +30,25 @@ class LobbyPage extends ConsumerStatefulWidget {
   _LobbyPageState createState() => _LobbyPageState();
 }
 
-class _LobbyPageState extends ConsumerState<LobbyPage> {
-
+class _LobbyPageState extends ConsumerState<LobbyPage>
+    with SingleTickerProviderStateMixin {
   late PusherService _pusherService;
   Question? question;
+  late AnimationController _animationController;
+  late Animation<Offset> _slideAnimation;
 
   @override
   void initState() {
-
     super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800), // Duração da animação
+    );
+    _slideAnimation = Tween<Offset>(begin: const Offset(-0.1, 0.0), end: Offset.zero).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutQuad),
+    );
+    _animationController.forward(); // Inicia a animação
 
     final pusherParams = PusherServiceParams(
       apiKey: envApiKey,
@@ -67,16 +76,12 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
           ),
         );
       } catch (e) {
-
         print('Erro ao buscar a questão atual: $e');
-
       }
     });
 
-
     handler.on('match-ended-event', (data) async {
       try {
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -84,18 +89,12 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
           ),
         );
       } catch (e) {
-
         print('Erro ao sair da partida e rentornar ao lobby: $e');
-
       }
-
     });
 
     _pusherService.connect();
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -103,58 +102,58 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'assets/images/logo.png',
-                width: 160,
-              ),
-              const SizedBox(height: 40),
-              // Avatar gerado por nickname
-              Container(
-                width: 100,
-                height: 100,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
+      body: SlideTransition( // Widget para a animação de slide
+        position: _slideAnimation,
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 160,
                 ),
-                child: ClipOval(
-                  child: SvgPicture.network(
-                    avatarUrl!,
-                    width:80,
-                    height: 80,
-                    fit: BoxFit.scaleDown,
-                    placeholderBuilder: (context) => CircularProgressIndicator(),
+                const SizedBox(height: 40),
+                // Avatar gerado por nickname
+                Container(
+                  width: 100,
+                  height: 100,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: ClipOval(
+                    child: SvgPicture.network(
+                      avatarUrl!,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.scaleDown,
+                      placeholderBuilder: (context) =>
+                      const CircularProgressIndicator(),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                widget.participant.nickname,
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                const SizedBox(height: 20),
+                Text(
+                  widget.participant.nickname,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              // const SizedBox(height: 30),
-              // const CircularProgressIndicator(
-              //   color: Colors.white,
-              // ),
-              const SizedBox(height: 20),
-              const Text(
-                'Aguarde a partida iniciar...',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+                const SizedBox(height: 20),
+                const Text(
+                  'Aguarde a partida iniciar...',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -163,7 +162,7 @@ class _LobbyPageState extends ConsumerState<LobbyPage> {
 
   @override
   void dispose() {
+    _animationController.dispose();
     super.dispose();
   }
-
 }
