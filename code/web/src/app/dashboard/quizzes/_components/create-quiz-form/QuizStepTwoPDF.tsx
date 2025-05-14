@@ -1,14 +1,16 @@
 "use client";
-import pdfToText from "react-pdftotext";
+import { Upload } from "lucide-react";
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import pdfToText from "react-pdftotext";
+import { z } from "zod";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
-import { Upload } from "lucide-react";
-import { useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
+import { quizCreateSchema } from "../../form-schema";
 
 export default function QuizStepTwoPDF() {
-  const form = useCreateQuizFormContext();
+  const form = useFormContext<z.infer<typeof quizCreateSchema>>();
   const [fileName, setFileName] = useState<string | null>(null);
 
   return (

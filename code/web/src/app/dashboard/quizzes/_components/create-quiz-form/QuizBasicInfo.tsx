@@ -1,11 +1,13 @@
 "use client";
 
+import { useFormContext } from "react-hook-form";
+import { z } from "zod";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
+import { quizCreateSchema } from "../../form-schema";
 
 export default function QuizBasicInfo() {
-  const form = useCreateQuizFormContext();
+  const form = useFormContext<z.infer<typeof quizCreateSchema>>();
 
   return (
     <div className="space-y-3">

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 import { deleteQuiz, insertQuiz, updateQuiz } from "~/lib/data/quiz";
-import { RawQuestionsWithAlternatives, updateQuizParser, uuidParser } from "~/lib/parsers";
+import { updateQuizParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { type Quiz } from "~/lib/types";
 import { ROUTES } from "../constants";
@@ -12,22 +12,10 @@ import { generateQuizByPDF, generateQuizByTheme } from "../openai";
 import { isUuid, type UpdateQuiz } from "../parsers";
 import { createQuestionsAndAlternatives } from "./question";
 
-
-const quizSchema = z.object({
-  educatorId: uuidParser,
-  title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-  description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
-  type: z.enum(["BLANK", "THEME_GENERATED", "PDF_GENERATED"]),
-  theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres").optional(),
-  difficulty: z.enum(["EASY", "MEDIUM", "HARD"]).optional(),
-  language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres").optional(),
-  pdfText: z.string().optional(),
-});
-
 export async function createQuiz(
   quizData: z.infer<typeof quizCreateSchema>,
 ): Promise<Result<Quiz, string>> {
-  const parsedData = quizSchema.safeParse(quizData);
+  const parsedData = quizCreateSchema.safeParse(quizData);
 
   if (!parsedData.success) {
     return fail("Os dados informados para a criação do quiz são inválidos.");
@@ -43,8 +31,8 @@ export async function createQuiz(
       questions = await generateQuizByPDF(quizData);
     }
 
-    if (!questions) {
-      const rawQuestionsWithAlternatives: RawQuestionsWithAlternatives = {
+    if (questions) {
+      const rawQuestionsWithAlternatives = {
         quizId: quiz.id,
         ...questions,
       };
