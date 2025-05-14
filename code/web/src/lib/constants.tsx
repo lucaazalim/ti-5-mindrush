@@ -73,3 +73,10 @@ export const QUESTION_ALTERNATIVES_STYLING: {
 ];
 
 export const TEST_SESSION_TOKEN = "365636bc-fd6d-4d5f-a688-8af780dc3b05";
+
+export const COLORS: Record<string, string> = {
+  "bg-red-500": "#ef4444",
+  "bg-blue-500": "#3b82f6",
+  "bg-yellow-500": "#eab308",
+  "bg-green-500": "#22c55e",
+};

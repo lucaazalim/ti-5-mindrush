@@ -2,6 +2,7 @@ import { Trash2 } from "lucide-react";
 import BackButton from "~/app/dashboard/_components/BackButton";
 import { Button } from "~/components/ui/button";
 import { type QuestionWithRawAlternatives } from "~/lib/types";
+import { QUESTION_ALTERNATIVES_STYLING, COLORS } from "~/lib/constants";
 
 interface SlideNavigationProps {
   questions: QuestionWithRawAlternatives[];
@@ -22,7 +23,6 @@ export function SlideNavigation({
     <aside className="flex min-h-screen w-[200px] flex-col items-center gap-4 overflow-y-auto border-r bg-white px-2 py-6 dark:border-muted dark:bg-background">
       <div className="flex flex-col items-center gap-4">
         <BackButton href="/dashboard/quizzes" className="w-full" />
-
         <Button type="button" onClick={onAdd} className="h-[8px] w-[140px] rounded-sm">
           Nova questão
         </Button>
@@ -37,8 +37,10 @@ export function SlideNavigation({
             onClick={() => onSlideChange(index)}
             onKeyDown={(e) => e.key === "Enter" && onSlideChange(index)}
             className={`relative w-[148px] cursor-pointer rounded-md border p-5 text-left text-sm transition-colors ${
-              currentSlide === index ? "border-primary" : "border-muted dark:border-muted"
-            } bg-white dark:bg-muted`}
+              currentSlide === index
+                ? "border-primary bg-blue-50 dark:bg-muted/40"
+                : "border-muted bg-white dark:border-muted dark:bg-muted"
+            }`}
           >
             {questions.length > 1 && (
               <button
@@ -58,18 +60,29 @@ export function SlideNavigation({
             </div>
 
             <div className="flex flex-wrap gap-1">
-              {q.alternatives.map((_, i) => (
-                <div
-                  key={i}
-                  className={`rounded border px-1 text-xs ${
-                    q.correctAlternativeIndex === i
-                      ? "border-green-500 text-green-600"
-                      : "border-muted text-muted-foreground dark:border-muted dark:text-muted-foreground"
-                  }`}
-                >
-                  --
-                </div>
-              ))}
+              {q.alternatives.map((_, i) => {
+                const style =
+                  QUESTION_ALTERNATIVES_STYLING[i % QUESTION_ALTERNATIVES_STYLING.length]!;
+                const Icon = style.icon;
+                const isCorrect = q.correctAlternativeIndex === i;
+
+                const colorHex = COLORS[style.colorClassName] ?? "#000000";
+
+                return (
+                  <div
+                    key={i}
+                    className={`flex items-center justify-center rounded transition-transform ${isCorrect ? "border-2 border-green-500 bg-green-100 p-[4px]" : "p-[2px]"} hover:scale-110`}
+                  >
+                    <Icon
+                      size={14}
+                      style={{
+                        stroke: colorHex,
+                        fill: colorHex,
+                      }}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         ))}
