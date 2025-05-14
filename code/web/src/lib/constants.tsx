@@ -25,7 +25,7 @@ export const QUESTION_TYPES = ["QUIZ", "TRUE_OR_FALSE"] as const;
 
 export const QUIZ_DIFFICULTIES = ["EASY", "MEDIUM", "HARD"] as const;
 
-export const QUIZ_LANGUAGES = ["ENGLISH", "PORTUGUESE", "SPANISH"] as const;
+export const QUIZ_LANGUAGES = ["PORTUGUESE", "ENGLISH", "SPANISH"] as const;
 
 export const MATCH_STATUSES = ["WAITING", "RUNNING", "ENDED"] as const;
 

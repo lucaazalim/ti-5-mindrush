@@ -24,7 +24,7 @@ export function isUuid(uuid: string): uuid is Uuid {
   return uuidParser.safeParse(uuid).success;
 }
 
-// Quiz Update
+// Quiz
 
 export const updateQuizParser = z.object({
   title: z.string().min(3).optional(),
@@ -35,26 +35,26 @@ export type UpdateQuiz = z.infer<typeof updateQuizParser>;
 
 // Question
 
-export const questionAndAlternativesParser = z.object({
-  quizId: uuidParser,
-  questions: z.array(
-    z.object({
-      id: uuidParser.optional(),
-      question: z.string().min(1, { message: "A pergunta deve conter pelo menos 1 caractere." }),
-      type: z.enum(QUESTION_TYPES),
-      timeLimit: z
-        .number()
-        .min(5, { message: "O tempo limite deve ser de no mínimo 5 segundos." })
-        .max(3600, { message: "O tempo limite deve ser de no máximo 3600 segundos." }),
-      order: z.number().nonnegative(),
-      image: z.string().nullable().optional(),
-      alternatives: z.array(z.string()),
-      correctAlternativeIndex: z.number(),
-    }),
-  ),
+export const questionWithAlternativesParser = z.object({
+  id: uuidParser.optional(),
+  question: z.string().min(1, { message: "A pergunta deve conter pelo menos 1 caractere." }),
+  type: z.enum(QUESTION_TYPES),
+  timeLimit: z
+    .number()
+    .min(5, { message: "O tempo limite deve ser de no mínimo 5 segundos." })
+    .max(3600, { message: "O tempo limite deve ser de no máximo 3600 segundos." }),
+  order: z.number().nonnegative(),
+  image: z.string().nullable().optional(),
+  alternatives: z.array(z.string()),
+  correctAlternativeIndex: z.number(),
 });
 
-export type RawQuestionsWithAlternatives = z.infer<typeof questionAndAlternativesParser>;
+export const quizWithQuestionsAndAlternativesParser = z.object({
+  quizId: uuidParser,
+  questions: z.array(questionWithAlternativesParser),
+});
+
+export type RawQuestionsWithAlternatives = z.infer<typeof quizWithQuestionsAndAlternativesParser>;
 
 // Participant Nickname
 

@@ -19,8 +19,6 @@ import { Uuid } from "~/lib/parsers";
 import { isSuccess } from "~/lib/result";
 import QuizStepOne from "./create-quiz-form/QuizStepOne";
 import QuizStepTwoPDF from "./create-quiz-form/QuizStepTwoPDF";
-import QuizStepTwoAI from "./create-quiz-form/QuizStepTwoTheme";
-import StepTwoActions from "./create-quiz-form/StepTwoActions";
 
 export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
   const [step, setStep] = useState(1);
@@ -49,6 +47,8 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
       title: "",
       description: "",
       type: "BLANK",
+      difficulty: "EASY",
+      language: "PORTUGUESE",
     },
   });
 
@@ -74,22 +74,22 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
                 <QuizStepOne />
                 <div className="flex justify-center">
                   <Button
-                    type="button"
-                    className="mt-2 w-1/2"
+                    type="submit"
                     loading={mutation.isPending}
-                    onClick={async () => {
+                    onClick={async (e) => {
                       const isValid = await form.trigger(["title", "description"]);
 
-                      if (isValid) {
-                        if (selectedType === "BLANK") {
-                          await form.handleSubmit(onSubmit)();
-                        } else {
-                          setStep(2);
-                        }
+                      if (!isValid) {
+                        return;
+                      }
+
+                      if (selectedType === "PDF_GENERATED") {
+                        setStep(2);
+                        e.preventDefault();
                       }
                     }}
                   >
-                    {selectedType === "BLANK" ? "Confirmar" : "Continuar ->"}
+                    {selectedType === "PDF_GENERATED" ? "Continuar ->" : "Confirmar"}
                   </Button>
                 </div>
               </>
@@ -97,9 +97,16 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
 
             {step === 2 && (
               <>
-                {selectedType === "THEME_GENERATED" && <QuizStepTwoAI />}
                 {selectedType === "PDF_GENERATED" && <QuizStepTwoPDF />}
-                <StepTwoActions setStep={setStep} />
+                <div className="mt-4 flex justify-between">
+                  <Button type="button" variant="outline" onClick={() => setStep(1)}>
+                    Voltar
+                  </Button>
+
+                  <Button type="submit" loading={mutation.isPending}>
+                    Confirmar
+                  </Button>
+                </div>
               </>
             )}
           </form>

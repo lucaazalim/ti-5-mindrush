@@ -1,16 +1,79 @@
 "use client";
 
-import { FormControl, FormField, FormItem, FormMessage } from "~/components/ui/form";
-import QuizTypeSelector from "./QuizTypeSelector";
+import { useFormContext } from "react-hook-form";
+import { z } from "zod";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import { QUIZ_DIFFICULTY_NAMES, QUIZ_LANGUAGE_NAMES } from "~/lib/constants";
+import { quizCreateSchema } from "../../form-schema";
 import QuizBasicInfo from "./QuizBasicInfo";
-import { useCreateQuizFormContext } from "~/app/dashboard/quizzes/form-schema";
+import QuizTypeSelector from "./QuizTypeSelector";
 
 export default function QuizStepOne() {
-  const form = useCreateQuizFormContext();
+  const form = useFormContext<z.infer<typeof quizCreateSchema>>();
 
   return (
     <>
-      <QuizBasicInfo />
+      <div className="space-y-3">
+        <QuizBasicInfo />
+        <div className="grid grid-cols-2 gap-4">
+          <FormField
+            control={form.control}
+            name="difficulty"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel>Dificuldade</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Escolha a dificuldade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(QUIZ_DIFFICULTY_NAMES).map(([key, value]) => (
+                        <SelectItem key={key} value={key}>
+                          {value}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="language"
+            render={({ field }) => (
+              <FormItem className="space-y-1">
+                <FormLabel>Idioma</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Escolha o idioma" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(QUIZ_LANGUAGE_NAMES).map(([key, value]) => (
+                        <SelectItem key={key} value={key}>
+                          {value}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+      </div>
 
       <FormField
         control={form.control}

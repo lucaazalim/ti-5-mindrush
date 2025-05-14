@@ -1,14 +1,14 @@
 "use server";
 
 import { saveQuestionsAndAlternatives } from "~/lib/data/question";
-import { questionAndAlternativesParser } from "~/lib/parsers";
+import { quizWithQuestionsAndAlternativesParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { RawQuestionsWithAlternatives } from "../parsers";
 
 export async function createQuestionsAndAlternatives(
   data: RawQuestionsWithAlternatives,
 ): Promise<Result<void, string>> {
-  const parsedData = questionAndAlternativesParser.safeParse(data);
+  const parsedData = quizWithQuestionsAndAlternativesParser.safeParse(data);
 
   if (!parsedData.success) {
     return fail(parsedData.error.errors[0]?.message ?? "Os dados informados são inválidos.");

@@ -3,7 +3,7 @@ import {
   isMatchPin,
   isParticipantNickname,
   isUuid,
-  questionAndAlternativesParser,
+  quizWithQuestionsAndAlternativesParser,
   updateQuizParser,
 } from "../../lib/parsers";
 
@@ -51,7 +51,7 @@ describe("questionAndAlternativesParser", () => {
         },
       ],
     };
-    expect(() => questionAndAlternativesParser.parse(validQuestion)).not.toThrow();
+    expect(() => quizWithQuestionsAndAlternativesParser.parse(validQuestion)).not.toThrow();
   });
 
   it("should invalidate an incorrect question object", () => {
@@ -68,7 +68,7 @@ describe("questionAndAlternativesParser", () => {
         },
       ],
     };
-    expect(() => questionAndAlternativesParser.parse(invalidQuestion)).toThrow();
+    expect(() => quizWithQuestionsAndAlternativesParser.parse(invalidQuestion)).toThrow();
   });
 });
 
