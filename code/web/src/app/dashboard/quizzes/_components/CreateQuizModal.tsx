@@ -74,10 +74,9 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
                 <QuizStepOne />
                 <div className="flex justify-center">
                   <Button
-                    type="button"
-                    className="mt-2 w-1/2"
+                    type="submit"
                     loading={mutation.isPending}
-                    onClick={async () => {
+                    onClick={async (e) => {
                       const isValid = await form.trigger(["title", "description"]);
 
                       if (!isValid) {
@@ -86,10 +85,8 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
 
                       if (selectedType === "PDF_GENERATED") {
                         setStep(2);
-                        return;
+                        e.preventDefault();
                       }
-
-                      await form.handleSubmit(onSubmit)();
                     }}
                   >
                     {selectedType === "PDF_GENERATED" ? "Continuar ->" : "Confirmar"}
@@ -106,7 +103,9 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
                     Voltar
                   </Button>
 
-                  <Button type="submit">Confirmar</Button>
+                  <Button type="submit" loading={mutation.isPending}>
+                    Confirmar
+                  </Button>
                 </div>
               </>
             )}
