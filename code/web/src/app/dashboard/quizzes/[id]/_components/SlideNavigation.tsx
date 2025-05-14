@@ -32,7 +32,11 @@ export function SlideNavigation({
         {questions.map((q, index) => (
           <div
             key={q.id || index}
-            className={`relative w-[148px] rounded-md border p-5 text-left text-sm transition-colors ${
+            role="button"
+            tabIndex={0}
+            onClick={() => onSlideChange(index)}
+            onKeyDown={(e) => e.key === "Enter" && onSlideChange(index)}
+            className={`relative w-[148px] cursor-pointer rounded-md border p-5 text-left text-sm transition-colors ${
               currentSlide === index ? "border-primary" : "border-muted dark:border-muted"
             } bg-white dark:bg-muted`}
           >
@@ -40,32 +44,33 @@ export function SlideNavigation({
               <button
                 type="button"
                 className="absolute right-2 top-2 text-muted-foreground hover:text-destructive dark:text-muted-foreground dark:hover:text-destructive"
-                onClick={() => onDelete(index)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(index);
+                }}
               >
                 <Trash2 size={14} />
               </button>
             )}
 
-            <button type="button" className="w-full text-left" onClick={() => onSlideChange(index)}>
-              <div className="mb-1 text-xs font-semibold text-foreground dark:text-foreground">
-                {index + 1}. {q.type === "QUIZ" ? "Quiz" : "Verdadeiro ou falso"}
-              </div>
+            <div className="mb-1 text-xs font-semibold text-foreground dark:text-foreground">
+              {index + 1}. {q.type === "QUIZ" ? "Quiz" : "Verdadeiro ou falso"}
+            </div>
 
-              <div className="flex flex-wrap gap-1">
-                {q.alternatives.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`rounded border px-1 text-xs ${
-                      q.correctAlternativeIndex === i
-                        ? "border-green-500 text-green-600"
-                        : "border-muted text-muted-foreground dark:border-muted dark:text-muted-foreground"
-                    }`}
-                  >
-                    --
-                  </div>
-                ))}
-              </div>
-            </button>
+            <div className="flex flex-wrap gap-1">
+              {q.alternatives.map((_, i) => (
+                <div
+                  key={i}
+                  className={`rounded border px-1 text-xs ${
+                    q.correctAlternativeIndex === i
+                      ? "border-green-500 text-green-600"
+                      : "border-muted text-muted-foreground dark:border-muted dark:text-muted-foreground"
+                  }`}
+                >
+                  --
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
