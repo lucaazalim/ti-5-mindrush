@@ -1,13 +1,7 @@
 "use client";
-
+import pdfToText from "react-pdftotext";
 import { useState } from "react";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "~/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
 import { Upload } from "lucide-react";
@@ -20,7 +14,7 @@ export default function QuizStepTwoPDF() {
   return (
     <FormField
       control={form.control}
-      name="pdfBase64"
+      name="pdfText"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Enviar PDF</FormLabel>
@@ -28,9 +22,7 @@ export default function QuizStepTwoPDF() {
             <label
               className={cn(
                 "flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 transition",
-                fileName
-                  ? "border-green-400 bg-green-100"
-                  : "border-gray-300 hover:bg-gray-100",
+                fileName ? "border-green-400 bg-green-100" : "border-gray-300 hover:bg-gray-100",
               )}
             >
               <Upload className="mb-2 h-6 w-6 text-gray-500" />
@@ -44,10 +36,9 @@ export default function QuizStepTwoPDF() {
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (file) {
-                    const reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.onload = () =>
-                      field.onChange(reader.result as string);
+                    pdfToText(file)
+                      .then((text) => field.onChange(text))
+                      .catch((_error) => console.error("Failed to extract text from pdf"));
                     setFileName(file.name);
                   }
                 }}

@@ -25,10 +25,12 @@ export const themeGeneratedSchema = z.object({
   language: z.enum(QUIZ_LANGUAGES),
 });
 
-const pdfGeneratedSchema = z.object({
+export const pdfGeneratedSchema = z.object({
   ...baseFields.shape,
   type: z.literal("PDF_GENERATED"),
-  pdfBase64: z.string().min(1, "Faça o upload de um arquivo PDF."),
+  pdfText: z.string().min(1, "Faça o upload de um arquivo PDF."),
+    difficulty: z.enum(QUIZ_DIFFICULTIES),
+  language: z.enum(QUIZ_LANGUAGES),
 });
 
 export const quizCreateSchema = z.discriminatedUnion("type", [

@@ -4,13 +4,14 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { quizCreateSchema } from "~/app/dashboard/quizzes/form-schema";
 import { deleteQuiz, insertQuiz, updateQuiz } from "~/lib/data/quiz";
-import { updateQuizParser, uuidParser } from "~/lib/parsers";
+import { RawQuestionsWithAlternatives, updateQuizParser, uuidParser } from "~/lib/parsers";
 import { fail, Result, succeed } from "~/lib/result";
 import { type Quiz } from "~/lib/types";
 import { ROUTES } from "../constants";
-import { generateQuizByTheme } from "../openai";
+import { generateQuizByPDF, generateQuizByTheme } from "../openai";
 import { isUuid, type UpdateQuiz } from "../parsers";
 import { createQuestionsAndAlternatives } from "./question";
+
 
 const quizSchema = z.object({
   educatorId: uuidParser,
@@ -20,7 +21,7 @@ const quizSchema = z.object({
   theme: z.string().min(3, "O tema deve ter pelo menos 3 caracteres").optional(),
   difficulty: z.enum(["EASY", "MEDIUM", "HARD"]).optional(),
   language: z.string().min(2, "O idioma deve ter pelo menos 2 caracteres").optional(),
-  pdfBase64: z.string().optional(),
+  pdfText: z.string().optional(),
 });
 
 export async function createQuiz(
@@ -34,11 +35,16 @@ export async function createQuiz(
 
   try {
     const quiz = await insertQuiz(parsedData.data);
+    let questions;
 
     if (quizData.type === "THEME_GENERATED") {
-      const questions = await generateQuizByTheme(quizData);
+      questions = await generateQuizByTheme(quizData);
+    } else if (quizData.type === "PDF_GENERATED") {
+      questions = await generateQuizByPDF(quizData);
+    }
 
-      const rawQuestionsWithAlternatives = {
+    if (!questions) {
+      const rawQuestionsWithAlternatives: RawQuestionsWithAlternatives = {
         quizId: quiz.id,
         ...questions,
       };
@@ -50,8 +56,7 @@ export async function createQuiz(
 
     return succeed(quiz);
   } catch (e) {
-    console.error(e);
-    return fail("Falha ao criar o quiz.");
+    return fail(String(e));
   }
 }
 

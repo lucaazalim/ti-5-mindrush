@@ -1,7 +1,7 @@
 import { openai } from "@ai-sdk/openai";
 import { generateObject } from "ai";
 import { z } from "zod";
-import { themeGeneratedSchema } from "~/app/dashboard/quizzes/form-schema";
+import { themeGeneratedSchema, pdfGeneratedSchema } from "~/app/dashboard/quizzes/form-schema";
 import { QUESTION_TYPES } from "./constants";
 
 const questionAndAlternativesSchema = z.object({
@@ -39,4 +39,33 @@ export async function generateQuizByTheme(quiz: z.infer<typeof themeGeneratedSch
   });
 
   return object;
+}
+
+export async function generateQuizByPDF(quiz: z.infer<typeof pdfGeneratedSchema>) {
+  const quantityQuestions = 3;
+
+  try {
+    const extractedText = quiz.pdfText ?? "";
+
+    const { object } = await generateObject({
+      model: openai("gpt-4.1-nano"),
+      maxTokens: 500,
+      schema: questionAndAlternativesSchema,
+      messages: [
+        {
+          role: "user",
+          content: `Baseado no seguinte conteúdo extraído de um PDF, crie um quiz com ${quantityQuestions} questões de múltipla escolha, em ${quiz.language}, com dificuldade ${quiz.difficulty}, cada uma com 4 alternativas, sendo apenas uma correta:\n\n"${extractedText}"`,
+        },
+      ],
+    });
+
+    return object;
+
+  } catch (e) {
+    if (e instanceof Error) {
+      throw new Error(e.message);
+    } else {
+      throw new Error(String(e));
+    }
+  }
 }
