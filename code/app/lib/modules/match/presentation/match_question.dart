@@ -125,8 +125,10 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                       fit: BoxFit.cover,
                     ),
                   ),
+
                 ),
               ),
+
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
@@ -187,15 +189,28 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                                     child: Text(
                                       alternative.answer,
                                       textAlign: TextAlign.left,
+
+
+
+
+
                                     ),
                                   ),
                                 ],
+
+
+
+
+
+
+
                               ),
                             ),
                           );
                         },
                       ),
                     ),
+
                     const SizedBox(height: 16),
                     QuestionTimer(
                       initialTime: widget.question.timeLimit,
@@ -224,4 +239,11 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
       ),
     );
   }
+}
+
+Widget _defaultImage() {
+  return Image.asset(
+    'assets/images/default.jpg',
+    fit: BoxFit.cover,
+  );
 }

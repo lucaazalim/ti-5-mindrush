@@ -43,6 +43,7 @@ dependencies:
   mobile_scanner: ^3.5.0
   equatable: ^2.0.7
   dotenv: ^4.2.0
+  audioplayers: ^6.4.0
 
 
 dev_dependencies:
@@ -72,6 +73,9 @@ flutter:
     - assets/images/losango.png
     - assets/images/quadrado.png
     - assets/images/triangulo.png
+    - assets/images/default.jpg
+    - assets/sounds/click.mp3
+    - assets/sounds/answered.mp3
     - .env
   # To add assets to your application, add an assets section, like this:
   # assets:

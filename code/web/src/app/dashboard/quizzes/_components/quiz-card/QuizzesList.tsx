@@ -25,8 +25,8 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
 
               <div className="relative flex flex-1 flex-col justify-between px-4 py-5">
                 <div className="space-y-1">
-                  <h3 className="text-sm font-semibold">{quiz.title}</h3>
-                  <p className="line-clamp-2 text-sm text-muted-foreground">{quiz.description}</p>
+                  <h3 className="text-sm font-semibold break-words pr-8">{quiz.title}</h3>
+                  <p className="line-clamp-2 text-sm text-muted-foreground break-words">{quiz.description}</p>
                 </div>
 
                 <QuizOptions quiz={quiz} />
