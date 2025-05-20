@@ -137,9 +137,9 @@ export async function selectQuestionWithAlternatives(
       .from(questions)
       .innerJoin(quizzes, eq(questions.quizId, quizzes.id))
       .where(
-        internal
-          ? eq(questions.id, questionId)
-          : and(eq(questions.id, questionId), eq(quizzes.educatorId, session!.user.id as Uuid)),
+        session
+          ? and(eq(questions.id, questionId), eq(quizzes.educatorId, session.user.id as Uuid))
+          : eq(questions.id, questionId),
       )
       .orderBy(questions.order)
   )[0];

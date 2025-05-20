@@ -78,7 +78,11 @@ export async function selectPopulatedMatchById(
       .select()
       .from(matches)
       .innerJoin(quizzes, eq(matches.quizId, quizzes.id))
-      .where(and(eq(matches.id, matchId), eq(quizzes.educatorId, session.user.id as Uuid)))
+      .where(
+        session
+          ? and(eq(matches.id, matchId), eq(quizzes.educatorId, session.user.id as Uuid))
+          : eq(matches.id, matchId),
+      )
   )[0];
 
   if (!matchWithQuiz) {
