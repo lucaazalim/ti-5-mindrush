@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
   }
 
   const { id: participantId, matchId } = participant.data;
-  const match = await selectPopulatedMatchById(matchId);
+  const match = await selectPopulatedMatchById(matchId, { internal: true });
 
   if (!match) {
     return apiErrorResponse({

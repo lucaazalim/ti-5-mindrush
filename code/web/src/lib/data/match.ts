@@ -1,7 +1,13 @@
 import { and, desc, eq, getTableColumns, inArray } from "drizzle-orm";
 import { forbidden, unauthorized } from "next/navigation";
 import { matches, participants, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
-import { MatchWithQuizTitle, NewMatch, type Match, type PopulatedMatch } from "~/lib/types";
+import {
+  DataAccessOptions,
+  MatchWithQuizTitle,
+  NewMatch,
+  type Match,
+  type PopulatedMatch,
+} from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
 import { Uuid, isUuid } from "../parsers";
@@ -57,10 +63,13 @@ export async function selectAllMatches(): Promise<MatchWithQuizTitle[]> {
   return matchesWhithQuizTitle;
 }
 
-export async function selectPopulatedMatchById(matchId: Uuid): Promise<PopulatedMatch | undefined> {
+export async function selectPopulatedMatchById(
+  matchId: Uuid,
+  { internal = false }: DataAccessOptions = {},
+): Promise<PopulatedMatch | undefined> {
   const session = await auth();
 
-  if (!session) {
+  if (!internal && !session) {
     return unauthorized();
   }
 
