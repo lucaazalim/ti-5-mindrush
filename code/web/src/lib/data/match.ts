@@ -122,6 +122,7 @@ export async function selectPopulatedMatchById(
     const currentQuestionAnswers = await selectQuizAnswersByQuestionId(
       match.id,
       currentQuestion.id,
+      { internal },
     );
 
     const currentQuestionAlternatives = alternativesResult
