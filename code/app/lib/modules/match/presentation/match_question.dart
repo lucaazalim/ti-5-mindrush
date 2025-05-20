@@ -112,21 +112,24 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            if (widget.question.image != null)
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: SizedBox( // Envolve o Image.network com um SizedBox
-                    height: imageHeight,
-                    width: double.infinity,
-                    child: Image.network(
-                      widget.question.image!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: SizedBox(
+                  height: imageHeight,
+                  width: double.infinity,
+                  child: widget.question.image != null
+                      ? Image.network(
+                    widget.question.image!,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _defaultImage(),
+                  )
+                      : _defaultImage(),
                 ),
               ),
+            ),
+
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
@@ -149,53 +152,49 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: widget.question.alternatives.length,
-                        itemBuilder: (context, index) {
-                          final alternative = widget.question.alternatives[index];
-                          final cor = _corPorIndice(index);
-                          final imagePath = _iconePorIndice(index);
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16.0),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: cor,
-                                foregroundColor: Colors.white,
-                                textStyle: const TextStyle(fontSize: 20),
-                                minimumSize: const Size.fromHeight(70),
-                                padding: const EdgeInsets.symmetric(horizontal: 12),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
+                    Flexible(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (int index = 0; index < widget.question.alternatives.length; index++)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: _corPorIndice(index),
+                                  foregroundColor: Colors.white,
+                                  textStyle: const TextStyle(fontSize: 20),
+                                  minimumSize: const Size.fromHeight(70),
+                                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                ),
+                                onPressed: answered
+                                    ? null
+                                    : () => answerQuestion(widget.question.alternatives[index].id),
+                                child: Row(
+                                  children: [
+                                    Image.asset(
+                                      _iconePorIndice(index),
+                                      height: 40,
+                                      width: 40,
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Text(
+                                        widget.question.alternatives[index].answer,
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              onPressed: answered
-                                  ? null
-                                  : () {
-                                answerQuestion(alternative.id);
-                              },
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    imagePath,
-                                    height: 40,
-                                    width: 40,
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: Text(
-                                      alternative.answer,
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
-                          );
-                        },
+                        ],
                       ),
                     ),
+
                     const SizedBox(height: 16),
                     QuestionTimer(
                       initialTime: widget.question.timeLimit,
@@ -224,4 +223,11 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
       ),
     );
   }
+}
+
+Widget _defaultImage() {
+  return Image.asset(
+    'assets/images/default.jpg',
+    fit: BoxFit.cover,
+  );
 }
