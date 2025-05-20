@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { insertQuizAnswer, selectQuizAnswer } from "~/lib/data/answer";
-import { selectMatchByIdOrPin } from "~/lib/data/match";
-import { selectQuestionWithAlternatives } from "~/lib/data/question";
+import { selectPopulatedMatchById } from "~/lib/data/match";
 import { uuidParser } from "~/lib/parsers";
 import { publishMatchEvent } from "~/lib/pusher/publisher";
 import { isFailure } from "~/lib/result";
-import {
-  calculateAnswerPoints,
-  hasCurrentQuestion,
-  hasCurrentQuestionTimeEnded,
-} from "~/lib/utils";
+import { calculatePoints, hasCurrentQuestion, hasCurrentQuestionTimeEnded } from "~/lib/utils";
 import { apiErrorResponse, authParticipant } from "../../api";
 
 const payloadParser = z.object({
@@ -35,7 +30,7 @@ export async function POST(req: NextRequest) {
   }
 
   const { id: participantId, matchId } = participant.data;
-  const match = await selectMatchByIdOrPin(matchId);
+  const match = await selectPopulatedMatchById(matchId);
 
   if (!match) {
     return apiErrorResponse({
@@ -69,11 +64,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const currentQuestion = await selectQuestionWithAlternatives(match.currentQuestionId, {
-    internal: true,
-  });
-
-  if (!currentQuestion) {
+  if (!match.currentQuestion) {
     return apiErrorResponse({
       status: 404,
       message: "Question not found.",
@@ -81,7 +72,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const correctAlternative = currentQuestion.alternatives.find(
+  const correctAlternative = match.currentQuestion.alternatives.find(
     (alternative) => alternative.isCorrect,
   );
 
@@ -95,7 +86,7 @@ export async function POST(req: NextRequest) {
 
   const { alternativeId } = payload.data;
 
-  const alternative = currentQuestion.alternatives.find(
+  const alternative = match.currentQuestion.alternatives.find(
     (alternative) => alternative.id === alternativeId,
   );
 
@@ -107,7 +98,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const existingAnswer = await selectQuizAnswer(participantId, currentQuestion.id);
+  const existingAnswer = await selectQuizAnswer(participantId, match.currentQuestion.id);
 
   if (existingAnswer) {
     return apiErrorResponse({
@@ -119,13 +110,19 @@ export async function POST(req: NextRequest) {
 
   const isCorrect = correctAlternative.id === alternativeId;
 
-  const timeLimit = currentQuestion.timeLimit * 1000; // ms
+  const timeLimit = match.currentQuestion.timeLimit * 1000; // ms
   const timeTaken = Date.now() - match.currentQuestionStartedAt.getTime(); // ms
-  const points = calculateAnswerPoints(isCorrect, timeLimit, timeTaken);
+  const correctBefore = match.currentQuestion?.alternatives.reduce(
+    (acc, alternative) => acc + alternative.count,
+    0,
+  );
+  const totalParticipants = match.participants.length;
+
+  const points = calculatePoints(isCorrect, timeLimit, timeTaken, correctBefore, totalParticipants);
 
   await insertQuizAnswer({
     participantId,
-    questionId: currentQuestion.id,
+    questionId: match.currentQuestion.id,
     matchId,
     alternativeId,
     isCorrect,

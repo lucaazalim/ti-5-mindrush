@@ -89,13 +89,39 @@ export function hasCurrentQuestion(
 }
 
 /**
- * Calculates the points for an answer.
+ * Calculates the score for a quiz question similar to Kahoot.
  *
- * @param isCorrect true if the answer is correct, false otherwise
- * @param timeLimit the time limit for the question in milliseconds
- * @param timeTaken the time taken to answer the question in milliseconds
- * @returns the points for the answer
+ * Rules:
+ * - Participants that got the question wrong receive 0 points.
+ * - The score ranges from 0 to 1000.
+ * - The score is based on:
+ *   - How fast the participant answered (up to 50% of the score).
+ *   - How many participants had already answered correctly (up to 50% of the score).
+ *
+ * @param isCorrect - Indicates whether the participant answered correctly.
+ * @param timeLimit - The total time limit to answer the question in milliseconds.
+ * @param timeTaken - The time taken by the participant to answer in milliseconds.
+ * @param correctBefore - The number of participants who answered correctly before this participant.
+ * @param totalParticipants - The total number of participants for this question.
+ * @returns A score between 0 and 1000.
  */
-export function calculateAnswerPoints(isCorrect: boolean, timeLimit: number, timeTaken: number) {
-  return isCorrect ? Math.round((1 - timeTaken / timeLimit) * 1000) : 0;
+export function calculatePoints(
+  isCorrect: boolean,
+  timeLimit: number,
+  timeTaken: number,
+  correctBefore: number,
+  totalParticipants: number,
+): number {
+  if (!isCorrect) return 0;
+
+  const timeFactor = 0.5; // 50% of the score is based on speed
+  const speedScore = 1 - Math.min(timeTaken / timeLimit, 1); // Normalize speed (0 to 1)
+  const timeScore = speedScore * (1000 * timeFactor);
+
+  const accuracyFactor = 1 - correctBefore / Math.max(totalParticipants, 1); // Normalize accuracy (0 to 1)
+  const accuracyScore = accuracyFactor * (1000 * (1 - timeFactor));
+
+  const totalScore = Math.round(timeScore + accuracyScore);
+
+  return Math.min(1000, Math.max(0, totalScore));
 }
