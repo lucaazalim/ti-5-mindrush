@@ -18,4 +18,10 @@ test("Create match from the dashboard", async ({ page, context }) => {
   await test.step("Expect redirection to match page", async () => {
     await expect(page).toHaveURL(/\/dashboard\/matches\/[a-fA-F0-9-]{36}$/);
   });
+
+  await test.step("Verify success message", async () => {
+    await page.waitForTimeout(1000);
+    await expect(page.locator("text=Partida criada com sucesso!")).toBeVisible();
+  });
+
 });
