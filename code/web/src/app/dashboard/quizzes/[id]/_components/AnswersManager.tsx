@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Check, Plus, Trash2 } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { QUESTION_ALTERNATIVES_STYLING } from "~/lib/constants";
@@ -53,6 +53,7 @@ export function AnswersManager({
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {answers.slice(0, isVF ? 2 : answers.length).map((answer, index) => {
           const { icon: Icon, colorClassName: color } = QUESTION_ALTERNATIVES_STYLING[index]!;
+          const isCorrect = correctAnswerIndex === index;
 
           return (
             <div key={index} className="relative flex items-center gap-2">
@@ -60,13 +61,12 @@ export function AnswersManager({
                 value={answer}
                 placeholder={`Resposta ${index + 1}`}
                 onChange={(e) => updateAnswer(index, e.target.value)}
-                onClick={() => onChangeCorrectIndex(index)}
                 className={cn(
                   "cursor-pointer border-2 px-10 text-lg",
                   "text-white dark:text-white",
                   "placeholder:text-white/50",
-                  correctAnswerIndex === index
-                    ? `border-green-500 focus-visible:ring-green-500 ${color}`
+                  isCorrect
+                    ? `border-green-800 focus-visible:ring-green-500 ${color}`
                     : `${color} border-muted`,
                 )}
               />
@@ -80,15 +80,30 @@ export function AnswersManager({
                 <Icon className="h-4 w-4 fill-white text-white" />
               </div>
 
-              {!isVF && canDelete && (
+              <div className="absolute right-2 top-1/2 flex -translate-y-1/2 items-center gap-2">
+                {!isVF && canDelete && (
+                  <button
+                    onClick={() => deleteAnswer(index)}
+                    type="button"
+                    className="text-white transition-all hover:scale-110"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                )}
+
                 <button
-                  onClick={() => deleteAnswer(index)}
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white transition-all hover:scale-110"
+                  onClick={() => onChangeCorrectIndex(index)}
+                  className={cn(
+                    "flex h-5 w-5 items-center justify-center rounded border text-white/80 transition-all",
+                    isCorrect
+                      ? "border-green-600 bg-white text-green-600"
+                      : "border-white/50 bg-white/10 hover:ring-1 hover:ring-white",
+                  )}
                 >
-                  <Trash2 size={16} />
+                  {isCorrect && <Check className="h-4 w-4" />}
                 </button>
-              )}
+              </div>
             </div>
           );
         })}
