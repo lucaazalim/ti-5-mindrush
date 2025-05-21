@@ -12,9 +12,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import { endMatch } from "~/lib/actions/match";
 import { isFailure } from "~/lib/result";
 import { hasNextQuestion } from "~/lib/utils";
-import { endMatch } from "~/lib/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 
 export function EndMatchButton() {
@@ -29,7 +29,7 @@ export function EndMatchButton() {
         return;
       }
 
-      setMatch({ ...match, ...result.data });
+      setMatch(result.data);
       toast("Partida encerrada!");
     },
     onError: (error) => {

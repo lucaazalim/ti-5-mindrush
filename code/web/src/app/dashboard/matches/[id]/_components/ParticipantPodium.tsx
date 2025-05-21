@@ -18,7 +18,7 @@ const metadata: [PodiumMetadata, PodiumMetadata, PodiumMetadata] = [
     // first place
     className: "order-1 from-yellow-500 to-yellow-600",
     height: "20rem",
-    liftDelay: 6,
+    liftDelay: 5,
     liftDuration: 0.6,
     revealDelay: 0.5,
   },
@@ -26,7 +26,7 @@ const metadata: [PodiumMetadata, PodiumMetadata, PodiumMetadata] = [
     // second place
     className: "order-0 from-gray-400 to-gray-500",
     height: "15rem",
-    liftDelay: 4,
+    liftDelay: 3,
     liftDuration: 0.6,
     revealDelay: 0.5,
   },
@@ -34,7 +34,7 @@ const metadata: [PodiumMetadata, PodiumMetadata, PodiumMetadata] = [
     // third place
     className: "order-2 from-orange-800 to-orange-900",
     height: "10rem",
-    liftDelay: 2,
+    liftDelay: 1,
     liftDuration: 0.6,
     revealDelay: 0.5,
   },

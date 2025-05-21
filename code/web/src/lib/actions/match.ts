@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import {
   checkActiveMatchByQuizId,
   insertMatch,
-  selectMatchByIdOrPin,
   selectPopulatedMatchById,
   updateMatch,
 } from "~/lib/data/match";
@@ -121,8 +120,8 @@ async function updateCurrentQuestion(
   });
 }
 
-export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
-  const match = await selectMatchByIdOrPin(matchId);
+export async function endMatch(matchId: Uuid): Promise<Result<PopulatedMatch, string>> {
+  const match = await selectPopulatedMatchById(matchId);
 
   if (!match) {
     return fail("Partida não encontrada.");
@@ -148,5 +147,5 @@ export async function endMatch(matchId: Uuid): Promise<Result<Match, string>> {
 
   revalidatePath(ROUTES.QUIZZES);
 
-  return succeed(updatedMatch);
+  return succeed({ ...match, ...updatedMatch });
 }
