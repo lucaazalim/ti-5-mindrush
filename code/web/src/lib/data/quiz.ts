@@ -2,6 +2,7 @@ import { and, count, eq, getTableColumns, inArray } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import { matches, questionAlternatives, questions, quizzes } from "~/lib/db/schema";
 import {
+  DataAccessOptions,
   NewQuiz,
   Quiz,
   QuizWithQuestionCountAndActiveMatch,
@@ -30,10 +31,13 @@ export async function insertQuiz(newQuiz: Omit<NewQuiz, "educatorId">): Promise<
   return createdQuiz;
 }
 
-export async function selectQuizByMatchId(matchId: Uuid): Promise<Quiz | undefined> {
+export async function selectQuizByMatchId(
+  matchId: Uuid,
+  { internal = false }: DataAccessOptions = {},
+): Promise<Quiz | undefined> {
   const session = await auth();
 
-  if (!session) {
+  if (!internal && !session) {
     return unauthorized();
   }
 
@@ -43,7 +47,11 @@ export async function selectQuizByMatchId(matchId: Uuid): Promise<Quiz | undefin
     })
     .from(quizzes)
     .innerJoin(matches, eq(matches.quizId, quizzes.id))
-    .where(and(eq(matches.id, matchId), eq(quizzes.educatorId, session.user.id as Uuid)));
+    .where(
+      session
+        ? and(eq(matches.id, matchId), eq(quizzes.educatorId, session.user.id as Uuid))
+        : eq(matches.id, matchId),
+    );
 
   return result[0]?.quiz;
 }

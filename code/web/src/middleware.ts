@@ -14,7 +14,6 @@ export default auth((request) => {
 
   // Redirect to home if the user is not authenticated and trying to access the dashboard
   if (matchesRoute(ROUTES.DASHBOARD) && !request.auth) {
-    console.log("User not authenticated, redirecting to home");
     const homeUrl = new URL(ROUTES.HOME, request.nextUrl.origin);
     return Response.redirect(homeUrl);
   }

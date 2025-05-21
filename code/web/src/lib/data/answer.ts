@@ -1,7 +1,7 @@
 import { and, eq } from "drizzle-orm";
 import { unauthorized } from "next/navigation";
 import { quizAnswers } from "~/lib/db/schema";
-import { NewQuizAnswer, QuizAnswer } from "~/lib/types";
+import { DataAccessOptions, NewQuizAnswer, QuizAnswer } from "~/lib/types";
 import { auth } from "../auth";
 import { db } from "../db";
 import { Uuid } from "../parsers";
@@ -32,16 +32,17 @@ export async function selectQuizAnswer(
 export async function selectQuizAnswersByQuestionId(
   matchId: Uuid,
   questionId: Uuid,
+  { internal = false }: DataAccessOptions = {},
 ): Promise<QuizAnswer[]> {
   const session = await auth();
 
-  if (!session) {
+  if (!internal && !session) {
     return unauthorized();
   }
 
-  const quiz = await selectQuizByMatchId(matchId);
+  const quiz = await selectQuizByMatchId(matchId, {internal});
 
-  if (!quiz || quiz.educatorId !== session.user.id) {
+  if (session && !internal && (!quiz || quiz.educatorId !== session.user.id)) {
     return unauthorized();
   }
 
