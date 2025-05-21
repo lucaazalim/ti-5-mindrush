@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mindrush/modules/lobby/presentation/name_screen.dart';
 import '../logic/api/lobby_service.dart';
+import '../data/sound_utils.dart';
 
 class PinScreen extends StatefulWidget {
   const PinScreen({super.key});
@@ -38,6 +39,7 @@ class _PinScreenState extends State<PinScreen>
   }
 
   void _validatePin() async {
+    SoundUtils.playSound('sounds/click.mp3');
     setState(() {
       _pinError = null; // Limpa o erro anterior
     });

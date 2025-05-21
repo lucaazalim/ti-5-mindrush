@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:mindrush/modules/lobby/presentation/pin_screen.dart';
 import 'package:mindrush/modules/lobby/presentation/qr_code_screen.dart';
+import '../data/sound_utils.dart';
 
 class SelectAccessScreen extends StatefulWidget {
   const SelectAccessScreen({super.key});
@@ -56,6 +57,7 @@ class _SelectAccessScreenState extends State<SelectAccessScreen>
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
+                      SoundUtils.playSound('sounds/click.mp3');
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const PinScreen()),
@@ -88,6 +90,7 @@ class _SelectAccessScreenState extends State<SelectAccessScreen>
                           ),
                         );
                       } else {
+                        SoundUtils.playSound('sounds/click.mp3');
                         Navigator.push(
                           context,
                           MaterialPageRoute(
