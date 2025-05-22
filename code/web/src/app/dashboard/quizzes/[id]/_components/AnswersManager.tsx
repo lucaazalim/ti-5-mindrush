@@ -58,6 +58,9 @@ export function AnswersManager({
           return (
             <div key={index} className="relative flex items-center gap-2">
               <Input
+                id={`resposta-${index}`}
+                data-testid={`resposta-${index}`}
+                aria-label={`Resposta ${index + 1}`}
                 value={answer}
                 placeholder={`Resposta ${index + 1}`}
                 onChange={(e) => updateAnswer(index, e.target.value)}
@@ -85,6 +88,7 @@ export function AnswersManager({
                   <button
                     onClick={() => deleteAnswer(index)}
                     type="button"
+                    aria-label={`Excluir resposta ${index + 1}`}
                     className="text-white transition-all hover:scale-110"
                   >
                     <Trash2 size={16} />
@@ -94,6 +98,8 @@ export function AnswersManager({
                 <button
                   type="button"
                   onClick={() => onChangeCorrectIndex(index)}
+                  aria-label={`Marcar resposta ${index + 1} como correta`}
+                  aria-pressed={isCorrect}
                   className={cn(
                     "flex h-5 w-5 items-center justify-center rounded border text-white/80 transition-all",
                     isCorrect
@@ -116,6 +122,7 @@ export function AnswersManager({
             variant="outline"
             className="rounded-sm border px-4 py-1.5 text-sm font-medium shadow-sm hover:bg-white dark:hover:bg-muted/40"
             onClick={addAnswer}
+            aria-label="Adicionar resposta"
           >
             <Plus size={14} className="mr-2" />
             Adicionar resposta
