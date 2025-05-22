@@ -39,17 +39,25 @@ export function QuestionEditor({ value, onChange, imageBase64, onImageChange }: 
     <div className="space-y-4">
       <Textarea
         id="question"
+        data-testid="question-textarea"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Ex: Quais os tipos de alocação de memória do Java?"
+        aria-label="Texto da pergunta"
         className="min-h-[40px] resize-none border border-primary bg-white focus-visible:ring-0 focus-visible:ring-offset-0 dark:bg-muted dark:text-foreground"
       />
 
-      <div className="relative rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-2 text-center transition hover:bg-gray-100 dark:border-muted dark:bg-muted/50 dark:hover:bg-muted">
+      <div
+        className="relative rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 p-2 text-center transition hover:bg-gray-100 dark:border-muted dark:bg-muted/50 dark:hover:bg-muted"
+        aria-label="Área para adicionar imagem"
+      >
         {!preview ? (
           <label
             htmlFor="file-upload"
             className="flex cursor-pointer flex-col items-center space-y-2 text-gray-500 dark:text-muted-foreground"
+            role="button"
+            tabIndex={0}
+            aria-label="Clique para adicionar imagem da pergunta"
           >
             <ImagePlus className="h-10 w-10" />
             <span className="font-medium">Clique para adicionar imagem</span>
@@ -81,6 +89,7 @@ export function QuestionEditor({ value, onChange, imageBase64, onImageChange }: 
               onClick={handleRemoveImage}
               className="absolute right-2 top-2 rounded-full border border-gray-300 bg-white p-1 text-gray-700 shadow-sm hover:bg-gray-100 dark:border-muted dark:bg-background dark:text-muted-foreground dark:hover:bg-muted"
               title="Remover imagem"
+              aria-label="Remover imagem da pergunta"
             >
               <Trash2 className="h-4 w-4" />
             </button>
