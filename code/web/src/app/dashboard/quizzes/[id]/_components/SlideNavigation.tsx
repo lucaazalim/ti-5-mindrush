@@ -23,7 +23,13 @@ export function SlideNavigation({
     <aside className="flex min-h-screen w-[200px] flex-col items-center gap-4 overflow-y-auto border-r bg-white px-2 py-6 dark:border-muted dark:bg-background">
       <div className="flex flex-col items-center gap-4">
         <BackButton href="/dashboard/quizzes" className="w-full" />
-        <Button type="button" onClick={onAdd} className="h-[8px] w-[140px] rounded-sm">
+        <Button
+          type="button"
+          onClick={onAdd}
+          data-testid="adicionar-questao"
+          aria-label="Adicionar nova questão"
+          className="h-[8px] w-[140px] rounded-sm"
+        >
           Nova questão
         </Button>
       </div>
@@ -34,6 +40,8 @@ export function SlideNavigation({
             key={q.id || index}
             role="button"
             tabIndex={0}
+            aria-label={`Selecionar questão ${index + 1}`}
+            data-testid={`questao-${index}`}
             onClick={() => onSlideChange(index)}
             onKeyDown={(e) => e.key === "Enter" && onSlideChange(index)}
             className={`relative w-[148px] cursor-pointer rounded-md border p-5 text-left text-sm transition-colors ${
@@ -45,6 +53,7 @@ export function SlideNavigation({
             {questions.length > 1 && (
               <button
                 type="button"
+                aria-label={`Excluir questão ${index + 1}`}
                 className="absolute right-2 top-2 text-muted-foreground hover:text-destructive dark:text-muted-foreground dark:hover:text-destructive"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -55,11 +64,14 @@ export function SlideNavigation({
               </button>
             )}
 
-            <div className="mb-1 text-xs font-semibold text-foreground dark:text-foreground">
+            <div
+              className="mb-1 text-xs font-semibold text-foreground dark:text-foreground"
+              aria-hidden="true"
+            >
               {index + 1}. {q.type === "QUIZ" ? "Quiz" : "Verdadeiro ou falso"}
             </div>
 
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1" aria-hidden="true">
               {q.alternatives.map((_, i) => {
                 const style =
                   QUESTION_ALTERNATIVES_STYLING[i % QUESTION_ALTERNATIVES_STYLING.length]!;
@@ -71,7 +83,9 @@ export function SlideNavigation({
                 return (
                   <div
                     key={i}
-                    className={`flex items-center justify-center rounded transition-transform ${isCorrect ? "border-2 border-green-500 bg-green-100 p-[4px]" : "p-[2px]"} hover:scale-110`}
+                    className={`flex items-center justify-center rounded transition-transform ${
+                      isCorrect ? "border-2 border-green-500 bg-green-100 p-[4px]" : "p-[2px]"
+                    } hover:scale-110`}
                   >
                     <Icon
                       size={14}
