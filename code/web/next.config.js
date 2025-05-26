@@ -3,6 +3,7 @@
  * for Docker builds.
  */
 import "./src/env.js";
+import { env } from "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -18,6 +19,50 @@ const config = {
         hostname: "api.dicebear.com",
       },
     ],
+  },
+
+  async headers() {
+    return [
+      {
+        source: "/api/:path*",
+        headers: [
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "*",
+          },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
+            value: "Content-Type, Authorization",
+          },
+        ],
+      },
+      // Fix CWE 264
+      {
+        source: "/api/auth/:path*",
+        headers: [
+          {
+            key: "Access-Control-Allow-Origin",
+            value: env.CORS_ORIGIN ?? "http://localhost:3000",
+          },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET, POST, OPTIONS",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
+            value: "Content-Type, Authorization",
+          },
+          {
+            key: "Access-Control-Allow-Credentials",
+            value: "true",
+          },
+        ],
+      },
+    ];
   },
 };
 

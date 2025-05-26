@@ -18,21 +18,7 @@ export default auth((request) => {
     return Response.redirect(homeUrl);
   }
 
-  // CORS
-  const response = NextResponse.next();
-
-  if (matchesRoute(ROUTES.API)) {
-    response.headers.set("Access-Control-Allow-Origin", "*");
-
-    response.headers.set(
-      "Access-Control-Allow-Methods",
-      "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
-    );
-
-    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  }
-
-  return response;
+  return NextResponse.next();
 });
 
 export const config = {
