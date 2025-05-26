@@ -118,6 +118,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 4. O educador deve ser redirecionado automaticamente para a página da nova partida, por exemplo: `/dashboard/games/[ID da partida]`.
 5. A nova partida deve estar em estado inicial (ainda não iniciada), pronta para ser configurada ou iniciada.
 6. Uma **mensagem de sucesso** (ex: “Partida criada com sucesso!”) pode ser exibida ao educador.
+7. Ao tentar criar uma nova partida para o mesmo quiz novamente, o botão "Criar partida" não deve estar mais disponível para este quiz, e deve ser exibido o botão "Acompanhar partida" em seu lugar, indicando que já existe uma partida ativa.
 
 #### 4.2 Verificações
 
@@ -127,6 +128,8 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 4. A nova partida está vinculada corretamente ao quiz selecionado.
 5. A interface da página da partida reflete o estado inicial esperado.
 6. Uma mensagem de sucesso é exibida após a criação.
+7. Após a criação da partida, na listagem do quiz, o botão "Criar partida" deve desaparecer para aquele quiz específico e ser substituído pelo botão "Acompanhar partida".
+8. O botão "Acompanhar partida" deve estar visível e funcional para o quiz que já possui partida.
 
 #### 4.3 Critérios de Aceite
 
@@ -135,6 +138,8 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 3. O educador é redirecionado corretamente para a interface da nova partida.
 4. A nova partida está associada ao quiz correto e pronta para ser iniciada.
 5. O sistema exibe uma mensagem clara de confirmação da criação da partida.
+6. A tentativa de criar nova partida para quiz com partida ativa não é possível via interface — o botão "Criar partida" desaparece para aquele quiz, e o botão "Acompanhar partida" aparece no seu lugar.
+
 
 ---
 
