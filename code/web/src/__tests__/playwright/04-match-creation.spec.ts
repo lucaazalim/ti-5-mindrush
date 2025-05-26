@@ -24,4 +24,15 @@ test("Create match from the dashboard", async ({ page, context }) => {
     await expect(page.locator("text=Partida criada com sucesso!")).toBeVisible();
   });
 
+  await test.step("Try to create the match again for the same quiz", async () => {
+    await page.goto("/dashboard/quizzes");
+    await expect(page).toHaveURL("/dashboard/quizzes");
+
+    const createButtons = page.getByRole("button", { name: "Criar partida" });
+    await expect(createButtons.first()).not.toBeVisible(); 
+
+    const trackButton = page.getByRole("button", { name: "Acompanhar partida" }).first();
+    await expect(trackButton).toBeVisible();
+  });
+
 });
