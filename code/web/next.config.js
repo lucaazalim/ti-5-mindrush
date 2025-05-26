@@ -7,6 +7,7 @@ import { env } from "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  poweredByHeader: false,
   experimental: {
     nodeMiddleware: true,
     authInterrupts: true,
