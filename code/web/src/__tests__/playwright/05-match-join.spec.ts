@@ -43,6 +43,25 @@ test("Participant join match", async ({ page, context }) => {
     expect(response.ok()).toBeTruthy();
   });
 
+  await test.step("Fail to create participant with duplicate nickname", async () => {
+
+    const apiContext = await request.newContext();
+  
+    const response = await apiContext.post(`/api/matches/${pinValue}/participants`, {
+      data: {
+        nickname: "Richard", 
+      },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+  
+
+    expect(response.status()).toBe(400); 
+
+  });
+
   await page.pause();
 
   await test.step("Expect to see participant nickname", async () => {
