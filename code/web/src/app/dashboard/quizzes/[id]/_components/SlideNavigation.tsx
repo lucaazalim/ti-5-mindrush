@@ -41,7 +41,7 @@ export function SlideNavigation({
             role="button"
             tabIndex={0}
             aria-label={`Selecionar questão ${index + 1}`}
-            data-testid={`questao-${index}`}
+            data-testid={`question-${index}`}
             onClick={() => onSlideChange(index)}
             onKeyDown={(e) => e.key === "Enter" && onSlideChange(index)}
             className={`relative w-[148px] cursor-pointer rounded-md border p-5 text-left text-sm transition-colors ${
