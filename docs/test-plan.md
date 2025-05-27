@@ -147,31 +147,30 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 
 #### 5.1 Comportamento Esperado
 
-1. O participante abre o aplicativo mobile do MindRush.
-2. Na tela inicial, o participante informa o **PIN da partida** fornecido pelo educador.
-3. O sistema verifica a validade do PIN e, se for válido, redireciona o participante para a próxima tela.
-4. O participante informa um **nickname** que será usado durante a partida.
-5. Após confirmar, o participante entra na sala de espera e aguarda o início da partida.
-6. O nickname informado deve aparecer na interface web do educador, indicando que o participante está conectado.
-7. O participante deve visualizar uma tela de "Aguardando o início da partida".
+1. O educador acessa o painel de quizzes e inicia o acompanhamento de uma partida existente.
+2. O sistema redireciona o educador para a tela da partida, onde é exibido um PIN exclusivo.
+3. Um participante se conecta à partida através de uma requisição POST para a rota `/matches/{pin}/participants`, informando o nickname no corpo da requisição.
+4. O nickname informado deve aparecer na interface web do educador, indicando que o participante está conectado.
+5. O participante deve visualizar uma tela de "Aguardando o início da partida".
 
 #### 5.2 Verificações
 
-1. O aplicativo mobile está funcional e acessível ao participante.
-2. O campo para inserir o PIN está visível na tela inicial do app.
-3. O sistema valida corretamente o PIN e impede o acesso se ele for inválido.
+1. O painel de quizzes está acessível ao educador autenticado.
+2. O botão “Acompanhar partida” está visível e funcional.
+3. O sistema redireciona corretamente para a URL da partida (/dashboard/matches/[id]).
 4. O campo de nickname é exibido somente após o PIN válido.
-5. É possível inserir e confirmar o nickname.
-6. O nickname do participante aparece na tela web do educador (por exemplo, na interface da partida em `/dashboard/games/[ID]`).
-7. A interface do participante exibe o estado de "Aguardando início".
+5. O PIN da partida é exibido na interface com exatamente 6 dígitos.
+6. A API de criação de participante aceita um nickname e responde com sucesso.
+7. O nickname informado aparece na interface web da partida para o educador.
 
 #### 5.3 Critérios de Aceite
 
-1. O participante consegue acessar o app, informar o PIN e escolher um nickname.
-2. O sistema valida o PIN corretamente e direciona o participante para a tela adequada.
-3. O nickname do participante é exibido na interface do educador.
-4. O participante visualiza claramente que está aguardando o início da partida.
-5. O fluxo não apresenta erros de interface ou falhas de comunicação entre cliente e servidor.
+1. O educador consegue acessar o dashboard e acompanhar uma partida.
+2. O sistema exibe corretamente o PIN da partida.
+3. Um participante pode se registrar usando o PIN e um nickname válido.
+4. O nickname do participante é exibido na interface da partida para o educador.
+5. O participante permanece aguardando o início da partida.
+6.	Não ocorrem falhas de comunicação ou erros de interface durante o processo.
 
 ---
 
