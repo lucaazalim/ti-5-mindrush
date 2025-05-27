@@ -43,6 +43,32 @@ test("Participant join match", async ({ page, context }) => {
     expect(response.ok()).toBeTruthy();
   });
 
+
+
+  await test.step("Create multiple participants", async () => {
+
+    const nicknames = ["Alice", "Bob"];
+    const apiContext = await request.newContext();
+
+    for (const nick of nicknames) {
+      const response = await apiContext.post(`/api/matches/${pinValue}/participants`, {
+        data: { 
+          nickname: nick
+         },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
+      expect(response.ok()).toBeTruthy();
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+    }
+
+  });
+
+
   await test.step("Fail to create participant with duplicate nickname", async () => {
 
     const apiContext = await request.newContext();
@@ -62,9 +88,13 @@ test("Participant join match", async ({ page, context }) => {
 
   });
 
+
   await page.pause();
 
-  await test.step("Expect to see participant nickname", async () => {
+  await test.step("Expect to see participants nickname", async () => {
     await expect(page.getByText("Richard")).toBeVisible();
+    await expect(page.getByText("Alice")).toBeVisible();
+    await expect(page.getByText("Bob")).toBeVisible();
   });
+
 });
