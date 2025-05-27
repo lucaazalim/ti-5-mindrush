@@ -58,8 +58,8 @@ export function AnswersManager({
           return (
             <div key={index} className="relative flex items-center gap-2">
               <Input
-                id={`resposta-${index}`}
-                data-testid={`resposta-${index}`}
+                id={`answer-${index}`}
+                data-testid={`answer-${index}`}
                 aria-label={`Resposta ${index + 1}`}
                 value={answer}
                 placeholder={`Resposta ${index + 1}`}

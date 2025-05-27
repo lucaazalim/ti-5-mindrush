@@ -116,7 +116,7 @@ export default function QuizForm({ quizId, initialQuestions = [] }: Props) {
   };
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="flex h-screen w-full" data-testid="quiz-form">
       <div className="h-full w-[200px] shrink-0 border-r border-muted">
         <SlideNavigation
           questions={questions}
@@ -127,7 +127,10 @@ export default function QuizForm({ quizId, initialQuestions = [] }: Props) {
         />
       </div>
 
-      <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-6">
+      <main
+        className="flex flex-1 flex-col gap-6 overflow-y-auto p-6"
+        aria-label="Editor de questão atual"
+      >
         <QuestionEditor
           value={currentQuestion.question}
           onChange={(val) => updateCurrentQuestion({ question: val })}
@@ -142,7 +145,7 @@ export default function QuizForm({ quizId, initialQuestions = [] }: Props) {
           onChangeAnswers={handleChangeAnswer}
           onChangeCorrectIndex={handleChangeCorrectIndex}
         />
-      </div>
+      </main>
 
       <div className="w-[200px] shrink-0 border-l border-muted">
         <SidebarSettings
