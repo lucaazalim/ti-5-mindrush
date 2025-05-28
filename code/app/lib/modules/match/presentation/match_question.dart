@@ -105,27 +105,27 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final imageHeight = screenHeight * 0.3; // Define a altura máxima da imagem como 30% da tela
+    final imageHeight = screenHeight * 0.2; // Define a altura máxima da imagem como 30% da tela
 
     return Scaffold(
       backgroundColor: const Color(0xFF0060E1),
       body: SafeArea(
         child: Column(
           children: [
-            if (widget.question.image != null)
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
-                  child: SizedBox( // Envolve o Image.network com um SizedBox
+                  child: SizedBox(
                     height: imageHeight,
                     width: double.infinity,
-                    child: Image.network(
+                    child: widget.question.image != null
+                        ? Image.network(
                       widget.question.image!,
                       fit: BoxFit.cover,
-                    ),
+                    )
+                        : _defaultImage(), // Usa a imagem padrão se não houver URL
                   ),
-
                 ),
               ),
 
@@ -189,21 +189,9 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                                     child: Text(
                                       alternative.answer,
                                       textAlign: TextAlign.left,
-
-
-
-
-
                                     ),
                                   ),
                                 ],
-
-
-
-
-
-
-
                               ),
                             ),
                           );
@@ -217,7 +205,6 @@ class _MatchQuestionScreenState extends ConsumerState<MatchQuestionScreen> {
                       onTimeExpired: () {
                         if (!answered) {
                           setState(() => answered = true);
-                          // Navega para a MatchPointsScreen com tempo restante 0
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

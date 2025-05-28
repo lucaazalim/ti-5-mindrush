@@ -34,7 +34,7 @@ class _QuestionTimerState extends State<QuestionTimer> {
         _timer?.cancel();
         widget.onTimeExpired();
       }
-    });
+    }); 
   }
 
   void stopTimer() {
