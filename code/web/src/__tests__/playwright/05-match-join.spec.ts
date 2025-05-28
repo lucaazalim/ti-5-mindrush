@@ -47,6 +47,7 @@ test("Participant join match", async ({ page, context }) => {
 
   await test.step("Create multiple participants", async () => {
 
+    await page.waitForTimeout(1000);
     const nicknames = ["Alice", "Bob"];
     const apiContext = await request.newContext();
 
@@ -62,7 +63,7 @@ test("Participant join match", async ({ page, context }) => {
       });
 
       expect(response.ok()).toBeTruthy();
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await page.waitForTimeout(1000);
 
     }
 

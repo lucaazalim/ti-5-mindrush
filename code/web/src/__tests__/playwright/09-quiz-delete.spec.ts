@@ -27,4 +27,11 @@ test("Delete quiz from the dashboard", async ({ page, context }) => {
     await page.waitForTimeout(1000);
     await expect(page.locator("text=Quiz excluído com sucesso")).toBeVisible();
   });
+
+
+  await test.step("Verify success message", async () => {
+    await page.waitForTimeout(1000);
+    await expect(page.locator("text=Nenhum quiz encontrado.")).toBeVisible();
+  });
+
 });
