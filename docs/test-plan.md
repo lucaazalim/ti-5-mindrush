@@ -2,11 +2,49 @@
 
 ## Introdução
 
-Este documento detalha o plano de testes das funcionalidades principais do sistema MindRush. Para cada funcionalidade prioritária, está descrito o comportamento esperado, as verificações a serem realizadas e os critérios de aceite.
+Este documento detalha o plano de testes das funcionalidades principais do sistema MindRush. Para cada funcionalidade prioritária, está descrito o comportamento esperado, as verificações a serem realizadas e os critérios de aceite. A arquitetura do sistema MindRush está descrita no [documento de arquitetura](/docs/architecture.md).
 
-## Arquitetura
+## Estratégia de Teste
 
-A arquitetura do sistema MindRush está descrita no [documento principal da documentação](README.md#4-modelagem-e-projeto-arquitetural).
+Para cada funcionalidade, serão escolhidas uma ou mais estratégias de teste das listadas abaixo.
+
+| Tipo de Teste | Descrição                                                                                                               | Ferramenta       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| Unitário      | Testa pequenas partes isoladas do código (ex.: funções ou métodos) para garantir que funcionem corretamente.            | Jest             |
+| Ponta-a-ponta | Verifica o fluxo completo do sistema, simulando o comportamento real do usuário e a integração entre os componentes.    | Playwright       |
+| Manual        | Teste realizado por uma pessoa, explorando o sistema manualmente para identificar problemas ou validar funcionalidades. | Postman / Manual |
+
+## Ambiente e Ferramentas
+
+Os testes serão realizados em ambiente de produção, com o auxílio das ferramentas descritas abaixo.
+
+| Ferramenta | Descrição                                                                       |
+| ---------- | ------------------------------------------------------------------------------- |
+| Jest       | Framework de testes JavaScript focado em testes unitários e de integração.      |
+| Playwright | Ferramenta para testes end-to-end que simula interações reais em navegadores.   |
+| Postman    | Plataforma para testar APIs, permitindo enviar requisições e validar respostas. |
+
+## Classificação de Bugs
+
+Os bugs encontrados devem ser classificados com uma das severidades descritas abaixo.
+
+| Severidade | Descrição                                                                                                            |
+| ---------- | -------------------------------------------------------------------------------------------------------------------- |
+| Bloqueante | Impede completamente o uso do sistema ou de uma funcionalidade principal; não há solução alternativa viável.         |
+| Grave      | Impacta severamente uma funcionalidade importante, mas há alguma solução alternativa temporária disponível.          |
+| Moderada   | Afeta parcialmente uma funcionalidade ou gera erros em cenários específicos, sem comprometer o uso geral do sistema. |
+| Pequena    | Problema de baixo impacto, como erros visuais, textos, ou pequenas inconsistências que não afetam o funcionamento.   |
+
+## Definição de Pronto
+
+Serão consideradas prontas as funcionalidades que passarem pelas verificações e testes descritas neste documento e não apresentarem bugs com severidade acima de "Pequena".
+
+## Cobertura
+
+- **Testes unitários:** pelo menos 90% do código contido na raiz do diretório `/code/web/src/lib` deve estar coberto por testes unitários. Os demais arquivos de código do projeto terão seu comportamento validados por meio de testes ponta-a-ponta.
+- **Testes ponta-a-ponta:** pelo menos 80% das funcionalidades principais devem ser testadas com testes ponta-a-ponta.
+
+---
 
 ## Casos de Teste
 
@@ -140,7 +178,6 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 5. O sistema exibe uma mensagem clara de confirmação da criação da partida.
 6. A tentativa de criar nova partida para quiz com partida ativa não é possível via interface — o botão "Criar partida" desaparece para aquele quiz, e o botão "Acompanhar partida" aparece no seu lugar.
 
-
 ---
 
 ### 5. Participante acessa partida
@@ -170,7 +207,7 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 3. Um participante pode se registrar usando o PIN e um nickname válido.
 4. O nickname do participante é exibido na interface da partida para o educador.
 5. O participante permanece aguardando o início da partida.
-6.	Não ocorrem falhas de comunicação ou erros de interface durante o processo.
+6. Não ocorrem falhas de comunicação ou erros de interface durante o processo.
 
 ---
 
@@ -296,40 +333,3 @@ A arquitetura do sistema MindRush está descrita no [documento principal da docu
 3. O quiz não aparece mais na interface após a exclusão.
 4. Uma mensagem de sucesso é exibida para confirmar a operação.
 5. A interface permanece estável e sem erros após a exclusão do quiz.
-
----
-
-## Estratégia de Teste
-
-Para cada funcionalidade, serão escolhidas uma ou mais estratégias de teste das listadas abaixo.
-
-| Tipo de Teste | Descrição                                                                                                               | Ferramenta       |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| Unitário      | Testa pequenas partes isoladas do código (ex.: funções ou métodos) para garantir que funcionem corretamente.            | Jest             |
-| Ponta-a-ponta | Verifica o fluxo completo do sistema, simulando o comportamento real do usuário e a integração entre os componentes.    | Playwright       |
-| Manual        | Teste realizado por uma pessoa, explorando o sistema manualmente para identificar problemas ou validar funcionalidades. | Postman / Manual |
-
-## Ambiente e Ferramentas
-
-Os testes serão realizados em ambiente de produção, com o auxílio das ferramentas descritas abaixo.
-
-| Ferramenta | Descrição                                                                       |
-| ---------- | ------------------------------------------------------------------------------- |
-| Jest       | Framework de testes JavaScript focado em testes unitários e de integração.      |
-| Playwright | Ferramenta para testes end-to-end que simula interações reais em navegadores.   |
-| Postman    | Plataforma para testar APIs, permitindo enviar requisições e validar respostas. |
-
-## Classificação de Bugs
-
-Os bugs encontrados devem ser classificados com uma das severidades descritas abaixo.
-
-| Severidade | Descrição                                                                                                            |
-| ---------- | -------------------------------------------------------------------------------------------------------------------- |
-| Bloqueante | Impede completamente o uso do sistema ou de uma funcionalidade principal; não há solução alternativa viável.         |
-| Grave      | Impacta severamente uma funcionalidade importante, mas há alguma solução alternativa temporária disponível.          |
-| Moderada   | Afeta parcialmente uma funcionalidade ou gera erros em cenários específicos, sem comprometer o uso geral do sistema. |
-| Pequena    | Problema de baixo impacto, como erros visuais, textos, ou pequenas inconsistências que não afetam o funcionamento.   |
-
-## Definição de Pronto
-
-Serão consideradas prontas as funcionalidades que passarem pelas verificações e testes descritas neste documento e não apresentarem bugs com severidade acima de "Pequena".
