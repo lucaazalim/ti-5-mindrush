@@ -104,20 +104,20 @@ O modelo tradicional de ensino apresenta limitações na forma como o aprendizad
 
 ## 1.3. Definições e Abreviaturas
 
-| **Termo / Sigla** | **Definição**                                                                                                                                    |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| API               | Interface de Programação de Aplicações (_Application Programming Interface_). Conjunto de rotinas e padrões para integração de software.         |
-| IA                | Inteligência Artificial. Área da ciência da computação dedicada à criação de sistemas capazes de simular inteligência humana.                    |
-| REST              | Estilo arquitetural para comunicação entre sistemas distribuídos utilizando o protocolo HTTP.                                                    |
-| CRUD              | Acrônimo para Create, Read, Update e Delete. Operações básicas de persistência em banco de dados.                                                |
-| UI/UX             | Interface do Usuário e Experiência do Usuário (_User Interface_ / _User Experience_). Design focado na interação e experiência do usuário final. |
-| QR Code           | Código de barras bidimensional que pode ser escaneado para fornecer acesso rápido a uma URL ou outra informação.                                 |
-| API RESTful       | API que segue o estilo arquitetural REST, baseada em recursos e operações HTTP (GET, POST, PUT, DELETE).                                         |
-| PostgreSQL        | Sistema gerenciador de banco de dados relacional de código aberto e altamente escalável.                                                         |
-| Next.js           | Framework React para desenvolvimento de aplicações web com renderização híbrida (SSR, SSG e CSR).                                                |
-| Flutter           | Framework da Google para desenvolvimento de aplicações móveis nativas para iOS e Android com uma única base de código.                           |
-| RabbitMQ          | Sistema de mensageria open-source baseado no protocolo AMQP, utilizado para comunicação assíncrona entre serviços.                               |
-| Render            | Plataforma de computação em nuvem utilizada para deploy de aplicações web e serviços backend.                                                    |
+| **Termo / Sigla** | **Definição**                                                                                                                                       |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| API               | Interface de Programação de Aplicações (_Application Programming Interface_). Conjunto de rotinas e padrões para integração de software.            |
+| IA                | Inteligência Artificial. Área da ciência da computação dedicada à criação de sistemas capazes de simular inteligência humana.                       |
+| REST              | Estilo arquitetural para comunicação entre sistemas distribuídos utilizando o protocolo HTTP.                                                       |
+| CRUD              | Acrônimo para Create, Read, Update e Delete. Operações básicas de persistência em banco de dados.                                                   |
+| UI/UX             | Interface do Usuário e Experiência do Usuário (_User Interface_ / _User Experience_). Design focado na interação e experiência do usuário final.    |
+| QR Code           | Código de barras bidimensional que pode ser escaneado para fornecer acesso rápido a uma URL ou outra informação.                                    |
+| API RESTful       | API que segue o estilo arquitetural REST, baseada em recursos e operações HTTP (GET, POST, PUT, DELETE).                                            |
+| PostgreSQL        | Sistema gerenciador de banco de dados relacional de código aberto e altamente escalável.                                                            |
+| Next.js           | Framework React para desenvolvimento de aplicações web com renderização híbrida (SSR, SSG e CSR).                                                   |
+| Flutter           | Framework da Google para desenvolvimento de aplicações móveis nativas para iOS e Android com uma única base de código.                              |
+| Pusher            | Serviço de mensageria em tempo real baseado em nuvem, utilizado para implementar comunicação instantânea entre clientes e servidores via WebSocket. |
+| Render            | Plataforma de computação em nuvem utilizada para deploy de aplicações web e serviços backend.                                                       |
 
 <a name="produto"></a>
 
@@ -294,7 +294,7 @@ Os mecanismos arquiteturais do MindRush foram definidos para garantir desempenho
 | Back-end          | REST API + RPC                        | Route Handlers + Server Actions (Next.js) |
 | Front-end         | Single Page Application               | React + Next.js                           |
 | Aplicativo        | Tecnologia híbrida para iOS e Android | Flutter                                   |
-| Mensageria        | Event driven                          | RabbitMQ                                  |
+| Mensageria        | Event driven                          | Pusher                                    |
 | Teste de Software | Testes unitários e de integração      | Jest                                      |
 | Deploy            | Cloud gerenciado                      | Render                                    |
 
@@ -313,7 +313,7 @@ Breve descrição do diagrama:
 - **Usuários**: O educador cria e gerencia quizzes, enquanto o estudante participa das partidas.
 - **Front-end**: Interface web (Next.js) para educadores e aplicativo móvel (Flutter) para estudantes.
 - **Back-end**: Next.js API centraliza a lógica, com serviços modulares para autenticação, quizzes e partidas.
-- **Infraestrutura**: PostgreSQL armazena dados, RabbitMQ gerencia mensagens e API de IA Generativa gera quizzes automaticamente.
+- **Infraestrutura**: PostgreSQL armazena dados, Pusher gerencia mensagens e API de IA Generativa gera quizzes automaticamente.
 - **Fluxo**: O Front-end consome a API, que interage com o banco de dados, mensageria e IA para entregar uma experiência dinâmica e escalável.
 
 ## 4.1. Visão de Negócio (Funcionalidades)
@@ -393,7 +393,7 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 1. **Arquitetura Cliente-Servidor**: O **Front-end Web (Next.js)** e o **Aplicativo Flutter** se comunicam com o **Back-end (Next.js API)** via **REST API**.
 2. **Arquitetura em Camadas**: Separação entre **interface do usuário, lógica de negócio e persistência**.
 3. **RESTful API**: O Back-end expõe **serviços HTTP** para os clientes consumirem.
-4. **Event-Driven Architecture (EDA)**: **RabbitMQ** gerencia eventos de **partidas e atualizações em tempo real**.
+4. **Event-Driven Architecture (EDA)**: **Pusher** gerencia eventos de **partidas e atualizações em tempo real**.
 5. **Cross-Platform**: **Flutter** garante compatibilidade para Android e iOS.
 
 ---
@@ -411,7 +411,7 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 | **REST API**         | Disponibiliza serviços HTTP consumidos pelo aplicativo, como autenticação e envio de respostas.               |
 | **WebSocket**        | Proporciona comunicação em tempo real entre o back-end e o aplicativo, enviando atualizações instantâneas.    |
 | **Banco de Dados**   | Armazena dados relacionados a usuários, quizzes, partidas e resultados (PostgreSQL).                          |
-| **Mensageria**       | Gerencia eventos e filas de comunicação assíncrona entre os serviços (RabbitMQ).                              |
+| **Mensageria**       | Gerencia eventos para comunicação assíncrona entre os serviços (Pusher).                                      |
 | **API da OpenAI**    | Serviço externo que gera quizzes automaticamente a partir de temas ou documentos fornecidos pelos educadores. |
 
 ---
@@ -420,7 +420,7 @@ O **diagrama de componentes** foi empregado para representar a arquitetura do si
 
 | **Tipo**          | **Componentes**                                                                 |
 | ----------------- | ------------------------------------------------------------------------------- |
-| **Reutilizados**  | Navegadores, PostgreSQL, RabbitMQ.                                              |
+| **Reutilizados**  | Navegadores, PostgreSQL, Pusher.                                                |
 | **Adquiridos**    | API de IA Generativa (serviço externo, possivelmente pago).                     |
 | **Desenvolvidos** | Next.js (Front-end e Back-end), Aplicativo Flutter, Serviços de Quiz e Partida. |
 
@@ -550,42 +550,142 @@ _Apresente as telas dos sistema construído com uma descrição sucinta de cada 
 
 # 7. Avaliação da Arquitetura
 
-_Esta seção descreve a avaliação da arquitetura apresentada, baseada no método ATAM._
+Esta seção descreve a avaliação da arquitetura apresentada, baseada no método ATAM (Architecture Trade-off Analysis Method).
 
 ## 7.1. Cenários
 
-_Apresente os cenários de testes utilizados na realização dos testes da sua aplicação. Escolha cenários de testes que demonstrem os requisitos não funcionais sendo satisfeitos. Os requisitos a seguir são apenas exemplos de possíveis requisitos, devendo ser revistos, adequados a cada projeto e complementados de forma a terem uma especificação completa e auto-explicativa._
+Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende aos requisitos não-funcionais críticos do sistema MindRush.
 
-**Cenário 1 - Acessibilidade:** Suspendisse consequat consectetur velit. Sed sem risus, dictum dictum facilisis vitae, commodo quis leo. Vivamus nulla sem, cursus a mollis quis, interdum at nulla. Nullam dictum congue mauris. Praesent nec nisi hendrerit, ullamcorper tortor non, rutrum sem. In non lectus tortor. Nulla vel tincidunt eros.
+### Cenário 1 - Performance
 
-**Cenário 2 - Interoperabilidade:** Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce ut accumsan erat. Pellentesque in enim tempus, iaculis sem in, semper arcu.
+**Contexto:** Durante uma partida de quiz com 60 estudantes conectados simultaneamente.
+**Estímulo:** Todos os estudantes respondem à mesma pergunta ao mesmo tempo (pico de carga).
+**Artefato:** API REST, WebSocket, Banco de Dados PostgreSQL.
+**Ambiente:** Sistema em produção durante horário de pico.
+**Resposta:** Todas as respostas são processadas e o ranking é atualizado em tempo real.
+**Medida:** Tempo de resposta da API < 200ms para 95% das requisições (RNF9).
 
-**Cenário 3 - Manutenibilidade:** Phasellus magna tellus, consectetur quis scelerisque eget, ultricies eu ligula. Sed rhoncus fermentum nisi, a ullamcorper leo fringilla id. Nulla lacinia sem vel magna ornare, non tincidunt ipsum rhoncus. Nam euismod semper ante id tristique. Mauris vel elit augue.
+### Cenário 2 - Segurança
 
-**Cenário 4 - Segurança:** Suspendisse consectetur porta tortor non convallis. Sed lobortis erat sed dignissim dignissim. Nunc eleifend elit et aliquet imperdiet. Ut eu quam at lacus tincidunt fringilla eget maximus metus. Praesent finibus, sapien eget molestie porta, neque turpis congue risus, vel porttitor sapien tortor ac nulla. Aliquam erat volutpat.
+**Contexto:** Educador autenticado tentando acessar quizzes de outro educador.
+**Estímulo:** Requisição HTTP para endpoint protegido com ID de quiz não autorizado.
+**Artefato:** Sistema de autenticação baseado em sessões + Google OAuth (RNF5, RNF6).
+**Ambiente:** Sistema em operação normal.
+**Resposta:** Acesso negado com código HTTP 403 Forbidden.
+**Medida:** 100% das tentativas de acesso não autorizado bloqueadas (RNF10).
+
+### Cenário 3 - Usabilidade
+
+**Contexto:** Estudante utilizando smartphone para entrar em uma partida.
+**Estímulo:** Digitação do código PIN de 6 dígitos no aplicativo Flutter.
+**Artefato:** Interface mobile do aplicativo e API de participação.
+**Ambiente:** Sala de aula com conexão Wi-Fi regular.
+**Resposta:** Entrada bem-sucedida na partida com feedback visual.
+**Medida:** Processo completo (abertura do app até lobby) em menos de 30 segundos.
+
+### Cenário 4 - Escalabilidade
+
+**Contexto:** Múltiplas partidas simultâneas acontecendo na plataforma.
+**Estímulo:** 10 educadores executando partidas ao mesmo tempo, cada uma com 30 estudantes.
+**Artefato:** Sistema completo (Next.js, PostgreSQL, Pusher).
+**Ambiente:** Infraestrutura em nuvem (Render) sob carga normal.
+**Resposta:** Todas as partidas funcionam sem degradação perceptível.
+**Medida:** Manutenção da performance com até 300 usuários simultâneos.
+
+### Cenário 5 - Disponibilidade
+
+**Contexto:** Falha temporária na conexão com o banco de dados.
+**Estímulo:** Interrupção de rede ou restart do PostgreSQL.
+**Artefato:** Connection pool do Drizzle ORM e mecanismos de retry.
+**Ambiente:** Produção durante uma partida ativa.
+**Resposta:** Reconexão automática e recuperação da sessão.
+**Medida:** Downtime máximo de 30 segundos com recuperação automática.
 
 ## 7.2. Avaliação
 
-_Apresente as medidas registradas na coleta de dados. O que não for possível quantificar apresente uma justificativa baseada em evidências qualitativas que suportam o atendimento do requisito não-funcional. Apresente uma avaliação geral da arquitetura indicando os pontos fortes e as limitações da arquitetura proposta._
+### Atributo: Performance
 
-| **Atributo de Qualidade:** | Segurança                                                                                                                                                                                                                                                              |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Requisito de Qualidade** | Acesso aos recursos restritos deve ser controlado                                                                                                                                                                                                                      |
-| **Preocupação:**           | Os acessos de usuários devem ser controlados de forma que cada um tenha acesso apenas aos recursos condizentes as suas credenciais.                                                                                                                                    |
-| **Cenários(s):**           | Cenário 4                                                                                                                                                                                                                                                              |
-| **Ambiente:**              | Sistema em operação normal                                                                                                                                                                                                                                             |
-| **Estímulo:**              | Acesso do administrador do sistema as funcionalidades de cadastro de novos produtos e exclusão de produtos.                                                                                                                                                            |
-| **Mecanismo:**             | O servidor de aplicação (Rails) gera um _token_ de acesso para o usuário que se autentica no sistema. Este _token_ é transferido para a camada de visualização (Angular) após a autenticação e o tratamento visual das funcionalidades podem ser tratados neste nível. |
-| **Medida de Resposta:**    | As áreas restritas do sistema devem ser disponibilizadas apenas quando há o acesso de usuários credenciados.                                                                                                                                                           |
+| **Critério**                | **Objetivo**          | **Implementação**                              | **Evidência**                           |
+| --------------------------- | --------------------- | ---------------------------------------------- | --------------------------------------- |
+| **Tempo de Resposta**       | < 200ms (RNF9)        | Route handlers otimizados + connection pooling | Testes de carga necessários             |
+| **Usuários Simultâneos**    | 60 por partida (RNF8) | WebSocket + Pusher para distribuição           | Arquitetura suporta, validação pendente |
+| **Throughput de Mensagens** | Tempo real            | Event-driven com message queues                | Implementado, métricas pendentes        |
+
+**Avaliação:** A arquitetura demonstra boa capacidade para os requisitos de performance. O uso de WebSocket para comunicação em tempo real e Pusher para mensageria assíncrona são adequados para os cenários de carga esperados.
+
+### Atributo: Segurança
+
+| **Critério**                | **Objetivo**                  | **Implementação**                     | **Evidência**                  |
+| --------------------------- | ----------------------------- | ------------------------------------- | ------------------------------ |
+| **Autenticação**            | Google OAuth (RNF5)           | NextAuth.js integrado                 | Implementado e testado         |
+| **Autorização**             | Session-based (RNF6)          | Sessões em banco + middleware         | Implementado                   |
+| **Controle de Acesso**      | Sem quebra (RNF10)            | Validação por sessão em cada endpoint | Revisão de código necessária   |
+| **Proteção contra Injeção** | Zero vulnerabilidades (RNF12) | Drizzle ORM + validação de inputs     | Testes de penetração pendentes |
+
+**Avaliação:** A segurança baseline está implementada com boas práticas. Requer testes de penetração externos para validação completa dos controles de acesso.
+
+### Atributo: Usabilidade
+
+| **Critério**               | **Objetivo**        | **Implementação**                | **Evidência** |
+| -------------------------- | ------------------- | -------------------------------- | ------------- |
+| **Responsividade Web**     | 1280-1920px (RNF2)  | Tailwind CSS + design responsivo | Implementado  |
+| **Compatibilidade Mobile** | iOS/Android         | Flutter multiplataforma          | Implementado  |
+| **Temas Visuais**          | Claro/Escuro (RNF3) | Sistema de temas integrado       | Implementado  |
+
+**Avaliação:** A experiência do usuário foi bem planejada com interfaces específicas para cada contexto (educador/estudante) e suporte completo multiplataforma.
+
+### Pontos Fortes da Arquitetura
+
+1. **Separação clara de responsabilidades:** Web para educadores, mobile para estudantes
+2. **Stack tecnológica moderna:** Next.js, Flutter, PostgreSQL com boa produtividade
+3. **Comunicação em tempo real robusta:** WebSocket + Pusher adequados para gamificação
+4. **Segurança bem fundamentada:** Google OAuth + session management
+5. **Escalabilidade horizontal viável:** Arquitetura permite evolução gradual
+
+### Limitações Identificadas
+
+1. **Arquitetura monolítica:** Pode limitar escalabilidade em longo prazo
+2. **Dependência de serviços externos:** Alto acoplamento com Google e OpenAI
+3. **Complexidade operacional:** Múltiplas tecnologias aumentam complexidade de deploy
+4. **Testes de carga ausentes:** Performance real não validada sob carga
+
+### Trade-offs Principais
+
+**Next.js Full-Stack vs. Microservices**
+
+- ✅ **Escolha:** Monolito modular com Next.js
+- ✅ **Benefício:** Simplicidade de desenvolvimento e deploy
+- ⚠️ **Trade-off:** Limitações futuras de escalabilidade
+
+**Session-based vs. Token-based Auth**
+
+- ✅ **Escolha:** Sessions em banco de dados
+- ✅ **Benefício:** Controle granular e revogação
+- ⚠️ **Trade-off:** Dependência do banco para autenticação
+
+**WebSocket Direto vs. Third-party Solutions**
+
+- ✅ **Escolha:** Pusher
+- ✅ **Benefício:** Facilidade de implementação e escalabilidade
+- ⚠️ **Trade-off:** Dependência de serviço externo e custo potencial
 
 **Considerações sobre a arquitetura:**
 
-| **Riscos:**                  | Não existe |
-| ---------------------------- | ---------- |
-| **Pontos de Sensibilidade:** | Não existe |
-| _ **Tradeoff** _ **:**       | Não existe |
+| **Riscos:**                  | Escalabilidade limitada da arquitetura monolítica; Dependência de serviços externos |
+| ---------------------------- | ----------------------------------------------------------------------------------- |
+| **Pontos de Sensibilidade:** | Concorrência no banco de dados; Gerenciamento de conexões WebSocket                 |
+| **Trade-offs:**              | Simplicidade vs. Escalabilidade; Controle vs. Complexidade operacional              |
 
-Evidências dos testes realizados
+### Recomendações
+
+1. **Implementar monitoring e métricas** para validar performance em produção
+2. **Executar testes de penetração** para confirmar segurança
+3. **Realizar load testing** com 60 usuários simultâneos
+4. **Planejar evolução arquitetural** para crescimento futuro
+
+### Conclusão
+
+A arquitetura do MindRush é adequada para o MVP e lançamento inicial, demonstrando boa aderência aos requisitos funcionais e não-funcionais. Os trade-offs foram conscientemente avaliados, priorizando simplicidade de desenvolvimento sobre escalabilidade máxima. As limitações identificadas são endereçáveis através das recomendações propostas.
 
 _Apresente imagens, descreva os testes de tal forma que se comprove a realização da avaliação._
 
