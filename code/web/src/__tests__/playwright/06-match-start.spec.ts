@@ -22,14 +22,11 @@ test("start match from dashboard", async ({ page, context }) => {
   await test.step("Click start match button", async () => {
     const button = page.getByRole("button", { name: /Iniciar partida/i });
 
-    // Garante que o botão está habilitado (deve ter participantes no match store)
     await expect(button).toBeEnabled();
 
-    // Clica para iniciar partida
     await button.click();
 
-    // Espera por efeito da mutation (toast, loading, etc)
-    await page.waitForTimeout(500); // ou aguarde um seletor
+    await page.waitForTimeout(500);
 
   });
 });
