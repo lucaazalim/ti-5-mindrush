@@ -36,41 +36,28 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 
 ## SUMÁRIO
 
-1. [Apresentação](#apresentacao "Apresentação") <br />
-   1.1. Problema <br />
-   1.2. Objetivos do trabalho <br />
-   1.3. Definições e Abreviaturas <br />
-
-2. [Nosso Produto](#produto "Nosso Produto") <br />
-   2.1. Visão do Produto <br />
-   2.2. Nosso Produto <br />
-   2.3. Personas <br />
-
-3. [Requisitos](#requisitos "Requisitos") <br />
-   3.1. Requisitos Funcionais <br />
-   3.2. Requisitos Não-Funcionais <br />
-   3.3. Restrições Arquiteturais <br />
-   3.4. Mecanismos Arquiteturais <br />
-
-4. [Modelagem](#modelagem "Modelagem e projeto arquitetural") <br />
-   4.1. Visão de Negócio <br />
-   4.2. Visão Lógica <br />
-   4.3. Modelo de dados (opcional) <br />
-
-5. [Wireframes](#wireframes "Wireframes") <br />
-   5.1. Wireframe Mobile <br/>
-   5.2. Wireframe Web <br/>
-
-6. [Solução](#solucao "Projeto da Solução") <br />
-
-7. [Avaliação](#avaliacao "Avaliação da Arquitetura") <br />
-   7.1. Cenários <br />
-   7.2. Avaliação <br />
-
-8. [Referências](#referencias "REFERÊNCIAS")<br />
-
-9. [Apêndices](#apendices "APÊNDICES")<br />
-   9.1 Ferramentas <br />
+1. [Apresentação](#apresentacao "Apresentação")
+   1.1. Problema
+   1.2. Objetivos do trabalho
+   1.3. Definições e Abreviaturas
+2. [Nosso Produto](#produto "Nosso Produto")
+   2.1. Visão do Produto
+   2.2. Nosso Produto
+   2.3. Personas
+3. [Requisitos](#requisitos "Requisitos")
+   3.1. Requisitos Funcionais
+   3.2. Requisitos Não-Funcionais
+   3.3. Restrições Arquiteturais
+   3.4. Mecanismos Arquiteturais
+4. [Modelagem e Projeto Arquitetural](#modelagem "Modelagem e projeto arquitetural")
+   4.1. Visão de Negócio (Funcionalidades)
+   4.2. Visão Lógica
+   4.3. Modelo de dados
+5. [Wireframes](#wireframes "Wireframes")
+6. [Projeto da Solução](#solucao "Projeto da Solução")
+7. [Avaliação da Arquitetura](#avaliacao "Avaliação da Arquitetura")
+   7.1. Cenários
+   7.2. Avaliação
 
 <a name="apresentacao"></a>
 
@@ -99,8 +86,6 @@ O modelo tradicional de ensino apresenta limitações na forma como o aprendizad
 
 - Desenvolver uma plataforma web que permita ao educador o gerenciamento dos quizzes e das suas aplicações em tempo real.
 - Desenvolver um aplicativo móvel que permita ao estudante responder aos quizzes em tempo real e obter _feedback_ sobre seu desempenho.
-
-## 1.3. Definições e Abreviaturas
 
 ## 1.3. Definições e Abreviaturas
 
@@ -442,6 +427,8 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 **Figura 4 – Diagrama Lógico de Banco de Dados. Fonte: o próprio autor.**
 
+<a name="wireframes"></a>
+
 # 5. Wireframes
 
 Os wireframes da interface do projeto estão disponíveis no documento [wireframes.md](wireframes.md).
@@ -564,5 +551,3 @@ Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende
 - **Trade-offs:** Simplicidade vs. Escalabilidade; Controle vs. Complexidade operacional
 
 ### Evidências
-
-<a name="referencias"></a>
