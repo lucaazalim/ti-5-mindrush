@@ -19,7 +19,8 @@
     "format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:load": "npx ts-node src/__tests__/performance/quiz-answer-load.ts"
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.3.20",

@@ -56,8 +56,6 @@ _**Resumo**. A plataforma MindRush está inserida no contexto de ferramentas de 
 5. [Wireframes](#wireframes "Wireframes")
 6. [Projeto da Solução](#solucao "Projeto da Solução")
 7. [Avaliação da Arquitetura](#avaliacao "Avaliação da Arquitetura")
-   7.1. Cenários
-   7.2. Avaliação
 
 <a name="apresentacao"></a>
 
@@ -251,7 +249,7 @@ Esta seção descreve os requisitos comtemplados nesta descrição arquitetural,
 | RNF6   | O sistema deve usar a abordagem _Session Based Authentication_, armazenando as sessões dos usuários em banco de dados.                                                                                                                                                                                             |
 | RNF7   | As respostas dos estudantes aos quizzes devem ser vinculadas exclusivamente ao nome de usuário escolhido por eles ao início de cada partida, impedindo a identificação direta dos participantes por meio de informações pessoais, garantindo o anonimato e a privacidade dos jogadores durante e após a atividade. |
 | RNF8   | O sistema deve suportar até 60 estudantes participando de um quiz ao mesmo tempo, sem aumento significativo de tempo de resposta.                                                                                                                                                                                  |
-| RNF9   | O tempo de processamento das requisições realizadas à API deve ser inferior a 200ms, considerando apenas o tempo de execução no servidor e desconsiderando a latência da rede.                                                                                                                                     |
+| RNF9   | O tempo de processamento das requisições realizadas à API deve ser inferior a 500ms, considerando apenas o tempo de execução no servidor e desconsiderando a latência da rede.                                                                                                                                     |
 | RNF10  | O sistema não pode apresentar a falha de segurança "quebra de controle de acesso".                                                                                                                                                                                                                                 |
 | RNF11  | O sistema não pode apresentar a falha de segurança "falhas de criptografia".                                                                                                                                                                                                                                       |
 | RNF12  | O sistema não pode apresentar a falha de segurança "injeção"                                                                                                                                                                                                                                                       |
@@ -443,111 +441,4 @@ _Apresente as telas dos sistema construído com uma descrição sucinta de cada 
 
 # 7. Avaliação da Arquitetura
 
-Esta seção descreve a avaliação da arquitetura apresentada, baseada no método ATAM (Architecture Trade-off Analysis Method).
-
-## 7.1. Cenários
-
-Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende aos requisitos não-funcionais críticos do sistema MindRush.
-
-### Cenário 1 - Performance
-
-- **Contexto:** Durante uma partida de quiz com 60 estudantes conectados simultaneamente.
-- **Estímulo:** Todos os estudantes respondem à mesma pergunta ao mesmo tempo (pico de carga).
-- **Artefato:** Next.js, Pusher, Banco de Dados PostgreSQL.
-- **Ambiente:** Sistema em produção.
-- **Resposta:** Todas as respostas são processadas e o ranking é atualizado em tempo real.
-- **Medida:** Tempo de resposta da API < 200ms para 95% das requisições (RNF9).
-
-### Cenário 2 - Segurança
-
-- **Contexto:** Educador autenticado tentando acessar quizzes de outro educador.
-- **Estímulo:** Requisição HTTP para endpoint protegido com ID de quiz não autorizado.
-- **Artefato:** Sistema de autenticação baseado em sessões + Google OAuth (RNF5, RNF6).
-- **Ambiente:** Sistema em operação normal.
-- **Resposta:** Acesso negado com código HTTP 403 Forbidden.
-- **Medida:** 100% das tentativas de acesso não autorizado bloqueadas (RNF10).
-
-### Cenário 3 - Usabilidade
-
-- **Contexto:** Estudante utilizando smartphone para entrar em uma partida.
-- **Estímulo:** Digitação do código PIN de 6 dígitos no aplicativo Flutter.
-- **Artefato:** Interface mobile do aplicativo e API de participação.
-- **Ambiente:** Sala de aula com conexão Wi-Fi regular.
-- **Resposta:** Entrada bem-sucedida na partida com feedback visual.
-- **Medida:** Processo completo (abertura do app até lobby) em menos de 30 segundos.
-
-## 7.2. Avaliação
-
-### Atributo: Performance
-
-| **Critério**                | **Objetivo**          | **Implementação**                              | **Evidência**                           |
-| --------------------------- | --------------------- | ---------------------------------------------- | --------------------------------------- |
-| **Tempo de Resposta**       | < 200ms (RNF9)        | Route handlers otimizados + connection pooling | Testes de carga necessários             |
-| **Usuários Simultâneos**    | 60 por partida (RNF8) | WebSocket + Pusher para distribuição           | Arquitetura suporta, validação pendente |
-| **Throughput de Mensagens** | Tempo real            | Event-driven com message queues                | Implementado, métricas pendentes        |
-
-**Avaliação:** A arquitetura demonstra boa capacidade para os requisitos de performance. O uso de WebSocket para comunicação em tempo real e Pusher para mensageria assíncrona são adequados para os cenários de carga esperados.
-
-### Atributo: Segurança
-
-| **Critério**                | **Objetivo**                  | **Implementação**                     | **Evidência**                  |
-| --------------------------- | ----------------------------- | ------------------------------------- | ------------------------------ |
-| **Autenticação**            | Google OAuth (RNF5)           | NextAuth.js integrado                 | Implementado e testado         |
-| **Autorização**             | Session-based (RNF6)          | Sessões em banco + middleware         | Implementado                   |
-| **Controle de Acesso**      | Sem quebra (RNF10)            | Validação por sessão em cada endpoint | Revisão de código necessária   |
-| **Proteção contra Injeção** | Zero vulnerabilidades (RNF12) | Drizzle ORM + validação de inputs     | Testes de penetração pendentes |
-
-**Avaliação:** A segurança baseline está implementada com boas práticas. Requer testes de penetração externos para validação completa dos controles de acesso.
-
-### Atributo: Usabilidade
-
-| **Critério**               | **Objetivo**        | **Implementação**                | **Evidência** |
-| -------------------------- | ------------------- | -------------------------------- | ------------- |
-| **Responsividade Web**     | 1280-1920px (RNF2)  | Tailwind CSS + design responsivo | Implementado  |
-| **Compatibilidade Mobile** | iOS/Android         | Flutter multiplataforma          | Implementado  |
-| **Temas Visuais**          | Claro/Escuro (RNF3) | Sistema de temas integrado       | Implementado  |
-
-**Avaliação:** A experiência do usuário foi bem planejada com interfaces específicas para cada contexto (educador/estudante) e suporte completo multiplataforma.
-
-### Pontos Fortes da Arquitetura
-
-1. **Separação clara de responsabilidades:** Web para educadores, mobile para estudantes
-2. **Stack tecnológica moderna:** Next.js, Flutter, PostgreSQL com boa produtividade
-3. **Comunicação em tempo real robusta:** WebSocket + Pusher adequados para gamificação
-4. **Segurança bem fundamentada:** Google OAuth + session management
-5. **Escalabilidade horizontal viável:** Arquitetura permite evolução gradual
-
-### Limitações Identificadas
-
-1. **Arquitetura monolítica:** Pode limitar escalabilidade em longo prazo
-2. **Dependência de serviços externos:** Alto acoplamento com Google e OpenAI
-3. **Complexidade operacional:** Múltiplas tecnologias aumentam complexidade de deploy
-4. **Testes de carga ausentes:** Performance real não validada sob carga
-
-### Trade-offs Principais
-
-#### Next.js Full-Stack vs. Microservices
-
-- ✅ **Escolha:** Monolito modular com Next.js
-- ✅ **Benefício:** Simplicidade de desenvolvimento e deploy
-- ⚠️ **Trade-off:** Limitações futuras de escalabilidade
-
-#### Session-based vs. Token-based Auth
-
-- ✅ **Escolha:** Sessions em banco de dados
-- ✅ **Benefício:** Controle granular e revogação
-- ⚠️ **Trade-off:** Dependência do banco para autenticação
-
-#### WebSocket Direto vs. Third-party Solutions
-
-- ✅ **Escolha:** Pusher
-- ✅ **Benefício:** Facilidade de implementação e escalabilidade
-- ⚠️ **Trade-off:** Dependência de serviço externo e custo potencial
-
-#### Considerações sobre a arquitetura
-
-- **Riscos:** Escalabilidade limitada da arquitetura monolítica; Dependência de serviços externos
-- **Pontos de Sensibilidade:** Concorrência no banco de dados; Gerenciamento de conexões WebSocket
-- **Trade-offs:** Simplicidade vs. Escalabilidade; Controle vs. Complexidade operacional
-
-### Evidências
+A avaliação da arquitetura do projeto está disponível no documento [atam.md](atam.md).

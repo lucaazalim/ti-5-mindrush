@@ -1,0 +1,344 @@
+luca@Lucas-MacBook-Air web % npm run test:load
+
+> mindrush@0.1.0 test:load
+> npx ts-node src/__tests__/performance/quiz-answer-load.ts
+
+Starting MindRush Load Test
+Simulating 60 concurrent users...
+
+User 1: Creating participant with nickname "SmartEagle795"
+User 2: Creating participant with nickname "FastTiger712"
+User 3: Creating participant with nickname "BrightBear554"
+User 4: Creating participant with nickname "CleverShark618"
+User 5: Creating participant with nickname "BoldPanther668"
+User 6: Creating participant with nickname "SmartPanther267"
+User 7: Creating participant with nickname "SharpTiger786"
+User 8: Creating participant with nickname "SmartHawk538"
+User 9: Creating participant with nickname "QuickEagle104"
+User 10: Creating participant with nickname "QuickShark259"
+User 11: Creating participant with nickname "SmartWolf568"
+User 12: Creating participant with nickname "CoolTiger161"
+User 13: Creating participant with nickname "BraveHawk397"
+User 14: Creating participant with nickname "BrightPanther518"
+User 15: Creating participant with nickname "BrightFox53"
+User 16: Creating participant with nickname "CleverWolf237"
+User 17: Creating participant with nickname "BrightEagle300"
+User 18: Creating participant with nickname "BoldFox317"
+User 19: Creating participant with nickname "BraveHawk959"
+User 20: Creating participant with nickname "BraveShark460"
+User 21: Creating participant with nickname "FastFox394"
+User 22: Creating participant with nickname "BraveTiger524"
+User 23: Creating participant with nickname "SwiftShark184"
+User 24: Creating participant with nickname "SharpFox717"
+User 25: Creating participant with nickname "SmartFalcon996"
+User 26: Creating participant with nickname "CoolFox160"
+User 27: Creating participant with nickname "SharpLion541"
+User 28: Creating participant with nickname "BoldHawk200"
+User 29: Creating participant with nickname "BoldFalcon736"
+User 30: Creating participant with nickname "BrightFox218"
+User 31: Creating participant with nickname "SwiftBear94"
+User 32: Creating participant with nickname "SharpBear628"
+User 33: Creating participant with nickname "SmartTiger785"
+User 34: Creating participant with nickname "FastTiger266"
+User 35: Creating participant with nickname "BrightFalcon430"
+User 36: Creating participant with nickname "SharpPanther156"
+User 37: Creating participant with nickname "SmartPanther803"
+User 38: Creating participant with nickname "FastHawk437"
+User 39: Creating participant with nickname "BrightPanther992"
+User 40: Creating participant with nickname "QuickLion953"
+User 41: Creating participant with nickname "CoolShark662"
+User 42: Creating participant with nickname "SwiftPanther178"
+User 43: Creating participant with nickname "SharpTiger168"
+User 44: Creating participant with nickname "CoolBear416"
+User 45: Creating participant with nickname "FastFalcon36"
+User 46: Creating participant with nickname "CoolFalcon507"
+User 47: Creating participant with nickname "SwiftTiger324"
+User 48: Creating participant with nickname "BraveBear605"
+User 49: Creating participant with nickname "CleverFox60"
+User 50: Creating participant with nickname "SharpBear971"
+User 51: Creating participant with nickname "BrightShark135"
+User 52: Creating participant with nickname "SmartHawk461"
+User 53: Creating participant with nickname "BoldHawk249"
+User 54: Creating participant with nickname "CleverBear326"
+User 55: Creating participant with nickname "BrightHawk907"
+User 56: Creating participant with nickname "SmartFalcon199"
+User 57: Creating participant with nickname "CleverLion359"
+User 58: Creating participant with nickname "FastBear612"
+User 59: Creating participant with nickname "FastBear95"
+User 60: Creating participant with nickname "CleverLion140"
+Executing 60 concurrent user simulations...
+
+(node:42593) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+User 2: Participant created (307.41ms)
+User 2: Waiting 10000ms before answering...
+User 1: Participant created (314.35ms)
+User 1: Waiting 10000ms before answering...
+User 15: Participant created (340.26ms)
+User 15: Waiting 10000ms before answering...
+User 12: Participant created (351.35ms)
+User 12: Waiting 10000ms before answering...
+User 24: Participant created (355.34ms)
+User 24: Waiting 10000ms before answering...
+User 19: Participant created (357.92ms)
+User 19: Waiting 10000ms before answering...
+User 3: Participant created (362.81ms)
+User 3: Waiting 10000ms before answering...
+User 8: Participant created (362.81ms)
+User 8: Waiting 10000ms before answering...
+User 9: Participant created (364.18ms)
+User 9: Waiting 10000ms before answering...
+User 16: Participant created (366.23ms)
+User 16: Waiting 10000ms before answering...
+User 29: Participant created (368.20ms)
+User 29: Waiting 10000ms before answering...
+User 33: Participant created (368.79ms)
+User 33: Waiting 10000ms before answering...
+User 27: Participant created (369.78ms)
+User 27: Waiting 10000ms before answering...
+User 34: Participant created (370.11ms)
+User 34: Waiting 10000ms before answering...
+User 28: Participant created (371.19ms)
+User 28: Waiting 10000ms before answering...
+User 7: Participant created (375.08ms)
+User 7: Waiting 10000ms before answering...
+User 35: Participant created (375.00ms)
+User 35: Waiting 10000ms before answering...
+User 32: Participant created (376.11ms)
+User 32: Waiting 10000ms before answering...
+User 22: Participant created (377.61ms)
+User 22: Waiting 10000ms before answering...
+User 43: Participant created (377.15ms)
+User 43: Waiting 10000ms before answering...
+User 14: Participant created (382.34ms)
+User 14: Waiting 10000ms before answering...
+User 11: Participant created (385.33ms)
+User 11: Waiting 10000ms before answering...
+User 18: Participant created (388.17ms)
+User 18: Waiting 10000ms before answering...
+User 17: Participant created (389.06ms)
+User 17: Waiting 10000ms before answering...
+User 10: Participant created (390.73ms)
+User 10: Waiting 10000ms before answering...
+User 20: Participant created (391.12ms)
+User 20: Waiting 10000ms before answering...
+User 57: Participant created (391.05ms)
+User 57: Waiting 10000ms before answering...
+User 60: Participant created (391.64ms)
+User 60: Waiting 10000ms before answering...
+User 36: Participant created (393.50ms)
+User 36: Waiting 10000ms before answering...
+User 21: Participant created (395.00ms)
+User 21: Waiting 10000ms before answering...
+User 39: Participant created (395.21ms)
+User 39: Waiting 10000ms before answering...
+User 4: Participant created (402.81ms)
+User 4: Waiting 10000ms before answering...
+User 5: Participant created (404.17ms)
+User 5: Waiting 10000ms before answering...
+User 26: Participant created (401.33ms)
+User 26: Waiting 10000ms before answering...
+User 6: Participant created (405.26ms)
+User 6: Waiting 10000ms before answering...
+User 23: Participant created (403.53ms)
+User 23: Waiting 10000ms before answering...
+User 41: Participant created (403.23ms)
+User 41: Waiting 10000ms before answering...
+User 30: Participant created (405.58ms)
+User 30: Waiting 10000ms before answering...
+User 31: Participant created (406.31ms)
+User 31: Waiting 10000ms before answering...
+User 46: Participant created (406.32ms)
+User 46: Waiting 10000ms before answering...
+User 13: Participant created (408.92ms)
+User 13: Waiting 10000ms before answering...
+User 25: Participant created (408.81ms)
+User 25: Waiting 10000ms before answering...
+User 45: Participant created (408.36ms)
+User 45: Waiting 10000ms before answering...
+User 38: Participant created (410.58ms)
+User 38: Waiting 10000ms before answering...
+User 49: Participant created (410.78ms)
+User 49: Waiting 10000ms before answering...
+User 47: Participant created (414.33ms)
+User 47: Waiting 10000ms before answering...
+User 40: Participant created (416.42ms)
+User 40: Waiting 10000ms before answering...
+User 48: Participant created (419.36ms)
+User 48: Waiting 10000ms before answering...
+User 55: Participant created (420.34ms)
+User 55: Waiting 10000ms before answering...
+User 59: Participant created (421.38ms)
+User 59: Waiting 10000ms before answering...
+User 50: Participant created (422.73ms)
+User 50: Waiting 10000ms before answering...
+User 44: Participant created (423.70ms)
+User 44: Waiting 10000ms before answering...
+User 42: Participant created (424.41ms)
+User 42: Waiting 10000ms before answering...
+User 37: Participant created (425.37ms)
+User 37: Waiting 10000ms before answering...
+User 51: Participant created (430.52ms)
+User 51: Waiting 10000ms before answering...
+User 58: Participant created (432.45ms)
+User 58: Waiting 10000ms before answering...
+User 53: Participant created (434.25ms)
+User 53: Waiting 10000ms before answering...
+User 52: Participant created (435.09ms)
+User 52: Waiting 10000ms before answering...
+User 54: Participant created (435.71ms)
+User 54: Waiting 10000ms before answering...
+User 56: Participant created (436.31ms)
+User 56: Waiting 10000ms before answering...
+User 2: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 1: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 15: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 12: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 24: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 19: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 3: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 8: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 9: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 16: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 29: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 33: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 27: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 34: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 28: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 7: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 35: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 32: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 22: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 43: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 1: Answer submitted successfully (71.98ms)
+User 14: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 11: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 18: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 17: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 10: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 20: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 57: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 60: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 36: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 21: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 39: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 4: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 5: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 26: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 6: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 23: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 41: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 30: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 31: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 46: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 13: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 25: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 45: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 38: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 49: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 47: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 40: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 48: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 55: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 59: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 50: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 44: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 42: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 37: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 51: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 58: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 53: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 52: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 54: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 56: Submitting answer with alternative ID "0deb393d-5921-49ae-9d25-124fd101e826"
+User 2: Answer submitted successfully (132.42ms)
+User 15: Answer submitted successfully (186.85ms)
+User 12: Answer submitted successfully (244.81ms)
+User 24: Answer submitted successfully (251.92ms)
+User 9: Answer submitted successfully (264.51ms)
+User 16: Answer submitted successfully (267.61ms)
+User 7: Answer submitted successfully (281.57ms)
+User 35: Answer submitted successfully (286.67ms)
+User 3: Answer submitted successfully (304.67ms)
+User 8: Answer submitted successfully (309.05ms)
+User 19: Answer submitted successfully (317.67ms)
+User 29: Answer submitted successfully (309.98ms)
+User 57: Answer submitted successfully (287.81ms)
+User 33: Answer submitted successfully (315.87ms)
+User 34: Answer submitted successfully (315.04ms)
+User 27: Answer submitted successfully (325.09ms)
+User 14: Answer submitted successfully (314.80ms)
+User 28: Answer submitted successfully (332.20ms)
+User 60: Answer submitted successfully (313.67ms)
+User 4: Answer submitted successfully (314.63ms)
+User 36: Answer submitted successfully (320.51ms)
+User 5: Answer submitted successfully (314.55ms)
+User 21: Answer submitted successfully (322.34ms)
+User 32: Answer submitted successfully (341.64ms)
+User 26: Answer submitted successfully (316.52ms)
+User 39: Answer submitted successfully (323.36ms)
+User 23: Answer submitted successfully (320.59ms)
+User 11: Answer submitted successfully (341.09ms)
+User 22: Answer submitted successfully (348.40ms)
+User 43: Answer submitted successfully (348.48ms)
+User 10: Answer submitted successfully (338.22ms)
+User 46: Answer submitted successfully (321.18ms)
+User 18: Answer submitted successfully (341.08ms)
+User 30: Answer submitted successfully (322.97ms)
+User 17: Answer submitted successfully (340.86ms)
+User 25: Answer submitted successfully (323.34ms)
+User 49: Answer submitted successfully (321.67ms)
+User 20: Answer submitted successfully (345.84ms)
+User 40: Answer submitted successfully (336.68ms)
+User 59: Answer submitted successfully (335.83ms)
+User 48: Answer submitted successfully (337.10ms)
+User 55: Answer submitted successfully (337.46ms)
+User 56: Answer submitted successfully (327.33ms)
+User 53: Answer submitted successfully (328.70ms)
+User 42: Answer submitted successfully (341.01ms)
+User 50: Answer submitted successfully (343.74ms)
+User 44: Answer submitted successfully (341.99ms)
+User 54: Answer submitted successfully (330.50ms)
+User 58: Answer submitted successfully (334.02ms)
+User 6: Answer submitted successfully (364.74ms)
+User 31: Answer submitted successfully (361.54ms)
+User 52: Answer submitted successfully (331.81ms)
+User 37: Answer submitted successfully (343.18ms)
+User 51: Answer submitted successfully (337.57ms)
+User 47: Answer submitted successfully (357.05ms)
+User 41: Answer submitted successfully (371.12ms)
+User 13: Answer submitted successfully (367.75ms)
+User 45: Answer submitted successfully (372.16ms)
+User 38: Answer submitted successfully (373.30ms)
+
+Load test completed in 10795.98ms
+
+=== LOAD TEST REPORT ===
+Test Configuration:
+  • Users: 60
+  • Match ID: 684072
+  • Alternative ID: 0deb393d-5921-49ae-9d25-124fd101e826
+  • Max Response Time: 200ms
+  • Wait Time: 10000ms
+
+Participant Creation:
+  • Success Rate: 60/60 (100.0%)
+  • Average Response Time: 393.05ms
+  • Min Response Time: 307.41ms
+  • Max Response Time: 436.31ms
+  • Requests > 200ms: 60 (100.0%)
+
+Answer Submission:
+  • Success Rate: 60/60 (100.0%)
+  • Average Response Time: 316.27ms
+  • Min Response Time: 71.98ms
+  • Max Response Time: 373.30ms
+  • Requests > 200ms: 57 (95.0%)
+
+Overall:
+  • Complete Success Rate: 60/60 (100.0%)
+  • Average Total Time per User: 10709.96ms
+
+Performance Assessment:
+  ✗ 117/120 requests exceeded 200ms threshold (97.5%)
+  ✓ All 60 users completed successfully
