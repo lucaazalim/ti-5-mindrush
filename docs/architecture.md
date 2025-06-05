@@ -442,103 +442,9 @@ As relações entre as tabelas foram estabelecidas para garantir a integridade r
 
 **Figura 4 – Diagrama Lógico de Banco de Dados. Fonte: o próprio autor.**
 
-<a name="wireframes"></a>
-
 # 5. Wireframes
 
-## Wireframe Mobile
-
-### Tela de início.
-
-![Tela de início do app](assets/wireframes/app-inicio.png "Tela de início do app")
-
-### RF9: O estudante informa um código para acessar uma partida.
-
-![Wireframe aplicativo RF9](assets/wireframes/app-pin.png "Wireframe aplicativo RF9")
-
-### RF11: O estudante informa um apelido que o identificará na partida.
-
-![Wireframe aplicativo RF11](assets/wireframes/app-apelido.png "Wireframe aplicativo RF11")
-
-### Lobby de espera.
-
-![Wireframe aplicativo Lobby](assets/wireframes/app-lobby-espera.png "Wireframe aplicativo Lobby")
-
-### Carregamento da partida.
-
-![Wireframe carregamento da partida](assets/wireframes/app-carregamento-partida.png "Wireframe carregamento da partida")
-
-### Exibição da pergunta.
-
-![Wireframe exibe pergunta](assets/wireframes/app-exibindo-pergunta.png "Wireframe exibe pergunta")
-
-### RF12: O estudante responde às questões da partida em tempo real. (Múltipla escolha)
-
-![Wireframe partida](assets/wireframes/app-partida.png "Wireframe partida")
-
-#### RF12: Resposta correta.
-
-![Wireframe resposta-correta](assets/wireframes/app-resposta-correta.png "Wireframe resposta-correta")
-
-#### RF12: Resposta errada.
-
-![Wireframe resposta-errada](assets/wireframes/app-resposta-errada.png "Wireframe resposta-errada")
-
-### RF12: O estudante responde às questões da partida em tempo real. (Verdadeiro ou falso)
-
-![Wireframe partida-vf](assets/wireframes/app-partida-vf.png "Wireframe partida-vf")
-
-#### RF12: Resposta correta. (Verdadeiro ou falso)
-
-![Wireframe resposta-correta-vf](assets/wireframes/app-resposta-correta-vf.png "Wireframe resposta-correta-vf")
-
-#### RF12: Resposta errada. (Verdadeiro ou falso)
-
-![Wireframe resposta-errada-vf](assets/wireframes/app-resposta-errada-vf.png "Wireframe resposta-errada-vf")
-
-## Wireframe Web
-
-### RF2: O educador gerencia os quizzes.
-
-![Wireframe web RF02](assets/wireframes/web-dashboard.png "Wireframe web RF02")
-
-#### RF2: Modal para criar um quiz.
-
-![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz.png "Wireframe web RF02 - Modal inicial")
-
-#### RF2: Step para quizzes gerados por IA.
-
-![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-IA.png "Wireframe web RF02 - Modal com step de opções geradas por IA")
-
-#### RF2: Step para quizzes gerados por PDF.
-
-![Wireframe web RF02](assets/wireframes/web-modal-criar-quiz-PDF.png "Wireframe web RF02 - Modal com step de opções geradas por PDF")
-
-### RF5: O educador gerencia as questões dos quizzes.
-
-![Wireframe web RF05](assets/wireframes/web-questoes-manuais.png "Wireframe web RF05 - Gerenciamento de questões")
-
-### RF6: O educador gera uma partida a partir de um quiz.
-
-![Wireframe web RF06](./assets/wireframes/web-iniciar%20partida.png "Wireframe web RF06 - Iniciar Partida")
-
-### RF7: O educador inicia e encerra uma partida.
-
-![Wireframe web RF07](assets/wireframes/web-pausar-ou-encerrar-partida.png "Wireframe web RF07")
-
-### RF8: O educador acompanha o andamento da partida.
-
-#### RF8: Aguardando jogadores.
-
-![Wireframe web RF08](assets/wireframes/web-acompanhar-partida.png "Wireframe web RF08")
-
-#### RF8: Jogadores em sala.
-
-![Wireframe web RF08](assets/wireframes/web-acompanhar-partida-02.png "Wireframe web RF08")
-
-#### RF8: Acertos acerca das questões.
-
-![Wireframe web RF08](assets/wireframes/web-pontuacao-questao.png "Wireframe web RF08")
+Os wireframes da interface do projeto estão disponíveis no documento [wireframes.md](wireframes.md).
 
 <a name="solucao"></a>
 
@@ -558,48 +464,30 @@ Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende
 
 ### Cenário 1 - Performance
 
-**Contexto:** Durante uma partida de quiz com 60 estudantes conectados simultaneamente.
-**Estímulo:** Todos os estudantes respondem à mesma pergunta ao mesmo tempo (pico de carga).
-**Artefato:** API REST, WebSocket, Banco de Dados PostgreSQL.
-**Ambiente:** Sistema em produção durante horário de pico.
-**Resposta:** Todas as respostas são processadas e o ranking é atualizado em tempo real.
-**Medida:** Tempo de resposta da API < 200ms para 95% das requisições (RNF9).
+- **Contexto:** Durante uma partida de quiz com 60 estudantes conectados simultaneamente.
+- **Estímulo:** Todos os estudantes respondem à mesma pergunta ao mesmo tempo (pico de carga).
+- **Artefato:** Next.js, Pusher, Banco de Dados PostgreSQL.
+- **Ambiente:** Sistema em produção.
+- **Resposta:** Todas as respostas são processadas e o ranking é atualizado em tempo real.
+- **Medida:** Tempo de resposta da API < 200ms para 95% das requisições (RNF9).
 
 ### Cenário 2 - Segurança
 
-**Contexto:** Educador autenticado tentando acessar quizzes de outro educador.
-**Estímulo:** Requisição HTTP para endpoint protegido com ID de quiz não autorizado.
-**Artefato:** Sistema de autenticação baseado em sessões + Google OAuth (RNF5, RNF6).
-**Ambiente:** Sistema em operação normal.
-**Resposta:** Acesso negado com código HTTP 403 Forbidden.
-**Medida:** 100% das tentativas de acesso não autorizado bloqueadas (RNF10).
+- **Contexto:** Educador autenticado tentando acessar quizzes de outro educador.
+- **Estímulo:** Requisição HTTP para endpoint protegido com ID de quiz não autorizado.
+- **Artefato:** Sistema de autenticação baseado em sessões + Google OAuth (RNF5, RNF6).
+- **Ambiente:** Sistema em operação normal.
+- **Resposta:** Acesso negado com código HTTP 403 Forbidden.
+- **Medida:** 100% das tentativas de acesso não autorizado bloqueadas (RNF10).
 
 ### Cenário 3 - Usabilidade
 
-**Contexto:** Estudante utilizando smartphone para entrar em uma partida.
-**Estímulo:** Digitação do código PIN de 6 dígitos no aplicativo Flutter.
-**Artefato:** Interface mobile do aplicativo e API de participação.
-**Ambiente:** Sala de aula com conexão Wi-Fi regular.
-**Resposta:** Entrada bem-sucedida na partida com feedback visual.
-**Medida:** Processo completo (abertura do app até lobby) em menos de 30 segundos.
-
-### Cenário 4 - Escalabilidade
-
-**Contexto:** Múltiplas partidas simultâneas acontecendo na plataforma.
-**Estímulo:** 10 educadores executando partidas ao mesmo tempo, cada uma com 30 estudantes.
-**Artefato:** Sistema completo (Next.js, PostgreSQL, Pusher).
-**Ambiente:** Infraestrutura em nuvem (Render) sob carga normal.
-**Resposta:** Todas as partidas funcionam sem degradação perceptível.
-**Medida:** Manutenção da performance com até 300 usuários simultâneos.
-
-### Cenário 5 - Disponibilidade
-
-**Contexto:** Falha temporária na conexão com o banco de dados.
-**Estímulo:** Interrupção de rede ou restart do PostgreSQL.
-**Artefato:** Connection pool do Drizzle ORM e mecanismos de retry.
-**Ambiente:** Produção durante uma partida ativa.
-**Resposta:** Reconexão automática e recuperação da sessão.
-**Medida:** Downtime máximo de 30 segundos com recuperação automática.
+- **Contexto:** Estudante utilizando smartphone para entrar em uma partida.
+- **Estímulo:** Digitação do código PIN de 6 dígitos no aplicativo Flutter.
+- **Artefato:** Interface mobile do aplicativo e API de participação.
+- **Ambiente:** Sala de aula com conexão Wi-Fi regular.
+- **Resposta:** Entrada bem-sucedida na partida com feedback visual.
+- **Medida:** Processo completo (abertura do app até lobby) em menos de 30 segundos.
 
 ## 7.2. Avaliação
 
@@ -651,75 +539,30 @@ Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende
 
 ### Trade-offs Principais
 
-**Next.js Full-Stack vs. Microservices**
+#### Next.js Full-Stack vs. Microservices
 
 - ✅ **Escolha:** Monolito modular com Next.js
 - ✅ **Benefício:** Simplicidade de desenvolvimento e deploy
 - ⚠️ **Trade-off:** Limitações futuras de escalabilidade
 
-**Session-based vs. Token-based Auth**
+#### Session-based vs. Token-based Auth
 
 - ✅ **Escolha:** Sessions em banco de dados
 - ✅ **Benefício:** Controle granular e revogação
 - ⚠️ **Trade-off:** Dependência do banco para autenticação
 
-**WebSocket Direto vs. Third-party Solutions**
+#### WebSocket Direto vs. Third-party Solutions
 
 - ✅ **Escolha:** Pusher
 - ✅ **Benefício:** Facilidade de implementação e escalabilidade
 - ⚠️ **Trade-off:** Dependência de serviço externo e custo potencial
 
-**Considerações sobre a arquitetura:**
+#### Considerações sobre a arquitetura
 
-| **Riscos:**                  | Escalabilidade limitada da arquitetura monolítica; Dependência de serviços externos |
-| ---------------------------- | ----------------------------------------------------------------------------------- |
-| **Pontos de Sensibilidade:** | Concorrência no banco de dados; Gerenciamento de conexões WebSocket                 |
-| **Trade-offs:**              | Simplicidade vs. Escalabilidade; Controle vs. Complexidade operacional              |
+- **Riscos:** Escalabilidade limitada da arquitetura monolítica; Dependência de serviços externos
+- **Pontos de Sensibilidade:** Concorrência no banco de dados; Gerenciamento de conexões WebSocket
+- **Trade-offs:** Simplicidade vs. Escalabilidade; Controle vs. Complexidade operacional
 
-### Recomendações
-
-1. **Implementar monitoring e métricas** para validar performance em produção
-2. **Executar testes de penetração** para confirmar segurança
-3. **Realizar load testing** com 60 usuários simultâneos
-4. **Planejar evolução arquitetural** para crescimento futuro
-
-### Conclusão
-
-A arquitetura do MindRush é adequada para o MVP e lançamento inicial, demonstrando boa aderência aos requisitos funcionais e não-funcionais. Os trade-offs foram conscientemente avaliados, priorizando simplicidade de desenvolvimento sobre escalabilidade máxima. As limitações identificadas são endereçáveis através das recomendações propostas.
-
-_Apresente imagens, descreva os testes de tal forma que se comprove a realização da avaliação._
+### Evidências
 
 <a name="referencias"></a>
-
-# 8. REFERÊNCIAS
-
-_Como um projeto da arquitetura de uma aplicação não requer revisão bibliográfica, a inclusão das referências não é obrigatória. No entanto, caso você deseje incluir referências relacionadas às tecnologias, padrões, ou metodologias que serão usadas no seu trabalho, relacione-as de acordo com a ABNT._
-
-Verifique no link abaixo como devem ser as referências no padrão ABNT:
-
-http://www.pucminas.br/imagedb/documento/DOC\_DSC\_NOME\_ARQUI20160217102425.pdf
-
-**[1]** - _ELMASRI, Ramez; NAVATHE, Sham. **Sistemas de banco de dados**. 7. ed. São Paulo: Pearson, c2019. E-book. ISBN 9788543025001._
-
-**[2]** - _COPPIN, Ben. **Inteligência artificial**. Rio de Janeiro, RJ: LTC, c2010. E-book. ISBN 978-85-216-2936-8._
-
-**[3]** - _CORMEN, Thomas H. et al. **Algoritmos: teoria e prática**. Rio de Janeiro, RJ: Elsevier, Campus, c2012. xvi, 926 p. ISBN 9788535236996._
-
-**[4]** - _SUTHERLAND, Jeffrey Victor. **Scrum: a arte de fazer o dobro do trabalho na metade do tempo**. 2. ed. rev. São Paulo, SP: Leya, 2016. 236, [4] p. ISBN 9788544104514._
-
-**[5]** - _RUSSELL, Stuart J.; NORVIG, Peter. **Inteligência artificial**. Rio de Janeiro: Elsevier, c2013. xxi, 988 p. ISBN 9788535237016._
-
-<a name="apendices"></a>
-
-# 9. APÊNDICES
-
-_Inclua o URL do repositório (Github, Bitbucket, etc) onde você armazenou o código da sua prova de conceito/protótipo arquitetural da aplicação como anexos. A inclusão da URL desse repositório de código servirá como base para garantir a autenticidade dos trabalhos._
-
-## 9.1 Ferramentas
-
-| Ambiente              | Plataforma | Link de Acesso                                                                                    |
-| --------------------- | ---------- | ------------------------------------------------------------------------------------------------- |
-| Repositório de código | GitHub     | https://github.com/XXXXXXX                                                                        |
-| Hospedagem do site    | Heroku     | https://XXXXXXX.herokuapp.com                                                                     |
-| Protótipo Interativo  | Figma      | https://www.figma.com/design/DcDtqzVkWQUl8jz5oM1LvG/MindRUSH?node-id=0-1&p=f&t=hCi66TTuAL3XCmL6-0 |
-| Documentação de teste | Github     | https://githun.com/xxxx                                                                           |
