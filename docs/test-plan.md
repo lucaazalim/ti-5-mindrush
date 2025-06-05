@@ -277,27 +277,29 @@ Serão consideradas prontas as funcionalidades que passarem pelas verificações
 
 ### 8. Educador visualiza histórico de partidas
 
-#### 8.1 Comportamento Esperado
-
-1. O educador acessa a página `/dashboard/quizzes`, onde estão listados seus quizzes.
-2. Para cada quiz listado, há a opção **"Histórico de Partidas"** disponível.
-3. Ao clicar em **"Histórico de Partidas"**, o educador é redirecionado para uma página (ou modal) que exibe uma **tabela** contendo as partidas já realizadas com aquele quiz.
-4. Cada linha da tabela corresponde a uma partida finalizada.
-5. Em cada linha da tabela, há um **ícone de olho** que permite visualizar o resultado da respectiva partida.
-6. Ao clicar no ícone, o educador é redirecionado para a página de relatório final da partida selecionada.
-
-#### 8.2 Verificações
+#### 8.1  Comportamento Esperado
 
 1. A opção **"Histórico de Partidas"** está visível e funcional na página `/dashboard/quizzes` para quizzes com partidas realizadas.
 2. A tabela de histórico é exibida corretamente ao clicar na opção.
-3. Apenas partidas finalizadas são exibidas na tabela.
 4. O ícone de olho está presente e funcional em cada linha da tabela.
 5. O clique no ícone redireciona corretamente para a página de resultados da partida.
-6. Os dados exibidos na página de resultado são consistentes com a execução da partida.
+
+### 8.2 Verificações
+1. A opção "Histórico de Partidas" está visível na página `/dashboard/quizzes`.
+
+2. Ao clicar na opção, o educador é redirecionado corretamente para a página `/dashboard/matches`.
+
+3. A tabela de partidas é exibida corretamente, com colunas como título do quiz, status e data de finalização.
+
+5. O ícone de olho (visualizar resultado) está presente em cada linha da tabela.
+
+6. O botão de voltar está presente e funcional na página de histórico.
+
+7. O clique no ícone de olho redireciona corretamente para a página de relatório da respectiva partida.
 
 #### 8.3 Critérios de Aceite
 
-1. O educador consegue visualizar o histórico de partidas associadas a um quiz.
+1. O educador consegue visualizar o histórico de todas as partidas finalizadas
 2. A navegação entre a lista de quizzes, o histórico e o resultado da partida funciona sem erros.
 3. O ícone de olho permite acessar corretamente os relatórios de partidas finalizadas.
 4. A funcionalidade apresenta uma experiência clara e livre de inconsistências.
