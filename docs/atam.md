@@ -29,7 +29,7 @@ Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende
 - **Contexto:** Estudante utilizando smartphone para entrar em uma partida.
 - **Estímulo:** Digitação do código PIN de 6 dígitos no aplicativo Flutter.
 - **Artefato:** Interface mobile do aplicativo e API de participação.
-- **Ambiente:** Sala de aula com conexão Wi-Fi regular.
+- **Ambiente:** Sala de aula com conexão Wi-Fi de pelo menos 10Mbps.
 - **Resposta:** Entrada bem-sucedida na partida com feedback visual.
 - **Medida:** Processo completo (abertura do app até lobby) em menos de 30 segundos.
 
