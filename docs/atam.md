@@ -33,6 +33,8 @@ Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende
 - **Resposta:** Entrada bem-sucedida na partida com feedback visual.
 - **Medida:** Processo completo (abertura do app até lobby) em menos de 30 segundos.
 
+---
+
 ## Avaliação
 
 ### Atributo: Performance
@@ -52,6 +54,8 @@ Com a ajuda de um modelo de inteligência artificial, foi desenvolvido um script
 **Documentação do script:** [README.md](/code/web/src/__tests__/performance/README.md)
 **Código-fonte do script:** [quiz-answer-load.ts](/code/web/src/__tests__/performance/quiz-answer-load.ts)
 **Saída do script:** [quiz-answer-load-output.txt](assets/quiz-answer-load-output.txt)
+
+---
 
 ### Atributo: Segurança
 
@@ -79,6 +83,8 @@ Por fim, foi realizada uma análise de segurança por meio da ferramenta [OWASP 
 - [CWE-352: Absence of Anti-CSRF Tokens](https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti5-0492100-mindrush/issues/64)
 
 Não foram encontradas vulnerabilidades do tipo "injeção".
+
+---
 
 ### Atributo: Usabilidade
 
@@ -114,6 +120,8 @@ Os resultados obtidos foram:
 
 - Nenhum bug ou travamento perceptível reportado pelos usuários.
 
+---
+
 ### Pontos Fortes da Arquitetura
 
 1. **Separação clara de responsabilidades:** Web para educadores, mobile para estudantes
@@ -122,12 +130,16 @@ Os resultados obtidos foram:
 4. **Segurança bem fundamentada:** Google OAuth + session management
 5. **Escalabilidade horizontal viável:** Arquitetura permite evolução gradual
 
+---
+
 ### Limitações Identificadas
 
 1. **Arquitetura monolítica:** Pode limitar escalabilidade em longo prazo
 2. **Dependência de serviços externos:** Alto acoplamento com Google e OpenAI
 3. **Complexidade operacional:** Múltiplas tecnologias aumentam complexidade de deploy
 4. **Testes de carga ausentes:** Performance real não validada sob carga
+
+---
 
 ### Trade-offs Principais
 
@@ -148,6 +160,8 @@ Os resultados obtidos foram:
 - ✅ **Escolha:** Pusher
 - ✅ **Benefício:** Facilidade de implementação e escalabilidade
 - ⚠️ **Trade-off:** Dependência de serviço externo e custo potencial
+
+---
 
 #### Considerações sobre a arquitetura
 
