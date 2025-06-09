@@ -51,9 +51,9 @@ Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende
 
 Com a ajuda de um modelo de inteligência artificial, foi desenvolvido um script de teste de carga que simula 60 usuários simultâneos entrando em uma partida e, na sequência, respondendo à primeira questão do quiz no mesmo instante. O script mede o tempo de resposta da API e confirma que todas as respostas sejam processadas com sucesso, e que pelo menos 95% das requisições sejam atendidas em menos de 500ms.
 
-**Documentação do script:** [README.md](/code/web/src/__tests__/performance/README.md)
-**Código-fonte do script:** [quiz-answer-load.ts](/code/web/src/__tests__/performance/quiz-answer-load.ts)
-**Saída do script:** [quiz-answer-load-output.txt](assets/quiz-answer-load-output.txt)
+- **Documentação do script:** [README.md](/code/web/src/__tests__/performance/README.md)
+- **Código-fonte do script:** [quiz-answer-load.ts](/code/web/src/__tests__/performance/quiz-answer-load.ts)
+- **Saída do script:** [quiz-answer-load-output.txt](assets/quiz-answer-load-output.txt)
 
 ---
 
