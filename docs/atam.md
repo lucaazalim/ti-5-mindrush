@@ -99,8 +99,10 @@ Não foram encontradas vulnerabilidades do tipo "injeção".
 ### Evidência
 
 Com a ajuda de um modelo de inteligência artificial, foi definido um conjunto de cenários típicos de uso para educadores e estudantes. Esses cenários foram automatizados parcialmente com Playwright (fluxos web) e validados manualmente no aplicativo mobile Flutter.
-
 No caso do fluxo de entrada de estudantes em uma partida, foi utilizada uma combinação de testes manuais e análise de usabilidade com Lighthouse para garantir responsividade e acessibilidade. Foram realizados testes em diferentes tamanhos de tela (smartphones iOS e Android) e em um notebook com modo noturno ativado para avaliar a consistência visual.
+
+| ![Evidência de autorização](assets/lighthouse-evidence.png) | ![Evidência de autorização](assets/lighthouse-evidence-2.png) |
+|:---------------------------------------------------------:|:-----------------------------------------------------------:|
 
 Além disso, foram conduzidos testes com cinco usuários reais (três estudantes e dois educadores), que executaram as seguintes tarefas:
 
@@ -110,13 +112,13 @@ Educador: navegação pelo dashboard, acesso ao histórico de partidas, troca de
 
 Os resultados obtidos foram:
 
-- Tempo médio para entrada do estudante no lobby: 11,2 segundos.
+- Tempo médio para entrada do estudante no lobby: 7,2 segundos.
 
 - Taxa de sucesso das interações esperadas: 100%.
 
 - Nenhuma inconsistência visual detectada nos temas claro e escuro.
 
-- Pontuação de acessibilidade no Lighthouse: 95.
+- Pontuação de acessibilidade no Lighthouse: 98.
 
 - Nenhum bug ou travamento perceptível reportado pelos usuários.
 
