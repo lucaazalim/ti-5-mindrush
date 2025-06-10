@@ -47,7 +47,7 @@ Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende
 
 **Avaliação:** A arquitetura demonstra boa capacidade para os requisitos de performance. O uso do Next.js para processamento das requisições e do Pusher para mensageria assíncrona são adequados para os cenários de carga esperados.
 
-#### Evidência
+### Evidência
 
 Com a ajuda de um modelo de inteligência artificial, foi desenvolvido um script de teste de carga que simula 60 usuários simultâneos entrando em uma partida e, na sequência, respondendo à primeira questão do quiz no mesmo instante. O script mede o tempo de resposta da API e confirma que todas as respostas sejam processadas com sucesso, e que pelo menos 95% das requisições sejam atendidas em menos de 500ms.
 
@@ -69,7 +69,7 @@ Com a ajuda de um modelo de inteligência artificial, foi desenvolvido um script
 
 **Avaliação:** A segurança baseline está implementada com boas práticas. Requer testes de penetração externos para validação completa dos controles de acesso.
 
-#### Evidência
+### Evidência
 
 O funcionamento da autenticação e da autorização foi testado manualmente em todas as rotas protegidas do sistema, incluindo rotas de API e páginas web. Foi verificado que as estratégia de autenticação e autorização implementadas impedem acessos não autorizados e que não há vulnerabilidades conhecidas.
 
@@ -96,7 +96,7 @@ Não foram encontradas vulnerabilidades do tipo "injeção".
 
 **Avaliação:** A experiência do usuário foi bem planejada com interfaces específicas para cada contexto (educador/estudante) e suporte completo multiplataforma.
 
-#### Evidência
+### Evidência
 
 Com a ajuda de um modelo de inteligência artificial, foi definido um conjunto de cenários típicos de uso para educadores e estudantes. Esses cenários foram automatizados parcialmente com Playwright (fluxos web) e validados manualmente no aplicativo mobile Flutter.
 
