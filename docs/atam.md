@@ -104,24 +104,6 @@ No caso do fluxo de entrada de estudantes em uma partida, foi utilizada uma comb
 | ![Evidência de autorização](assets/lighthouse-evidence.png) | ![Evidência de autorização](assets/lighthouse-evidence-2.png) |
 |:---------------------------------------------------------:|:-----------------------------------------------------------:|
 
-Além disso, foram conduzidos testes com cinco usuários reais (três estudantes e dois educadores), que executaram as seguintes tarefas:
-
-Estudante: abertura do aplicativo, digitação do PIN da partida, entrada no lobby da partida.
-
-Educador: navegação pelo dashboard, acesso ao histórico de partidas, troca de tema visual.
-
-Os resultados obtidos foram:
-
-- Tempo médio para entrada do estudante no lobby: 7,2 segundos.
-
-- Taxa de sucesso das interações esperadas: 100%.
-
-- Nenhuma inconsistência visual detectada nos temas claro e escuro.
-
-- Pontuação de acessibilidade no Lighthouse: 98.
-
-- Nenhum bug ou travamento perceptível reportado pelos usuários.
-
 ---
 
 ### Pontos Fortes da Arquitetura
