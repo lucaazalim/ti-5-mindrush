@@ -65,7 +65,7 @@ export function AnswersManager({
                 placeholder={`Resposta ${index + 1}`}
                 onChange={(e) => updateAnswer(index, e.target.value)}
                 className={cn(
-                  "cursor-pointer border-2 px-10 text-lg",
+                  "cursor-pointer border-2 px-10 pr-16 text-lg",
                   "text-white dark:text-white",
                   "placeholder:text-white/50",
                   isCorrect
