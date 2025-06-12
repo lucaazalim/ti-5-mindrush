@@ -90,19 +90,30 @@ Não foram encontradas vulnerabilidades do tipo "injeção".
 
 | **Critério**               | **Objetivo**        | **Implementação**                |
 | -------------------------- | ------------------- | -------------------------------- |
-| **Responsividade Web**     | 1280-1920px (RNF2)  | Tailwind CSS + design responsivo |
-| **Compatibilidade Mobile** | iOS/Android         | Flutter multiplataforma          |
-| **Temas Visuais**          | Claro/Escuro (RNF3) | Sistema de temas integrado       |
+| **Conformidade com padrões de design acessível**     | Facilitar uso intuitivo por todos os perfis de usuários, reduzindo ambiguidade e esforço cognitivo	  | Tailwind CSS + design responsivo |
 
 **Avaliação:** A experiência do usuário foi bem planejada com interfaces específicas para cada contexto (educador/estudante) e suporte completo multiplataforma.
 
 ### Evidência
 
-Com a ajuda de um modelo de inteligência artificial, foi definido um conjunto de cenários típicos de uso para educadores e estudantes. Esses cenários foram automatizados parcialmente com Playwright (fluxos web) e validados manualmente no aplicativo mobile Flutter.
-No caso do fluxo de entrada de estudantes em uma partida, foi utilizada uma combinação de testes manuais e análise de usabilidade com Lighthouse para garantir responsividade e acessibilidade. Foram realizados testes em diferentes tamanhos de tela (smartphones iOS e Android) e em um notebook com modo noturno ativado para avaliar a consistência visual.
+Foram realizados testes com o Google Lighthouse nas telas críticas do sistema, como:
 
-| ![Evidência de autorização](assets/lighthouse-evidence.png) | ![Evidência de autorização](assets/lighthouse-evidence-2.png) |
-|:---------------------------------------------------------:|:-----------------------------------------------------------:|
+- `/dashboard/quizzes` – área de criação e gestão de quizzes por educadores
+- `/dashboard/matches/{idPartida}` – interface ativa de uma partida para acompanhamento em tempo real
+
+As métricas de acessibilidade do Lighthouse foram utilizadas como proxy para a usabilidade, dado que muitos critérios de acessibilidade também beneficiam diretamente a experiência do usuário, como:
+
+- Contraste de cores adequado
+- Uso de elementos HTML semânticos
+- Tamanhos e espaçamentos de toque apropriados
+- Rótulos e descrições claras para botões e formulários
+
+Essas boas práticas facilitam o uso do sistema por um público diverso, inclusive usuários em situações de alta carga cognitiva, como durante uma partida ao vivo.
+
+| Dashboard Quizzes | Dashboard Matches |
+|:-----------------:|:----------------:|
+| ![Lighthouse Evidence 1](assets/lighthouse-evidence-1.jpeg) | ![Lighthouse Evidence 3](assets/lighthouse-evidence-3.jpeg) |
+| ![Lighthouse Evidence 2](assets/lighthouse-evidence-2.jpeg) | ![Lighthouse Evidence 4](assets/lighthouse-evidence-4.jpeg) |
 
 ---
 
