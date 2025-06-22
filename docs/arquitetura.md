@@ -435,7 +435,7 @@ Os wireframes da interface do projeto estão disponíveis no documento [wirefram
 
 # 6. Projeto da Solução
 
-O projeto da solução está disponível no documento [projeto-solucao.md](projeto-solucao.md).
+O projeto da solução está disponível no documento [projeto-de-solucao.md](projeto-de-solucao.md).
 
 <a name="avaliacao"></a>
 

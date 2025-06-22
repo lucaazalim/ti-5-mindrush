@@ -2,7 +2,7 @@
 
 ## Introdução
 
-Este documento detalha o plano de testes das funcionalidades principais do sistema MindRush. Para cada funcionalidade prioritária, está descrito o comportamento esperado, as verificações a serem realizadas e os critérios de aceite. A arquitetura do sistema MindRush está descrita no [documento de arquitetura](/docs/architecture.md).
+Este documento detalha o plano de testes das funcionalidades principais do sistema MindRush. Para cada funcionalidade prioritária, está descrito o comportamento esperado, as verificações a serem realizadas e os critérios de aceite. A arquitetura do sistema MindRush está descrita no [documento de arquitetura](/docs/arquitetura.md).
 
 ## Estratégia de Teste
 
@@ -277,25 +277,26 @@ Serão consideradas prontas as funcionalidades que passarem pelas verificações
 
 ### 8. Educador visualiza histórico de partidas
 
-#### 8.1  Comportamento Esperado
+#### 8.1 Comportamento Esperado
 
 1. A opção **"Histórico de Partidas"** está visível e funcional na página `/dashboard/quizzes` para quizzes com partidas realizadas.
 2. A tabela de histórico é exibida corretamente ao clicar na opção.
-4. O ícone de olho está presente e funcional em cada linha da tabela.
-5. O clique no ícone redireciona corretamente para a página de resultados da partida.
+3. O ícone de olho está presente e funcional em cada linha da tabela.
+4. O clique no ícone redireciona corretamente para a página de resultados da partida.
 
 ### 8.2 Verificações
+
 1. A opção "Histórico de Partidas" está visível na página `/dashboard/quizzes`.
 
 2. Ao clicar na opção, o educador é redirecionado corretamente para a página `/dashboard/matches`.
 
 3. A tabela de partidas é exibida corretamente, com colunas como título do quiz, status e data de finalização.
 
-5. O ícone de olho (visualizar resultado) está presente em cada linha da tabela.
+4. O ícone de olho (visualizar resultado) está presente em cada linha da tabela.
 
-6. O botão de voltar está presente e funcional na página de histórico.
+5. O botão de voltar está presente e funcional na página de histórico.
 
-7. O clique no ícone de olho redireciona corretamente para a página de relatório da respectiva partida.
+6. O clique no ícone de olho redireciona corretamente para a página de relatório da respectiva partida.
 
 #### 8.3 Critérios de Aceite
 
