@@ -78,12 +78,12 @@ O modelo tradicional de ensino apresenta limitações na forma como o aprendizad
 
 ## 1.2. Objetivos do trabalho
 
-**Objetivo:** Desenvolver uma plataforma digital que permita a educadores a criação e aplicação em tempo real de quizzes personalizados.
+**Objetivo:** Desenvolver uma solução interativa baseada em gamificação para potencializar o engajamento e a eficácia do processo de ensino-aprendizagem por meio de quizzes.
 
 **Objetivos específicos:**
 
-- Desenvolver uma plataforma web que permita ao educador o gerenciamento dos quizzes e das suas aplicações em tempo real.
-- Desenvolver um aplicativo móvel que permita ao estudante responder aos quizzes em tempo real e obter _feedback_ sobre seu desempenho.
+- Implementar uma plataforma web que permita ao educador gerenciar quizzes e aplicá-los em tempo real.
+- Implementar um aplicativo móvel que possibilite ao estudante responder aos quizzes de forma síncrona e receber feedback imediato sobre seu desempenho.
 
 ## 1.3. Definições e Abreviaturas
 
