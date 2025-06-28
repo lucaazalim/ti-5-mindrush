@@ -1,165 +1,165 @@
-# Avaliação da Arquitetura
+# Architecture Evaluation
 
-Este documento a avaliação da arquitetura apresentada, baseada no método ATAM (Architecture Trade-off Analysis Method).
+This document contains the evaluation of the presented architecture, based on the ATAM (Architecture Trade-off Analysis Method) method.
 
-## Cenários
+## Scenarios
 
-Os cenários a seguir foram elaborados para demonstrar como a arquitetura atende aos requisitos não-funcionais críticos do sistema MindRush.
+The following scenarios were developed to demonstrate how the architecture meets the critical non-functional requirements of the MindRush system.
 
-### Cenário 1 - Performance
+### Scenario 1 - Performance
 
-- **Contexto:** Durante uma partida de quiz com 60 estudantes conectados simultaneamente.
-- **Estímulo:** Todos os estudantes respondem à mesma pergunta ao mesmo tempo (pico de carga).
-- **Artefato:** Next.js, Pusher, Banco de Dados PostgreSQL.
-- **Ambiente:** Sistema em ambiente de desenvolvimento, mas com build de produção.
-- **Resposta:** Todas as respostas são processadas com código de retorno 200 ou 201.
-- **Medida:** Tempo de resposta da API < 500ms para 95% das requisições (RNF9).
+- **Context:** During a quiz game with 60 students connected simultaneously.
+- **Stimulus:** All students answer the same question at the same time (peak load).
+- **Artifact:** Next.js, Pusher, PostgreSQL Database.
+- **Environment:** System in development environment, but with production build.
+- **Response:** All responses are processed with return code 200 or 201.
+- **Measure:** API response time < 500ms for 95% of requests (RNF9).
 
-### Cenário 2 - Segurança
+### Scenario 2 - Security
 
-- **Contexto:** Educador autenticado tentando acessar quizzes de outro educador.
-- **Estímulo:** Requisição HTTP para a página de edição de quiz de outro educador.
-- **Artefato:** Sistema de autenticação baseado em sessões + Google OAuth (RNF5, RNF6).
-- **Ambiente:** Sistema em ambiente de desenvolvimento, mas com build de produção.
-- **Resposta:** Acesso negado com código HTTP 404 Not Found.
-- **Medida:** 100% das tentativas de acesso não autorizado bloqueadas (RNF10).
+- **Context:** Authenticated educator trying to access quizzes from another educator.
+- **Stimulus:** HTTP request to the quiz editing page of another educator.
+- **Artifact:** Session-based authentication system + Google OAuth (RNF5, RNF6).
+- **Environment:** System in development environment, but with production build.
+- **Response:** Access denied with HTTP 404 Not Found code.
+- **Measure:** 100% of unauthorized access attempts blocked (RNF10).
 
-### Cenário 3 - Usabilidade
+### Scenario 3 - Usability
 
-- **Contexto:** Estudante utilizando smartphone para entrar em uma partida.
-- **Estímulo:** Digitação do código PIN de 6 dígitos no aplicativo Flutter.
-- **Artefato:** Interface mobile do aplicativo e API de participação.
-- **Ambiente:** Sala de aula com conexão Wi-Fi de pelo menos 10Mbps.
-- **Resposta:** Entrada bem-sucedida na partida com feedback visual.
-- **Medida:** Processo completo (abertura do app até lobby) em menos de 30 segundos.
-
----
-
-## Avaliação
-
-### Atributo: Performance
-
-| **Critério**                | **Objetivo**          | **Implementação**                              |
-| --------------------------- | --------------------- | ---------------------------------------------- |
-| **Tempo de Resposta**       | < 500ms (RNF9)        | Route handlers otimizados + connection pooling |
-| **Usuários Simultâneos**    | 60 por partida (RNF8) | WebSocket + Pusher para distribuição           |
-| **Throughput de Mensagens** | Tempo real            | Event-driven com message queues                |
-
-**Avaliação:** A arquitetura demonstra boa capacidade para os requisitos de performance. O uso do Next.js para processamento das requisições e do Pusher para mensageria assíncrona são adequados para os cenários de carga esperados.
-
-### Evidência
-
-Com a ajuda de um modelo de inteligência artificial, foi desenvolvido um script de teste de carga que simula 60 usuários simultâneos entrando em uma partida e, na sequência, respondendo à primeira questão do quiz no mesmo instante. O script mede o tempo de resposta da API e confirma que todas as respostas sejam processadas com sucesso, e que pelo menos 95% das requisições sejam atendidas em menos de 500ms.
-
-- **Documentação do script:** [README.md](/code/web/src/__tests__/performance/README.md)
-- **Código-fonte do script:** [quiz-answer-load.ts](/code/web/src/__tests__/performance/quiz-answer-load.ts)
-- **Saída do script:** [quiz-answer-load-output.txt](assets/quiz-answer-load-output.txt)
+- **Context:** Student using a smartphone to join a game.
+- **Stimulus:** Typing the 6-digit PIN code in the Flutter app.
+- **Artifact:** Mobile interface of the app and participation API.
+- **Environment:** Classroom with Wi-Fi connection of at least 10Mbps.
+- **Response:** Successful entry into the game with visual feedback.
+- **Measure:** Complete process (app opening to lobby) in less than 30 seconds.
 
 ---
 
-### Atributo: Segurança
+## Evaluation
 
-| **Critério**                                                    | **Objetivo**         | **Implementação**                                                                                                |
-| --------------------------------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| **Autenticação**                                                | Google OAuth (RNF5)  | Auth.js integrado com middleware de validação.                                                                   |
-| **Autorização**                                                 | Session-based (RNF6) | Camada de dados com validações de autorização                                                                    |
-| **Sem vulnerabilidades do tipo "quebra de controle de acesso"** | Sem quebra (RNF10)   | Validação por sessão em cada endpoint de API e página web.                                                       |
-| **Sem vulnerabilidades do tipo "falhas de criptografia"**       | Sem quebra (RNF11)   | Uso de HTTPS, cookies com Secure e HttpOnly, e criptografia de tokens e dados sensíveis com algoritmos modernos. |
-| **Sem vulnerabilidades do tipo "injeção"**                      | Sem quebra (RNF12)   | Uso do DrizzleORM, que impede injeção.                                                                           |
+### Attribute: Performance
 
-**Avaliação:** A segurança baseline está implementada com boas práticas. Requer testes de penetração externos para validação completa dos controles de acesso.
+| **Criterion**          | **Objective**      | **Implementation**                             |
+| ---------------------- | ------------------ | ---------------------------------------------- |
+| **Response Time**      | < 500ms (RNF9)     | Route handlers otimizados + connection pooling |
+| **Simultaneous Users** | 60 per game (RNF8) | WebSocket + Pusher para distribuição           |
+| **Message Throughput** | Real-time          | Event-driven com message queues                |
 
-### Evidência
+**Evaluation:** The architecture demonstrates good capacity for performance requirements. The use of Next.js for processing requests and Pusher for asynchronous messaging is suitable for the expected load scenarios.
 
-O funcionamento da autenticação e da autorização foi testado manualmente em todas as rotas protegidas do sistema, incluindo rotas de API e páginas web. Foi verificado que as estratégia de autenticação e autorização implementadas impedem acessos não autorizados e que não há vulnerabilidades conhecidas.
+### Evidence
 
-![Evidência de autorização](assets/auth-evidence.png)
+With the help of an artificial intelligence model, a load testing script was developed that simulates 60 simultaneous users entering a game and then answering the first quiz question at the same time. The script measures the API response time and confirms that all responses are processed successfully, and that at least 95% of requests are met in less than 500ms.
 
-Por fim, foi realizada uma análise de segurança por meio da ferramenta [OWASP ZAP](https://www.zaproxy.org/), que encontrou quatro vulnerabilidades dos tipos "quebra de controle de acesso" e "falhas de criptografia". Todas foram analisadas e corrigidas, conforme registrado nos seguintes issues do GitHub:
+- **Script documentation:** [README.md](/code/web/src/__tests__/performance/README.md)
+- **Script source code:** [quiz-answer-load.ts](/code/web/src/__tests__/performance/quiz-answer-load.ts)
+- **Script output:** [quiz-answer-load-output.txt](assets/quiz-answer-load-output.txt)
+
+---
+
+### Attribute: Security
+
+| **Criterion**                                  | **Objective**        | **Implementation**                                                                                               |
+| ---------------------------------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| **Authentication**                             | Google OAuth (RNF5)  | Auth.js integrado com middleware de validação.                                                                   |
+| **Authorization**                              | Session-based (RNF6) | Camada de dados com validações de autorização                                                                    |
+| **No "access control breach" vulnerabilities** | No breach (RNF10)    | Validação por sessão em cada endpoint de API e página web.                                                       |
+| **No "cryptographic failure" vulnerabilities** | No breach (RNF11)    | Uso de HTTPS, cookies com Secure e HttpOnly, e criptografia de tokens e dados sensíveis com algoritmos modernos. |
+| **No "injection" vulnerabilities**             | No breach (RNF12)    | Uso do DrizzleORM, que impede injeção.                                                                           |
+
+**Evaluation:** The baseline security is implemented with good practices. It requires external penetration testing for complete validation of access controls.
+
+### Evidence
+
+The functioning of authentication and authorization was tested manually on all protected routes of the system, including API routes and web pages. It was verified that the implemented authentication and authorization strategies prevent unauthorized access and that there are no known vulnerabilities.
+
+![Authorization Evidence](assets/auth-evidence.png)
+
+Finally, a security analysis was performed using the [OWASP ZAP](https://www.zaproxy.org/) tool, which found four vulnerabilities of the "access control breach" and "cryptographic failure" types. All were analyzed and corrected, as recorded in the following GitHub issues:
 
 - [CWE-264: Cross-Domain Misconfiguration](https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti5-0492100-mindrush/issues/91)
 - [CWE-497: Timestamp Disclosure - Unix](https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti5-0492100-mindrush/issues/66)
 - [CWE-497: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s)](https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti5-0492100-mindrush/issues/65)
 - [CWE-352: Absence of Anti-CSRF Tokens](https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti5-0492100-mindrush/issues/64)
 
-Não foram encontradas vulnerabilidades do tipo "injeção".
+No "injection" vulnerabilities were found.
 
 ---
 
-### Atributo: Usabilidade
+### Attribute: Usability
 
-| **Critério**               | **Objetivo**        | **Implementação**                |
-| -------------------------- | ------------------- | -------------------------------- |
-| **Conformidade com padrões de design acessível**     | Facilitar uso intuitivo por todos os perfis de usuários, reduzindo ambiguidade e esforço cognitivo	  | Tailwind CSS + design responsivo |
+| **Criterion**                                   | **Objective**                                                                          | **Implementation**               |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------- |
+| **Compliance with accessible design standards** | Facilitate intuitive use by all user profiles, reducing ambiguity and cognitive effort | Tailwind CSS + responsive design |
 
-**Avaliação:** A experiência do usuário foi bem planejada com interfaces específicas para cada contexto (educador/estudante) e suporte completo multiplataforma.
+**Evaluation:** The user experience was well planned with specific interfaces for each context (educator/student) and full multiplatform support.
 
-### Evidência
+### Evidence
 
-Foram realizados testes com o Google Lighthouse nas telas críticas do sistema, como:
+Tests were conducted with Google Lighthouse on the critical screens of the system, such as:
 
-- `/dashboard/quizzes` – área de criação e gestão de quizzes por educadores
-- `/dashboard/matches/{idPartida}` – interface ativa de uma partida para acompanhamento em tempo real
+- `/dashboard/quizzes` – quiz creation and management area by educators
+- `/dashboard/matches/{idPartida}` – active interface of a game for real-time monitoring
 
-As métricas de acessibilidade do Lighthouse foram utilizadas como proxy para a usabilidade, dado que muitos critérios de acessibilidade também beneficiam diretamente a experiência do usuário, como:
+The Lighthouse accessibility metrics were used as a proxy for usability, given that many accessibility criteria also directly benefit the user experience, such as:
 
-- Contraste de cores adequado
-- Uso de elementos HTML semânticos
-- Tamanhos e espaçamentos de toque apropriados
-- Rótulos e descrições claras para botões e formulários
+- Adequate color contrast
+- Use of semantic HTML elements
+- Appropriate touch sizes and spacings
+- Clear labels and descriptions for buttons and forms
 
-Essas boas práticas facilitam o uso do sistema por um público diverso, inclusive usuários em situações de alta carga cognitiva, como durante uma partida ao vivo.
+These best practices facilitate the use of the system by a diverse audience, including users in high cognitive load situations, such as during a live game.
 
-| Dashboard Quizzes | Dashboard Matches |
-|:-----------------:|:----------------:|
+|                      Dashboard Quizzes                      |                      Dashboard Matches                      |
+| :---------------------------------------------------------: | :---------------------------------------------------------: |
 | ![Lighthouse Evidence 1](assets/lighthouse-evidence-1.jpeg) | ![Lighthouse Evidence 3](assets/lighthouse-evidence-3.jpeg) |
 | ![Lighthouse Evidence 2](assets/lighthouse-evidence-2.jpeg) | ![Lighthouse Evidence 4](assets/lighthouse-evidence-4.jpeg) |
 
 ---
 
-### Pontos Fortes da Arquitetura
+### Architecture Strengths
 
-1. **Separação clara de responsabilidades:** Web para educadores, mobile para estudantes
-2. **Stack tecnológica moderna:** Next.js, Flutter, PostgreSQL com boa produtividade
-3. **Comunicação em tempo real robusta:** WebSocket + Pusher adequados para gamificação
-4. **Segurança bem fundamentada:** Google OAuth + session management
-5. **Escalabilidade horizontal viável:** Arquitetura permite evolução gradual
-
----
-
-### Limitações Identificadas
-
-1. **Arquitetura monolítica:** Pode limitar escalabilidade em longo prazo
-2. **Dependência de serviços externos:** Alto acoplamento com Google e OpenAI
-3. **Complexidade operacional:** Múltiplas tecnologias aumentam complexidade de deploy
-4. **Testes de carga ausentes:** Performance real não validada sob carga
+1. **Clear separation of responsibilities:** Web for educators, mobile for students
+2. **Modern technological stack:** Next.js, Flutter, PostgreSQL with good productivity
+3. **Robust real-time communication:** WebSocket + Pusher suitable for gamification
+4. **Well-founded security:** Google OAuth + session management
+5. **Viable horizontal scalability:** Architecture allows gradual evolution
 
 ---
 
-### Trade-offs Principais
+### Identified Limitations
+
+1. **Monolithic architecture:** May limit scalability in the long term
+2. **Dependency on external services:** High coupling with Google and OpenAI
+3. **Operational complexity:** Multiple technologies increase deploy complexity
+4. **Missing load tests:** Real performance not validated under load
+
+---
+
+### Main Trade-offs
 
 #### Next.js Full-Stack vs. Microservices
 
-- ✅ **Escolha:** Monolito modular com Next.js
-- ✅ **Benefício:** Simplicidade de desenvolvimento e deploy
-- ⚠️ **Trade-off:** Limitações futuras de escalabilidade
+- ✅ **Choice:** Modular monolith with Next.js
+- ✅ **Benefit:** Simplicity of development and deploy
+- ⚠️ **Trade-off:** Future scalability limitations
 
 #### Session-based vs. Token-based Auth
 
-- ✅ **Escolha:** Sessions em banco de dados
-- ✅ **Benefício:** Controle granular e revogação
-- ⚠️ **Trade-off:** Dependência do banco para autenticação
+- ✅ **Choice:** Sessions in database
+- ✅ **Benefit:** Granular control and revocation
+- ⚠️ **Trade-off:** Database dependency for authentication
 
-#### WebSocket Direto vs. Third-party Solutions
+#### Direct WebSocket vs. Third-party Solutions
 
-- ✅ **Escolha:** Pusher
-- ✅ **Benefício:** Facilidade de implementação e escalabilidade
-- ⚠️ **Trade-off:** Dependência de serviço externo e custo potencial
+- ✅ **Choice:** Pusher
+- ✅ **Benefit:** Ease of implementation and scalability
+- ⚠️ **Trade-off:** Dependency on external service and potential cost
 
 ---
 
-#### Considerações sobre a arquitetura
+#### Architectural Considerations
 
-- **Riscos:** Escalabilidade limitada da arquitetura monolítica; Dependência de serviços externos
-- **Pontos de Sensibilidade:** Concorrência no banco de dados; Gerenciamento de conexões WebSocket
-- **Trade-offs:** Simplicidade vs. Escalabilidade; Controle vs. Complexidade operacional
+- **Risks:** Limited scalability of the monolithic architecture; Dependency on external services
+- **Sensitivity Points:** Database concurrency; WebSocket connection management
+- **Trade-offs:** Simplicity vs. Scalability; Control vs. Operational complexity

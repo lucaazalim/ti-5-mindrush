@@ -1,54 +1,54 @@
 # Test Plan - MindRush
 
-## Introdução
+## Introduction
 
-Este documento detalha o plano de testes das funcionalidades principais do sistema MindRush. Para cada funcionalidade prioritária, está descrito o comportamento esperado, as verificações a serem realizadas e os critérios de aceite. A arquitetura do sistema MindRush está descrita no [documento de arquitetura](/docs/arquitetura.md).
+This document details the test plan for the main functionalities of the MindRush system. For each priority functionality, the expected behavior, verifications to be performed and acceptance criteria are described. The MindRush system architecture is described in the [architecture document](/docs/architecture.md).
 
-## Estratégia de Teste
+## Test Strategy
 
-Para cada funcionalidade, serão escolhidas uma ou mais estratégias de teste das listadas abaixo.
+For each functionality, one or more test strategies from the list below will be chosen.
 
-| Tipo de Teste | Descrição                                                                                                               | Ferramenta       |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| Unitário      | Testa pequenas partes isoladas do código (ex.: funções ou métodos) para garantir que funcionem corretamente.            | Jest             |
-| Ponta-a-ponta | Verifica o fluxo completo do sistema, simulando o comportamento real do usuário e a integração entre os componentes.    | Playwright       |
-| Manual        | Teste realizado por uma pessoa, explorando o sistema manualmente para identificar problemas ou validar funcionalidades. | Postman / Manual |
+| Test Type  | Description                                                                                                 | Tool             |
+| ---------- | ----------------------------------------------------------------------------------------------------------- | ---------------- |
+| Unit       | Tests small isolated parts of code (e.g.: functions or methods) to ensure they work correctly.              | Jest             |
+| End-to-end | Verifies the complete system flow, simulating real user behavior and integration between components.        | Playwright       |
+| Manual     | Test performed by a person, manually exploring the system to identify problems or validate functionalities. | Postman / Manual |
 
-## Ambiente e Ferramentas
+## Environment and Tools
 
-Os testes serão realizados em ambiente de produção, com o auxílio das ferramentas descritas abaixo.
+Tests will be performed in production environment, with the help of tools described below.
 
-| Ferramenta | Descrição                                                                       |
-| ---------- | ------------------------------------------------------------------------------- |
-| Jest       | Framework de testes JavaScript focado em testes unitários e de integração.      |
-| Playwright | Ferramenta para testes end-to-end que simula interações reais em navegadores.   |
-| Postman    | Plataforma para testar APIs, permitindo enviar requisições e validar respostas. |
+| Tool       | Description                                                                    |
+| ---------- | ------------------------------------------------------------------------------ |
+| Jest       | JavaScript testing framework focused on unit and integration tests.            |
+| Playwright | Tool for end-to-end testing that simulates real interactions in browsers.      |
+| Postman    | Platform for testing APIs, allowing sending requests and validating responses. |
 
-## Classificação de Bugs
+## Bug Classification
 
-Os bugs encontrados devem ser classificados com uma das severidades descritas abaixo.
+Found bugs must be classified with one of the severities described below.
 
-| Severidade | Descrição                                                                                                            |
-| ---------- | -------------------------------------------------------------------------------------------------------------------- |
-| Bloqueante | Impede completamente o uso do sistema ou de uma funcionalidade principal; não há solução alternativa viável.         |
-| Grave      | Impacta severamente uma funcionalidade importante, mas há alguma solução alternativa temporária disponível.          |
-| Moderada   | Afeta parcialmente uma funcionalidade ou gera erros em cenários específicos, sem comprometer o uso geral do sistema. |
-| Pequena    | Problema de baixo impacto, como erros visuais, textos, ou pequenas inconsistências que não afetam o funcionamento.   |
+| Severity | Description                                                                                                             |
+| -------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Blocking | Completely prevents system or main functionality usage; there is no viable alternative solution.                        |
+| Severe   | Severely impacts an important functionality, but there is some temporary alternative solution available.                |
+| Moderate | Partially affects a functionality or generates errors in specific scenarios, without compromising general system usage. |
+| Minor    | Low impact problem, such as visual errors, texts, or small inconsistencies that do not affect functionality.            |
 
-## Definição de Pronto
+## Definition of Done
 
-Serão consideradas prontas as funcionalidades que passarem pelas verificações e testes descritas neste documento e não apresentarem bugs com severidade acima de "Pequena".
+Functionalities will be considered done when they pass the verifications and tests described in this document and do not present bugs with severity above "Minor".
 
-## Cobertura
+## Coverage
 
-- **Testes unitários:** pelo menos 90% do código contido na raiz do diretório `/code/web/src/lib` deve estar coberto por testes unitários. Os demais arquivos de código do projeto terão seu comportamento validados por meio de testes ponta-a-ponta.
-- **Testes ponta-a-ponta:** pelo menos 80% das funcionalidades principais devem ser testadas com testes ponta-a-ponta.
+- **Unit tests:** at least 90% of code contained in the `/code/web/src/lib` directory root must be covered by unit tests. Other project code files will have their behavior validated through end-to-end tests.
+- **End-to-end tests:** at least 80% of main functionalities must be tested with end-to-end tests.
 
 ---
 
-## Casos de Teste
+## Test Cases
 
-### 1. Educador autentica-se
+### 1. Educator autentica-se
 
 #### 1.1 Comportamento Esperado
 

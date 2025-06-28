@@ -2,9 +2,9 @@
 
 ![Alt text](/docs/assets/header.png)
 
-MindRush é uma plataforma de aprendizado baseada em gamificação que visa facilitar e dinamizar o processo de ensino-aprendizagem por meio de quizzes interativos. A solução permite que educadores criem e apliquem quizzes personalizados em tempo real, enquanto os alunos participam de forma síncrona e recebem feedback imediato sobre seu desempenho. Inspirado na plataforma Kahoot!, a ferramenta busca aprimorar a experiência de aprendizado, oferecendo funcionalidades como rankings dinâmicos, geração de quizzes por meio IA generativa e um ambiente interativo que aumenta o engajamento dos estudantes.
+MindRush is a gamification-based learning platform that aims to facilitate and streamline the teaching-learning process through interactive quizzes. The solution allows educators to create and apply personalized quizzes in real-time, while students participate synchronously and receive immediate feedback on their performance. Inspired by the Kahoot! platform, the tool seeks to enhance the learning experience by offering features such as dynamic rankings, quiz generation through generative AI, and an interactive environment that increases student engagement.
 
-## Integrantes
+## Team Members
 
 - Arthur Ferreira Costa
 - Fernando Antônio Ferreira Ibrahim
@@ -13,7 +13,7 @@ MindRush é uma plataforma de aprendizado baseada em gamificação que visa faci
 - Pedro Henrique Braga de Castro
 - Wanessa Dias Costa
 
-## Orientadores
+## Advisors
 
 - Cleiton Silva Tavares
 - Cristiano de Macêdo Neto
@@ -21,75 +21,75 @@ MindRush é uma plataforma de aprendizado baseada em gamificação que visa faci
 
 ---
 
-## Instruções de utilização
+## Usage Instructions
 
-### Projeto Web (Next.js) — `/code/web`
+### Web Project (Next.js) — `/code/web`
 
-#### Pré-requisitos
+#### Prerequisites
 
-- [Node.js](https://nodejs.org/) (versão LTS recomendada)
+- [Node.js](https://nodejs.org/) (LTS version recommended)
 - [npm](https://www.npmjs.com/)
 
-#### Passos para rodar o projeto localmente
+#### Steps to run the project locally
 
-1. **Acesse a pasta do projeto web**
+1. **Access the web project folder**
 
 ```bash
 cd code/web
 ```
 
-2. **Instale as dependências**
+2. **Install dependencies**
 
 ```bash
 npm install
 ```
 
-3. **Configure as variáveis de ambiente**
+3. **Configure environment variables**
 
-Crie um arquivo `.env` baseado no arquivo de exemplo:
+Create a `.env` file based on the example file:
 
 ```bash
 cp .env.example .env
 ```
 
-Edite o arquivo `.env` com os valores apropriados para o seu ambiente local.
+Edit the `.env` file with the appropriate values for your local environment.
 
-4. **Execute o servidor de desenvolvimento**
+4. **Run the development server**
 
 ```bash
 npm run dev
 ```
 
-5. **Acesse a aplicação**
+5. **Access the application**
 
-Abra [http://localhost:3000](http://localhost:3000) no navegador para visualizar a aplicação em execução.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the running application.
 
 ---
 
-### Aplicativo Mobile (Flutter) — `/code/app`
+### Mobile Application (Flutter) — `/code/app`
 
-#### Pré-requisitos
+#### Prerequisites
 
 - [Flutter SDK](https://flutter.dev/docs/get-started/install)
-- Um emulador Android/iOS ou dispositivo físico configurado
+- An Android/iOS emulator or configured physical device
 
-#### Passos para rodar o aplicativo localmente
+#### Steps to run the application locally
 
-1. **Acesse a pasta do aplicativo Flutter**
+1. **Access the Flutter application folder**
 
 ```bash
 cd code/app
 ```
 
-2. **Instale as dependências**
+2. **Install dependencies**
 
 ```bash
 flutter pub get
 ```
 
-3. **Execute o aplicativo**
+3. **Run the application**
 
-Com um dispositivo/emulador conectado:
+With a connected device/emulator:
 
 ```bash
 flutter run

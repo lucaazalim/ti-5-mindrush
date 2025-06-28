@@ -1,10 +1,10 @@
-# Documentação
+# Documentation
 
-Este diretório inclui a documentação do projeto, que abrange:
+This directory includes the project documentation, which covers:
 
-- `assets/`: Diagramas, wireframes e outros recursos visuais da documentação.
-- `arquitetura.md`: Descrição completa da arquitetura do sistema incluindo avaliação ATAM integrada.
-- `atam.md`: Avaliação da arquitetura baseada no método ATAM (Architecture Trade-off Analysis Method).
-- `projeto-de-solucao.md`: Imagens do sistema e descrição do projeto de solução.
-- `test-plan.md`: Plano de testes detalhado.
-- `wireframes.md`: Wireframes do aplicativo e da interface web.
+- `assets/`: Diagrams, wireframes and other visual documentation resources.
+- `architecture.md`: Complete system architecture description including integrated ATAM evaluation.
+- `atam.md`: Architecture evaluation based on the ATAM (Architecture Trade-off Analysis Method).
+- `solution_design.md`: System images and solution design description.
+- `test_plan.md`: Detailed test plan.
+- `wireframes.md`: Application and web interface wireframes.

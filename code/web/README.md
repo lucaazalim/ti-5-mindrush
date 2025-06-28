@@ -1,227 +1,225 @@
-# MindRush - Aplicação Web
+# MindRush - Web Application
 
-O **MindRush** é uma aplicação web desenvolvida em Next.js que oferece uma plataforma completa para criação e gerenciamento de quizzes para educadores.
+**MindRush** is a web application developed in Next.js that offers a complete platform for quiz creation and management for educators.
 
-## 🌐 Funcionalidades
+## 🌐 Features
 
-- Interface administrativa para criação e gerenciamento de quizzes
-- Sistema de autenticação com Google OAuth
-- Dashboard para acompanhamento de resultados e estatísticas
-- Geração de QR Codes para acesso aos jogos
-- Comunicação em tempo real com Pusher
-- Sistema de análise de PDFs com IA para geração automática de perguntas
-- Interface moderna com Tailwind CSS
-- Suporte a temas claro e escuro
+- Administrative interface for quiz creation and management
+- Authentication system with Google OAuth
+- Dashboard for tracking results and statistics
+- QR Code generation for game access
+- Real-time communication with Pusher
+- PDF analysis system with AI for automatic question generation
+- Modern interface with Tailwind CSS
+- Light and dark theme support
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Technologies Used
 
-- **Next.js**: Framework React para desenvolvimento web
-- **TypeScript**: Linguagem de programação tipada
-- **Tailwind CSS**: Framework de CSS utilitário
-- **ShadCN/UI**: Biblioteca de componentes React
-- **Drizzle ORM**: ORM TypeScript para PostgreSQL
-- **PostgreSQL**: Banco de dados relacional
-- **NextAuth.js**: Autenticação para Next.js
-- **Pusher**: Comunicação em tempo real
-- **React Query**: Gerenciamento de estado e cache
-- **React Hook Form**: Gerenciamento de formulários
-- **Zod**: Validação de schemas
-- **Recharts**: Biblioteca de gráficos
-- **OpenAI**: Integração com IA para análise de PDFs
+- **Next.js**: React framework for web development
+- **TypeScript**: Typed programming language
+- **Tailwind CSS**: Utility CSS framework
+- **ShadCN/UI**: React component library
+- **Drizzle ORM**: TypeScript ORM for PostgreSQL
+- **PostgreSQL**: Relational database
+- **NextAuth.js**: Authentication for Next.js
+- **Pusher**: Real-time communication
+- **React Query**: State management and cache
+- **React Hook Form**: Form management
+- **Zod**: Schema validation
+- **Recharts**: Chart library
+- **OpenAI**: AI integration for PDF analysis
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-Antes de rodar a aplicação, certifique-se de ter instalado:
+Before running the application, make sure you have installed:
 
-- [Node.js](https://nodejs.org/) (versão 18 ou superior)
-- [npm](https://www.npmjs.com/) (incluído com Node.js)
-- [PostgreSQL](https://www.postgresql.org/) (versão 13 ou superior)
-- Editor de código (recomendado: [VS Code](https://code.visualstudio.com/))
+- [Node.js](https://nodejs.org/) (version 18 or higher)
+- [npm](https://www.npmjs.com/) (included with Node.js)
+- [PostgreSQL](https://www.postgresql.org/) (version 13 or higher)
+- Code editor (recommended: [VS Code](https://code.visualstudio.com/))
 
-## 🚀 Como Rodar a Aplicação
+## 🚀 How to Run the Application
 
-### 1. Clone o repositório e navegue até o diretório web
+### 1. Clone the repository and navigate to the web directory
 
 ```bash
 cd code/web
 ```
 
-### 2. Instale as dependências
+### 2. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Configure o banco de dados
+### 3. Configure the database
 
-Inicie o PostgreSQL usando Docker:
+Start PostgreSQL using Docker:
 
 ```bash
 ./start-database.sh
 ```
 
-### 4. Configure as variáveis de ambiente
+### 4. Set up environment variables
 
-Copie o arquivo `.env.example` para `.env` e configure as variáveis necessárias:
+Copy the `.env.example` file to `.env` and configure the necessary variables:
 
 ```bash
 cp .env.example .env
 ```
 
-Em seguida, edite o arquivo `.env` com suas configurações específicas. Consulte a seção [Configurando autenticação com Google OAuth](#configurando-autenticação-com-google-oauth) para obter as credenciais do Google.
+Then, edit the `.env` file with your specific settings. See the section [Setting up authentication with Google OAuth](#setting-up-authentication-with-google-oauth) for Google credentials.
 
-### 5. Execute as migrações do banco de dados
+### 5. Run the database migrations
 
 ```bash
 npm run db:push
 ```
 
-### 6. Execute a aplicação
+### 6. Run the application
 
-#### Para executar em modo de desenvolvimento
+#### To run in development mode
 
 ```bash
 npm run dev
 ```
 
-A aplicação estará disponível em `http://localhost:3000`
+The application will be available at `http://localhost:3000`
 
-#### Para executar em modo de produção
+#### To run in production mode
 
 ```bash
 npm run build
 npm run start
 ```
 
-## 🔧 Comandos Úteis
+## 🔧 Useful Commands
 
-### Gerenciamento do banco de dados
+### Database management
 
 ```bash
-# Gerar migrações
+# Generate migrations
 npm run db:generate
 
-# Aplicar migrações
+# Apply migrations
 npm run db:migrate
 
-# Push schema para o banco
+# Push schema to the database
 npm run db:push
 
-# Abrir Drizzle Studio
+# Open Drizzle Studio
 npm run db:studio
 ```
 
-### Desenvolvimento
+### Development
 
 ```bash
-# Verificar tipos TypeScript
+# Check TypeScript types
 npm run typecheck
 
-# Executar linting
+# Run linting
 npm run lint
 
-# Corrigir problemas de linting
+# Fix linting issues
 npm run lint:fix
 
-# Formatar código
+# Format code
 npm run format:write
 
-# Verificar formatação
+# Check formatting
 npm run format:check
 ```
 
-### Testes
+### Testing
 
 ```bash
-# Executar testes
+# Run tests
 npm run test
 
-# Executar testes em modo watch
+# Run tests in watch mode
 npm run test:watch
 
-# Teste de performance (carregamento de respostas)
+# Performance test (response loading)
 npm run test:load
 ```
 
 ---
 
-## Diretrizes de Desenvolvimento
+## Development Guidelines
 
-1. **Evite o uso de `any` no TypeScript**. Caso tenha dúvidas sobre como tipar algo corretamente, peça ajuda antes de
-   usar esse tipo genérico.
+1. **Avoid using `any` in TypeScript**. If you have doubts about how to type something correctly, ask for help before
+   using this generic type.
 
-2. **Não utilize `@ts-ignore` ou `eslint-disable`**. Esses comandos ignoram erros importantes. Se surgir algum alerta do
-   ESLint que você não conseguir resolver, solicite suporte ao invés de suprimir o aviso.
+2. **Do not use `@ts-ignore` or `eslint-disable`**. These commands ignore important errors. If there is an ESLint warning that you cannot resolve, seek support instead of suppressing the warning.
 
-3. **Para redirecionamentos, utilize o hook `useRouter()` do Next.js**. Não use `window.location.href`, pois isso não é
-   apropriado em aplicações SPA (Single Page Application).
+3. **For redirects, use the `useRouter()` hook from Next.js**. Do not use `window.location.href`, as this is not
+   appropriate in SPA (Single Page Application) applications.
 
-4. **Evite recarregar a página com `window.location.reload()`**. Essa prática quebra a fluidez da SPA e deve ser
-   substituída por abordagens reativas e controladas.
+4. **Avoid reloading the page with `window.location.reload()`**. This practice breaks the fluidity of the SPA and should be
+   replaced with reactive and controlled approaches.
 
-5. **Use constantes de rota definidas no arquivo `lib/routes.ts`**. Isso evita o uso de rotas hard-coded, garante
-   consistência entre os arquivos e facilita manutenções futuras.
+5. **Use route constants defined in the `lib/routes.ts` file**. This avoids the use of hard-coded routes, ensures
+   consistency between files, and facilitates future maintenance.
 
-6. **Com React Hook Form, não passe objetos de formulário como props**. Em vez disso, utilize os hooks diretamente
-   dentro dos componentes que precisam interagir com o formulário.
+6. **With React Hook Form, do not pass form objects as props**. Instead, use the hooks directly
+   within the components that need to interact with the form.
 
-7. **Corrija todos os avisos do ESLint**. Leia com atenção cada sublinhado amarelo ou vermelho e entenda o problema
-   antes de corrigi-lo. Isso contribui para um código mais limpo e confiável.
+7. **Fix all ESLint warnings**. Carefully read each yellow or red underline and understand the problem
+   before fixing it. This contributes to cleaner and more reliable code.
 
-8. **Escreva todo o código em inglês**, com exceção dos textos exibidos para os usuários finais (como rótulos, mensagens
-   e títulos).
+8. **Write all code in English**, except for texts displayed to end users (such as labels, messages,
+   and titles).
 
-9. **Para exibir mensagens ao usuário, utilize o componente Sonner do ShadCN**. Evite o uso de `alert()`, que não é
-   elegante nem padronizado com o restante da interface.
+9. **To display messages to the user, use the Sonner component from ShadCN**. Avoid using `alert()`, which is neither
+   elegant nor standardized with the rest of the interface.
 
-10. **Sempre utilize os componentes da biblioteca ShadCN quando disponíveis**. Evite criar componentes personalizados
-    desnecessariamente. Isso garante consistência visual, reduz retrabalho e acelera o desenvolvimento
+10. **Always use the components from the ShadCN library when available**. Avoid unnecessarily creating custom
+    components. This ensures visual consistency, reduces rework, and speeds up development.
 
-11. **Todas as entidades do banco de dados possuem tipos inferidos automaticamente**, disponíveis no arquivo
-    `lib/types.ts`. Usem esses tipos para evitar a duplicação de tipos e garantir a consistência entre o banco de dados
-    e o código.
+11. **All database entities have automatically inferred types**, available in the `lib/types.ts` file. Use these types to avoid duplicating types and ensure consistency between the database
+    and the code.
 
-12. **Evite o uso de `throw`.** O arquivo `/lib/result.ts` fornece uma abstração para lidar com erros de maneira
-    funcional. Leia [este artigo](https://www.dennisokeeffe.com/blog/2024-07-14-creating-a-result-type-in-typescript)
-    sobre Result Pattern.
+12. **Avoid using `throw`.** The `/lib/result.ts` file provides an abstraction for handling errors in a
+    functional way. Read [this article](https://www.dennisokeeffe.com/blog/2024-07-14-creating-a-result-type-in-typescript)
+    about the Result Pattern.
 
 ---
 
-## Configurando autenticação com Google OAuth
+## Setting up authentication with Google OAuth
 
-1. Acesse [Google Cloud Console](https://console.cloud.google.com/cloud-resource-manager)
-2. Crie um novo projeto
-3. Vá para **APIs e Serviços** -> **Tela de Consentimento OAuth**
-4. Configure a autenticação OAuth:
-   - Insira `http://localhost:3000` na "Página inicial do aplicativo"
-   - Em **Acesso a dados**, adicione os três primeiros escopos disponíveis
-5. Vá para **Credenciais** e crie um novo **OAuth Client ID**:
-   - Selecione "Aplicativo Web"
-   - **Origens JavaScript autorizadas**: `http://localhost:3000`
-   - **URIs de redirecionamento autorizados**: `http://localhost:3000/api/auth/callback/google`
-6. Copie o **Client ID** e o **Client Secret**
+1. Go to [Google Cloud Console](https://console.cloud.google.com/cloud-resource-manager)
+2. Create a new project
+3. Go to **APIs & Services** -> **OAuth consent screen**
+4. Set up OAuth consent:
+   - Enter `http://localhost:3000` in the "Application homepage" field
+   - Under **Scopes for Google APIs**, add the first three available scopes
+5. Go to **Credentials** and create a new **OAuth Client ID**:
+   - Select "Web application"
+   - **Authorized JavaScript origins**: `http://localhost:3000`
+   - **Authorized redirect URIs**: `http://localhost:3000/api/auth/callback/google`
+6. Copy the **Client ID** and **Client Secret**
 
-### Criar o arquivo `.env`
+### Create the `.env` file
 
-No diretório raiz do projeto, crie um arquivo `.env` e adicione:
+In the root directory of the project, create a `.env` file and add:
 
 ```env
-AUTH_GOOGLE_ID=seu-client-id
-AUTH_GOOGLE_SECRET=seu-client-secret
-AUTH_SECRET=sua-chave-secreta
+AUTH_GOOGLE_ID=your-client-id
+AUTH_GOOGLE_SECRET=your-client-secret
+AUTH_SECRET=your-secret-key
 ```
 
-**Dica**: Para gerar uma chave segura para `AUTH_SECRET`, use:
+**Tip**: To generate a secure key for `AUTH_SECRET`, use:
 
 ```bash
 npx auth secret
 ```
 
-## 📚 Recursos Adicionais
+## 📚 Additional Resources
 
-- [Documentação oficial do Next.js](https://nextjs.org/docs)
-- [Documentação do ShadCN/UI](https://ui.shadcn.com/)
-- [Documentação do Drizzle ORM](https://orm.drizzle.team/)
-- [Documentação do NextAuth.js](https://next-auth.js.org/)
-- [Documentação do Tailwind CSS](https://tailwindcss.com/docs)
-- [Documentação do React Query](https://tanstack.com/query/latest)
+- [Next.js official documentation](https://nextjs.org/docs)
+- [ShadCN/UI documentation](https://ui.shadcn.com/)
+- [Drizzle ORM documentation](https://orm.drizzle.team/)
+- [NextAuth.js documentation](https://next-auth.js.org/)
+- [Tailwind CSS documentation](https://tailwindcss.com/docs)
+- [React Query documentation](https://tanstack.com/query/latest)

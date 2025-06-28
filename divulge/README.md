@@ -1,7 +1,7 @@
-# Divulgação do Projeto
+# Project Promotion
 
-Este diretório contém os artefatos de divulgação do projeto, incluindo:
+This directory contains project promotion artifacts, including:
 
-- **Apresentação inicial.pdf** - Apresentação utilizada no início do projeto para introduzir o conceito e objetivos.
-- **Apresentação final.pdf** - Apresentação final do projeto com resultados.
-- **Vídeo de apresentação final.mp4** - Vídeo demonstrativo da apresentação final do projeto.
+- **Initial presentation (PT-BR).pdf** - Presentation used at the beginning of the project to introduce the concept and objectives.
+- **Final presentation (PT-BR).pdf** - Final project presentation with results.
+- **Demo video (PT-BR).mp4** - Demonstration video of the final project presentation.

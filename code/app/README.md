@@ -1,169 +1,169 @@
-# MindRush - Aplicativo Flutter
+# MindRush - Flutter Application
 
-O **MindRush** é um aplicativo móvel desenvolvido em Flutter que oferece uma experiência interativa de jogos e quizzes educativos para estudantes.
+**MindRush** is a mobile application developed in Flutter that offers an interactive experience of educational games and quizzes for students.
 
-## 📱 Funcionalidades
+## 📱 Features
 
-- Interface interativa para jogos e quizzes
-- Scanner QR Code integrado
-- Reprodução de áudio para feedback
-- Integração com Pusher para comunicação em tempo real
-- Suporte a múltiplas plataformas (iOS, Android, Web, Desktop)
+- Interactive interface for games and quizzes
+- Integrated QR Code scanner
+- Audio playback for feedback
+- Pusher integration for real-time communication
+- Multi-platform support (iOS, Android, Web, Desktop)
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Technologies Used
 
-- **Flutter**: Framework de desenvolvimento multiplataforma
-- **Dart**: Linguagem de programação
-- **Riverpod**: Gerenciamento de estado
-- **Dio**: Cliente HTTP para requisições à API
-- **Pusher Channels**: Comunicação em tempo real
-- **Mobile Scanner**: Funcionalidade de QR Code
-- **AudioPlayers**: Reprodução de áudio
+- **Flutter**: Multi-platform development framework
+- **Dart**: Programming language
+- **Riverpod**: State management
+- **Dio**: HTTP client for API requests
+- **Pusher Channels**: Real-time communication
+- **Mobile Scanner**: QR Code functionality
+- **AudioPlayers**: Audio playback
 
-## 📋 Pré-requisitos
+## 📋 Prerequisites
 
-Antes de rodar o aplicativo, certifique-se de ter instalado:
+Before running the application, make sure you have installed:
 
-- [Flutter SDK](https://flutter.dev/docs/get-started/install) (versão 3.7.2 ou superior)
-- [Dart SDK](https://dart.dev/get-dart) (incluído com Flutter)
-- Editor de código (recomendado: [VS Code](https://code.visualstudio.com/) ou [Android Studio](https://developer.android.com/studio))
+- [Flutter SDK](https://flutter.dev/docs/get-started/install) (version 3.7.2 or higher)
+- [Dart SDK](https://dart.dev/get-dart) (included with Flutter)
+- Code editor (recommended: [VS Code](https://code.visualstudio.com/) or [Android Studio](https://developer.android.com/studio))
 
-### Para desenvolvimento Android
+### For Android development
 
 - [Android Studio](https://developer.android.com/studio)
 - Android SDK
-- Emulador Android ou dispositivo físico
+- Android emulator or physical device
 
-### Para desenvolvimento iOS (apenas macOS)
+### For iOS development (macOS only)
 
 - [Xcode](https://developer.apple.com/xcode/)
-- Simulador iOS ou dispositivo físico
+- iOS Simulator or physical device
 
-## 🚀 Como Rodar o Aplicativo
+## 🚀 How to Run the Application
 
-### 1. Clone o repositório e navegue até o diretório do app
+### 1. Clone the repository and navigate to the app directory
 
 ```bash
 cd code/app
 ```
 
-### 2. Instale as dependências
+### 2. Install dependencies
 
 ```bash
 flutter pub get
 ```
 
-### 3. Configure as variáveis de ambiente
+### 3. Configure environment variables
 
-O aplicativo utiliza um arquivo `.env` localizado em `assets/.env`. As variáveis de ambiente já estão configuradas:
+The application uses an `.env` file located in `assets/.env`. The environment variables are already configured:
 
-- `API_KEY`: Chave da API do Pusher
-- `CLUSTER`: Cluster do Pusher (sa1)
-- `API_URL`: URL da API backend (<http://localhost:3000/api>)
+- `API_KEY`: Pusher API key
+- `CLUSTER`: Pusher cluster (sa1)
+- `API_URL`: Backend API URL (<http://localhost:3000/api>)
 
-⚠️ **Importante**: Certifique-se de que o backend esteja rodando na URL especificada antes de executar o aplicativo.
+⚠️ **Important**: Make sure the backend is running at the specified URL before running the application.
 
-### 4. Verifique se tudo está configurado corretamente
+### 4. Check if everything is set up correctly
 
 ```bash
 flutter doctor
 ```
 
-Este comando verificará se todas as dependências estão instaladas corretamente.
+This command will check if all dependencies are installed correctly.
 
-### 5. Execute o aplicativo
+### 5. Run the application
 
-#### Para executar em modo de desenvolvimento
+#### To run in development mode
 
 ```bash
 flutter run
 ```
 
-#### Para executar em uma plataforma específica
+#### To run on a specific platform
 
 ```bash
 # Android
 flutter run -d android
 
-# iOS (apenas macOS)
+# iOS (macOS only)
 flutter run -d ios
 
 # Web
 flutter run -d web-server --web-port 8080
 
-# Windows (apenas Windows)
+# Windows (Windows only)
 flutter run -d windows
 
-# macOS (apenas macOS)
+# macOS (macOS only)
 flutter run -d macos
 
-# Linux (apenas Linux)
+# Linux (Linux only)
 flutter run -d linux
 ```
 
-### 6. Para executar em modo release
+### 6. To run in release mode
 
 ```bash
 flutter run --release
 ```
 
-## 🔧 Comandos Úteis
+## 🔧 Useful Commands
 
-### Listar dispositivos disponíveis
+### List available devices
 
 ```bash
 flutter devices
 ```
 
-### Limpar cache e dependências
+### Clear cache and dependencies
 
 ```bash
 flutter clean
 flutter pub get
 ```
 
-### Executar testes
+### Run tests
 
 ```bash
 flutter test
 ```
 
-### Analisar código
+### Analyze code
 
 ```bash
 flutter analyze
 ```
 
-### Formatar código
+### Format code
 
 ```bash
 dart format .
 ```
 
-## 🎯 Estrutura do Projeto
+## 🎯 Project Structure
 
 ```text
 lib/
-├── main.dart           # Ponto de entrada do aplicativo
-└── modules/           # Módulos organizados por funcionalidade
+├── main.dart           # Entry point of the application
+└── modules/           # Modules organized by functionality
 
 assets/
-├── .env              # Variáveis de ambiente
-├── images/           # Imagens do aplicativo
+├── .env              # Environment variables
+├── images/           # Application images
 │   ├── logo.png
 │   ├── circulo.png
 │   ├── losango.png
 │   ├── quadrado.png
 │   ├── triangulo.png
 │   └── default.jpg
-└── sounds/           # Arquivos de áudio
+└── sounds/           # Audio files
     ├── click.mp3
     └── answered.mp3
 ```
 
-## 📚 Recursos Adicionais
+## 📚 Additional Resources
 
-- [Documentação oficial do Flutter](https://flutter.dev/docs)
-- [Cookbook Flutter](https://flutter.dev/docs/cookbook)
-- [Documentação do Riverpod](https://riverpod.dev/)
-- [Documentação do Dio](https://pub.dev/packages/dio)
+- [Official Flutter Documentation](https://flutter.dev/docs)
+- [Flutter Cookbook](https://flutter.dev/docs/cookbook)
+- [Riverpod Documentation](https://riverpod.dev/)
+- [Dio Documentation](https://pub.dev/packages/dio)
