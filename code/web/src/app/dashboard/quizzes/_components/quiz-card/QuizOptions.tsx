@@ -30,10 +30,10 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
       <DropdownMenu>
         <DropdownMenuTrigger className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:hover:text-white">
           <Settings2 aria-hidden={true} size={20} />
-          <span className="sr-only">Opções do quiz</span>
+          <span className="sr-only">Quiz options</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>Opções do quiz</DropdownMenuLabel>
+          <DropdownMenuLabel>Quiz options</DropdownMenuLabel>
           <DropdownMenuSeparator />
 
           <DropdownMenuItem
@@ -41,7 +41,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
             onClick={() => router.push(ROUTES.QUIZ(quiz.id))}
           >
             <Pencil className="mr-2 h-4 w-4" />
-            Editar
+            Edit
           </DropdownMenuItem>
 
           <DropdownMenuItem
@@ -51,7 +51,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
             }}
           >
             <TextCursorInput className="mr-2 h-4 w-4" />
-            Renomear
+            Rename
           </DropdownMenuItem>
 
           <DropdownMenuItem
@@ -59,7 +59,7 @@ export default function QuizOptions({ quiz }: QuizOptionsProps) {
             onClick={() => setIsDeleteDialogOpen(true)}
           >
             <Trash2 className="mr-2 h-4 w-4" />
-            Excluir
+            Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

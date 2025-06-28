@@ -10,7 +10,7 @@ import { MatchWithQuizTitle } from "~/lib/types";
 export const columns: ColumnDef<MatchWithQuizTitle>[] = [
   {
     accessorKey: "quizTitle",
-    header: "Título do Quiz",
+    header: "Quiz Title",
   },
   {
     accessorKey: "status",
@@ -24,7 +24,7 @@ export const columns: ColumnDef<MatchWithQuizTitle>[] = [
   },
   {
     accessorKey: "endedAt",
-    header: "Finalizada em",
+    header: "Ended at",
     cell: ({ row }) => {
       const date: Date | null = row.original.endedAt;
       return date

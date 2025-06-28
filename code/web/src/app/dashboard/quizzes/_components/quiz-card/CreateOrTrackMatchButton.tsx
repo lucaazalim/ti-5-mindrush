@@ -26,11 +26,11 @@ export default function CreateOrTrackMatchButton({
       return result.data;
     },
     onSuccess: (data) => {
-      toast.success("Partida criada com sucesso!");
+      toast.success("Match created successfully!");
       router.push(ROUTES.MATCH(data.id));
     },
     onError: (error) => {
-      toast.error("Erro ao criar partida: " + error.message);
+      toast.error("Error creating match: " + error.message);
     },
   });
 
@@ -38,7 +38,7 @@ export default function CreateOrTrackMatchButton({
 
   return activeMatch ? (
     <Button className="mt-4 h-11" onClick={() => router.push(ROUTES.MATCH(activeMatch.id))}>
-      Acompanhar partida
+      Track match
     </Button>
   ) : (
     <Button
@@ -46,7 +46,7 @@ export default function CreateOrTrackMatchButton({
       onClick={() => mutation.mutate(quiz.id)}
       loading={mutation.isPending}
     >
-      Criar partida
+      Create match
     </Button>
   );
 }

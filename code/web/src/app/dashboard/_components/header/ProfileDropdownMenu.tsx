@@ -1,5 +1,6 @@
 import { DropdownMenu, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { BadgeCheck, ChevronsUpDown } from "lucide-react";
+import { auth } from "src/lib/auth";
 import LogOutDropdownMenuItem from "~/app/dashboard/_components/header/LogOutDropdownMenuItem";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
 import {
@@ -9,7 +10,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "~/components/ui/dropdown-menu";
-import { auth } from "src/lib/auth";
 
 export default async function ProfileDropdownMenu() {
   const session = await auth();
@@ -80,7 +80,7 @@ export default async function ProfileDropdownMenu() {
         <DropdownMenuGroup>
           <DropdownMenuItem>
             <BadgeCheck />
-            Sua conta
+            Your account
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

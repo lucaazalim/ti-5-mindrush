@@ -24,7 +24,8 @@ export default function WaitingPage() {
         <Container className="flex-grow content-center p-10 text-xl">
           <Download className="mr-1.5 inline" />
           <span>
-            Baixe o app <span className="font-bold">MindRush</span> para participar desta partida.
+            Download the <span className="font-bold">MindRush</span> app to participate in this
+            match.
           </span>
         </Container>
         <Container
@@ -33,7 +34,7 @@ export default function WaitingPage() {
           aria-labelledby="pin-label"
           aria-describedby="pin-value"
         >
-          <span id="pin-label">PIN da partida</span>
+          <span id="pin-label">Match PIN</span>
           <span id="pin-value" className="text-5xl font-black">
             {match.pin}
           </span>

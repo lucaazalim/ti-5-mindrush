@@ -34,11 +34,11 @@ export default function DeleteQuizModal({
       }
     },
     onSuccess: () => {
-      toast.success("Quiz excluído com sucesso!");
+      toast.success("Quiz deleted successfully!");
       router.refresh();
     },
     onError: (error) => {
-      toast.error("Erro ao excluir quiz: " + error.message);
+      toast.error("Error deleting quiz: " + error.message);
     },
   });
 
@@ -46,19 +46,19 @@ export default function DeleteQuizModal({
     <Dialog open={open} onOpenChange={setIsDeleteDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Excluir quiz - {quiz.title}</DialogTitle>
-          <DialogDescription>Esta ação excluirá permanentemente o quiz.</DialogDescription>
+          <DialogTitle>Delete quiz - {quiz.title}</DialogTitle>
+          <DialogDescription>This action will permanently delete the quiz.</DialogDescription>
         </DialogHeader>
         <div className="mt-2 flex gap-2">
           <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
-            Cancelar
+            Cancel
           </Button>
           <Button
             variant="destructive"
             onClick={() => mutation.mutate()}
             loading={mutation.isPending}
           >
-            Excluir
+            Delete
           </Button>
         </div>
       </DialogContent>

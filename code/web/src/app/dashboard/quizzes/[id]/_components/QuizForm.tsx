@@ -111,7 +111,7 @@ export default function QuizForm({ quizId, initialQuestions = [] }: Props) {
       return;
     }
 
-    toast.success("Questões salvas com sucesso!");
+    toast.success("Questions saved successfully!");
     router.push(ROUTES.QUIZZES);
   };
 
@@ -129,7 +129,7 @@ export default function QuizForm({ quizId, initialQuestions = [] }: Props) {
 
       <main
         className="flex flex-1 flex-col gap-6 overflow-y-auto p-6"
-        aria-label="Editor de questão atual"
+        aria-label="Current question editor"
       >
         <QuestionEditor
           value={currentQuestion.question}

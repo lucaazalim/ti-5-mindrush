@@ -20,8 +20,8 @@ type Props = {
 };
 
 const formSchema = z.object({
-  title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
-  description: z.string().min(8, "A descrição deve ter pelo menos 8 caracteres"),
+  title: z.string().min(3, "Title must have at least 3 characters"),
+  description: z.string().min(8, "Description must have at least 8 characters"),
 });
 
 export default function RenameQuizModal({ open, setIsRenameDialogOpen, quiz }: Props) {
@@ -35,12 +35,12 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quiz }: P
       }
     },
     onSuccess: () => {
-      toast.success("Quiz renomeado com sucesso!");
+      toast.success("Quiz renamed successfully!");
       setIsRenameDialogOpen(false);
       router.refresh();
     },
     onError: (error) => {
-      toast.error("Erro ao renomear quiz: " + error.message);
+      toast.error("Error renaming quiz: " + error.message);
     },
   });
 
@@ -61,7 +61,7 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quiz }: P
     <Dialog open={open} onOpenChange={setIsRenameDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Editar quiz - {quiz.title}</DialogTitle>
+          <DialogTitle>Edit quiz - {quiz.title}</DialogTitle>
         </DialogHeader>
         <Form {...renameQuizForm}>
           <form onSubmit={renameQuizForm.handleSubmit(onSubmit)} className="space-y-6">
@@ -69,9 +69,9 @@ export default function RenameQuizModal({ open, setIsRenameDialogOpen, quiz }: P
 
             <div className="mt-2 flex gap-2">
               <Button variant="outline" onClick={() => setIsRenameDialogOpen(false)}>
-                Cancelar
+                Cancel
               </Button>
-              <Button loading={mutation.isPending}>Salvar</Button>
+              <Button loading={mutation.isPending}>Save</Button>
             </div>
           </form>
         </Form>

@@ -2,9 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { CircleArrowRight, SkipForward } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
+import { nextQuestion } from "~/lib/actions/match";
 import { isFailure } from "~/lib/result";
 import { hasCurrentQuestionTimeEnded, hasNextQuestion } from "~/lib/utils";
-import { nextQuestion } from "~/lib/actions/match";
 import { useMatchStore } from "../_store/store-provider";
 
 export function NextQuestionButton() {
@@ -20,7 +20,7 @@ export function NextQuestionButton() {
       }
 
       setMatch(result.data);
-      toast("Você avançou para a próxima questão!");
+      toast("You advanced to the next question!");
     },
     onError: (error) => {
       toast.error(error.message);
@@ -40,12 +40,12 @@ export function NextQuestionButton() {
       {hasCurrentQuestionTimeEnded(match) ? (
         <>
           <CircleArrowRight />
-          <span>Próxima questão</span>
+          <span>Next question</span>
         </>
       ) : (
         <>
           <SkipForward />
-          <span>Pular questão</span>
+          <span>Skip question</span>
         </>
       )}
     </Button>

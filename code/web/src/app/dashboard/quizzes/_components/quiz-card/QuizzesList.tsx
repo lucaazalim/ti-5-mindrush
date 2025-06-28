@@ -19,14 +19,16 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
               <div className="relative flex h-32 items-center justify-center bg-gray-200 dark:bg-zinc-800">
                 <CreateOrTrackMatchButton quiz={quiz} />
                 <span className="absolute right-2 top-2 rounded-full bg-background px-3 py-0.5 text-xs font-semibold text-foreground">
-                  {quiz.questionCount} {quiz.questionCount === 1 ? "questão" : "questões"}
+                  {quiz.questionCount} {quiz.questionCount === 1 ? "question" : "questions"}
                 </span>
               </div>
 
               <div className="relative flex flex-1 flex-col justify-between px-4 py-5">
                 <div className="space-y-1">
-                  <h3 className="text-sm font-semibold break-words pr-8">{quiz.title}</h3>
-                  <p className="line-clamp-2 text-sm text-muted-foreground break-words">{quiz.description}</p>
+                  <h3 className="break-words pr-8 text-sm font-semibold">{quiz.title}</h3>
+                  <p className="line-clamp-2 break-words text-sm text-muted-foreground">
+                    {quiz.description}
+                  </p>
                 </div>
 
                 <QuizOptions quiz={quiz} />
@@ -35,7 +37,7 @@ export default function QuizzesList({ quizzes }: QuizzesListProps) {
           );
         })
       ) : (
-        <p className="text-muted-foreground">Nenhum quiz encontrado.</p>
+        <p className="text-muted-foreground">No quiz found.</p>
       )}
     </div>
   );

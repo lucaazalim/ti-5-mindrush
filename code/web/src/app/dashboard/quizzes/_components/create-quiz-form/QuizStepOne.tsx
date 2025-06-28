@@ -28,11 +28,11 @@ export default function QuizStepOne() {
             name="difficulty"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel>Dificuldade</FormLabel>
+                <FormLabel>Difficulty</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Escolha a dificuldade" />
+                      <SelectValue placeholder="Choose difficulty" />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.entries(QUIZ_DIFFICULTY_NAMES).map(([key, value]) => (
@@ -53,11 +53,11 @@ export default function QuizStepOne() {
             name="language"
             render={({ field }) => (
               <FormItem className="space-y-1">
-                <FormLabel>Idioma</FormLabel>
+                <FormLabel>Language</FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Escolha o idioma" />
+                      <SelectValue placeholder="Choose language" />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.entries(QUIZ_LANGUAGE_NAMES).map(([key, value]) => (

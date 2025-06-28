@@ -12,7 +12,7 @@ export default function SignInButton() {
       type="button"
       onClick={() => signIn("google", { callbackUrl: ROUTES.DASHBOARD })}
     >
-      Acessar
+      Access
     </Button>
   );
 }

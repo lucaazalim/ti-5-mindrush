@@ -1,9 +1,9 @@
 "use client";
 
-import { testimonials } from "~/app/(home)/_data/testimonials";
-import Image from "next/image";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import React from "react";
+import { testimonials } from "~/app/(home)/_data/testimonials";
 
 const firstColumn = testimonials.slice(0, 3);
 const secondColumn = testimonials.slice(3, 6);
@@ -69,7 +69,7 @@ export const Testimonials = () => {
             transition={{ duration: 1, delay: 0.6 }}
             className="mt-5 text-[50px] font-semibold"
           >
-            Feedback dos usuários
+            User feedback
           </motion.div>
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
@@ -78,7 +78,7 @@ export const Testimonials = () => {
             viewport={{ once: true }}
             className="text-[25px]"
           >
-            Veja como educadores e estudantes estão aproveitando a Mind
+            See how educators and students are enjoying Mind
             <span className="italic">Rush</span>!
           </motion.div>
         </div>

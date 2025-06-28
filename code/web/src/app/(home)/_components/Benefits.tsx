@@ -24,8 +24,8 @@ const Benefits = () => {
           viewport={{ once: true }}
           className="pb-28 text-[25px]"
         >
-          Veja como a Mind<span className="italic">Rush</span> pode revolucionar a forma de ensinar
-          e aprender.
+          See how Mind<span className="italic">Rush</span> can revolutionize the way of teaching and
+          learning.
         </motion.div>
 
         <div className="flex gap-10">
@@ -57,7 +57,7 @@ const Benefits = () => {
                 className="mb-8 flex items-center gap-5"
               >
                 <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">1</p>
-                <p className="text-lg font-semibold">Crie quizzes em menos de 3 minutos</p>
+                <p className="text-lg font-semibold">Create quizzes in less than 3 minutes</p>
               </motion.div>
 
               <motion.div
@@ -68,7 +68,7 @@ const Benefits = () => {
                 className="mb-8 flex items-center gap-5"
               >
                 <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">2</p>
-                <p className="text-lg font-semibold">Acompanhamento em tempo real</p>
+                <p className="text-lg font-semibold">Real-time tracking</p>
               </motion.div>
               <motion.div
                 initial={{ x: +100, opacity: 0 }}
@@ -78,7 +78,7 @@ const Benefits = () => {
                 className="mb-8 flex items-center gap-5"
               >
                 <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">3</p>
-                <p className="text-lg font-semibold">+ Engajamento e interatividade</p>
+                <p className="text-lg font-semibold">+ Engagement and interactivity</p>
               </motion.div>
 
               <motion.div
@@ -89,7 +89,7 @@ const Benefits = () => {
                 className="mb-24 flex items-center gap-5"
               >
                 <p className="h-10 w-10 rounded-full bg-primary p-2 font-bold text-background">4</p>
-                <p className="text-lg font-semibold">Economia de tempo para você!</p>
+                <p className="text-lg font-semibold">Time saving for you!</p>
               </motion.div>
 
               <motion.div
@@ -99,7 +99,7 @@ const Benefits = () => {
                 viewport={{ once: true }}
                 className="flex"
               >
-                <Button variant="secondary">Começar agora</Button>
+                <Button variant="secondary">Start now</Button>
               </motion.div>
             </div>
           </div>
@@ -113,7 +113,7 @@ const Benefits = () => {
           transition={{ duration: 1, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          <p className="text-[40px]">A solução das aulas chatas e entediantes!</p>
+          <p className="text-[40px]">The solution for boring and tedious classes!</p>
         </motion.div>
       </div>
     </div>

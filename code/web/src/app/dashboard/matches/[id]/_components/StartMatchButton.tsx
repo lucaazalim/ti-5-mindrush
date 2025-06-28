@@ -2,8 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { Play } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "~/components/ui/button";
-import { isFailure } from "~/lib/result";
 import { startMatch } from "~/lib/actions/match";
+import { isFailure } from "~/lib/result";
 import { useMatchStore } from "../_store/store-provider";
 
 export function StartMatchButton() {
@@ -37,7 +37,7 @@ export function StartMatchButton() {
       loading={mutation.isPending}
     >
       <Play />
-      Iniciar partida
+      Start match
     </Button>
   );
 }

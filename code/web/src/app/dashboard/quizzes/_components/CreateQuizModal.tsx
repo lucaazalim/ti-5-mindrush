@@ -28,7 +28,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
     mutationFn: createQuiz,
     onSuccess: (result) => {
       if (isSuccess(result)) {
-        toast.success("Quiz criado com sucesso!");
+        toast.success("Quiz created successfully!");
         router.push(ROUTES.QUIZ(result.data.id));
       } else {
         toast.error(result.error);
@@ -61,11 +61,11 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="rounded-3xl">Criar quiz</Button>
+        <Button className="rounded-3xl">Create quiz</Button>
       </DialogTrigger>
 
       <DialogContent>
-        <DialogTitle>Criar um novo quiz</DialogTitle>
+        <DialogTitle>Create a new quiz</DialogTitle>
 
         <FormProvider {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -89,7 +89,7 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
                       }
                     }}
                   >
-                    {selectedType === "PDF_GENERATED" ? "Continuar ->" : "Confirmar"}
+                    {selectedType === "PDF_GENERATED" ? "Continue ->" : "Confirm"}
                   </Button>
                 </div>
               </>
@@ -100,11 +100,11 @@ export function CreateQuizModal({ educatorId }: { educatorId: Uuid }) {
                 {selectedType === "PDF_GENERATED" && <QuizStepTwoPDF />}
                 <div className="mt-4 flex justify-between">
                   <Button type="button" variant="outline" onClick={() => setStep(1)}>
-                    Voltar
+                    Back
                   </Button>
 
                   <Button type="submit" loading={mutation.isPending}>
-                    Confirmar
+                    Confirm
                   </Button>
                 </div>
               </>

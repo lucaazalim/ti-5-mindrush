@@ -31,25 +31,25 @@ export const MATCH_STATUSES = ["WAITING", "RUNNING", "ENDED"] as const;
 
 export const QUESTION_TYPES_NAMES: Record<(typeof QUESTION_TYPES)[number], string> = {
   QUIZ: "Quiz",
-  TRUE_OR_FALSE: "Verdadeiro ou falso",
+  TRUE_OR_FALSE: "True or False",
 };
 
 export const QUIZ_DIFFICULTY_NAMES: Record<(typeof QUIZ_DIFFICULTIES)[number], string> = {
-  EASY: "Fácil",
-  MEDIUM: "Média",
-  HARD: "Difícil",
+  EASY: "Easy",
+  MEDIUM: "Medium",
+  HARD: "Hard",
 };
 
 export const QUIZ_LANGUAGE_NAMES: Record<(typeof QUIZ_LANGUAGES)[number], string> = {
-  ENGLISH: "Inglês",
-  PORTUGUESE: "Português",
-  SPANISH: "Espanhol",
+  ENGLISH: "English",
+  PORTUGUESE: "Portuguese",
+  SPANISH: "Spanish",
 };
 
 export const MATCH_STATUSES_NAMES: Record<(typeof MATCH_STATUSES)[number], string> = {
-  WAITING: "Aguardando",
-  RUNNING: "Em andamento",
-  ENDED: "Finalizada",
+  WAITING: "Waiting",
+  RUNNING: "Running",
+  ENDED: "Ended",
 };
 
 export const MATCH_STATUS_BADGE_VARIANTS: Record<

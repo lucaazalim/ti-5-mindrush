@@ -16,9 +16,9 @@ export default function QuizBasicInfo() {
         name="title"
         render={({ field }) => (
           <FormItem className="space-y-1">
-            <FormLabel>Título</FormLabel>
+            <FormLabel>Title</FormLabel>
             <FormControl>
-              <Input placeholder="História do Brasil" {...field} />
+              <Input placeholder="History of Brazil" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -29,9 +29,9 @@ export default function QuizBasicInfo() {
         name="description"
         render={({ field }) => (
           <FormItem className="space-y-1">
-            <FormLabel>Descrição</FormLabel>
+            <FormLabel>Description</FormLabel>
             <FormControl>
-              <Input placeholder="Revisão do capítulo 4" {...field} />
+              <Input placeholder="Chapter 4 review" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>

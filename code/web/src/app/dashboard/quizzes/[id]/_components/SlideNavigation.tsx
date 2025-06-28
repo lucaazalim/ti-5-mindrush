@@ -1,8 +1,8 @@
 import { Trash2 } from "lucide-react";
 import BackButton from "~/app/dashboard/_components/BackButton";
 import { Button } from "~/components/ui/button";
+import { COLORS, QUESTION_ALTERNATIVES_STYLING } from "~/lib/constants";
 import { type QuestionWithRawAlternatives } from "~/lib/types";
-import { QUESTION_ALTERNATIVES_STYLING, COLORS } from "~/lib/constants";
 
 interface SlideNavigationProps {
   questions: QuestionWithRawAlternatives[];
@@ -27,7 +27,7 @@ export function SlideNavigation({
           type="button"
           onClick={onAdd}
           data-testid="adicionar-questao"
-          aria-label="Adicionar nova questão"
+          aria-label="Add new question"
           className="h-[8px] w-[140px] rounded-sm"
         >
           Nova questão
@@ -40,7 +40,7 @@ export function SlideNavigation({
             key={q.id || index}
             role="button"
             tabIndex={0}
-            aria-label={`Selecionar questão ${index + 1}`}
+            aria-label={`Select question ${index + 1}`}
             data-testid={`question-${index}`}
             onClick={() => onSlideChange(index)}
             onKeyDown={(e) => e.key === "Enter" && onSlideChange(index)}
@@ -53,7 +53,7 @@ export function SlideNavigation({
             {questions.length > 1 && (
               <button
                 type="button"
-                aria-label={`Excluir questão ${index + 1}`}
+                aria-label={`Delete question ${index + 1}`}
                 className="absolute right-2 top-2 text-muted-foreground hover:text-destructive dark:text-muted-foreground dark:hover:text-destructive"
                 onClick={(e) => {
                   e.stopPropagation();
@@ -68,7 +68,7 @@ export function SlideNavigation({
               className="mb-1 text-xs font-semibold text-foreground dark:text-foreground"
               aria-hidden="true"
             >
-              {index + 1}. {q.type === "QUIZ" ? "Quiz" : "Verdadeiro ou falso"}
+              {index + 1}. {q.type === "QUIZ" ? "Quiz" : "True or false"}
             </div>
 
             <div className="flex flex-wrap gap-1" aria-hidden="true">

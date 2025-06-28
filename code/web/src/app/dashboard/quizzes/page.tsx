@@ -24,10 +24,10 @@ export default async function Page() {
   return (
     <Main>
       <div className="flex flex-row justify-between">
-        <PageTitle className="mt-1">Seus quizzes</PageTitle>
+        <PageTitle className="mt-1">Your quizzes</PageTitle>
         <div className="flex flex-row items-center gap-3">
           <Link href={ROUTES.MATCHES}>
-            <Button variant="outline">Histórico de Partidas</Button>
+            <Button variant="outline">Match History</Button>
           </Link>
           <CreateQuizModal educatorId={(session.user.id as Uuid) ?? ""} />
         </div>

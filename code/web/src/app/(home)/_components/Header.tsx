@@ -1,6 +1,6 @@
-import SignInButton from "./SignInButton";
 import * as motion from "motion/react-client";
 import Link from "next/link";
+import SignInButton from "./SignInButton";
 
 const Header = () => {
   return (
@@ -22,25 +22,25 @@ const Header = () => {
             href="#benefits"
             className="relative block w-fit text-lg after:absolute after:block after:h-[4px] after:w-full after:origin-center after:scale-x-0 after:bg-primary after:transition after:duration-300 after:content-[''] after:hover:scale-x-100"
           >
-            Benefícios
+            Benefits
           </Link>
           <Link
             href="#testimonials"
             className="relative block w-fit text-lg after:absolute after:block after:h-[4px] after:w-full after:origin-center after:scale-x-0 after:bg-primary after:transition after:duration-300 after:content-[''] after:hover:scale-x-100"
           >
-            Depoimentos
+            Testimonials
           </Link>
           <Link
             href="#price"
             className="relative block w-fit text-lg after:absolute after:block after:h-[4px] after:w-full after:origin-center after:scale-x-0 after:bg-primary after:transition after:duration-300 after:content-[''] after:hover:scale-x-100"
           >
-            Preço
+            Pricing
           </Link>
           <Link
             href="#customers"
             className="relative block w-fit text-lg after:absolute after:block after:h-[4px] after:w-full after:origin-center after:scale-x-0 after:bg-primary after:transition after:duration-300 after:content-[''] after:hover:scale-x-100"
           >
-            Clientes
+            Customers
           </Link>
         </div>
 

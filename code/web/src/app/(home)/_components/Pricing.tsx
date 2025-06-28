@@ -1,8 +1,8 @@
 "use client";
 
-import { twMerge } from "tailwind-merge";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { twMerge } from "tailwind-merge";
 import { pricingTiers } from "~/app/(home)/_data/pricing";
 
 export const Pricing = () => {
@@ -17,7 +17,7 @@ export const Pricing = () => {
             viewport={{ once: true }}
             className="text-[50px] font-semibold"
           >
-            Escolha o plano ideal
+            Choose the ideal plan
           </motion.div>
           <motion.div
             initial={{ scale: 0, opacity: 0 }}
@@ -26,7 +26,7 @@ export const Pricing = () => {
             viewport={{ once: true }}
             className="text-[25px]"
           >
-            Gratuito para sempre. Faça o upgrade para obter recursos exclusivos!
+            Free forever. Upgrade to get exclusive features!
           </motion.div>
         </div>
       </div>

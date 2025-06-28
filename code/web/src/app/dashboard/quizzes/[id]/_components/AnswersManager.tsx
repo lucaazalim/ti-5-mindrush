@@ -88,7 +88,7 @@ export function AnswersManager({
                   <button
                     onClick={() => deleteAnswer(index)}
                     type="button"
-                    aria-label={`Excluir resposta ${index + 1}`}
+                    aria-label={`Delete answer ${index + 1}`}
                     className="text-white transition-all hover:scale-110"
                   >
                     <Trash2 size={16} />
@@ -98,7 +98,7 @@ export function AnswersManager({
                 <button
                   type="button"
                   onClick={() => onChangeCorrectIndex(index)}
-                  aria-label={`Marcar resposta ${index + 1} como correta`}
+                  aria-label={`Mark answer ${index + 1} as correct`}
                   aria-pressed={isCorrect}
                   className={cn(
                     "flex h-5 w-5 items-center justify-center rounded border text-white/80 transition-all",
@@ -122,10 +122,10 @@ export function AnswersManager({
             variant="outline"
             className="rounded-sm border px-4 py-1.5 text-sm font-medium shadow-sm hover:bg-white dark:hover:bg-muted/40"
             onClick={addAnswer}
-            aria-label="Adicionar resposta"
+            aria-label="Add answer"
           >
             <Plus size={14} className="mr-2" />
-            Adicionar resposta
+            Add answer
           </Button>
         </div>
       )}

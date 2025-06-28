@@ -19,7 +19,7 @@ export default function QuizStepTwoPDF() {
       name="pdfText"
       render={({ field }) => (
         <FormItem>
-          <FormLabel>Enviar PDF</FormLabel>
+          <FormLabel>Upload PDF</FormLabel>
           <FormControl>
             <label
               className={cn(
@@ -29,7 +29,7 @@ export default function QuizStepTwoPDF() {
             >
               <Upload className="mb-2 h-6 w-6 text-gray-500" />
               <span className="text-sm font-medium text-gray-700">
-                {fileName ?? "Clique para enviar um arquivo PDF"}
+                {fileName ?? "Click to upload a PDF file"}
               </span>
               <Input
                 type="file"

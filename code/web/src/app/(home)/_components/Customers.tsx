@@ -1,6 +1,5 @@
 import * as motion from "motion/react-client";
 import Image from "next/image";
-import React from "react";
 import apexLogo from "public/home/logo-apex.png";
 import celestialLogo from "public/home/logo-celestial.png";
 import pulseLogo from "public/home/logo-pulse.png";
@@ -16,7 +15,7 @@ const Customers = () => {
         transition={{ duration: 1, delay: 0.2 }}
         className="text-[50px] font-semibold"
       >
-        Quem usa a plataforma?
+        Who uses the platform?
       </motion.div>
       <motion.div
         initial={{ scale: 0, opacity: 0 }}
@@ -25,7 +24,7 @@ const Customers = () => {
         viewport={{ once: true }}
         className="pb-5 text-[25px]"
       >
-        Escolas de todo o Brasil já estão utilizando nossa plataforma!
+        Schools all over Brazil are already using our platform!
       </motion.div>
       <motion.div
         initial={{ x: +100, opacity: 0 }}

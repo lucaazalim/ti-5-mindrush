@@ -53,15 +53,15 @@ export function EndMatchButton() {
         <DialogHeader>
           <DialogTitle>Deseja encerrar a partida?</DialogTitle>
           <DialogDescription>
-            Esta ação não pode ser desfeita. As respostas dos estudantes não serão salvas.
+            This action cannot be undone. Student answers will not be saved.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline">Cancelar</Button>
+            <Button variant="outline">Cancel</Button>
           </DialogClose>
           <Button variant="destructive" onClick={handleConfirm} loading={mutation.isPending}>
-            Encerrar
+            End
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -69,7 +69,7 @@ export function EndMatchButton() {
   ) : (
     <Button variant="outline" className="grow" onClick={handleConfirm} loading={mutation.isPending}>
       <CircleX />
-      Encerrar partida
+      End match
     </Button>
   );
 }

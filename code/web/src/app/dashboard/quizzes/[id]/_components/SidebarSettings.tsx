@@ -22,21 +22,20 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
       <div className="w-full space-y-4 px-2">
         <div className="space-y-2">
           <label htmlFor="question-type" className="mb-1 block text-sm font-medium">
-            Tipo de questão
+            Question type
           </label>
           <Select
             value={question.type}
             onValueChange={(value: QuestionType) => {
               onUpdate({
                 type: value,
-                alternatives:
-                  value === "TRUE_OR_FALSE" ? ["Verdadeiro", "Falso"] : ["", "", "", ""],
+                alternatives: value === "TRUE_OR_FALSE" ? ["True", "False"] : ["", "", "", ""],
                 correctAlternativeIndex: 0,
               });
             }}
           >
-            <SelectTrigger id="question-type" aria-label="Tipo de questão">
-              <SelectValue placeholder="Tipo de questão" />
+            <SelectTrigger id="question-type" aria-label="Question type">
+              <SelectValue placeholder="Question type" />
             </SelectTrigger>
             <SelectContent>
               {Object.entries(QUESTION_TYPES_NAMES).map(([key, value]) => (
@@ -50,14 +49,14 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
 
         <div>
           <label htmlFor="time-limit" className="mb-1 block text-sm font-medium">
-            Tempo limite (segundos)
+            Time limit (seconds)
           </label>
           <Input
             id="time-limit"
             type="number"
             min={10}
             max={120}
-            aria-label="Tempo limite da questão"
+            aria-label="Question time limit"
             value={question.timeLimit}
             onChange={(e) => onUpdate({ timeLimit: Number(e.target.value) || 30 })}
           />
@@ -67,10 +66,10 @@ export function SidebarSettings({ question, onUpdate, onSubmit }: Props) {
           type="button"
           onClick={onSubmit}
           className="w-full"
-          aria-label="Salvar quiz"
+          aria-label="Save quiz"
           data-testid="salvar-quiz"
         >
-          Salvar quiz
+          Save quiz
         </Button>
       </div>
     </aside>

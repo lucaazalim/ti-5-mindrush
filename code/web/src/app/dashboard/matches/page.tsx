@@ -24,13 +24,13 @@ export default async function Page() {
         <BackButton />
       </div>
 
-      <PageTitle className="mt-1">Histórico de Partidas</PageTitle>
+      <PageTitle className="mt-1">Match History</PageTitle>
 
       <div className="flex flex-col gap-5">
         {allMatches?.length > 0 ? (
           <DataTable columns={columns} data={allMatches} />
         ) : (
-          <p className="text-muted-foreground">Nenhuma partida encontrada.</p>
+          <p className="text-muted-foreground">No match found.</p>
         )}
       </div>
     </Main>
